@@ -1,0 +1,216 @@
+---
+import { icon } from '../lib/icons';
+import { REGISTER_URL } from '../lib/site';
+
+// moedas em órbita (símbolo + código)
+const ringA = [
+  { s: '$', c: 'USD' },
+  { s: '€', c: 'EUR' },
+  { s: '£', c: 'GBP' },
+  { s: 'R$', c: 'BRL' },
+];
+const ringB = [
+  { s: '¥', c: 'JPY' },
+  { s: 'A$', c: 'AUD' },
+  { s: 'C$', c: 'CAD' },
+  { s: '₣', c: 'CHF' },
+];
+
+// liquidação cross-border
+const settle = [
+  { flag: '🇺🇸', cur: 'USD', amount: '12.480,00', up: true },
+  { flag: '🇪🇺', cur: 'EUR', amount: '9.215,40', up: true },
+  { flag: '🇬🇧', cur: 'GBP', amount: '4.060,00', up: false },
+  { flag: '🇧🇷', cur: 'BRL', amount: '128.940,00', up: true },
+];
+---
+
+<section id="internacional" class="relative overflow-hidden py-28 sm:py-36">
+  <!-- ambient: aurora + grid + vignette -->
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute inset-0 vignette bg-grid-faint [background-size:60px_60px] opacity-40"></div>
+    <div class="absolute left-1/2 top-1/2 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[conic-gradient(from_120deg,rgba(43,95,160,0.22),rgba(111,163,224,0.06),rgba(201,146,58,0.08),rgba(43,95,160,0.22))] blur-[120px] opacity-70"></div>
+  </div>
+
+  <div class="section">
+    <!-- header -->
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <span class="kicker justify-center">Pagamentos globais · cross-border</span>
+      <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-6xl">
+        Seu produto não tem fronteira.<br />
+        <span class="text-titan-gradient">Seu recebimento também não.</span>
+      </h2>
+      <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/75">
+        Cobre o cliente na moeda dele, liquide na sua. A Korvex processa em
+        <strong class="text-white"> mais de 135 moedas</strong>, com checkout que fala o idioma de quem compra.
+      </p>
+    </div>
+
+    <!-- stage: globe + orbits + arcs + FX cards -->
+    <div data-tilt-zone class="relative mx-auto mt-16 grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <!-- LEFT: the globe stage -->
+      <div class="relative mx-auto aspect-square w-full max-w-[480px]">
+        <!-- orbit ring A -->
+        <div class="absolute inset-[5%] rounded-full border border-suede-500/15"></div>
+        <div class="absolute inset-[5%] animate-spin-slow">
+          {ringA.map((m, i) => (
+            <div class="absolute inset-0" style={`transform: rotate(${i * 90}deg)`}>
+              <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" style={`transform: translate(-50%,-50%) rotate(${-i * 90}deg)`}>
+                <div class="animate-spin-rev">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-suede-500/25 bg-ink/85 font-display text-sm font-bold text-chrome-100 shadow-glow backdrop-blur">
+                    {m.s}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- orbit ring B (smaller, reverse) -->
+        <div class="absolute inset-[19%] rounded-full border border-suede-500/10"></div>
+        <div class="absolute inset-[19%] animate-spin-rev">
+          {ringB.map((m, i) => (
+            <div class="absolute inset-0" style={`transform: rotate(${i * 90 + 45}deg)`}>
+              <div class="absolute left-1/2 top-0" style={`transform: translate(-50%,-50%) rotate(${-i * 90 - 45}deg)`}>
+                <div class="animate-spin-slow">
+                  <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-suede-500/20 bg-ink/80 text-[11px] font-bold text-suede-300 backdrop-blur">
+                    {m.s}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- GLOBE -->
+        <div data-tilt="8" class="tilt absolute inset-[28%]">
+          <div class="relative h-full w-full overflow-hidden rounded-full border border-titan-500/25 shadow-[0_30px_90px_-20px_rgba(43,95,160,0.7),inset_0_0_60px_rgba(0,0,0,0.6)]">
+            <!-- sphere base -->
+            <div class="absolute inset-0 rounded-full" style="background:radial-gradient(120% 120% at 30% 25%, #1c3a5c 0%, #0d2238 45%, #050b14 90%)"></div>
+            <!-- spinning dot texture (longitudes panning) -->
+            <div class="absolute inset-0 rounded-full opacity-70" style="background-image:radial-gradient(circle, rgba(111,163,224,0.55) 1px, transparent 1.6px); background-size:18px 18px; animation:globe-pan 9s linear infinite; -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 60%, transparent 78%); mask-image:radial-gradient(circle at 50% 50%, #000 60%, transparent 78%);"></div>
+            <!-- meridians / parallels -->
+            <svg viewBox="0 0 200 200" class="absolute inset-0 h-full w-full text-titan-400/25">
+              <g fill="none" stroke="currentColor" stroke-width="0.6">
+                <circle cx="100" cy="100" r="99" />
+                <ellipse cx="100" cy="100" rx="99" ry="34" />
+                <ellipse cx="100" cy="100" rx="99" ry="66" />
+                <ellipse cx="100" cy="100" rx="34" ry="99" />
+                <ellipse cx="100" cy="100" rx="66" ry="99" />
+              </g>
+            </svg>
+            <!-- terminator highlight -->
+            <div class="absolute inset-0 rounded-full" style="background:radial-gradient(80% 80% at 28% 22%, rgba(255,255,255,0.18), transparent 45%)"></div>
+            <!-- location pings -->
+            <span class="absolute left-[34%] top-[38%] h-2 w-2 rounded-full bg-titan-400 shadow-[0_0_10px_2px_rgba(111,163,224,0.9)]"></span>
+            <span class="absolute left-[34%] top-[38%] h-2 w-2 rounded-full border border-titan-400/60" style="animation:pulse-ring 2.6s ease-out infinite"></span>
+            <span class="absolute left-[62%] top-[30%] h-2 w-2 rounded-full bg-gold-300 shadow-[0_0_10px_2px_rgba(245,217,139,0.8)]"></span>
+            <span class="absolute left-[62%] top-[30%] h-2 w-2 rounded-full border border-gold-300/60" style="animation:pulse-ring 2.6s ease-out infinite 0.8s"></span>
+            <span class="absolute left-[55%] top-[64%] h-1.5 w-1.5 rounded-full bg-chrome-200 shadow-[0_0_8px_2px_rgba(220,229,238,0.7)]"></span>
+          </div>
+        </div>
+
+        <!-- connection arcs over everything -->
+        <svg viewBox="0 0 480 480" class="pointer-events-none absolute inset-0 h-full w-full">
+          <defs>
+            <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#6fa3e0" stop-opacity="0" />
+              <stop offset="0.5" stop-color="#6fa3e0" stop-opacity="0.9" />
+              <stop offset="1" stop-color="#f5d98b" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path d="M150 210 Q 240 90 320 175" fill="none" stroke="url(#arc)" stroke-width="1.5" stroke-dasharray="6 8" style="animation:dash-travel 6s linear infinite" />
+          <path d="M320 175 Q 360 300 250 330" fill="none" stroke="url(#arc)" stroke-width="1.5" stroke-dasharray="6 8" style="animation:dash-travel 7s linear infinite" />
+          <path d="M150 210 Q 130 330 250 330" fill="none" stroke="url(#arc)" stroke-width="1.2" stroke-dasharray="5 9" style="animation:dash-travel 8s linear infinite" />
+        </svg>
+
+        <!-- floating FX cards -->
+        <div class="absolute -left-4 top-[12%] animate-floaty">
+          <div class="flex items-center gap-2.5 rounded-xl border border-suede-500/25 bg-ink/85 px-3 py-2 shadow-glow backdrop-blur">
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400 text-xs font-bold">$</span>
+            <div>
+              <p class="text-[11px] font-semibold text-white">USD 1.200,00</p>
+              <p class="text-[9px] text-emerald-400">venda aprovada</p>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -right-2 top-[40%] animate-floaty" style="animation-delay:1.2s">
+          <div class="flex items-center gap-2.5 rounded-xl border border-suede-500/25 bg-ink/85 px-3 py-2 shadow-glow backdrop-blur">
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/20 text-titan-400 text-xs font-bold">€</span>
+            <div>
+              <p class="text-[11px] font-semibold text-white">EUR 980,00</p>
+              <p class="text-[9px] text-titan-400">checkout em alemão</p>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-[10%] left-[14%] animate-floaty" style="animation-delay:0.6s">
+          <div class="flex items-center gap-2.5 rounded-xl border border-gold-600/25 bg-ink/85 px-3 py-2 shadow-gold backdrop-blur">
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300 text-xs font-bold">R$</span>
+            <div>
+              <p class="text-[11px] font-semibold text-white">BRL 6.420,00</p>
+              <p class="text-[9px] text-gold-300">liquidado D0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: cross-border settlement panel + stats -->
+      <div class="reveal">
+        <div class="beam card spotlight overflow-hidden rounded-3xl p-6 sm:p-7">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="h-8 w-8 rounded-lg bg-titan-600/15 p-2 text-titan-400" set:html={icon('globe')}></span>
+              <p class="font-display text-sm font-semibold text-white">Liquidação cross-border</p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-400">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> ao vivo
+            </span>
+          </div>
+
+          <div class="mt-5 divide-y divide-suede-500/10">
+            {settle.map((s) => (
+              <div class="flex items-center justify-between py-3">
+                <div class="flex items-center gap-3">
+                  <span class="text-lg">{s.flag}</span>
+                  <span class="font-display text-sm font-semibold text-white">{s.cur}</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="font-mono text-sm text-chrome-100">{s.amount}</span>
+                  <span class={`flex h-5 w-5 items-center justify-center rounded ${s.up ? 'text-emerald-400' : 'text-suede-300'}`}>
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d={s.up ? 'M6 14l6-6 6 6' : 'M6 10l6 6 6-6'} stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-5 flex items-center justify-between rounded-xl border border-suede-500/15 bg-white/[0.02] px-4 py-3">
+            <span class="text-[12px] text-chrome-300/60">Convertido para BRL</span>
+            <span class="font-display text-lg font-bold text-white">R$ 152.617,80</span>
+          </div>
+        </div>
+
+        <!-- stat row -->
+        <div class="mt-5 grid grid-cols-3 gap-3">
+          <div class="card p-4 text-center">
+            <p class="font-display text-2xl font-bold text-white"><span data-count="135" data-suffix="+">135+</span></p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Moedas</p>
+          </div>
+          <div class="card p-4 text-center">
+            <p class="font-display text-2xl font-bold text-white">Multi</p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Idioma no checkout</p>
+          </div>
+          <div class="card p-4 text-center">
+            <p class="font-display text-2xl font-bold text-white">D0</p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Liquidação BR</p>
+          </div>
+        </div>
+
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-5">
+          Quero vender no mundo todo
+          <span class="h-4 w-4" set:html={icon('arrow')}></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

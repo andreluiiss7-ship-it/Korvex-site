@@ -1,0 +1,20 @@
+---
+import { icon } from '../lib/icons';
+import { REGISTER_URL } from '../lib/site';
+
+interface Props {
+  title: string;
+  label?: string;
+}
+const { title, label = 'Começar agora na Korvex' } = Astro.props;
+---
+
+<div class="section">
+  <div class="reveal flex flex-col items-center justify-between gap-4 rounded-2xl border border-suede-500/15 bg-gradient-to-r from-navy-800/50 to-ink/50 p-6 sm:flex-row sm:p-7">
+    <p class="text-pretty text-center font-display text-lg font-semibold text-white sm:text-left">{title}</p>
+    <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic flex-none">
+      {label}
+      <span class="h-4 w-4" set:html={icon('arrow')}></span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,288 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply bg-abyss text-chrome-200 font-sans antialiased;
+  background-image:
+    radial-gradient(1100px 600px at 82% -12%, rgba(43, 95, 160, 0.2), transparent 60%),
+    radial-gradient(800px 600px at -8% 8%, rgba(62, 92, 126, 0.14), transparent 55%),
+    radial-gradient(600px 600px at 50% 120%, rgba(201, 146, 58, 0.05), transparent 60%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(111, 163, 224, 0.3);
+  color: #fff;
+}
+
+/* ---- Typography helpers ---- */
+.h-display {
+  @apply font-display font-semibold tracking-tight text-white;
+  letter-spacing: -0.02em;
+}
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* ---- Premium chrome/gradient text ---- */
+.text-chrome-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #cfdbe8 45%, #8ba6c4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-titan-gradient {
+  background: linear-gradient(100deg, #6fa3e0 0%, #3e78c0 50%, #7e9cbd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-gold-gradient {
+  background: linear-gradient(100deg, #f5d98b 0%, #e7be6a 45%, #c9923a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Glass surfaces ---- */
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(126, 156, 189, 0.16);
+  backdrop-filter: blur(12px);
+}
+.glass-strong {
+  background: linear-gradient(180deg, rgba(16, 42, 68, 0.7), rgba(7, 16, 29, 0.55));
+  border: 1px solid rgba(126, 156, 189, 0.2);
+  backdrop-filter: blur(16px);
+}
+
+.hairline { border-color: rgba(126, 156, 189, 0.14); }
+
+/* ---- Buttons ---- */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 will-change-transform;
+}
+.btn-primary {
+  @apply text-white;
+  background: linear-gradient(180deg, #3e78c0, #2b5fa0);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 18px 40px -18px rgba(43, 95, 160, 0.9);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 24px 55px -18px rgba(62, 120, 192, 1);
+}
+.btn-ghost {
+  @apply text-chrome-200;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(126, 156, 189, 0.22);
+}
+.btn-ghost:hover {
+  border-color: rgba(111, 163, 224, 0.5);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ---- Section rhythm ---- */
+.section {
+  @apply relative mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full border border-suede-500/30 bg-white/5 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-suede-300;
+}
+
+/* ---- Card with depth ---- */
+.card {
+  @apply relative overflow-hidden rounded-2xl;
+  background: linear-gradient(180deg, rgba(16, 42, 68, 0.55), rgba(7, 16, 29, 0.5));
+  border: 1px solid rgba(126, 156, 189, 0.14);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 30px 60px -35px rgba(0, 0, 0, 0.85);
+}
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  border-color: rgba(111, 163, 224, 0.4);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 40px 80px -30px rgba(43, 95, 160, 0.5);
+}
+
+/* ---- Browser frame for mockups ---- */
+.browser {
+  @apply relative overflow-hidden rounded-xl;
+  border: 1px solid rgba(126, 156, 189, 0.2);
+  background: #07101d;
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.9);
+}
+.browser-bar {
+  @apply flex items-center gap-2 px-4 py-3;
+  background: linear-gradient(180deg, rgba(16, 42, 68, 0.8), rgba(10, 26, 47, 0.8));
+  border-bottom: 1px solid rgba(126, 156, 189, 0.14);
+}
+.dot { @apply h-2.5 w-2.5 rounded-full; }
+
+/* ---- Reveal on scroll ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation: none !important; }
+}
+
+/* shimmer line for metallic accents */
+.shine {
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.5) 50%, transparent 80%);
+  background-size: 200% 100%;
+}
+
+/* ============================================================
+   PREMIUM ATMOSPHERE & MOTION — v2
+   ============================================================ */
+
+/* Fine film grain over the whole page (kills the "flat AI" look) */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Section eyebrow with a leading hairline — more editorial than a pill */
+.kicker {
+  @apply inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-suede-300;
+}
+.kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(111, 163, 224, 0.8));
+}
+
+/* Conic beam border for hero / spotlight cards */
+.beam {
+  position: relative;
+  isolation: isolate;
+}
+.beam::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-a, 0deg),
+    transparent 0deg,
+    rgba(111, 163, 224, 0.7) 40deg,
+    rgba(245, 217, 139, 0.5) 80deg,
+    transparent 130deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beamspin 8s linear infinite;
+  z-index: -1;
+}
+@property --beam-a {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes beamspin {
+  to { --beam-a: 360deg; }
+}
+
+/* Spotlight that follows the cursor on a card */
+.spotlight {
+  position: relative;
+}
+.spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(111, 163, 224, 0.16),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.spotlight:hover::after { opacity: 1; }
+
+/* 3D tilt wrapper */
+.tilt {
+  transform: perspective(1200px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Magnetic button micro-shift */
+.magnetic { transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* Animated gradient underline for emphasized words */
+.ul-anim {
+  background-image: linear-gradient(90deg, #6fa3e0, #3e78c0);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.in .ul-anim { background-size: 100% 2px; }
+
+/* Vignette helper for immersive sections */
+.vignette {
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
+}
+
+/* Orbit + globe motion */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes spin-rev { to { transform: rotate(-360deg); } }
+@keyframes globe-pan { to { background-position-x: -512px; } }
+@keyframes draw { from { stroke-dashoffset: var(--len, 400); } to { stroke-dashoffset: 0; } }
+@keyframes dash-travel { to { stroke-dashoffset: -1000; } }
+@keyframes rise {
+  0% { transform: translateY(8px); opacity: 0; }
+  12%, 88% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-8px); opacity: 0; }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.animate-spin-slow { animation: spin-slow 60s linear infinite; }
+.animate-spin-rev { animation: spin-rev 48s linear infinite; }
+
+/* Number ticker (transactions feed) */
+.feed-item { animation: rise 5s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .beam::before, .feed-item, .animate-spin-slow, .animate-spin-rev { animation: none !important; }
+}

@@ -1,0 +1,56 @@
+---
+import Base from './Base.astro';
+import { WHATSAPP_URL } from '../lib/site';
+
+interface Props {
+  title: string;
+  updated?: string;
+}
+const { title, updated = 'junho de 2026' } = Astro.props;
+---
+
+<Base title={`${title} — Korvex`}>
+  <header class="fixed inset-x-0 top-0 z-50">
+    <nav class="mx-auto mt-3 flex w-[min(96%,1180px)] items-center justify-between rounded-full border border-suede-500/15 bg-ink/60 px-5 py-2.5 backdrop-blur-xl">
+      <a href="/" class="flex items-center gap-2.5">
+        <img src="/assets/logo-white.png" alt="Korvex" class="h-6 w-auto sm:h-7" />
+      </a>
+      <a href="/" class="text-sm font-medium text-chrome-300/80 transition-colors hover:text-white">← Voltar ao site</a>
+    </nav>
+  </header>
+
+  <main class="mx-auto w-full max-w-3xl px-5 pb-24 pt-36 sm:pt-44">
+    <p class="kicker">Documento legal</p>
+    <h1 class="h-display mt-5 text-4xl sm:text-5xl">{title}</h1>
+    <p class="mt-4 text-sm text-chrome-300/55">Última atualização: {updated} · Korvex Tecnologia</p>
+
+    <article class="prose-legal mt-12">
+      <slot />
+    </article>
+
+    <div class="mt-16 rounded-2xl border border-suede-500/20 bg-white/[0.02] p-6">
+      <p class="text-sm text-chrome-300/70">
+        Dúvidas sobre este documento? Fale com o time da Korvex.
+      </p>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost mt-4 !py-2.5 text-[13px]">Falar no WhatsApp</a>
+    </div>
+  </main>
+</Base>
+
+<style is:global>
+  .prose-legal { color: rgba(220, 229, 238, 0.78); }
+  .prose-legal h2 {
+    font-family: Sora, system-ui, sans-serif;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.35rem;
+    margin: 2.4rem 0 0.9rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-legal h3 { color: #e6edf3; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+  .prose-legal p { line-height: 1.75; margin: 0.85rem 0; }
+  .prose-legal ul { margin: 0.85rem 0; padding-left: 1.2rem; list-style: disc; }
+  .prose-legal li { margin: 0.4rem 0; line-height: 1.7; }
+  .prose-legal strong { color: #fff; }
+  .prose-legal a { color: #6fa3e0; text-decoration: underline; }
+</style>

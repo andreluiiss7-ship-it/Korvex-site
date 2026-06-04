@@ -1,0 +1,331 @@
+---
+import { icon } from '../lib/icons';
+import { REGISTER_URL } from '../lib/site';
+
+// 7 experiências de checkout — estruturas/fluxos diferentes, não skins
+const experiences = [
+  { name: 'Etapa única', note: 'Tudo em uma tela. Menos cliques, ideal para tráfego frio.', shape: 'one' },
+  { name: '3 etapas', note: 'Dados → pagamento → confirmação. Mais qualificação, menos chargeback.', shape: 'three' },
+  { name: 'Order Form', note: 'Carta de vendas + compra na mesma página, estilo long-form.', shape: 'form' },
+  { name: 'Upsell-first', note: 'Oferta principal já com bumps no topo para subir o ticket.', shape: 'bump' },
+  { name: 'Assinatura', note: 'Planos e recorrência com seletor de ciclo e trial.', shape: 'sub' },
+  { name: 'Internacional', note: 'Multimoeda e idioma automático para vender lá fora.', shape: 'intl' },
+  { name: 'Express 1-clique', note: 'Recompra com cartão salvo, aprovação imediata.', shape: 'express' },
+];
+
+const customizable = [
+  'Cores, fontes, logo e identidade visual da sua marca',
+  'Campos, ordem, order bump, prova social e selos',
+  'Timer, depoimentos, garantia e gatilhos de conversão',
+  'Domínio próprio — o checkout é seu, não da plataforma',
+];
+---
+
+<section id="checkout" class="relative py-24 sm:py-32">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute left-1/2 top-1/4 h-[440px] w-[760px] -translate-x-1/2 rounded-full bg-titan-600/10 blur-[140px]"></div>
+  </div>
+
+  <div class="section">
+    <!-- header -->
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <span class="kicker justify-center">Checkout</span>
+      <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-5xl">
+        7 experiências de checkout.<br /><span class="text-titan-gradient">Uma para cada tipo de oferta.</span>
+      </h2>
+      <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-chrome-300/72">
+        Não são 7 cores do mesmo modelo. São <strong class="text-white">7 estruturas e fluxos de compra
+        diferentes</strong> — de etapa única a 3 etapas — e cada uma 100% personalizável com a sua marca.
+        Produtos e funis diferentes pedem checkouts diferentes; aqui você tem todos.
+      </p>
+    </div>
+
+    <div data-tilt-zone class="mt-14 grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <!-- LEFT: interactive structural preview -->
+      <div class="reveal">
+        <!-- toggle -->
+        <div class="mb-4 flex flex-wrap gap-1.5 rounded-2xl border border-suede-500/20 bg-white/[0.03] p-1 text-[12px] font-semibold">
+          <button data-ck="one" class="ck-tab rounded-xl px-3.5 py-1.5 text-white" style="background:linear-gradient(180deg,#3e78c0,#2b5fa0)">Etapa única</button>
+          <button data-ck="three" class="ck-tab rounded-xl px-3.5 py-1.5 text-chrome-300/70">3 etapas</button>
+          <button data-ck="mobile" class="ck-tab rounded-xl px-3.5 py-1.5 text-chrome-300/70">Mobile</button>
+          <button data-ck="high" class="ck-tab rounded-xl px-3.5 py-1.5 text-chrome-300/70">High-ticket</button>
+          <button data-ck="intl" class="ck-tab rounded-xl px-3.5 py-1.5 text-chrome-300/70">Internacional</button>
+        </div>
+
+        <div data-tilt="5" class="tilt browser">
+          <div class="browser-bar">
+            <span class="dot bg-[#ff5f57]/80"></span>
+            <span class="dot bg-[#febc2e]/80"></span>
+            <span class="dot bg-[#28c840]/80"></span>
+            <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">pay.suamarca.com</span>
+          </div>
+
+          <!-- VARIANT: etapa única -->
+          <div data-view="one" class="grid gap-0 sm:grid-cols-[1.2fr_1fr]">
+            <div class="border-b border-suede-500/10 p-6 sm:border-b-0 sm:border-r">
+              <div class="flex items-center gap-2">
+                <div class="h-7 w-7 rounded-lg bg-gradient-to-br from-titan-400 to-titan-600"></div>
+                <span class="text-sm font-semibold text-white">Sua Marca</span>
+              </div>
+              <p class="mt-5 text-[11px] uppercase tracking-wider text-chrome-300/50">Pagamento</p>
+              <div class="mt-3 flex gap-2">
+                <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/16 px-3 py-2 text-center text-xs font-semibold text-white">Pix</span>
+                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Cartão</span>
+                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Boleto</span>
+              </div>
+              <div class="mt-4 space-y-2.5">
+                <div class="h-9 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+                <div class="h-9 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+              </div>
+              <div class="mt-4 rounded-lg border border-dashed border-titan-500/40 bg-titan-600/[0.06] p-3">
+                <div class="flex items-start gap-2">
+                  <span class="mt-0.5 flex h-4 w-4 items-center justify-center rounded bg-titan-600 text-white" set:html={icon('check')}></span>
+                  <div>
+                    <p class="text-[12px] font-semibold text-white">Sim, quero o bônus avançado</p>
+                    <p class="text-[11px] text-chrome-300/60">+ R$97 — leve junto com 1 clique</p>
+                  </div>
+                </div>
+              </div>
+              <button class="mt-4 w-full rounded-lg bg-gradient-to-b from-titan-400 to-titan-600 py-2.5 text-sm font-semibold text-white shadow-glow">Pagar agora</button>
+            </div>
+            <div class="bg-white/[0.015] p-6">
+              <p class="text-[11px] uppercase tracking-wider text-chrome-300/50">Sua compra</p>
+              <div class="mt-3 flex items-center gap-3">
+                <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-suede-500 to-navy-800"></div>
+                <div>
+                  <p class="text-sm font-semibold text-white">Mentoria Escala 7</p>
+                  <p class="text-[11px] text-chrome-300/55">Acesso imediato</p>
+                </div>
+              </div>
+              <div class="mt-5 space-y-2 text-[12px] text-chrome-300/70">
+                <div class="flex justify-between"><span>Produto</span><span>R$ 1.997</span></div>
+                <div class="flex justify-between"><span>Bônus avançado</span><span>R$ 97</span></div>
+                <div class="my-2 h-px bg-suede-500/15"></div>
+                <div class="flex justify-between text-sm font-semibold text-white"><span>Total</span><span class="text-titan-400">R$ 2.094</span></div>
+              </div>
+              <div class="mt-5 flex items-center gap-2 rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 py-2 text-[11px] text-chrome-300/65">
+                <span class="h-3.5 w-3.5 text-titan-400" set:html={icon('shield')}></span>
+                Ambiente seguro e criptografado
+              </div>
+            </div>
+          </div>
+
+          <!-- VARIANT: 3 etapas -->
+          <div data-view="three" class="hidden p-6">
+            <!-- stepper -->
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 text-[11px] font-semibold">
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-titan-600/20 text-titan-300 line-through decoration-titan-400/50">1</span>
+                <span class="text-chrome-300/45">Identificação</span>
+              </div>
+              <span class="h-px w-6 bg-suede-500/25"></span>
+              <div class="flex items-center gap-2 text-[11px] font-semibold">
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-titan-500 text-white shadow-glow">2</span>
+                <span class="text-white">Pagamento</span>
+              </div>
+              <span class="h-px w-6 bg-suede-500/15"></span>
+              <div class="flex items-center gap-2 text-[11px] font-semibold opacity-50">
+                <span class="flex h-6 w-6 items-center justify-center rounded-full border border-suede-500/30 text-chrome-300/60">3</span>
+                <span class="text-chrome-300/50">Pronto</span>
+              </div>
+            </div>
+
+            <div class="mt-6 grid gap-5 sm:grid-cols-[1.3fr_1fr]">
+              <div>
+                <p class="text-[11px] uppercase tracking-wider text-chrome-300/50">Forma de pagamento</p>
+                <div class="mt-3 flex gap-2">
+                  <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Pix</span>
+                  <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/16 px-3 py-2 text-center text-xs font-semibold text-white">Cartão</span>
+                </div>
+                <div class="mt-4 space-y-2.5">
+                  <div class="h-9 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+                  <div class="flex gap-2.5">
+                    <div class="h-9 flex-1 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+                    <div class="h-9 w-20 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+                  </div>
+                  <div class="h-9 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+                </div>
+                <div class="mt-4 flex items-center gap-2">
+                  <button class="flex-1 rounded-lg border border-suede-500/20 py-2.5 text-xs font-semibold text-chrome-300/70">Voltar</button>
+                  <button class="flex-[2] rounded-lg bg-gradient-to-b from-titan-400 to-titan-600 py-2.5 text-sm font-semibold text-white shadow-glow">Continuar</button>
+                </div>
+              </div>
+              <div class="rounded-xl border border-suede-500/12 bg-white/[0.02] p-4">
+                <p class="text-[11px] uppercase tracking-wider text-chrome-300/50">Resumo</p>
+                <p class="mt-2 text-sm font-semibold text-white">Mentoria Escala 7</p>
+                <div class="mt-3 flex justify-between text-sm font-semibold text-white"><span>Total</span><span class="text-titan-400">R$ 1.997</span></div>
+                <div class="mt-3 flex items-center gap-1.5 text-[10px] text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Dados protegidos</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VARIANT: mobile -->
+          <div data-view="mobile" class="hidden bg-gradient-to-b from-navy-900/40 to-ink/40 p-6">
+            <div class="mx-auto w-[230px] overflow-hidden rounded-[2rem] border-[6px] border-[#0b1626] bg-ink shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)]">
+              <div class="flex items-center justify-between bg-white/[0.03] px-4 py-2 text-[9px] text-chrome-300/60">
+                <span>9:41</span><span class="h-2.5 w-10 rounded-full bg-white/10"></span>
+              </div>
+              <div class="p-4">
+                <div class="flex items-center gap-2">
+                  <div class="h-6 w-6 rounded-md bg-gradient-to-br from-titan-400 to-titan-600"></div>
+                  <span class="text-[11px] font-semibold text-white">Sua Marca</span>
+                </div>
+                <div class="mt-3 flex items-center gap-2 rounded-lg border border-suede-500/15 bg-white/[0.02] p-2">
+                  <div class="h-9 w-9 rounded bg-gradient-to-br from-suede-500 to-navy-800"></div>
+                  <div><p class="text-[10px] font-semibold text-white">Mentoria Escala 7</p><p class="text-[9px] text-titan-400">R$ 1.997</p></div>
+                </div>
+                <div class="mt-3 flex gap-1.5">
+                  <span class="flex-1 rounded-md border border-titan-500/60 bg-titan-600/16 py-1.5 text-center text-[9px] font-semibold text-white">Pix</span>
+                  <span class="flex-1 rounded-md border border-suede-500/20 py-1.5 text-center text-[9px] text-chrome-300/65">Cartão</span>
+                </div>
+                <div class="mt-2.5 space-y-1.5">
+                  <div class="h-7 rounded-md border border-suede-500/15 bg-white/[0.02]"></div>
+                  <div class="h-7 rounded-md border border-suede-500/15 bg-white/[0.02]"></div>
+                </div>
+              </div>
+              <div class="border-t border-suede-500/10 bg-white/[0.03] p-3">
+                <button class="w-full rounded-lg bg-gradient-to-b from-titan-400 to-titan-600 py-2 text-[11px] font-bold text-white shadow-glow">Pagar R$ 1.997</button>
+                <p class="mt-1.5 text-center text-[8px] text-chrome-300/55">🔒 Ambiente seguro · 1-tap Pix</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- VARIANT: high-ticket -->
+          <div data-view="high" class="hidden grid gap-0 sm:grid-cols-[1.25fr_1fr]">
+            <div class="border-b border-gold-600/15 p-6 sm:border-b-0 sm:border-r">
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-gold-600/40 bg-gold-600/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-gold-300">Acesso VIP · vagas limitadas</span>
+              <p class="mt-4 font-display text-lg font-bold text-white">Mastermind Black — 12 meses</p>
+              <p class="mt-1 text-[12px] text-chrome-300/60">Mentoria individual, sala fechada e suporte concierge.</p>
+              <p class="mt-4 text-[11px] uppercase tracking-wider text-chrome-300/50">Parcelamento</p>
+              <div class="mt-2 space-y-2">
+                <div class="flex items-center justify-between rounded-lg border border-gold-600/40 bg-gold-600/[0.07] px-3 py-2"><span class="text-[12px] font-semibold text-white">12x de R$ 2.400</span><span class="h-3.5 w-3.5 rounded-full border-2 border-gold-400 bg-gold-400"></span></div>
+                <div class="flex items-center justify-between rounded-lg border border-suede-500/15 px-3 py-2"><span class="text-[12px] text-chrome-300/70">À vista — R$ 24.000</span><span class="h-3.5 w-3.5 rounded-full border border-suede-500/30"></span></div>
+              </div>
+              <button class="mt-4 w-full rounded-lg bg-gradient-to-b from-gold-300 to-gold-600 py-2.5 text-sm font-bold text-[#1c1608] shadow-gold">Garantir minha vaga</button>
+            </div>
+            <div class="bg-white/[0.015] p-6">
+              <p class="text-[11px] uppercase tracking-wider text-chrome-300/50">Resumo</p>
+              <p class="mt-3 font-display text-3xl font-bold text-white">R$ 24<span class="text-lg text-chrome-300/60">.000</span></p>
+              <p class="text-[11px] text-gold-300">ou 12x de R$ 2.400</p>
+              <div class="mt-5 space-y-2 text-[11px] text-chrome-300/65">
+                <p class="flex items-center gap-2"><span class="h-3 w-3 text-gold-300" set:html={icon('check')}></span>Garantia incondicional de 7 dias</p>
+                <p class="flex items-center gap-2"><span class="h-3 w-3 text-gold-300" set:html={icon('check')}></span>Atendimento concierge dedicado</p>
+                <p class="flex items-center gap-2"><span class="h-3 w-3 text-gold-300" set:html={icon('check')}></span>Antifraude reforçado para high-ticket</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- VARIANT: internacional -->
+          <div data-view="intl" class="hidden grid gap-0 sm:grid-cols-[1.2fr_1fr]">
+            <div class="border-b border-suede-500/10 p-6 sm:border-b-0 sm:border-r">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2"><div class="h-7 w-7 rounded-lg bg-gradient-to-br from-titan-400 to-titan-600"></div><span class="text-sm font-semibold text-white">Your Brand</span></div>
+                <div class="flex items-center gap-1.5">
+                  <span class="rounded-md border border-suede-500/20 bg-white/[0.03] px-2 py-1 text-[10px] text-chrome-200">🇺🇸 EN</span>
+                  <span class="rounded-md border border-suede-500/20 bg-white/[0.03] px-2 py-1 text-[10px] text-chrome-200">$ USD</span>
+                </div>
+              </div>
+              <p class="mt-5 text-[11px] uppercase tracking-wider text-chrome-300/50">Payment method</p>
+              <div class="mt-3 flex gap-2">
+                <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/16 px-3 py-2 text-center text-xs font-semibold text-white">Card</span>
+                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Apple Pay</span>
+                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">PayPal</span>
+              </div>
+              <div class="mt-4 space-y-2.5">
+                <div class="h-9 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div>
+                <div class="flex gap-2.5"><div class="h-9 flex-1 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div><div class="h-9 w-16 rounded-lg border border-suede-500/15 bg-white/[0.02]"></div></div>
+              </div>
+              <button class="mt-4 w-full rounded-lg bg-gradient-to-b from-titan-400 to-titan-600 py-2.5 text-sm font-semibold text-white shadow-glow">Pay $390.00</button>
+            </div>
+            <div class="bg-white/[0.015] p-6">
+              <p class="text-[11px] uppercase tracking-wider text-chrome-300/50">Order</p>
+              <p class="mt-3 text-sm font-semibold text-white">7D Global Mentorship</p>
+              <div class="mt-4 flex items-end justify-between">
+                <span class="font-display text-2xl font-bold text-white">$390.00</span>
+                <span class="text-[11px] text-chrome-300/55">≈ R$ 2.090</span>
+              </div>
+              <div class="mt-4 flex flex-wrap gap-1.5">
+                {['USD', 'EUR', 'GBP', 'BRL', '+135'].map((c) => (
+                  <span class="rounded border border-suede-500/15 bg-white/[0.02] px-1.5 py-0.5 text-[9px] text-chrome-300/65">{c}</span>
+                ))}
+              </div>
+              <p class="mt-4 flex items-center gap-1.5 text-[10px] text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Liquidação para BRL · D0</p>
+            </div>
+          </div>
+        </div>
+        <p class="mt-3 text-[12px] text-chrome-300/50">Alterne acima: a estrutura do checkout muda de verdade — não é troca de cor.</p>
+      </div>
+
+      <!-- RIGHT: the 7 experiences grid + customization -->
+      <div class="reveal">
+        <div class="grid grid-cols-2 gap-3">
+          {experiences.map((e) => (
+            <div class="spotlight card group flex gap-3 p-4 transition-colors hover:border-titan-500/40">
+              <div class="mt-0.5 flex-none">
+                <!-- mini structural diagram -->
+                {e.shape === 'one' && <div class="flex h-9 w-7 flex-col gap-1 rounded border border-suede-500/25 p-1"><div class="h-1.5 rounded bg-titan-400/70"></div><div class="flex-1 rounded bg-white/5"></div></div>}
+                {e.shape === 'three' && <div class="flex h-9 w-7 items-center justify-between rounded border border-suede-500/25 px-1"><span class="h-1.5 w-1.5 rounded-full bg-titan-400"></span><span class="h-1.5 w-1.5 rounded-full bg-suede-400"></span><span class="h-1.5 w-1.5 rounded-full bg-white/20"></span></div>}
+                {e.shape === 'form' && <div class="flex h-9 w-7 flex-col gap-0.5 rounded border border-suede-500/25 p-1"><div class="h-1 rounded bg-white/15"></div><div class="h-1 rounded bg-white/15"></div><div class="mt-auto h-2 rounded bg-titan-400/70"></div></div>}
+                {e.shape === 'bump' && <div class="flex h-9 w-7 flex-col gap-1 rounded border border-suede-500/25 p-1"><div class="h-2 rounded border border-dashed border-titan-400/60"></div><div class="flex-1 rounded bg-white/5"></div></div>}
+                {e.shape === 'sub' && <div class="flex h-9 w-7 items-end gap-0.5 rounded border border-suede-500/25 p-1"><div class="h-3 flex-1 rounded-sm bg-white/10"></div><div class="h-5 flex-1 rounded-sm bg-titan-400/70"></div><div class="h-4 flex-1 rounded-sm bg-white/10"></div></div>}
+                {e.shape === 'intl' && <div class="flex h-9 w-7 items-center justify-center rounded border border-suede-500/25 text-titan-400"><span class="h-4 w-4" set:html={icon('globe')}></span></div>}
+                {e.shape === 'express' && <div class="flex h-9 w-7 items-center justify-center rounded border border-suede-500/25 text-titan-400"><span class="h-4 w-4" set:html={icon('bolt')}></span></div>}
+              </div>
+              <div>
+                <p class="font-display text-[13px] font-semibold text-white">{e.name}</p>
+                <p class="mt-0.5 text-[11px] leading-snug text-chrome-300/60">{e.note}</p>
+              </div>
+            </div>
+          ))}
+          <div class="card flex items-center justify-center bg-titan-600/[0.07] p-4 text-center">
+            <p class="text-[12px] font-semibold text-titan-300">+ todas 100%<br />personalizáveis</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- customization band -->
+    <div class="reveal mt-12 overflow-hidden rounded-3xl border border-suede-500/20 bg-gradient-to-br from-navy-800/60 to-ink/70 p-8 sm:p-10">
+      <div class="grid items-center gap-8 lg:grid-cols-[1fr_1.1fr]">
+        <div>
+          <span class="kicker">Personalização total</span>
+          <h3 class="h-display mt-5 text-2xl sm:text-3xl">Cada experiência vira <span class="text-titan-gradient">a cara da sua marca.</span></h3>
+          <p class="mt-3 max-w-md text-pretty leading-relaxed text-chrome-300/70">
+            O comprador vê a sua operação do começo ao fim — não a de uma plataforma. Mais percepção de marca, menos atrito, mais aprovação.
+          </p>
+          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-6">
+            Montar meu checkout na Korvex
+            <span class="h-4 w-4" set:html={icon('arrow')}></span>
+          </a>
+        </div>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {customizable.map((c) => (
+            <li class="flex items-start gap-3 rounded-xl border border-suede-500/12 bg-white/[0.02] p-3.5">
+              <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-titan-600/20 text-titan-400" set:html={icon('check')} />
+              <span class="text-[13px] leading-snug text-chrome-200/90">{c}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.ck-tab');
+  const views = document.querySelectorAll<HTMLElement>('[data-view]');
+  tabs.forEach((t) => {
+    t.addEventListener('click', () => {
+      const key = t.dataset.ck!;
+      tabs.forEach((x) => {
+        x.style.background = '';
+        x.classList.remove('text-white');
+        x.classList.add('text-chrome-300/70');
+      });
+      t.style.background = 'linear-gradient(180deg,#3e78c0,#2b5fa0)';
+      t.classList.add('text-white');
+      t.classList.remove('text-chrome-300/70');
+      views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
+    });
+  });
+</script>

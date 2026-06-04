@@ -1,0 +1,99 @@
+---
+import { icon } from '../lib/icons';
+
+// Pilares fundidos: autoridade (quem opera) + confiança (compliance/uptime/suporte)
+const pillars = [
+  {
+    icon: 'shield',
+    title: 'Compliance de instituição séria',
+    desc: 'KYC, AML e KYT em todas as contas e transações. Operação dentro da regra, do cadastro ao saque.',
+  },
+  {
+    icon: 'spark',
+    title: 'Antifraude + prevenção de chargeback',
+    desc: 'Múltiplas camadas protegem cada venda. Você vê a contestação antes de virar prejuízo.',
+  },
+  {
+    icon: 'clock',
+    title: '99,9% de uptime',
+    desc: 'A infraestrutura não cai no seu pico de lançamento. Quando a venda vem, a Korvex aguenta.',
+  },
+  {
+    icon: 'headset',
+    title: 'Suporte humano dedicado',
+    desc: 'Gerente de contas de verdade, sem robô e sem fila. Quem move volume fala com gente.',
+  },
+];
+
+const integrations = ['Rastreamento', 'E-mail marketing', 'Área de membros', 'Automação', 'CRMs', 'Dashboards'];
+---
+
+<section id="confianca" class="relative py-24 sm:py-32">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute left-1/2 top-1/2 h-[460px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-titan-600/[0.08] blur-[140px]"></div>
+  </div>
+
+  <div class="section">
+    <div class="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+      <!-- left: authority statement -->
+      <div class="reveal">
+        <span class="kicker">Por que a Korvex</span>
+        <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-5xl">
+          Feita por quem opera —<br />
+          <span class="text-chrome-gradient">não por quem só programa.</span>
+        </h2>
+        <p class="mt-5 max-w-lg text-pretty leading-relaxed text-chrome-300/75">
+          A Korvex nasceu dentro da operação de quem fatura alto: simples por fora, dura por dentro.
+          Mais de <strong class="text-white">R$129 milhões</strong> processados por
+          <strong class="text-white">+400 players ativos</strong> que cansaram de perder venda e
+          esperar dias pelo próprio dinheiro.
+        </p>
+
+        <div class="mt-9 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div>
+            <p class="font-display text-3xl font-bold text-white">R$129M<span class="text-suede-400">+</span></p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Processados</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-bold text-white">400<span class="text-suede-400">+</span></p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Players ativos</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-bold text-white">94%</p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Aprovação no cartão</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-bold text-white">99,9%</p>
+            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Uptime</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: trust pillars -->
+      <div class="grid gap-4 sm:grid-cols-2">
+        {pillars.map((p, i) => (
+          <div class="reveal spotlight card card-hover p-6" style={`transition-delay:${i * 60}ms`}>
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl border border-suede-500/25 bg-titan-600/10 p-2.5 text-titan-400">
+              <span class="block h-full w-full" set:html={icon(p.icon)} />
+            </div>
+            <h3 class="mt-4 font-display text-base font-semibold text-white">{p.title}</h3>
+            <p class="mt-2 text-[13px] leading-relaxed text-chrome-300/70">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- integrations strip -->
+    <div class="reveal mt-8 flex flex-col items-center justify-between gap-5 rounded-2xl border border-suede-500/15 bg-white/[0.02] p-6 sm:flex-row sm:p-7">
+      <div>
+        <p class="font-display text-sm font-semibold text-white">Conecta com o seu ecossistema</p>
+        <p class="mt-1 text-[13px] text-chrome-300/60">Não achou a integração que precisa? A gente desenvolve sob medida.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        {integrations.map((t) => (
+          <span class="rounded-full border border-suede-500/20 bg-white/[0.03] px-3.5 py-1.5 text-[12px] font-medium text-chrome-200">{t}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

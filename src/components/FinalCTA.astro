@@ -1,0 +1,41 @@
+---
+import { icon } from '../lib/icons';
+import { WHATSAPP_URL, waUrl, REGISTER_URL } from '../lib/site';
+---
+
+<section id="contato" class="relative py-20 sm:py-28">
+  <div class="section">
+    <div class="reveal beam relative overflow-hidden rounded-[28px] border border-suede-500/25 bg-gradient-to-br from-navy-800/80 via-navy-900/70 to-ink/85 p-10 text-center shadow-glow sm:p-16">
+      <div class="pointer-events-none absolute inset-0 -z-10">
+        <div class="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-titan-600/20 blur-[120px]"></div>
+        <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-30 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000,transparent_75%)]"></div>
+      </div>
+
+      <img src="/assets/logo-white.png" alt="Korvex" class="mx-auto h-8 w-auto opacity-90" />
+
+      <h2 class="h-display mx-auto mt-7 max-w-3xl text-4xl leading-[1.08] sm:text-[3.4rem]">
+        Sua operação merece uma<br class="hidden sm:block" />
+        infraestrutura <span class="text-titan-gradient">à altura dela.</span>
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/75">
+        Fale com o time, mande sua operação para análise e receba a condição desenhada para o seu volume.
+        Migração assistida, do começo ao fim — sem parar de vender.
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic !px-7 !py-3.5 text-[15px]">
+          Criar minha conta na Korvex
+          <span class="h-4 w-4" set:html={icon('arrow')}></span>
+        </a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost !px-7 !py-3.5 text-[15px]">
+          <span class="h-5 w-5" set:html={icon('headset')}></span>
+          Falar com um especialista
+        </a>
+      </div>
+
+      <p class="mt-6 text-[13px] text-chrome-300/50">
+        +400 players ativos • +R$129 milhões transacionados • Saque D0 no Pix
+      </p>
+    </div>
+  </div>
+</section>

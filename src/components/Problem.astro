@@ -1,0 +1,58 @@
+---
+import { icon } from '../lib/icons';
+
+const rows = [
+  { label: 'Saque no Pix', common: 'D+1 ou D+2', korvex: 'D0 — no mesmo dia' },
+  { label: 'Aprovação no cartão', common: 'Adquirente único', korvex: 'Multiadquirência (94%)' },
+  { label: 'Checkout', common: 'Um modelo fechado', korvex: '7 experiências + 100% personalizável' },
+  { label: 'Funil', common: 'Limitado ou externo', korvex: 'Arrasta e solta com upsell 1-click' },
+  { label: 'Área de membros', common: 'Básica ou terceirizada', korvex: 'Estilo Netflix + upsell interno' },
+  { label: 'Vendas internacionais', common: 'Raro ou inexistente', korvex: '135+ moedas, multi-idioma' },
+  { label: 'Taxa', common: 'Fixa e inflexível', korvex: '6,99% + R$1,99 — negociável' },
+  { label: 'Suporte', common: 'Ticket e robô', korvex: 'Gerente dedicado, humano' },
+];
+---
+
+<section id="problema" class="relative py-24 sm:py-32">
+  <div class="section">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <span class="kicker justify-center">O problema</span>
+      <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-5xl">
+        Operação séria <span class="text-titan-gradient">não cabe</span><br />
+        em gateway comum.
+      </h2>
+      <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-chrome-300/72">
+        Você fatura alto. Sua plataforma trata você como qualquer um.
+        Saque que demora, checkout engessado, suporte por ticket e taxa fixa.
+        A Korvex foi feita para resolver exatamente isso.
+      </p>
+    </div>
+
+    <div class="reveal mt-12 overflow-hidden rounded-3xl border border-suede-500/20 shadow-depth">
+      <!-- header -->
+      <div class="grid grid-cols-[1.1fr_1fr_1fr] bg-ink/60">
+        <div class="p-4 sm:p-5"></div>
+        <div class="border-l border-suede-500/15 p-4 text-center sm:p-5">
+          <p class="text-sm font-semibold text-chrome-300/60">Gateway comum</p>
+        </div>
+        <div class="relative border-l border-suede-500/15 bg-titan-600/10 p-4 text-center sm:p-5">
+          <img src="/assets/logo-white.png" alt="Korvex" class="mx-auto h-5 w-auto" />
+        </div>
+      </div>
+
+      {rows.map((r, i) => (
+        <div class={`grid grid-cols-[1.1fr_1fr_1fr] ${i % 2 ? 'bg-white/[0.015]' : 'bg-transparent'}`}>
+          <div class="flex items-center p-4 text-sm font-medium text-chrome-200 sm:p-5">{r.label}</div>
+          <div class="flex items-center justify-center gap-2 border-l border-suede-500/10 p-4 text-center text-[13px] text-chrome-300/55 sm:p-5">
+            <span class="h-4 w-4 flex-none text-chrome-300/30" set:html={icon('x')} />
+            <span>{r.common}</span>
+          </div>
+          <div class="flex items-center justify-center gap-2 border-l border-suede-500/10 bg-titan-600/[0.06] p-4 text-center text-[13px] font-semibold text-white sm:p-5">
+            <span class="h-4 w-4 flex-none text-titan-400" set:html={icon('check')} />
+            <span>{r.korvex}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

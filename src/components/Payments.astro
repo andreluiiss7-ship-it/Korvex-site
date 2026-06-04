@@ -1,0 +1,68 @@
+---
+import { icon } from '../lib/icons';
+import { waUrl } from '../lib/site';
+
+const schedules = [
+  { tag: 'Pix', title: 'Saque D0', desc: 'Solicitou, caiu. Receba no mesmo dia, sem burocracia e com fluxo de caixa para reinvestir sem medo.', highlight: true },
+  { tag: 'Cartão', title: 'Recebimento D30', desc: 'Padrão de mercado para vendas no crédito, com previsibilidade total do seu caixa.' },
+  { tag: 'Antecipação', title: 'D14 ou D2', desc: 'Precisa do dinheiro antes? Antecipe o recebimento do cartão mediante taxa sob consulta.' },
+];
+---
+
+<section id="pagamentos" class="relative py-20 sm:py-28">
+  <div class="section">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <span class="kicker justify-center">Pagamentos &amp; saque</span>
+      <h2 class="h-display mt-6 text-4xl leading-[1.06] sm:text-5xl">
+        O seu dinheiro <span class="text-titan-gradient">na velocidade do seu caixa.</span>
+      </h2>
+      <p class="mt-5 text-pretty text-lg leading-relaxed text-chrome-300/70">
+        Da liquidez imediata no Pix à antecipação do cartão — você decide quando recebe.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-4 md:grid-cols-3">
+      {
+        schedules.map((s) => (
+          <div class={`reveal card card-hover spotlight p-7 ${s.highlight ? 'beam !border-titan-500/40' : ''}`}>
+            {s.highlight && (
+              <div class="absolute right-5 top-5 rounded-full bg-titan-600/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-titan-400">Mais rápido</div>
+            )}
+            <span class="inline-flex rounded-full border border-suede-500/25 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-chrome-300/70">{s.tag}</span>
+            <p class="mt-4 font-display text-2xl font-bold text-white">{s.title}</p>
+            <p class="mt-2 text-sm leading-relaxed text-chrome-300/70">{s.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- pricing band -->
+    <div class="reveal mt-6 overflow-hidden rounded-3xl border border-suede-500/20 bg-gradient-to-br from-navy-800/70 to-ink/70 shadow-depth">
+      <div class="grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-[1.2fr_1fr]">
+        <div>
+          <span class="eyebrow">Taxa padrão</span>
+          <div class="mt-5 flex items-end gap-3">
+            <p class="font-display text-5xl font-bold text-white sm:text-6xl">6,99<span class="text-3xl">%</span></p>
+            <p class="pb-2 font-display text-2xl font-semibold text-suede-300">+ R$1,99</p>
+          </div>
+          <p class="mt-2 text-sm text-chrome-300/60">por venda aprovada</p>
+          <p class="mt-5 max-w-md text-pretty leading-relaxed text-chrome-200/85">
+            Transparente, sem letra miúda. E o melhor: conforme o seu faturamento cresce,
+            <strong class="text-white"> sua taxa pode ser negociada</strong> e sua operação ganha prioridade.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-suede-500/20 bg-ink/50 p-6">
+          <p class="text-[12px] font-semibold uppercase tracking-wider text-chrome-300/55">Já fatura alto?</p>
+          <p class="mt-2 text-pretty leading-relaxed text-chrome-200/85">
+            Sellers com maior volume têm condição personalizada de taxa, antecipação e atendimento.
+          </p>
+          <a href={waUrl('Olá! Quero negociar uma taxa personalizada na Korvex de acordo com meu faturamento.')} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-5 w-full">
+            Negociar minha taxa
+            <span class="h-4 w-4" set:html={icon('spark')}></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

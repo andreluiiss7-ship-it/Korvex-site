@@ -1,0 +1,43 @@
+---
+const faqs = [
+  { q: 'Qual é o prazo para recebimento?', a: 'Pix: D0 (mesmo dia). Cartão de crédito: D30 padrão, com antecipação opcional para D14 ou D2 mediante taxa sob consulta. Você decide a velocidade do seu caixa.' },
+  { q: 'Qual é a taxa da Korvex?', a: 'A taxa padrão é 6,99% + R$1,99 fixo por venda aprovada. Conforme o seu faturamento cresce, essa taxa pode ser negociada e sua operação ganha prioridade no atendimento.' },
+  { q: 'Como funciona o saque D0 no Pix?', a: 'Vendas no Pix ficam disponíveis para saque no mesmo dia. Solicitou, caiu — sem burocracia, com fluxo de caixa ágil para reinvestir.' },
+  { q: 'A Korvex aceita vendas internacionais?', a: 'Sim. A Korvex processa em mais de 135 moedas, com checkout que se adapta automaticamente ao idioma do comprador e liquidação para o seu caixa no Brasil.' },
+  { q: 'Os 7 checkouts são só variações de cor?', a: 'Não. São 7 experiências de compra estruturalmente diferentes — de etapa única a 3 etapas, order form, assinatura, internacional e mais. Cada uma é 100% personalizável (cores, fontes, campos, identidade e domínio próprio), para você usar o checkout certo em cada produto e funil.' },
+  { q: 'A área de membros está inclusa?', a: 'Sim. Área de membros estilo Netflix, com a sua identidade, domínio próprio e a possibilidade de inserir upsells dentro da própria área para aumentar o ticket.' },
+  { q: 'Quais recursos de funil a Korvex oferece?', a: 'Funil arrasta e solta com order bump, upsell one-click e downsell. Aumente o ticket médio sem o cliente digitar o cartão novamente.' },
+  { q: 'A plataforma é segura?', a: 'Operamos com políticas de KYC, AML e KYT, criptografia avançada e antifraude com múltiplas camadas para proteger transações e dados.' },
+  { q: 'Como funciona a migração para a Korvex?', a: 'Fale com o nosso time pelo WhatsApp. Fazemos a análise da sua operação, definimos a melhor condição para o seu volume e conduzimos a migração de forma assistida.' },
+];
+---
+
+<section id="faq" class="relative py-20 sm:py-28">
+  <div class="section grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+    <div class="reveal">
+      <span class="kicker">Dúvidas frequentes</span>
+      <h2 class="h-display mt-5 text-3xl sm:text-[2.4rem] leading-[1.1]">
+        Tudo o que você precisa saber.
+      </h2>
+      <p class="mt-4 max-w-sm text-pretty leading-relaxed text-chrome-300/70">
+        Ficou alguma pergunta? Fale direto com o nosso time — atendimento humano, sem robô.
+      </p>
+    </div>
+
+    <div class="reveal space-y-3">
+      {
+        faqs.map((f) => (
+          <details class="group card overflow-hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5">
+              <span class="font-display text-[15px] font-semibold text-white">{f.q}</span>
+              <span class="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-suede-500/25 text-titan-400 transition-transform duration-300 group-open:rotate-45">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              </span>
+            </summary>
+            <div class="px-5 pb-5 text-sm leading-relaxed text-chrome-300/75">{f.a}</div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

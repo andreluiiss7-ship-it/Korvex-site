@@ -1,0 +1,107 @@
+---
+import { icon } from '../lib/icons';
+
+const palette = ['Página', 'Checkout', 'Order Bump', 'Upsell', 'Downsell', 'Membros'];
+
+// nós do fluxo principal
+const flow = [
+  { icon: 'card', title: 'Checkout', sub: 'R$ 1.997', tone: 'titan', metric: '8,2% conv.' },
+  { icon: 'layers', title: 'Order Bump', sub: '+ R$ 97', tone: 'suede', metric: '38% aceite' },
+  { icon: 'cursor', title: 'Upsell 1-clique', sub: '+ R$ 497', tone: 'titan', metric: '24% aceite' },
+  { icon: 'play', title: 'Área de Membros', sub: 'Acesso liberado', tone: 'gold', metric: 'entrega' },
+];
+---
+
+<section id="funil" class="relative py-24 sm:py-32">
+  <div class="section grid items-center gap-14 lg:grid-cols-[0.82fr_1.18fr]">
+    <!-- copy -->
+    <div class="reveal">
+      <span class="kicker">Funil arrasta e solta</span>
+      <h2 class="h-display mt-6 text-4xl leading-[1.06] sm:text-5xl">
+        O ticket médio sobe <span class="text-titan-gradient">a cada bloco que você solta.</span>
+      </h2>
+      <p class="mt-5 max-w-lg text-pretty leading-relaxed text-chrome-300/75">
+        Um construtor visual de verdade: arraste checkout, order bump, upsell, downsell e área de membros,
+        conecte as etapas e veja a conversão de cada nó em tempo real. Você desenha a jornada — a Korvex executa.
+      </p>
+      <div class="mt-8 grid grid-cols-3 gap-3">
+        <div class="card p-4">
+          <p class="font-display text-2xl font-bold text-white">R$ 2.4k</p>
+          <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Ticket médio</p>
+        </div>
+        <div class="card p-4">
+          <p class="font-display text-2xl font-bold text-white">+62%</p>
+          <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Receita/venda</p>
+        </div>
+        <div class="card p-4">
+          <p class="font-display text-2xl font-bold text-white">3 min</p>
+          <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Pra testar</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- builder canvas -->
+    <div class="reveal">
+      <div data-tilt-zone class="browser">
+        <div class="browser-bar">
+          <span class="dot bg-[#ff5f57]/80"></span>
+          <span class="dot bg-[#febc2e]/80"></span>
+          <span class="dot bg-[#28c840]/80"></span>
+          <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">Construtor de funil · 7D Global</span>
+          <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Salvo</span>
+        </div>
+
+        <!-- palette toolbar -->
+        <div class="flex flex-wrap items-center gap-1.5 border-b border-suede-500/10 px-4 py-2.5">
+          {palette.map((p, i) => (
+            <span class={`rounded-md border px-2.5 py-1 text-[10px] font-medium ${i === 1 ? 'border-titan-500/50 bg-titan-600/15 text-white' : 'border-suede-500/15 bg-white/[0.02] text-chrome-300/65'}`}>{p}</span>
+          ))}
+          <span class="ml-auto hidden text-[10px] text-chrome-300/45 sm:inline">100%</span>
+        </div>
+
+        <!-- canvas -->
+        <div class="relative bg-[radial-gradient(rgba(126,156,189,0.12)_1px,transparent_1px)] [background-size:20px_20px] p-5 sm:p-6">
+          <!-- main flow -->
+          <div class="flex items-stretch gap-2.5 overflow-x-auto pb-2 sm:gap-3">
+            {flow.map((n, i) => (
+              <>
+                <div data-tilt="4" class={`tilt relative w-[124px] flex-none rounded-xl border p-3 backdrop-blur-sm sm:w-[140px] ${
+                  n.tone === 'titan' ? 'border-titan-500/45 bg-titan-600/[0.12]' : n.tone === 'gold' ? 'border-gold-600/40 bg-gold-600/[0.08]' : 'border-suede-500/30 bg-suede-600/[0.14]'
+                }`}>
+                  <div class={`flex h-8 w-8 items-center justify-center rounded-lg p-1.5 ${n.tone === 'gold' ? 'bg-gold-600/15 text-gold-300' : 'bg-white/5 text-titan-300'}`} set:html={icon(n.icon)}></div>
+                  <p class="mt-2.5 text-[12px] font-semibold text-white">{n.title}</p>
+                  <p class="text-[10px] text-chrome-300/60">{n.sub}</p>
+                  <div class="mt-2 inline-flex rounded bg-black/30 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-400">{n.metric}</div>
+                  <!-- connector port -->
+                  {i < flow.length - 1 && <span class="absolute -right-1.5 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-ink bg-titan-400"></span>}
+                </div>
+                {i < flow.length - 1 && (
+                  <div class="flex flex-none flex-col items-center justify-center">
+                    <span class="text-[9px] font-bold text-titan-300">{['78%', '34%', '100%'][i]}</span>
+                    <span class="h-4 w-4 text-suede-400/70" set:html={icon('arrow')}></span>
+                  </div>
+                )}
+              </>
+            ))}
+          </div>
+
+          <!-- downsell branch -->
+          <div class="mt-3 flex items-center gap-3 pl-[150px] sm:pl-[176px]">
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-chrome-300/45">se recusar ↘</span>
+            <div class="w-[150px] flex-none rounded-xl border border-dashed border-suede-500/35 bg-white/[0.02] p-3">
+              <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/5 p-1.5 text-suede-300" set:html={icon('repeat')}></div>
+              <p class="mt-2 text-[12px] font-semibold text-white">Downsell</p>
+              <p class="text-[10px] text-chrome-300/60">+ R$ 197 · parcelado</p>
+            </div>
+          </div>
+
+          <!-- floating drag hint -->
+          <div class="mt-4 inline-flex items-center gap-2 rounded-xl border border-dashed border-titan-500/50 bg-ink/70 px-3.5 py-2.5 text-[12px] text-chrome-200 shadow-glow">
+            <span class="h-4 w-4 text-titan-400" set:html={icon('cursor')}></span>
+            Arraste um bloco para o canvas
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

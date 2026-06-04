@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Korvex — Infraestrutura de pagamentos para infoprodutores que escalam',
+  description = 'Gateway completo para infoprodutores sérios: saque D0 no Pix, checkout 100% personalizável, funil com upsell one-click, área de membros estilo Netflix e vendas internacionais. Mais de R$129 milhões transacionados.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/assets/icon.png" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#050B14" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/logo-metal.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="grain">
+    <slot />
+
+    <!-- Reveal on scroll -->
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      const mount = () =>
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      if (document.readyState !== 'loading') mount();
+      else document.addEventListener('DOMContentLoaded', mount);
+
+      // Count-up for [data-count]
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      const cio = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target as HTMLElement;
+            const target = parseFloat(el.dataset.count || '0');
+            const dec = parseInt(el.dataset.decimals || '0');
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const dur = 1600;
+            const start = performance.now();
+            const step = (now: number) => {
+              const p = Math.min((now - start) / dur, 1);
+              const eased = 1 - Math.pow(1 - p, 3);
+              const val = target * eased;
+              el.textContent =
+                prefix +
+                val.toLocaleString('pt-BR', {
+                  minimumFractionDigits: dec,
+                  maximumFractionDigits: dec,
+                }) +
+                suffix;
+              if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+            cio.unobserve(el);
+          });
+        },
+        { threshold: 0.5 }
+      );
+      counters.forEach((el) => cio.observe(el));
+
+      // ---- Spotlight follow (cards with .spotlight) ----
+      document.querySelectorAll<HTMLElement>('.spotlight').forEach((el) => {
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+          el.style.setProperty('--my', `${e.clientY - r.top}px`);
+        });
+      });
+
+      // ---- 3D tilt (elements with .tilt[data-tilt]) ----
+      const fine = window.matchMedia('(pointer:fine)').matches;
+      if (fine) {
+        document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+          const max = parseFloat(el.dataset.tilt || '6');
+          const parent = (el.closest('[data-tilt-zone]') as HTMLElement) || el;
+          parent.addEventListener('pointermove', (e) => {
+            const r = parent.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            el.style.setProperty('--rx', `${px * max}deg`);
+            el.style.setProperty('--ry', `${-py * max}deg`);
+          });
+          parent.addEventListener('pointerleave', () => {
+            el.style.setProperty('--rx', '0deg');
+            el.style.setProperty('--ry', '0deg');
+          });
+        });
+
+        // ---- Magnetic buttons (.magnetic) ----
+        document.querySelectorAll<HTMLElement>('.magnetic').forEach((el) => {
+          el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            const x = (e.clientX - r.left - r.width / 2) * 0.25;
+            const y = (e.clientY - r.top - r.height / 2) * 0.35;
+            el.style.transform = `translate(${x}px, ${y}px)`;
+          });
+          el.addEventListener('pointerleave', () => {
+            el.style.transform = 'translate(0,0)';
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
