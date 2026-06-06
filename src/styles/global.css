@@ -111,10 +111,12 @@ body {
   line-height: 1.02;
 }
 
-/* Editorial serif accent (used in 4 pivot moments only: Hero, Problem, Awards, FinalCTA) */
+/* Editorial serif accent — italic serifs precisam de mais altura por causa de descenders (g, j, q, y) */
 .font-editorial {
   font-feature-settings: 'liga' 1, 'kern' 1;
   letter-spacing: -0.015em;
+  line-height: 1.15;
+  padding-bottom: 0.08em;
 }
 
 /* Unified mono micro-label (replaces 23+ inline font-family declarations) */
