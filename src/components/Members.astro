@@ -55,7 +55,7 @@ import { REGISTER_URL } from '../lib/site';
       </div>
 
       <!-- Floating accent 1: "1.247 alunos online" (top-right) -->
-      <div class="absolute hidden lg:block animate-floaty" style="top:-18px; right:-50px">
+      <div class="absolute z-20 animate-floaty top-2 right-2 lg:top-[-18px] lg:right-[-50px]">
         <div class="rounded-2xl border border-emerald-500/30 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
           <div class="flex items-center gap-2.5">
             <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400" set:html={icon('users')}></span>
@@ -68,7 +68,7 @@ import { REGISTER_URL } from '../lib/site';
       </div>
 
       <!-- Floating accent 2: "Upsell vendido +R$497" (bottom-left) -->
-      <div class="absolute hidden lg:block animate-floaty" style="bottom:-12px; left:-50px; animation-delay:1.2s">
+      <div class="absolute z-20 animate-floaty -bottom-3 left-2 lg:bottom-[-12px] lg:left-[-50px]" style="animation-delay:1.2s">
         <div class="rounded-2xl border border-gold-600/35 bg-ink/95 px-3.5 py-2.5 shadow-gold backdrop-blur-xl">
           <div class="flex items-center gap-2.5">
             <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
