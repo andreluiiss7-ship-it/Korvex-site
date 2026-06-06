@@ -45,9 +45,8 @@ const stats = [
         </dl>
       </div>
 
-      <!-- RIGHT: editorial portrait with refined framing -->
-      <div class="relative min-h-[560px] overflow-hidden lg:min-h-0">
-        <!-- main image — object-position diferente por breakpoint pra não cortar os rostos -->
+      <!-- RIGHT: editorial portrait — aspect-square no mobile (foto inteira sem cortar), cover responsivo no desktop -->
+      <div class="founders-frame relative overflow-hidden">
         <img
           src="/assets/founders.jpg"
           alt="André & Vinícius, fundadores Korvex"
@@ -58,20 +57,12 @@ const stats = [
 
         <!-- left-edge fade into the card so the photo flows from the copy panel -->
         <div class="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-ink/95 via-ink/40 to-transparent lg:from-ink/85"></div>
-        <!-- bottom gradient — só ali, fora dos rostos -->
+        <!-- bottom gradient -->
         <div class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent"></div>
         <!-- subtle blue tint overlay -->
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-titan-600/10 via-transparent to-transparent"></div>
 
-        <!-- "year" tag, top-right -->
-        <div class="absolute right-5 top-5 z-10">
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/45 px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.16em] text-chrome-200 backdrop-blur">
-            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.55)]"></span>
-            Foto · 2026
-          </span>
-        </div>
-
-        <!-- caption bottom-left, fora dos rostos -->
+        <!-- caption bottom-left -->
         <div class="absolute inset-x-6 bottom-6 z-10 flex items-end justify-between gap-3">
           <div>
             <p class="font-display text-[15px] font-semibold leading-tight text-white">André &amp; Vinícius</p>
@@ -84,17 +75,18 @@ const stats = [
 </section>
 
 <style>
-  /* Mobile: object-contain mostra a foto inteira; Desktop: cover com framing 25% */
-  .founders-photo {
-    object-fit: contain;
-    object-position: center top;
-    background: linear-gradient(180deg, var(--ink, #07101D) 0%, transparent 30%, transparent 70%, var(--ink, #07101D) 100%);
+  /* Frame responsivo: square mobile, 4/3 tablet, fill no desktop */
+  .founders-frame {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+    .founders-frame { aspect-ratio: 4 / 3; }
   }
   @media (min-width: 1024px) {
-    .founders-photo {
-      object-fit: cover;
-      object-position: center 25%;
-      background: none;
-    }
+    .founders-frame { aspect-ratio: auto; height: 100%; min-height: 520px; }
   }
+  /* Foto centralizada — object-position ajustado pra centrar nos fundadores */
+  .founders-photo { object-position: center 50%; }
+  @media (min-width: 1024px) { .founders-photo { object-position: center 35%; } }
 </style>

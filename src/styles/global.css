@@ -299,8 +299,33 @@ section[id]::before {
   opacity: 0;
   transition: opacity 1.2s ease;
   pointer-events: none;
+  z-index: 1;
 }
 section[id].in-view::before { opacity: 1; }
+
+/* ===== Scroll-driven section transitions (Chrome 115+, Safari 17+) ===== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    main > section[id]:not(#topo) > .section {
+      animation: section-fade-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+    main > section[id]:not(#topo) {
+      animation: section-shift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+  @keyframes section-fade-in {
+    from { opacity: 0.2; transform: translateY(28px) scale(0.985); filter: blur(4px); }
+    to   { opacity: 1;   transform: none; filter: blur(0); }
+  }
+  @keyframes section-shift {
+    from { background-color: transparent; }
+    to   { background-color: transparent; }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
