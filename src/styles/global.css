@@ -257,16 +257,50 @@ body {
 }
 .dot { @apply h-2.5 w-2.5 rounded-full; }
 
-/* ---- Reveal on scroll ---- */
+/* ---- Reveal on scroll (premium easing 21st.dev-style) ---- */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(36px) scale(0.985);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s ease-out;
+  will-change: opacity, transform, filter;
 }
 .reveal.in {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
+
+/* Variant: reveal-up (mais sutil, sem blur) — pra elementos pequenos */
+.reveal-up { transform: translateY(20px); filter: none; }
+
+/* Variant: reveal-scale (entrada com zoom suave) — pra cards e mockups */
+.reveal-scale { transform: translateY(16px) scale(0.96); }
+
+/* Variant: reveal-slide-left / right */
+.reveal-slide-left  { transform: translateX(-40px); filter: none; }
+.reveal-slide-right { transform: translateX(40px);  filter: none; }
+.reveal-slide-left.in,
+.reveal-slide-right.in { transform: none; }
+
+/* Section enter — gradient sweep no border-top da próxima section */
+section[id] {
+  position: relative;
+}
+section[id]::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(111,160,255,0.18), transparent);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+section[id].in-view::before { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
@@ -949,6 +983,18 @@ body {
 .tier.blue   .tier-amount { color: var(--blue-2); }
 .tier.steel  .tier-amount { color: #D8DEE8; }
 .tier.gold   .tier-amount { color: var(--gold-2); }
+
+/* Mobile: tiers compactos (10K, 100K, 500K) — só o 1MM finale fica grande */
+@media (max-width: 640px) {
+  .tier-compact { border-radius: 14px; }
+  .tier-compact .tier-img { aspect-ratio: 1 / 1; }
+  .tier-compact .tier-img.bracelet { padding: 10px; }
+  .tier-compact .tier-img.bracelet img { max-height: 80%; }
+  .tier-compact .tier-body { padding: 8px 8px 10px; gap: 2px; }
+  .tier-compact .tier-lvl { font-size: 8.5px; letter-spacing: 0.14em; }
+  .tier-compact .tier-amount { font-size: 12px; letter-spacing: -0.02em; margin-top: 1px; }
+  .tier-compact .tier-name { font-size: 10px; margin-top: 0; line-height: 1.2; }
+}
 .tier.gold {
   border-color: rgba(201,163,94,0.18);
   background:

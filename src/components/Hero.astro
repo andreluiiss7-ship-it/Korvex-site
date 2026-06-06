@@ -91,7 +91,7 @@ const stats = [
 
 
     <!-- Pills -->
-    <div class="reveal mt-8 flex flex-wrap justify-center gap-2">
+    <div class="reveal mt-8 mx-auto flex max-w-md flex-wrap justify-center gap-2 sm:max-w-none">
       {pills.map((p) => (
         <span class="inline-flex items-center gap-2 rounded-full border border-suede-500/20 bg-white/[0.025] px-3 py-1.5 text-[12.5px] font-medium text-chrome-200">
           <span class="inline-block h-1.5 w-1.5 rounded-full bg-[--blue] shadow-[0_0_8px_var(--blue-glow)]"></span>
@@ -100,12 +100,12 @@ const stats = [
       ))}
     </div>
 
-    <!-- Inline stats — micro labels, very compact -->
-    <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-suede-500/10 pt-5 sm:mt-12 sm:gap-x-7 sm:pt-6">
+    <!-- Inline stats — grid 2x2 no mobile (balanceado), flex no desktop -->
+    <div class="reveal mt-10 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-suede-500/10 pt-5 sm:mt-12 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-7 sm:pt-6">
       {stats.map((s, i) => (
         <>
-          {i > 0 && <span class="h-4 w-px bg-suede-500/15"></span>}
-          <div class="inline-flex items-baseline gap-1.5">
+          {i > 0 && <span class="hidden h-4 w-px bg-suede-500/15 sm:block"></span>}
+          <div class="inline-flex items-baseline justify-center gap-1.5">
             <span class="font-display text-base font-bold leading-none text-white sm:text-lg" style="font-feature-settings:'tnum';">{s.big}</span>
             <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-chrome-300/55 sm:text-[10px]">{s.label}</span>
           </div>

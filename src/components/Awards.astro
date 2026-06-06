@@ -32,10 +32,10 @@ const tiers = [
       </p>
     </div>
 
-    <!-- TIER GRID — 3 cards (1MM é o finale abaixo) -->
-    <div class="reveal mt-14 grid gap-4 sm:grid-cols-3 lg:gap-5">
+    <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
+    <div class="reveal mt-14 grid grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
       {tiers.map((t, i) => (
-        <div class={`tier ${t.variant}`} style={`transition-delay:${i * 80}ms`}>
+        <div class={`tier tier-compact ${t.variant}`} style={`transition-delay:${i * 80}ms`}>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
             <img src={t.img} alt={t.name} loading="lazy" />
           </div>

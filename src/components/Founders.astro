@@ -46,13 +46,15 @@ const stats = [
       </div>
 
       <!-- RIGHT: editorial portrait with refined framing -->
-      <div class="relative min-h-[480px] overflow-hidden lg:min-h-0">
-        <!-- main image -->
-        <div
-          class="absolute inset-0 bg-cover transition-transform duration-700"
-          style="background-image: url('/assets/founders.jpg'); background-position: center 25%;"
+      <div class="relative min-h-[560px] overflow-hidden lg:min-h-0">
+        <!-- main image — object-position diferente por breakpoint pra não cortar os rostos -->
+        <img
+          src="/assets/founders.jpg"
+          alt="André & Vinícius, fundadores Korvex"
+          class="founders-photo absolute inset-0 h-full w-full object-cover transition-transform duration-700"
+          loading="lazy"
           data-tilt-zone
-        ></div>
+        />
 
         <!-- left-edge fade into the card so the photo flows from the copy panel -->
         <div class="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-ink/95 via-ink/40 to-transparent lg:from-ink/85"></div>
@@ -80,3 +82,19 @@ const stats = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Mobile: object-contain mostra a foto inteira; Desktop: cover com framing 25% */
+  .founders-photo {
+    object-fit: contain;
+    object-position: center top;
+    background: linear-gradient(180deg, var(--ink, #07101D) 0%, transparent 30%, transparent 70%, var(--ink, #07101D) 100%);
+  }
+  @media (min-width: 1024px) {
+    .founders-photo {
+      object-fit: cover;
+      object-position: center 25%;
+      background: none;
+    }
+  }
+</style>

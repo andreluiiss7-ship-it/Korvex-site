@@ -65,6 +65,11 @@ const {
         },
         { threshold: 0.12 }
       );
+      // Section sweep border on enter
+      const sectionIo = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.target.classList.toggle('in-view', e.isIntersecting)),
+        { threshold: 0.05 }
+      );
       const mount = () => {
         // auto-stagger siblings inside the same parent (.reveal-stagger)
         document.querySelectorAll<HTMLElement>('.reveal-stagger').forEach((parent) => {
@@ -74,6 +79,7 @@ const {
           });
         });
         document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+        document.querySelectorAll('section[id]').forEach((s) => sectionIo.observe(s));
       };
       if (document.readyState !== 'loading') mount();
       else document.addEventListener('DOMContentLoaded', mount);
