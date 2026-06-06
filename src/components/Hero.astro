@@ -1,132 +1,159 @@
 ---
-import { WHATSAPP_URL, waUrl, REGISTER_URL } from '../lib/site';
+import { waUrl, REGISTER_URL } from '../lib/site';
 import { icon } from '../lib/icons';
 
 const pills = [
-  { icon: 'bolt', label: 'Saque D0 no Pix' },
-  { icon: 'globe', label: '135+ moedas' },
-  { icon: 'cursor', label: 'Upsell one-click' },
-  { icon: 'paint', label: 'Checkout sob medida' },
+  { label: 'Saque D0 no Pix' },
+  { label: 'Saque em cripto' },
+  { label: '135+ moedas' },
+  { label: 'Upsell one-click' },
+  { label: 'Checkout sob medida' },
 ];
 
-const feed = [
-  { m: 'Pix', v: 'R$ 1.997,00', t: 'aprovado · agora' },
-  { m: 'Cartão', v: 'USD 1.200,00', t: 'internacional' },
-  { m: 'Pix', v: 'R$ 6.420,00', t: 'sacado D0' },
+const stats = [
+  { big: 'R$ 129M+', label: 'transacionados' },
+  { big: '400+',     label: 'players ativos' },
+  { big: '94%',      label: 'aprovação no cartão' },
+  { big: '99,9%',    label: 'uptime no pico' },
 ];
 ---
 
-<section class="relative overflow-hidden pt-36 pb-24 sm:pt-44 sm:pb-32">
+<section id="topo" class="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20">
   <!-- atmosphere -->
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute inset-0 bg-grid-faint [background-size:56px_56px] opacity-50 [mask-image:radial-gradient(ellipse_72%_55%_at_50%_0%,#000_25%,transparent_72%)]"></div>
-    <div class="absolute left-1/2 top-[-14%] h-[560px] w-[920px] -translate-x-1/2 rounded-full bg-titan-600/20 blur-[130px]"></div>
-    <div class="absolute right-[-8%] top-[34%] h-[380px] w-[380px] rounded-full bg-gold-600/[0.06] blur-[120px]"></div>
+    <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-50 [mask-image:radial-gradient(ellipse_72%_55%_at_50%_30%,#000_25%,transparent_72%)]"></div>
+    <div data-parallax="0.12" class="ambient-drift absolute right-[10%] top-[-10%] h-[480px] w-[680px] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.20),transparent_60%)] blur-2xl"></div>
+    <div data-parallax="0.08" class="absolute left-[-5%] bottom-[10%] h-[360px] w-[480px] rounded-full bg-[radial-gradient(circle,rgba(201,163,94,0.07),transparent_60%)] blur-3xl"></div>
+    <!-- subtle network constellation behind the centered copy -->
+    <svg class="absolute left-1/2 top-[8%] -translate-x-1/2 hidden h-[560px] w-[1100px] opacity-[0.18] lg:block" viewBox="0 0 1100 560" fill="none" aria-hidden="true">
+      <g stroke="rgba(111,160,255,0.5)" stroke-width="0.5">
+        <line x1="180" y1="120" x2="360" y2="180"/>
+        <line x1="360" y1="180" x2="540" y2="100"/>
+        <line x1="540" y1="100" x2="720" y2="180"/>
+        <line x1="720" y1="180" x2="900" y2="120"/>
+        <line x1="180" y1="120" x2="280" y2="320"/>
+        <line x1="360" y1="180" x2="540" y2="380"/>
+        <line x1="540" y1="100" x2="540" y2="380"/>
+        <line x1="720" y1="180" x2="820" y2="380"/>
+        <line x1="900" y1="120" x2="820" y2="380"/>
+      </g>
+      <g fill="#6FA0FF">
+        <circle cx="180" cy="120" r="2"><animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="360" cy="180" r="2"><animate attributeName="opacity" values="1;0.3;1" dur="3.4s" repeatCount="indefinite"/></circle>
+        <circle cx="540" cy="100" r="2.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite"/></circle>
+        <circle cx="720" cy="180" r="2"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.2s" repeatCount="indefinite"/></circle>
+        <circle cx="900" cy="120" r="2"><animate attributeName="opacity" values="1;0.4;1" dur="2.8s" repeatCount="indefinite"/></circle>
+        <circle cx="280" cy="320" r="2"><animate attributeName="opacity" values="0.6;1;0.6" dur="3.2s" repeatCount="indefinite"/></circle>
+        <circle cx="540" cy="380" r="2"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="3.6s" repeatCount="indefinite"/></circle>
+        <circle cx="820" cy="380" r="2"><animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.4s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
   </div>
 
-  <div data-tilt-zone class="section grid items-center gap-14 lg:grid-cols-[1.04fr_0.96fr]">
-    <!-- LEFT -->
-    <div>
-      <div class="reveal inline-flex items-center gap-2.5 rounded-full border border-suede-500/20 bg-white/[0.03] py-1.5 pl-1.5 pr-4">
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-titan-600/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-titan-300">
-          <span class="h-1.5 w-1.5 rounded-full bg-titan-400 shadow-[0_0_10px_2px_rgba(111,163,224,0.9)]"></span> Korvex
-        </span>
-        <span class="text-[12px] font-medium text-chrome-300/75">Gateway para operações de alto faturamento</span>
-      </div>
-
-      <h1 class="reveal mt-7 font-display text-[2.7rem] font-bold leading-[1.02] tracking-tight text-white sm:text-[4.1rem]">
-        O gateway que opera<br class="hidden sm:block" /> no <span class="text-titan-gradient">seu nível.</span>
-      </h1>
-
-      <p class="reveal mt-6 max-w-xl text-pretty text-[1.08rem] leading-relaxed text-chrome-300/80">
-        Para infoprodutores, experts, lançadores e coprodutores que já faturam: saque no mesmo dia,
-        checkout que converte, funil com upsell e venda em 135+ moedas. A infraestrutura de quem não pode parar.
-      </p>
-
-      <div class="reveal mt-9 flex flex-wrap items-center gap-3">
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic !px-7 !py-3.5">
-          Criar minha conta na Korvex
-          <span class="h-4 w-4" set:html={icon('arrow')}></span>
-        </a>
-        <a href={waUrl('Olá! Quero solicitar uma análise da minha operação para a Korvex.')} target="_blank" rel="noopener" class="btn btn-ghost !px-6 !py-3.5">
-          Falar com um especialista
-        </a>
-      </div>
-
-      <div class="reveal mt-9 flex flex-wrap gap-2.5">
-        {pills.map((p) => (
-          <span class="inline-flex items-center gap-2 rounded-full border border-suede-500/20 bg-white/[0.03] px-3.5 py-2 text-[13px] font-medium text-chrome-200">
-            <span class="inline-block h-4 w-4 text-titan-400" set:html={icon(p.icon)} />
-            {p.label}
-          </span>
-        ))}
-      </div>
-
-      <!-- inline stat bar (editorial, não 4 cards iguais) -->
-      <div class="reveal mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-suede-500/12 pt-7">
-        <div class="flex items-baseline gap-2">
-          <span class="font-display text-2xl font-bold text-white">R$129M<span class="text-suede-400">+</span></span>
-          <span class="text-[12px] text-chrome-300/55">transacionados</span>
-        </div>
-        <div class="h-8 w-px bg-suede-500/15"></div>
-        <div class="flex items-baseline gap-2">
-          <span class="font-display text-2xl font-bold text-white">400<span class="text-suede-400">+</span></span>
-          <span class="text-[12px] text-chrome-300/55">players ativos</span>
-        </div>
-        <div class="h-8 w-px bg-suede-500/15"></div>
-        <div class="flex items-baseline gap-2">
-          <span class="font-display text-2xl font-bold text-white">94%</span>
-          <span class="text-[12px] text-chrome-300/55">aprovação no cartão</span>
-        </div>
-      </div>
+  <div class="section flex flex-col items-center text-center">
+    <!-- Eyebrow -->
+    <div class="reveal inline-flex items-center gap-2.5 text-[11px] font-mono" style="letter-spacing:0.22em;text-transform:uppercase;color:var(--blue-2);">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[--blue] shadow-[0_0_14px_var(--blue-glow)]"></span>
+      Korvex · Gateway para operações de alto faturamento
     </div>
 
-    <!-- RIGHT: tilted dashboard + live feed -->
-    <div class="reveal relative">
-      <div class="absolute -inset-8 -z-10 rounded-[32px] bg-gradient-to-tr from-titan-600/25 via-transparent to-gold-600/10 blur-3xl"></div>
+    <!-- Headline — manifesto, Korvex no centro -->
+    <h1 class="reveal mt-7 max-w-4xl font-display text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.045em] text-white sm:text-[4.4rem]">
+      A Korvex não joga o jogo deles.
+      <span class="block font-editorial italic font-normal text-titan-gradient">Joga o seu.</span>
+    </h1>
 
-      <div data-tilt="5" class="tilt beam relative rounded-2xl">
-        <div class="browser">
-          <div class="browser-bar">
-            <span class="dot bg-[#ff5f57]/80"></span>
-            <span class="dot bg-[#febc2e]/80"></span>
-            <span class="dot bg-[#28c840]/80"></span>
-            <span class="ml-3 flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">
-              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
-              app.korvex.com.br
-            </span>
-          </div>
-          <img src="/assets/dashboard.png" alt="Painel Korvex — saldo, conquistas e vendas por método" class="block w-full" loading="eager" />
-        </div>
-      </div>
+    <!-- Lead -->
+    <p class="reveal mt-6 max-w-2xl text-pretty text-[1.05rem] leading-relaxed text-chrome-300/80 sm:text-[1.1rem]">
+      Antecipação. Reserva. Chargeback. Spread. Cada nome, um pedaço seu virando lucro de plataforma.
+      <strong class="text-white">A Korvex é o primeiro gateway construído contra esse modelo — e pelo lado de quem vende.</strong>
+      Saque D0. Taxa 6,99% real. Gerente humano. Por infoprodutor, pra infoprodutor.
+    </p>
 
-      <!-- live approvals feed -->
-      <div class="absolute -right-3 top-6 hidden w-52 sm:block">
-        <div class="rounded-2xl border border-suede-500/25 bg-ink/90 p-3 shadow-glow backdrop-blur-xl">
-          <div class="mb-2 flex items-center justify-between">
-            <span class="text-[10px] font-semibold uppercase tracking-wider text-chrome-300/55">Aprovações</span>
-            <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>ao vivo</span>
-          </div>
-          <div class="space-y-1.5">
-            {feed.map((f, i) => (
-              <div class="feed-item flex items-center justify-between rounded-lg border border-suede-500/12 bg-white/[0.02] px-2.5 py-1.5" style={`animation-delay:${i * 1.4}s`}>
-                <div>
-                  <p class="text-[11px] font-semibold text-white">{f.v}</p>
-                  <p class="text-[9px] text-chrome-300/55">{f.m} · {f.t}</p>
-                </div>
-                <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400"><svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m4 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    <!-- CTAs persona-routing -->
+    <div class="reveal mt-9 grid w-full max-w-3xl gap-3 sm:grid-cols-2">
+      <a href={waUrl('Olá! Faturando R$100K+/mês — quero análise da operação na Korvex.')} target="_blank" rel="noopener" class="persona-cta primary group">
+        <span class="persona-q">Faturando R$ 100K+ / mês?</span>
+        <span class="persona-a">
+          Falar com especialista
+          <small>· resposta em 1h</small>
+          <span class="h-4 w-4" set:html={icon('arrow')}></span>
+        </span>
+      </a>
+      <a href={REGISTER_URL} target="_blank" rel="noopener" class="persona-cta ghost group">
+        <span class="persona-q">Começando ou validando?</span>
+        <span class="persona-a">
+          Criar conta agora
+          <span class="h-4 w-4" set:html={icon('arrow')}></span>
+        </span>
+      </a>
+    </div>
 
-      <!-- floating saque card -->
-      <div class="absolute -bottom-5 -left-4 hidden w-52 rounded-2xl border border-suede-500/25 bg-ink/90 p-4 shadow-glow backdrop-blur-xl sm:block">
-        <p class="text-[11px] uppercase tracking-wider text-chrome-300/55">Saque realizado</p>
-        <p class="mt-1 font-display text-2xl font-bold text-white">R$113.478<span class="text-suede-400">,27</span></p>
-        <p class="mt-1 text-[11px] text-titan-400">Pix · mesmo dia (D0)</p>
-      </div>
+
+    <!-- Pills -->
+    <div class="reveal mt-8 flex flex-wrap justify-center gap-2">
+      {pills.map((p) => (
+        <span class="inline-flex items-center gap-2 rounded-full border border-suede-500/20 bg-white/[0.025] px-3 py-1.5 text-[12.5px] font-medium text-chrome-200">
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-[--blue] shadow-[0_0_8px_var(--blue-glow)]"></span>
+          {p.label}
+        </span>
+      ))}
+    </div>
+
+    <!-- Inline stats — micro labels, very compact -->
+    <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-suede-500/10 pt-5 sm:mt-12 sm:gap-x-7 sm:pt-6">
+      {stats.map((s, i) => (
+        <>
+          {i > 0 && <span class="h-4 w-px bg-suede-500/15"></span>}
+          <div class="inline-flex items-baseline gap-1.5">
+            <span class="font-display text-base font-bold leading-none text-white sm:text-lg" style="font-feature-settings:'tnum';">{s.big}</span>
+            <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-chrome-300/55 sm:text-[10px]">{s.label}</span>
+          </div>
+        </>
+      ))}
     </div>
   </div>
 </section>
+
+
+<style>
+  .persona-cta {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    text-align: left;
+    transition: all .2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .persona-cta.primary {
+    background: linear-gradient(180deg, #2B5FA0, #1A3A6B);
+    border: 1px solid rgba(168,204,255,0.35);
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 14px 32px -10px rgba(43,95,160,0.55);
+  }
+  .persona-cta.primary:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,0.22) inset, 0 18px 38px -10px rgba(43,95,160,0.7); }
+  .persona-cta.ghost {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(184,176,160,0.18);
+    color: #fff;
+  }
+  .persona-cta.ghost:hover { background: rgba(255,255,255,0.05); border-color: rgba(184,176,160,0.3); }
+  .persona-q {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .persona-cta.ghost .persona-q { color: rgba(176,179,184,0.65); }
+  .persona-a {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Geist', sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: #fff;
+  }
+  .persona-a small { font-weight: 400; opacity: 0.7; font-size: 12px; }
+  .persona-cta .h-4 { transition: transform .2s ease; }
+  .persona-cta:hover .h-4 { transform: translateX(3px); }
+</style>

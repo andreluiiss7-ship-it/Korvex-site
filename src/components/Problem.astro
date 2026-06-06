@@ -1,58 +1,251 @@
 ---
-import { icon } from '../lib/icons';
+// Gateways concorrentes (foco BR: infoproduto)
+const competitors = [
+  { id:'hotmart',    file:'hotmart.jpg',    name:'Hotmart',    pain:'9,9% + R$1 · saque D+30' },
+  { id:'kiwify',     file:'kiwify.jpg',     name:'Kiwify',     pain:'7,99% + R$1 · reserva 7d' },
+  { id:'eduzz',      file:'eduzz.png',      name:'Eduzz',      pain:'8,9% · saque D+15' },
+  { id:'kirvano',    file:'kirvano.avif',   name:'Kirvano',    pain:'taxas crescentes · D+2' },
+  { id:'cakto',      file:'cakto.png',      name:'Cakto',      pain:'reserva variável · D+2' },
+  { id:'perfectpay', file:'perfectpay.png', name:'PerfectPay', pain:'8,9% + R$1 · D+14' },
+];
+const byId = Object.fromEntries(competitors.map(c=>[c.id,c]));
 
-const rows = [
-  { label: 'Saque no Pix', common: 'D+1 ou D+2', korvex: 'D0 — no mesmo dia' },
-  { label: 'Aprovação no cartão', common: 'Adquirente único', korvex: 'Multiadquirência (94%)' },
-  { label: 'Checkout', common: 'Um modelo fechado', korvex: '7 experiências + 100% personalizável' },
-  { label: 'Funil', common: 'Limitado ou externo', korvex: 'Arrasta e solta com upsell 1-click' },
-  { label: 'Área de membros', common: 'Básica ou terceirizada', korvex: 'Estilo Netflix + upsell interno' },
-  { label: 'Vendas internacionais', common: 'Raro ou inexistente', korvex: '135+ moedas, multi-idioma' },
-  { label: 'Taxa', common: 'Fixa e inflexível', korvex: '6,99% + R$1,99 — negociável' },
-  { label: 'Suporte', common: 'Ticket e robô', korvex: 'Gerente dedicado, humano' },
+// Pile inside the bin (already discarded)
+const pile = [
+  { id:'eduzz',      bottom:6,  left:18, rot:-14, scale:0.9,  z:2 },
+  { id:'hotmart',    bottom:22, left:38, rot:8,   scale:1.0,  z:6 },
+  { id:'kiwify',     bottom:6,  left:58, rot:-10, scale:0.94, z:4 },
+  { id:'perfectpay', bottom:18, left:78, rot:12,  scale:0.92, z:3 },
+];
+
+// Falling
+const falling = [
+  { id:'kirvano', delay:0,   x:38, rot:-22 },
+  { id:'cakto',   delay:2.4, x:62, rot:18 },
 ];
 ---
 
-<section id="problema" class="relative py-24 sm:py-32">
+<section id="problema" class="relative overflow-hidden py-24 sm:py-32">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute inset-0" style="background: radial-gradient(720px 420px at 22% 18%, rgba(50,62,84,0.20), transparent 60%), radial-gradient(640px 420px at 86% 80%, rgba(59,130,246,0.10), transparent 60%);"></div>
+  </div>
+
   <div class="section">
-    <div class="reveal mx-auto max-w-3xl text-center">
-      <span class="kicker justify-center">O problema</span>
-      <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-5xl">
-        Operação séria <span class="text-titan-gradient">não cabe</span><br />
-        em gateway comum.
+    <!-- HEADER — direto ao ponto -->
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <span class="kicker">A conta que ninguém te mostra</span>
+      <h2 class="h-display mt-5 text-4xl leading-[1.02] sm:text-[3.6rem]">
+        Eles dizem 4,99%.
+        <span class="block font-editorial italic font-normal text-chrome-300/55">A real é o dobro.</span>
       </h2>
-      <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-chrome-300/72">
-        Você fatura alto. Sua plataforma trata você como qualquer um.
-        Saque que demora, checkout engessado, suporte por ticket e taxa fixa.
-        A Korvex foi feita para resolver exatamente isso.
+      <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/80">
+        Você assina por 4,99% e fecha o mês com <strong class="text-white">12% no buraco</strong>. Antecipação, reserva, chargeback, spread — cada nome, um pedaço seu virando lucro deles.
       </p>
     </div>
 
-    <div class="reveal mt-12 overflow-hidden rounded-3xl border border-suede-500/20 shadow-depth">
-      <!-- header -->
-      <div class="grid grid-cols-[1.1fr_1fr_1fr] bg-ink/60">
-        <div class="p-4 sm:p-5"></div>
-        <div class="border-l border-suede-500/15 p-4 text-center sm:p-5">
-          <p class="text-sm font-semibold text-chrome-300/60">Gateway comum</p>
-        </div>
-        <div class="relative border-l border-suede-500/15 bg-titan-600/10 p-4 text-center sm:p-5">
-          <img src="/assets/logo-white.png" alt="Korvex" class="mx-auto h-5 w-auto" />
+    <!-- BIN + KORVEX -->
+    <div class="reveal mt-16 grid gap-8 lg:grid-cols-[1.15fr_1fr]">
+
+      <!-- LIXEIRA -->
+      <div class="relative">
+        <!-- Bin canvas: SVG silhouette + HTML logo overlay -->
+        <div class="bin-canvas relative">
+
+          <!-- SVG silhouette: real trash bin shape -->
+          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 600 680" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="binBody" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#0a0c12"/>
+                <stop offset="0.18" stop-color="#1a1f2a"/>
+                <stop offset="0.5" stop-color="#22293a"/>
+                <stop offset="0.82" stop-color="#1a1f2a"/>
+                <stop offset="1" stop-color="#0a0c12"/>
+              </linearGradient>
+              <linearGradient id="binMouth" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#000"/>
+                <stop offset="0.6" stop-color="#000"/>
+                <stop offset="1" stop-color="#05060a"/>
+              </linearGradient>
+              <linearGradient id="rimChrome" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="rgba(184,176,160,0)"/>
+                <stop offset="0.5" stop-color="rgba(216,218,221,0.7)"/>
+                <stop offset="1" stop-color="rgba(184,176,160,0)"/>
+              </linearGradient>
+              <radialGradient id="baseShadow" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="rgba(0,0,0,0.85)"/>
+                <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+              </radialGradient>
+              <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
+              </filter>
+            </defs>
+
+            <!-- Ground shadow ellipse -->
+            <ellipse cx="300" cy="660" rx="220" ry="14" fill="url(#baseShadow)"/>
+
+            <!-- BIN BODY (tapered cylinder, front view) -->
+            <path d="M 60 95
+                     L 540 95
+                     L 510 615
+                     Q 510 650 300 650
+                     Q 90 650 90 615
+                     Z"
+                  fill="url(#binBody)"
+                  stroke="rgba(184,176,160,0.22)" stroke-width="1"/>
+
+            <!-- Subtle vertical ribbing on body -->
+            <g stroke="rgba(255,255,255,0.06)" stroke-width="0.6" fill="none">
+              <path d="M 150 120 L 138 620"/>
+              <path d="M 220 120 L 212 625"/>
+              <path d="M 300 120 L 300 630"/>
+              <path d="M 380 120 L 388 625"/>
+              <path d="M 450 120 L 462 620"/>
+            </g>
+
+            <!-- INNER MOUTH (dark hole) -->
+            <ellipse cx="300" cy="95" rx="240" ry="34" fill="url(#binMouth)"/>
+
+            <!-- Inner rim shadow (depth) -->
+            <ellipse cx="300" cy="102" rx="232" ry="28" fill="none" stroke="rgba(0,0,0,0.85)" stroke-width="4"/>
+            <ellipse cx="300" cy="106" rx="225" ry="22" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2"/>
+
+            <!-- TOP RIM (chrome metallic highlight) -->
+            <ellipse cx="300" cy="95" rx="240" ry="34" fill="none" stroke="url(#rimChrome)" stroke-width="2"/>
+            <ellipse cx="300" cy="91" rx="238" ry="32" fill="none" stroke="rgba(216,218,221,0.35)" stroke-width="1"/>
+
+            <!-- Side highlights (vertical metallic edges) -->
+            <path d="M 62 100 L 92 615" stroke="rgba(216,218,221,0.18)" stroke-width="1.5" fill="none"/>
+            <path d="M 538 100 L 508 615" stroke="rgba(216,218,221,0.18)" stroke-width="1.5" fill="none"/>
+
+            <!-- Bottom inside arc (suggests interior floor) -->
+            <ellipse cx="300" cy="615" rx="210" ry="14" fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="1.5"/>
+          </svg>
+
+          <!-- FALLING logos (apenas a logo quadrada arredondada) -->
+          <div class="pointer-events-none absolute inset-0 z-20">
+            {falling.map(f => {
+              const c = byId[f.id];
+              return (
+                <div class="falling absolute" style={`--delay:${f.delay}s; --x:${f.x}%; --rot:${f.rot}deg`}>
+                  <img src={`/assets/competitors/${c.file}`} alt={c.name} class="logo-square falling-square" loading="lazy" />
+                </div>
+              );
+            })}
+          </div>
+
+          <!-- PILE inside the bin (apenas as logos) -->
+          <div class="absolute inset-x-[14%] bottom-[8%] z-10">
+            <div class="relative h-44">
+              {pile.map(p => {
+                const c = byId[p.id];
+                return (
+                  <img
+                    src={`/assets/competitors/${c.file}`}
+                    alt={c.name}
+                    class="logo-square absolute"
+                    loading="lazy"
+                    style={`bottom:${p.bottom}px;left:${p.left}%;transform:translateX(-50%) rotate(${p.rot}deg) scale(${p.scale});z-index:${p.z};filter:saturate(0.85) brightness(0.85);`}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
-      {rows.map((r, i) => (
-        <div class={`grid grid-cols-[1.1fr_1fr_1fr] ${i % 2 ? 'bg-white/[0.015]' : 'bg-transparent'}`}>
-          <div class="flex items-center p-4 text-sm font-medium text-chrome-200 sm:p-5">{r.label}</div>
-          <div class="flex items-center justify-center gap-2 border-l border-suede-500/10 p-4 text-center text-[13px] text-chrome-300/55 sm:p-5">
-            <span class="h-4 w-4 flex-none text-chrome-300/30" set:html={icon('x')} />
-            <span>{r.common}</span>
-          </div>
-          <div class="flex items-center justify-center gap-2 border-l border-suede-500/10 bg-titan-600/[0.06] p-4 text-center text-[13px] font-semibold text-white sm:p-5">
-            <span class="h-4 w-4 flex-none text-titan-400" set:html={icon('check')} />
-            <span>{r.korvex}</span>
-          </div>
+      <!-- KORVEX CONTRAST CARD -->
+      <div class="relative overflow-hidden rounded-[36px] border border-titan-500/30 bg-gradient-to-br from-titan-600/14 via-ink to-ink p-8 shadow-glow sm:p-10">
+        <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-titan-500/15 blur-3xl"></div>
+
+        <span class="relative inline-flex items-center gap-2 rounded-full border border-titan-400/40 bg-titan-600/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-titan-200 font-mono">
+          <img src="/assets/icon.png" alt="" style="height:13px;width:auto" />
+          Korvex
+        </span>
+
+        <h3 class="relative font-display mt-6 text-[1.7rem] font-bold leading-[1.05] text-white sm:text-[2.1rem]">
+          O gateway que <span class="font-editorial italic font-normal text-titan-gradient">devolve dinheiro</span> pro seu bolso.
+        </h3>
+
+        <ul class="relative mt-7 space-y-4">
+          {[
+            ['6,99% + R$ 1,99','negociável pra quem fatura alto.'],
+            ['Saque D0 no Pix','sem fila, sem reserva, sem desculpa.'],
+            ['Gerente humano','dedicado — não bot, não ticket, não fila.'],
+            ['Zero bloqueio aleatório','operação séria tratada como séria.'],
+          ].map(([t,d]) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-titan-500/20 text-titan-300">
+                <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="m5 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <p class="text-[14.5px] leading-snug text-chrome-200/85"><b class="text-white">{t}</b> — {d}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="relative mt-8 rounded-2xl border border-titan-500/25 bg-titan-600/8 p-4">
+          <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-titan-300/80 font-mono">A diferença na sua conta</p>
+          <p class="mt-2 font-display text-[15.5px] leading-snug text-white">
+            Em <b>R$ 1.000.000</b> faturados, você fica com até <b class="text-titan-gradient">+R$ 30.000</b> no bolso.
+          </p>
         </div>
-      ))}
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .bin-canvas {
+    width: 100%;
+    aspect-ratio: 600 / 680;
+    max-height: 640px;
+    container-type: size;
+    container-name: bin;
+  }
+  @media (max-width: 640px) {
+    .bin-canvas { max-height: 520px; }
+  }
+
+  /* Logo quadrada com cantos arredondados — sem moldura, sem texto */
+  .logo-square {
+    width: 84px; height: 84px;
+    border-radius: 20px;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+  .falling-square { transform: translateX(-50%); transform-origin: center; }
+
+  /* Fall through the bin opening into the pile — usa cqh do .bin-canvas pra responsividade */
+  @keyframes fall {
+    0%   { transform: translate3d(0,-8cqh,0) rotate(0deg); opacity: 0; }
+    8%   { opacity: 1; }
+    55%  { transform: translate3d(0,72cqh,0) rotate(var(--rot)); opacity: 1; }
+    63%  { transform: translate3d(0,68cqh,0) rotate(calc(var(--rot) * 0.55)); }
+    70%  { transform: translate3d(0,72cqh,0) rotate(var(--rot)); }
+    92%  { transform: translate3d(0,72cqh,0) rotate(var(--rot)); opacity: 0.4; }
+    100% { transform: translate3d(0,72cqh,0) rotate(var(--rot)); opacity: 0; }
+  }
+  .falling {
+    left: var(--x); top: 0;
+    transform-origin: center;
+    animation: fall 6.8s cubic-bezier(.55,.05,.78,.34) infinite;
+    animation-delay: var(--delay);
+    will-change: transform, opacity;
+  }
+  /* Fallback pra browsers sem container queries */
+  @supports not (container-type: size) {
+    @keyframes fall {
+      0%   { transform: translate3d(0,-50px,0) rotate(0deg); opacity: 0; }
+      8%   { opacity: 1; }
+      55%  { transform: translate3d(0,420px,0) rotate(var(--rot)); opacity: 1; }
+      70%  { transform: translate3d(0,420px,0) rotate(var(--rot)); }
+      100% { transform: translate3d(0,420px,0) rotate(var(--rot)); opacity: 0; }
+    }
+  }
+  @media (max-width: 640px) {
+    .logo-square { width: 68px; height: 68px; border-radius: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .falling { animation: none; opacity: 0; }
+  }
+</style>

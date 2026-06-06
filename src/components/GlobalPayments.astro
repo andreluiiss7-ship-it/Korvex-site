@@ -33,16 +33,16 @@ const settle = [
   </div>
 
   <div class="section">
-    <!-- header -->
+    <!-- header — centered cinematic (mantém pq é o climax do produto) -->
     <div class="reveal mx-auto max-w-3xl text-center">
-      <span class="kicker justify-center">Pagamentos globais · cross-border</span>
-      <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-6xl">
+      <span class="kicker justify-center">Cross-border</span>
+      <h2 class="h-display mt-6 text-4xl leading-[1.02] sm:text-[3.4rem]">
         Seu produto não tem fronteira.<br />
-        <span class="text-titan-gradient">Seu recebimento também não.</span>
+        Seu recebimento <span class="font-editorial italic font-normal text-titan-gradient">também não.</span>
       </h2>
       <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/75">
         Cobre o cliente na moeda dele, liquide na sua. A Korvex processa em
-        <strong class="text-white"> mais de 135 moedas</strong>, com checkout que fala o idioma de quem compra.
+        <strong class="text-white"> 135+ moedas</strong>, com checkout no idioma de quem compra.
       </p>
     </div>
 
@@ -82,16 +82,20 @@ const settle = [
           ))}
         </div>
 
-        <!-- GLOBE -->
+        <!-- GLOBE — foto real da Terra à noite (NASA-style) com tratamento navy -->
         <div data-tilt="8" class="tilt absolute inset-[28%]">
-          <div class="relative h-full w-full overflow-hidden rounded-full border border-titan-500/25 shadow-[0_30px_90px_-20px_rgba(43,95,160,0.7),inset_0_0_60px_rgba(0,0,0,0.6)]">
-            <!-- sphere base -->
-            <div class="absolute inset-0 rounded-full" style="background:radial-gradient(120% 120% at 30% 25%, #1c3a5c 0%, #0d2238 45%, #050b14 90%)"></div>
-            <!-- spinning dot texture (longitudes panning) -->
-            <div class="absolute inset-0 rounded-full opacity-70" style="background-image:radial-gradient(circle, rgba(111,163,224,0.55) 1px, transparent 1.6px); background-size:18px 18px; animation:globe-pan 9s linear infinite; -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 60%, transparent 78%); mask-image:radial-gradient(circle at 50% 50%, #000 60%, transparent 78%);"></div>
-            <!-- meridians / parallels -->
-            <svg viewBox="0 0 200 200" class="absolute inset-0 h-full w-full text-titan-400/25">
-              <g fill="none" stroke="currentColor" stroke-width="0.6">
+          <div class="relative h-full w-full overflow-hidden rounded-full border border-titan-500/25 shadow-[0_30px_90px_-20px_rgba(43,95,160,0.7),inset_0_0_60px_rgba(0,0,0,0.55)]">
+            <!-- Foto real da Terra como base -->
+            <img src="/assets/earth-night.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full scale-[1.4] object-cover" style="object-position: 50% 35%; filter: saturate(0.85) brightness(0.95);" loading="lazy" />
+            <!-- Tint navy/suede para harmonizar com a paleta -->
+            <div class="absolute inset-0 mix-blend-color" style="background: linear-gradient(135deg, rgba(43,95,160,0.55), rgba(13,34,56,0.4));"></div>
+            <!-- Vinheta nas bordas para acentuar a esfera -->
+            <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 25%, transparent 40%, rgba(7,16,29,0.55) 90%);"></div>
+            <!-- Brilho atmosférico no topo -->
+            <div class="absolute inset-0" style="background: radial-gradient(80% 60% at 28% 18%, rgba(111,163,224,0.18), transparent 50%);"></div>
+            <!-- Meridianos / paralelos sobrepostos -->
+            <svg viewBox="0 0 200 200" class="absolute inset-0 h-full w-full text-titan-400/30">
+              <g fill="none" stroke="currentColor" stroke-width="0.5">
                 <circle cx="100" cy="100" r="99" />
                 <ellipse cx="100" cy="100" rx="99" ry="34" />
                 <ellipse cx="100" cy="100" rx="99" ry="66" />
@@ -99,9 +103,7 @@ const settle = [
                 <ellipse cx="100" cy="100" rx="66" ry="99" />
               </g>
             </svg>
-            <!-- terminator highlight -->
-            <div class="absolute inset-0 rounded-full" style="background:radial-gradient(80% 80% at 28% 22%, rgba(255,255,255,0.18), transparent 45%)"></div>
-            <!-- location pings -->
+            <!-- Pings de localização -->
             <span class="absolute left-[34%] top-[38%] h-2 w-2 rounded-full bg-titan-400 shadow-[0_0_10px_2px_rgba(111,163,224,0.9)]"></span>
             <span class="absolute left-[34%] top-[38%] h-2 w-2 rounded-full border border-titan-400/60" style="animation:pulse-ring 2.6s ease-out infinite"></span>
             <span class="absolute left-[62%] top-[30%] h-2 w-2 rounded-full bg-gold-300 shadow-[0_0_10px_2px_rgba(245,217,139,0.8)]"></span>
@@ -162,20 +164,27 @@ const settle = [
               <span class="h-8 w-8 rounded-lg bg-titan-600/15 p-2 text-titan-400" set:html={icon('globe')}></span>
               <p class="font-display text-sm font-semibold text-white">Liquidação cross-border</p>
             </div>
-            <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-400">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> ao vivo
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-400 font-mono">
+              <span class="relative inline-flex h-1.5 w-1.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              </span>
+              ao vivo
             </span>
           </div>
 
           <div class="mt-5 divide-y divide-suede-500/10">
-            {settle.map((s) => (
+            {settle.map((s, i) => (
               <div class="flex items-center justify-between py-3">
                 <div class="flex items-center gap-3">
-                  <span class="text-lg">{s.flag}</span>
+                  <span class="relative inline-flex">
+                    <span class="text-lg leading-none">{s.flag}</span>
+                    <span class="absolute -inset-1 rounded-full" style={`animation: pulse-station 2.4s ease-in-out infinite; animation-delay:${i * 0.4}s; --pulse-c: rgba(111,160,255,0.6);`}></span>
+                  </span>
                   <span class="font-display text-sm font-semibold text-white">{s.cur}</span>
                 </div>
                 <div class="flex items-center gap-3">
-                  <span class="font-mono text-sm text-chrome-100">{s.amount}</span>
+                  <span class="font-mono text-sm text-chrome-100" style="font-feature-settings: 'tnum';">{s.amount}</span>
                   <span class={`flex h-5 w-5 items-center justify-center rounded ${s.up ? 'text-emerald-400' : 'text-suede-300'}`}>
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d={s.up ? 'M6 14l6-6 6 6' : 'M6 10l6 6 6-6'} stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
@@ -184,25 +193,9 @@ const settle = [
             ))}
           </div>
 
-          <div class="mt-5 flex items-center justify-between rounded-xl border border-suede-500/15 bg-white/[0.02] px-4 py-3">
-            <span class="text-[12px] text-chrome-300/60">Convertido para BRL</span>
-            <span class="font-display text-lg font-bold text-white">R$ 152.617,80</span>
-          </div>
-        </div>
-
-        <!-- stat row -->
-        <div class="mt-5 grid grid-cols-3 gap-3">
-          <div class="card p-4 text-center">
-            <p class="font-display text-2xl font-bold text-white"><span data-count="135" data-suffix="+">135+</span></p>
-            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Moedas</p>
-          </div>
-          <div class="card p-4 text-center">
-            <p class="font-display text-2xl font-bold text-white">Multi</p>
-            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Idioma no checkout</p>
-          </div>
-          <div class="card p-4 text-center">
-            <p class="font-display text-2xl font-bold text-white">D0</p>
-            <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Liquidação BR</p>
+          <div class="mt-5 flex items-center justify-between rounded-xl border border-suede-500/15 bg-white/[0.025] px-4 py-3" style="background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent);">
+            <span class="text-[12px] text-chrome-300/60">Total convertido para BRL</span>
+            <span class="font-display text-lg font-bold text-titan-gradient" data-counter data-target="152617.80" data-prefix="R$ " data-decimals="2">R$ 152.617,80</span>
           </div>
         </div>
 

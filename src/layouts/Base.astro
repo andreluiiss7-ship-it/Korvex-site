@@ -1,4 +1,11 @@
 ---
+// Self-hosted fonts (latin subset only — sem Google Fonts CSS)
+import '@fontsource/inter-tight/latin-400.css';
+import '@fontsource/inter-tight/latin-600.css';
+import '@fontsource/inter-tight/latin-700.css';
+import '@fontsource/instrument-serif/latin-400-italic.css';
+import '@fontsource/geist-mono/latin-400.css';
+
 import '../styles/global.css';
 
 interface Props {
@@ -30,19 +37,20 @@ const {
     <meta property="og:locale" content="pt_BR" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts: self-hosted via @fontsource (importadas no frontmatter) — sem chamada Google Fonts -->
   </head>
   <body class="grain">
+    <!-- Scroll progress bar (top) -->
+    <div id="scroll-progress" class="pointer-events-none fixed left-0 top-0 z-[60] h-[2px] w-full origin-left scale-x-0 bg-gradient-to-r from-titan-400 via-titan-300 to-gold-300" style="will-change:transform"></div>
+
     <slot />
 
-    <!-- Reveal on scroll -->
+    <!-- Reveal on scroll (with stagger) -->
     <script>
+      // Declared up front so they can be used by every block below (avoid TDZ)
+      const fine = window.matchMedia('(pointer:fine)').matches;
+      const reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -54,56 +62,174 @@ const {
         },
         { threshold: 0.12 }
       );
-      const mount = () =>
+      const mount = () => {
+        // auto-stagger siblings inside the same parent (.reveal-stagger)
+        document.querySelectorAll<HTMLElement>('.reveal-stagger').forEach((parent) => {
+          Array.from(parent.children).forEach((child, i) => {
+            (child as HTMLElement).classList.add('reveal');
+            (child as HTMLElement).style.transitionDelay = `${i * 70}ms`;
+          });
+        });
         document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      };
       if (document.readyState !== 'loading') mount();
       else document.addEventListener('DOMContentLoaded', mount);
 
-      // Count-up for [data-count]
-      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      // ---- Scroll progress bar ----
+      const bar = document.getElementById('scroll-progress');
+      const onScrollProgress = () => {
+        const h = document.documentElement;
+        const scrolled = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight);
+        if (bar) bar.style.transform = `scaleX(${scrolled})`;
+      };
+      window.addEventListener('scroll', onScrollProgress, { passive: true });
+      onScrollProgress();
+
+      // ---- Parallax ([data-parallax="0.2"] = moves at 20% of scroll) — desktop only ----
+      const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
+      const wideEnough = window.innerWidth >= 1024;
+      if (parallaxEls.length && !reduced && wideEnough) {
+        let ticking = false;
+        const onScrollParallax = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            parallaxEls.forEach((el) => {
+              const speed = parseFloat(el.dataset.parallax || '0.15');
+              const rect = el.getBoundingClientRect();
+              const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+              el.style.transform = `translate3d(0, ${center * -speed}px, 0)`;
+            });
+            ticking = false;
+          });
+        };
+        window.addEventListener('scroll', onScrollParallax, { passive: true });
+        onScrollParallax();
+      }
+
+      // ---- Word-by-word text reveal (.text-reveal)
+      // Only words DIRECTLY inside the .text-reveal element are split.
+      // Nested <span> elements (gradient text, etc) are left intact and treated
+      // as a single "word" so background-clip:text keeps working.
+      const splitWords = (el: HTMLElement) => {
+        if (el.dataset.split === '1') return;
+        el.dataset.split = '1';
+        let wi = 0;
+        const children = Array.from(el.childNodes);
+        children.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const tag = (node as Element).tagName;
+            if (tag === 'BR') return;
+            // Treat whole nested element as one word unit so gradients/italics stay intact
+            const wrap = document.createElement('span');
+            wrap.className = 'word';
+            wrap.style.setProperty('--word-index', String(wi++));
+            (node as Element).parentNode!.insertBefore(wrap, node);
+            wrap.appendChild(node);
+          } else if (node.nodeType === Node.TEXT_NODE) {
+            const text = (node as Text).nodeValue || '';
+            const parts = text.split(/(\s+)/);
+            const frag = document.createDocumentFragment();
+            parts.forEach((p) => {
+              if (!p) return;
+              if (/^\s+$/.test(p)) {
+                frag.appendChild(document.createTextNode(p));
+              } else {
+                const span = document.createElement('span');
+                span.className = 'word';
+                span.style.setProperty('--word-index', String(wi++));
+                span.textContent = p;
+                frag.appendChild(span);
+              }
+            });
+            (node as Text).replaceWith(frag);
+          }
+        });
+      };
+      // text-reveal currently behaves like a normal fade-in (no word split)
+      // — splitting nested gradient spans was unreliable across edge cases.
+      document.querySelectorAll<HTMLElement>('.text-reveal').forEach((el) => {
+        el.classList.add('reveal');
+        io.observe(el);
+      });
+
+      // ---- 3D Magnetic cards (.mag-card) — entire card tilts toward cursor ----
+      if (fine && !reduced) {
+        document.querySelectorAll<HTMLElement>('.mag-card').forEach((card) => {
+          const max = 6; // deg
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            card.style.transform = `perspective(1100px) rotateX(${-py * max}deg) rotateY(${px * max}deg) translateY(-3px)`;
+          });
+          card.addEventListener('pointerleave', () => {
+            card.style.transform = 'perspective(1100px) rotateX(0) rotateY(0) translateY(0)';
+          });
+        });
+      }
+
+      // ---- Lift-on-scroll (.lift-on-scroll) — soft scale+fade ----
+      document.querySelectorAll('.lift-on-scroll').forEach((el) => io.observe(el));
+
+      // ---- Safety fallback: ensure every reveal element becomes visible after 2.5s
+      //      so we never end up with permanently-hidden content if IO misses anything
+      window.setTimeout(() => {
+        document.querySelectorAll<HTMLElement>('.reveal,.text-reveal,.lift-on-scroll').forEach((el) => {
+          if (!el.classList.contains('in')) el.classList.add('in');
+        });
+      }, 2500);
+
+      // Count-up for [data-count] AND [data-counter]
+      const formatCount = (target: number, dec: number) => {
+        // For values >= 1,000,000 — show as "M+" formatted (e.g. 129000000 -> "129")
+        // The component decides format with prefix/suffix
+        return target.toLocaleString('pt-BR', {
+          minimumFractionDigits: dec,
+          maximumFractionDigits: dec,
+        });
+      };
+      const animateCounter = (el: HTMLElement) => {
+        const target = parseFloat(el.dataset.target || el.dataset.count || '0');
+        const dec = parseInt(el.dataset.decimals || '0');
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        const dur = 1800;
+        let start = 0;
+        const step = (now: number) => {
+          if (!start) start = now;
+          const p = Math.max(0, Math.min((now - start) / dur, 1));
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = Math.max(0, target * eased);
+          el.textContent = prefix + formatCount(val, dec) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
       const cio = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (!e.isIntersecting) return;
-            const el = e.target as HTMLElement;
-            const target = parseFloat(el.dataset.count || '0');
-            const dec = parseInt(el.dataset.decimals || '0');
-            const prefix = el.dataset.prefix || '';
-            const suffix = el.dataset.suffix || '';
-            const dur = 1600;
-            const start = performance.now();
-            const step = (now: number) => {
-              const p = Math.min((now - start) / dur, 1);
-              const eased = 1 - Math.pow(1 - p, 3);
-              const val = target * eased;
-              el.textContent =
-                prefix +
-                val.toLocaleString('pt-BR', {
-                  minimumFractionDigits: dec,
-                  maximumFractionDigits: dec,
-                }) +
-                suffix;
-              if (p < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
-            cio.unobserve(el);
+            animateCounter(e.target as HTMLElement);
+            cio.unobserve(e.target);
           });
         },
-        { threshold: 0.5 }
+        { threshold: 0.4 }
       );
-      counters.forEach((el) => cio.observe(el));
+      document.querySelectorAll<HTMLElement>('[data-count],[data-counter]').forEach((el) => cio.observe(el));
 
-      // ---- Spotlight follow (cards with .spotlight) ----
-      document.querySelectorAll<HTMLElement>('.spotlight').forEach((el) => {
-        el.addEventListener('pointermove', (e) => {
-          const r = el.getBoundingClientRect();
-          el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-          el.style.setProperty('--my', `${e.clientY - r.top}px`);
+      // ---- Spotlight follow (cards with .spotlight) — desktop only ----
+      if (fine) {
+        document.querySelectorAll<HTMLElement>('.spotlight').forEach((el) => {
+          el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            el.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
         });
-      });
+      }
 
       // ---- 3D tilt (elements with .tilt[data-tilt]) ----
-      const fine = window.matchMedia('(pointer:fine)').matches;
       if (fine) {
         document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
           const max = parseFloat(el.dataset.tilt || '6');

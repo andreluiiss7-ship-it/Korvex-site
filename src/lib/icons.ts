@@ -20,7 +20,7 @@ export const icons: Record<string, string> = {
   clock: P('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
   trophy: P('<path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/><path d="M9 17h6M10 21h4M12 13v4"/>'),
   gift: P('<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13"/><path d="M12 8S10 3 7.5 4.5 9 8 12 8Zm0 0s2-5 4.5-3.5S15 8 12 8Z"/>'),
-  spark: P('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>'),
+  spark: P('<path d="M12 2.5l1.9 5.7 5.6 1.9-5.6 1.9-1.9 5.7-1.9-5.7-5.6-1.9 5.6-1.9L12 2.5Z"/><path d="M19 16l.8 2.2 2.2.8-2.2.8L19 22l-.8-2.2-2.2-.8 2.2-.8L19 16Z"/>'),
   check: P('<path d="m4 12 5 5L20 6"/>'),
   arrow: P('<path d="M4 12h14M13 6l6 6-6 6"/>'),
   x: P('<path d="M6 6l12 12M18 6 6 18"/>'),

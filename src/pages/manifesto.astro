@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { REGISTER_URL } from '../lib/site';
+import { icon } from '../lib/icons';
+
+const clauses = [
+  ['01', 'Nenhum centavo a mais do que está no contrato. Nunca.'],
+  ['02', 'Saque é direito. Não favor. D0 no Pix, sempre.'],
+  ['03', 'Operação séria não merece bot de ticket. Merece gerente humano.'],
+  ['04', 'Reserva de segurança não é caixa eletrônico da plataforma.'],
+  ['05', 'Cobrar pra processar venda é pedágio do passado.'],
+  ['06', 'Cada R$ 1 que você fatura é seu — e só seu — até prova em contrário.'],
+  ['07', 'Esse manifesto fica em aberto. Tudo que tentarem fazer pra cima de você, a gente desfaz.'],
+];
+---
+
+<Base>
+  <Nav />
+  <main class="relative pt-32 pb-24">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute inset-0" style="background: radial-gradient(800px 500px at 50% 0%, rgba(111,160,255,0.10), transparent 60%);"></div>
+    </div>
+
+    <section class="section">
+      <!-- HEADER -->
+      <div class="reveal mx-auto max-w-3xl text-center">
+        <span class="kicker">Manifesto</span>
+        <h1 class="h-display mt-5 text-5xl leading-[1.0] sm:text-[5rem]">
+          A Korvex joga
+          <span class="block font-editorial italic font-normal text-titan-gradient">o seu jogo.</span>
+        </h1>
+        <p class="mx-auto mt-7 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/75">
+          Sete cláusulas que separam quem está do nosso lado de quem ainda paga pra processar a própria venda.
+        </p>
+      </div>
+
+      <!-- CLAUSES -->
+      <ol class="reveal mx-auto mt-16 grid max-w-2xl gap-3">
+        {clauses.map(([n, t]) => (
+          <li class="flex items-start gap-5 rounded-2xl border border-suede-500/12 bg-white/[0.02] p-6 transition hover:border-titan-500/25">
+            <span class="font-display text-[42px] font-extrabold leading-none text-titan-gradient sm:text-[48px]" style="font-feature-settings:'tnum';">{n}</span>
+            <p class="mt-2 font-display text-[17px] font-semibold leading-snug text-white sm:text-[18px]">{t}</p>
+          </li>
+        ))}
+      </ol>
+
+      <!-- SIGN -->
+      <div class="reveal mx-auto mt-14 max-w-xl text-center">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic !px-8 !py-4 text-[15px]">
+          Assinar manifesto · Criar conta
+          <span class="h-4 w-4" set:html={icon('arrow')}></span>
+        </a>
+        <p class="mt-4 text-[12.5px] text-chrome-300/55">
+          Sua criação de conta é sua assinatura — sem burocracia adicional.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

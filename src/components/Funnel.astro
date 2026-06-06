@@ -1,105 +1,141 @@
 ---
 import { icon } from '../lib/icons';
+import { REGISTER_URL } from '../lib/site';
 
-const palette = ['Página', 'Checkout', 'Order Bump', 'Upsell', 'Downsell', 'Membros'];
-
-// nós do fluxo principal
-const flow = [
-  { icon: 'card', title: 'Checkout', sub: 'R$ 1.997', tone: 'titan', metric: '8,2% conv.' },
-  { icon: 'layers', title: 'Order Bump', sub: '+ R$ 97', tone: 'suede', metric: '38% aceite' },
-  { icon: 'cursor', title: 'Upsell 1-clique', sub: '+ R$ 497', tone: 'titan', metric: '24% aceite' },
-  { icon: 'play', title: 'Área de Membros', sub: 'Acesso liberado', tone: 'gold', metric: 'entrega' },
+const features = [
+  { icon: 'cursor',  title: 'Arraste e solte', desc: 'Construa o fluxo sem código nenhum.' },
+  { icon: 'layers',  title: 'Upsell · Downsell · Order Bump', desc: 'Suba o ticket sem nova compra do cliente.' },
+  { icon: 'sparkle', title: 'Conversão em tempo real',     desc: 'Veja % de aceite de cada nó na hora.' },
 ];
 ---
 
-<section id="funil" class="relative py-24 sm:py-32">
-  <div class="section grid items-center gap-14 lg:grid-cols-[0.82fr_1.18fr]">
-    <!-- copy -->
-    <div class="reveal">
-      <span class="kicker">Funil arrasta e solta</span>
-      <h2 class="h-display mt-6 text-4xl leading-[1.06] sm:text-5xl">
-        O ticket médio sobe <span class="text-titan-gradient">a cada bloco que você solta.</span>
-      </h2>
-      <p class="mt-5 max-w-lg text-pretty leading-relaxed text-chrome-300/75">
-        Um construtor visual de verdade: arraste checkout, order bump, upsell, downsell e área de membros,
-        conecte as etapas e veja a conversão de cada nó em tempo real. Você desenha a jornada — a Korvex executa.
+<section id="funil" class="relative py-16 sm:py-20">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div data-parallax="0.08" class="ambient-drift absolute right-[5%] top-1/3 h-[420px] w-[680px] rounded-full bg-titan-600/10 blur-[140px]"></div>
+    <div data-parallax="0.05" class="absolute left-[5%] top-1/2 h-[280px] w-[480px] rounded-full bg-gold-600/[0.05] blur-[140px]"></div>
+  </div>
+
+  <div class="section">
+    <!-- header — split: title left, copy right -->
+    <div class="reveal grid items-end gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+      <div>
+        <span class="kicker">Funil arrasta e solta</span>
+        <h2 class="h-display mt-6 text-4xl leading-[1.0] sm:text-[3.2rem]">
+          O ticket médio sobe<br />
+          a cada bloco<br />
+          que você <span class="font-display font-black">solta.</span>
+        </h2>
+      </div>
+      <p class="max-w-md text-pretty text-lg leading-relaxed text-chrome-300/72">
+        Construtor visual de verdade. Arraste, conecte e veja a conversão de cada nó em tempo real.
+        <strong class="text-white">Você desenha a jornada — a Korvex executa.</strong>
       </p>
-      <div class="mt-8 grid grid-cols-3 gap-3">
-        <div class="card p-4">
-          <p class="font-display text-2xl font-bold text-white">R$ 2.4k</p>
-          <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Ticket médio</p>
+    </div>
+
+    <!-- HERO IMAGE: real funnel builder screenshot, framed editorially -->
+    <div class="reveal mt-12">
+      <div data-tilt-zone class="relative mx-auto max-w-6xl">
+        <!-- glow underlay -->
+        <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[36px] bg-gradient-to-tr from-titan-600/30 via-transparent to-gold-600/10 blur-3xl"></div>
+
+        <div data-tilt="4" class="tilt browser relative overflow-hidden rounded-2xl border border-suede-500/25 shadow-depth">
+          <div class="browser-bar">
+            <span class="dot bg-[#ff5f57]/80"></span>
+            <span class="dot bg-[#febc2e]/80"></span>
+            <span class="dot bg-[#28c840]/80"></span>
+            <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/funil-de-vendas</span>
+            <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Auto-save
+            </span>
+          </div>
+
+          <!-- real product screenshot -->
+          <div class="relative">
+            <img
+              src="/assets/funnel-builder.png"
+              alt="Construtor de funil Korvex — arrastar e soltar"
+              class="block w-full"
+              loading="lazy"
+            />
+            <!-- subtle dark overlay so floating chips read better -->
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent"></div>
+          </div>
         </div>
-        <div class="card p-4">
-          <p class="font-display text-2xl font-bold text-white">+62%</p>
-          <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Receita/venda</p>
+
+        <!-- floating accent: "Upsell aceito" (desktop only, top-right) -->
+        <div class="absolute z-20 hidden lg:flex" style="top:-22px; right:-32px">
+          <div class="flex items-center gap-2.5 rounded-2xl border border-titan-500/40 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-titan-600/20 text-titan-300" set:html={icon('bolt')}></span>
+            <div>
+              <p class="font-display text-[12px] font-bold leading-none text-white">+ R$ 497</p>
+              <p class="mt-0.5 text-[10px] text-titan-300">Upsell 1-clique aceito</p>
+            </div>
+          </div>
         </div>
-        <div class="card p-4">
-          <p class="font-display text-2xl font-bold text-white">3 min</p>
-          <p class="mt-1 text-[11px] uppercase tracking-wider text-chrome-300/55">Pra testar</p>
+
+        <!-- floating accent: "Conversão" (desktop only, bottom-left) -->
+        <div class="absolute z-20 hidden lg:flex" style="bottom:-22px; left:-32px">
+          <div class="flex items-center gap-2.5 rounded-2xl border border-emerald-500/40 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <p class="font-display text-[12px] font-bold leading-none text-white">+62% ticket médio</p>
+              <p class="mt-0.5 text-[10px] text-emerald-400">vs. checkout único</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- builder canvas -->
-    <div class="reveal">
-      <div data-tilt-zone class="browser">
-        <div class="browser-bar">
-          <span class="dot bg-[#ff5f57]/80"></span>
-          <span class="dot bg-[#febc2e]/80"></span>
-          <span class="dot bg-[#28c840]/80"></span>
-          <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">Construtor de funil · 7D Global</span>
-          <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Salvo</span>
-        </div>
-
-        <!-- palette toolbar -->
-        <div class="flex flex-wrap items-center gap-1.5 border-b border-suede-500/10 px-4 py-2.5">
-          {palette.map((p, i) => (
-            <span class={`rounded-md border px-2.5 py-1 text-[10px] font-medium ${i === 1 ? 'border-titan-500/50 bg-titan-600/15 text-white' : 'border-suede-500/15 bg-white/[0.02] text-chrome-300/65'}`}>{p}</span>
-          ))}
-          <span class="ml-auto hidden text-[10px] text-chrome-300/45 sm:inline">100%</span>
-        </div>
-
-        <!-- canvas -->
-        <div class="relative bg-[radial-gradient(rgba(126,156,189,0.12)_1px,transparent_1px)] [background-size:20px_20px] p-5 sm:p-6">
-          <!-- main flow -->
-          <div class="flex items-stretch gap-2.5 overflow-x-auto pb-2 sm:gap-3">
-            {flow.map((n, i) => (
-              <>
-                <div data-tilt="4" class={`tilt relative w-[124px] flex-none rounded-xl border p-3 backdrop-blur-sm sm:w-[140px] ${
-                  n.tone === 'titan' ? 'border-titan-500/45 bg-titan-600/[0.12]' : n.tone === 'gold' ? 'border-gold-600/40 bg-gold-600/[0.08]' : 'border-suede-500/30 bg-suede-600/[0.14]'
-                }`}>
-                  <div class={`flex h-8 w-8 items-center justify-center rounded-lg p-1.5 ${n.tone === 'gold' ? 'bg-gold-600/15 text-gold-300' : 'bg-white/5 text-titan-300'}`} set:html={icon(n.icon)}></div>
-                  <p class="mt-2.5 text-[12px] font-semibold text-white">{n.title}</p>
-                  <p class="text-[10px] text-chrome-300/60">{n.sub}</p>
-                  <div class="mt-2 inline-flex rounded bg-black/30 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-400">{n.metric}</div>
-                  <!-- connector port -->
-                  {i < flow.length - 1 && <span class="absolute -right-1.5 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-ink bg-titan-400"></span>}
-                </div>
-                {i < flow.length - 1 && (
-                  <div class="flex flex-none flex-col items-center justify-center">
-                    <span class="text-[9px] font-bold text-titan-300">{['78%', '34%', '100%'][i]}</span>
-                    <span class="h-4 w-4 text-suede-400/70" set:html={icon('arrow')}></span>
-                  </div>
-                )}
-              </>
-            ))}
+    <!-- bottom row: 3 features (editorial list) + stats + CTA -->
+    <div class="mt-12 grid items-start gap-8 lg:grid-cols-[1fr_1.1fr]">
+      <!-- features — numbered editorial list, no cards -->
+      <div class="reveal divide-y divide-suede-500/12">
+        {features.map((f, i) => (
+          <div class="flex items-start gap-5 py-5 first:pt-0" style={`transition-delay:${i * 60}ms`}>
+            <span class="font-editorial text-3xl italic leading-none text-titan-400/80">0{i + 1}</span>
+            <div>
+              <p class="font-display text-[15px] font-bold text-white">{f.title}</p>
+              <p class="mt-1 text-[13px] leading-relaxed text-chrome-300/65">{f.desc}</p>
+            </div>
           </div>
+        ))}
+      </div>
 
-          <!-- downsell branch -->
-          <div class="mt-3 flex items-center gap-3 pl-[150px] sm:pl-[176px]">
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-chrome-300/45">se recusar ↘</span>
-            <div class="w-[150px] flex-none rounded-xl border border-dashed border-suede-500/35 bg-white/[0.02] p-3">
-              <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/5 p-1.5 text-suede-300" set:html={icon('repeat')}></div>
-              <p class="mt-2 text-[12px] font-semibold text-white">Downsell</p>
-              <p class="text-[10px] text-chrome-300/60">+ R$ 197 · parcelado</p>
+      <!-- stat band + CTA -->
+      <div class="reveal">
+        <div class="rounded-3xl border border-suede-500/20 bg-gradient-to-br from-navy-800/60 to-ink/70 p-7 sm:p-8">
+          <p class="text-[11px] uppercase tracking-wider text-chrome-300/55">Resultado típico do funil completo</p>
+          <div class="mt-5 grid grid-cols-3 gap-4">
+            <div>
+              <p class="font-editorial text-3xl leading-none text-white sm:text-4xl">R$ 2.4k</p>
+              <p class="mt-2 text-[11px] uppercase tracking-wider text-chrome-300/55">Ticket médio</p>
+            </div>
+            <div class="border-l border-suede-500/15 pl-4">
+              <p class="font-editorial text-3xl leading-none text-titan-gradient sm:text-4xl">+62%</p>
+              <p class="mt-2 text-[11px] uppercase tracking-wider text-chrome-300/55">Receita / venda</p>
+            </div>
+            <div class="border-l border-suede-500/15 pl-4">
+              <p class="font-editorial text-3xl leading-none text-white sm:text-4xl">3 min</p>
+              <p class="mt-2 text-[11px] uppercase tracking-wider text-chrome-300/55">Pra montar</p>
             </div>
           </div>
 
-          <!-- floating drag hint -->
-          <div class="mt-4 inline-flex items-center gap-2 rounded-xl border border-dashed border-titan-500/50 bg-ink/70 px-3.5 py-2.5 text-[12px] text-chrome-200 shadow-glow">
-            <span class="h-4 w-4 text-titan-400" set:html={icon('cursor')}></span>
-            Arraste um bloco para o canvas
+          <div class="mt-6 flex flex-wrap items-center gap-2.5 border-t border-suede-500/15 pt-5">
+            {['Checkout', 'Order Bump', 'Upsell', 'Downsell', 'Membros', 'Página'].map((b, i) => (
+              <span class={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[10px] font-medium ${i === 0 ? 'border-titan-500/50 bg-titan-600/15 text-white' : 'border-suede-500/20 bg-white/[0.02] text-chrome-300/70'}`}>
+                <span class="h-1 w-1 rounded-full bg-titan-400"></span>
+                {b}
+              </span>
+            ))}
           </div>
+
+          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-6">
+            Quero montar meu funil
+            <span class="h-4 w-4" set:html={icon('arrow')}></span>
+          </a>
         </div>
       </div>
     </div>

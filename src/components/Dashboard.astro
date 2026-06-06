@@ -1,0 +1,173 @@
+---
+import { icon } from '../lib/icons';
+
+const features = [
+  {
+    icon: 'bolt',
+    title: 'Métricas em tempo real',
+    desc: 'Saldo, ticket médio, transações e chargeback atualizando sozinhos.',
+  },
+  {
+    icon: 'trophy',
+    title: 'Conquistas integradas',
+    desc: 'Seus marcos de faturamento aparecem direto no painel, com placa em casa.',
+  },
+  {
+    icon: 'clock',
+    title: 'Saque com 1 clique',
+    desc: 'Da tela do saldo direto pro Pix. D0, sem burocracia, sem fila.',
+  },
+];
+
+const liveTxs = [
+  { flag: '🇧🇷', v: 'R$ 1.997,00',  m: 'Pix · agora' },
+  { flag: '🇺🇸', v: 'USD 1.200,00', m: 'Cartão · 18s' },
+  { flag: '🇩🇪', v: 'EUR 890,00',   m: 'Cartão · 1m' },
+];
+---
+
+<section id="dashboard" class="relative py-24 sm:py-28">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div data-parallax="0.06" class="absolute left-1/2 top-1/3 h-[360px] w-[640px] max-w-[110vw] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.10),transparent_60%)] blur-[140px]"></div>
+  </div>
+
+  <div class="section">
+    <!-- header — clean centered -->
+    <div class="reveal mx-auto max-w-3xl">
+      <span class="kicker">Painel</span>
+      <h2 class="h-display mt-5 text-3xl leading-[1.04] sm:text-[3rem]">
+        Sua operação inteira <span class="font-editorial italic font-normal text-titan-gradient">em uma tela.</span>
+      </h2>
+      <p class="mt-4 max-w-xl text-pretty leading-relaxed text-chrome-300/72">
+        Saldo, conquistas, vendas por método e histórico de faturamento — tudo no mesmo lugar, atualizado em tempo real.
+      </p>
+    </div>
+
+    <!-- Dashboard frame (premium) with floating overlays -->
+    <div class="reveal mt-12">
+      <div data-tilt-zone class="relative">
+        <!-- glow underlay -->
+        <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[36px] bg-gradient-to-tr from-titan-600/22 via-transparent to-gold-600/8 blur-3xl"></div>
+
+        <div data-tilt="3" class="tilt browser overflow-hidden">
+          <div class="browser-bar">
+            <span class="dot bg-[#ff5f57]/80"></span>
+            <span class="dot bg-[#febc2e]/80"></span>
+            <span class="dot bg-[#28c840]/80"></span>
+            <span class="ml-3 flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70 font-mono">
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+              app.korvex.com.br/dashboard
+            </span>
+            <span class="ml-auto hidden items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] text-emerald-400 sm:flex font-mono">
+              <span class="relative inline-flex h-1.5 w-1.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              </span>
+              ao vivo
+            </span>
+          </div>
+          <img src="/assets/dashboard.png" alt="Painel Korvex completo" class="block w-full" loading="lazy" />
+        </div>
+
+        <!-- MOBILE floating accents — small, on top of dashboard image -->
+        <div class="absolute right-3 top-16 z-20 lg:hidden animate-floaty">
+          <div class="rounded-lg border border-emerald-500/35 bg-ink/95 px-2.5 py-1.5 shadow-glow backdrop-blur-xl">
+            <div class="flex items-center gap-1.5">
+              <span class="relative inline-flex h-1.5 w-1.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              </span>
+              <p class="text-[9.5px] font-semibold text-white font-mono" style="font-feature-settings:'tnum';">R$ 1.997</p>
+              <p class="text-[8.5px] text-emerald-400">Pix</p>
+            </div>
+          </div>
+        </div>
+        <div class="absolute left-3 bottom-3 z-20 lg:hidden animate-floaty" style="animation-delay:1s">
+          <div class="rounded-lg border border-titan-500/40 bg-ink/95 px-2.5 py-1.5 shadow-glow backdrop-blur-xl">
+            <div class="flex items-center gap-1.5">
+              <span class="rounded bg-titan-600/20 px-1 py-0.5 text-[7.5px] font-bold uppercase tracking-[0.14em] text-titan-300 font-mono">D0</span>
+              <p class="text-[9.5px] font-semibold text-white font-mono" style="font-feature-settings:'tnum';">R$ 113K saque</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating overlay: Vendas ao vivo (top-right, desktop only) -->
+        <div class="absolute right-3 top-16 z-20 hidden w-[190px] xl:right-[-30px] lg:block">
+          <div class="rounded-xl border border-suede-500/30 bg-ink/95 p-3 shadow-glow backdrop-blur-xl">
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <span class="text-[9px] uppercase tracking-[0.16em] text-chrome-300/65 font-mono">Vendas ao vivo</span>
+              <span class="inline-flex items-center gap-1 text-[9px] uppercase tracking-[0.16em] text-emerald-400 font-mono">
+                <span class="relative inline-flex h-1.5 w-1.5">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                </span>
+                live
+              </span>
+            </div>
+            <div class="space-y-1.5">
+              {liveTxs.map((tx, i) => (
+                <div class="feed-item flex items-center gap-2 rounded-md border border-suede-500/12 bg-white/[0.02] px-2 py-1.5" style={`animation-delay:${i * 1.4}s`}>
+                  <span class="text-xs leading-none">{tx.flag}</span>
+                  <div class="min-w-0 flex-1">
+                    <p class="truncate text-[10.5px] font-semibold text-white font-mono" style="font-feature-settings:'tnum';">{tx.v}</p>
+                    <p class="truncate text-[9px] text-chrome-300/55">{tx.m}</p>
+                  </div>
+                  <span class="flex h-3.5 w-3.5 flex-none items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+                    <svg class="h-2 w-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m4 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating overlay: Saque realizado (bottom-left, desktop only) -->
+        <div class="absolute hidden lg:block xl:bottom-[-12px] xl:left-[-40px] left-3 bottom-16 animate-floaty">
+          <div class="rounded-xl border border-titan-500/40 bg-ink/95 px-3 py-2.5 shadow-glow backdrop-blur-xl">
+            <div class="mb-1 flex items-center justify-between gap-3">
+              <span class="text-[9px] uppercase tracking-[0.16em] text-chrome-300/65 font-mono">Saque realizado</span>
+              <span class="rounded bg-titan-600/20 px-1.5 py-0.5 text-[8.5px] font-bold uppercase tracking-[0.14em] text-titan-300 font-mono">D0</span>
+            </div>
+            <p class="font-display text-base font-bold leading-none text-white" style="font-feature-settings:'tnum';">R$ 113.478<span class="text-suede-400">,27</span></p>
+            <p class="mt-1 text-[9.5px] text-titan-400">Pix · caiu agora</p>
+          </div>
+        </div>
+
+        <!-- Floating: Venda aprovada · Korvex (mid-left, desktop only) -->
+        <div class="absolute hidden xl:flex xl:left-[-50px] xl:top-1/2 -translate-y-1/2 animate-floaty" style="animation-delay:1.5s">
+          <div class="rounded-xl border border-titan-500/40 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
+            <div class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg border border-titan-400/30 bg-titan-600/15">
+                <img src="/assets/icon.png" alt="Korvex" class="h-4 w-auto" />
+              </span>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="relative inline-flex h-1.5 w-1.5">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                  </span>
+                  <p class="font-display text-[12px] font-bold leading-none text-white" style="font-feature-settings:'tnum';">Venda aprovada</p>
+                </div>
+                <p class="mt-1 text-[9.5px] text-titan-300 font-mono">+R$ 6.420 · via Korvex</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3 mini-features -->
+    <div class="reveal mt-8 grid gap-4 md:grid-cols-3">
+      {features.map((f, i) => (
+        <div class="mag-card spotlight flex items-start gap-4 rounded-2xl border border-suede-500/12 bg-gradient-to-b from-white/[0.02] to-transparent p-6 shadow-depth" style={`transition-delay:${i * 70}ms`}>
+          <span class="flex h-10 w-10 flex-none items-center justify-center rounded-xl border border-titan-500/20 bg-titan-600/10 p-2 text-titan-400" set:html={icon(f.icon)}></span>
+          <div>
+            <p class="font-display text-[15px] font-semibold text-white">{f.title}</p>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-chrome-300/70">{f.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

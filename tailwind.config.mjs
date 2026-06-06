@@ -40,8 +40,10 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Sora', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Inter Tight"', 'system-ui', 'sans-serif'],
+        sans: ['"Inter Tight"', 'system-ui', 'sans-serif'],
+        editorial: ['"Instrument Serif"', 'Georgia', 'serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
         depth: '0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 50px -20px rgba(0,0,0,0.7)',

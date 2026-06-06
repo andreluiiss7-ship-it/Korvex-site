@@ -2,31 +2,31 @@
 import { icon } from '../lib/icons';
 
 const items = [
-  { icon: 'repeat', title: 'Recorrência', desc: 'Assinaturas com cobrança automática e menos inadimplência.' },
-  { icon: 'users', title: 'Coprodução', desc: 'Split automático entre coprodutores e parceiros.' },
-  { icon: 'link', title: 'Domínio próprio', desc: 'Checkout no seu domínio: confiança que aprova mais.' },
-  { icon: 'pix', title: 'Pix automático', desc: 'Identificado e baixado na hora, sem conferência manual.' },
-  { icon: 'ticket', title: 'Ingressos', desc: 'Eventos com lotes, ingressos e check-in.' },
-  { icon: 'clock', title: 'Monitoramento ao vivo', desc: 'Cada venda, saque e métrica em tempo real.' },
+  { icon: 'repeat', title: 'Recorrência', desc: 'Assinaturas com cobrança automática.' },
+  { icon: 'users', title: 'Coprodução', desc: 'Split automático entre parceiros.' },
+  { icon: 'link', title: 'Domínio próprio', desc: 'Checkout no seu domínio.' },
+  { icon: 'pix', title: 'Pix automático', desc: 'Identificado e baixado na hora.' },
+  { icon: 'ticket', title: 'Ingressos', desc: 'Eventos com lotes e check-in.' },
+  { icon: 'clock', title: 'Tempo real', desc: 'Cada venda e saque ao vivo.' },
 ];
 ---
 
-<section id="recursos" class="relative py-20 sm:py-24">
+<section id="recursos" class="relative py-10 sm:py-12">
   <div class="section">
-    <div class="reveal mx-auto max-w-2xl text-center">
-      <span class="kicker justify-center">+ tudo o que sua operação precisa</span>
-      <h2 class="h-display mt-5 text-3xl leading-[1.08] sm:text-4xl">
-        Sem terceiros, sem gambiarra, <span class="text-titan-gradient">sem perder o fio.</span>
+    <div class="reveal mb-8 flex items-end justify-between gap-4 border-b border-suede-500/12 pb-6">
+      <h2 class="h-display text-2xl leading-[1.05] sm:text-3xl">
+        Mais 6 coisas que <span class="font-display font-black">já vêm dentro.</span>
       </h2>
+      <span class="hidden text-[11px] uppercase tracking-[0.18em] text-chrome-300/50 sm:inline">sem custo extra</span>
     </div>
 
-    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-      {items.map((f) => (
-        <div class="spotlight card group flex flex-col gap-3 p-5 transition-colors hover:border-titan-500/40">
-          <span class="h-8 w-8 text-suede-300 transition-colors group-hover:text-titan-400" set:html={icon(f.icon)}></span>
-          <div>
-            <h4 class="font-display text-sm font-semibold text-white">{f.title}</h4>
-            <p class="mt-1 text-[12px] leading-snug text-chrome-300/55">{f.desc}</p>
+    <div data-tilt-zone class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {items.map((f, i) => (
+        <div data-tilt="5" class="reveal tilt spotlight card group flex items-center gap-3 p-4 transition-colors hover:border-titan-500/40" style={`transition-delay:${i * 50}ms`}>
+          <span class="flex h-9 w-9 flex-none items-center justify-center rounded-lg border border-suede-500/20 bg-white/[0.03] p-2 text-suede-300 transition-colors group-hover:text-titan-400" set:html={icon(f.icon)}></span>
+          <div class="min-w-0">
+            <h4 class="font-display text-[13px] font-semibold leading-tight text-white">{f.title}</h4>
+            <p class="mt-0.5 text-[11px] leading-snug text-chrome-300/55">{f.desc}</p>
           </div>
         </div>
       ))}

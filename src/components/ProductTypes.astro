@@ -1,0 +1,41 @@
+---
+import { icon } from '../lib/icons';
+
+const types = [
+  { icon: 'play', label: 'Curso gravado', desc: 'Módulos, aulas e área de membros.' },
+  { icon: 'headset', label: 'Mentoria', desc: 'Presencial ou online, com área privada.' },
+  { icon: 'users', label: 'Comunidade', desc: 'Assinatura recorrente com área exclusiva.' },
+  { icon: 'ticket', label: 'Evento', desc: 'Ingressos, lotes e check-in digital.' },
+  { icon: 'repeat', label: 'Assinatura', desc: 'Cobrança automática, menos inadimplência.' },
+  { icon: 'globe', label: 'Produto global', desc: 'Venda em qualquer moeda, em qualquer país.' },
+];
+---
+
+<section id="tipos" class="relative py-12 sm:py-14">
+  <div class="section">
+    <div class="reveal flex flex-col items-start justify-between gap-4 border-b border-suede-500/12 pb-6 sm:flex-row sm:items-end">
+      <div>
+        <span class="kicker">O que você vende?</span>
+        <h2 class="h-display mt-4 text-3xl leading-tight sm:text-4xl">
+          Curso, mentoria, evento.<br class="hidden sm:block" />
+          <span class="font-display font-black">Tanto faz.</span>
+        </h2>
+      </div>
+      <p class="max-w-xs text-pretty text-sm leading-relaxed text-chrome-300/65 sm:text-right">
+        Não importa o formato. A estrutura é a mesma.
+      </p>
+    </div>
+
+    <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      {types.map((t, i) => (
+        <div class="reveal mag-card spotlight card group flex flex-col gap-3 p-5 transition-colors hover:border-titan-500/35" style={`transition-delay:${i * 40}ms`}>
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-suede-500/20 bg-titan-600/10 p-2 text-titan-400 transition-colors group-hover:text-white" set:html={icon(t.icon)}></span>
+          <div>
+            <p class="font-display text-[13px] font-semibold text-white">{t.label}</p>
+            <p class="mt-0.5 text-[11px] leading-snug text-chrome-300/55">{t.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

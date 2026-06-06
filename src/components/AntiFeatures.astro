@@ -1,0 +1,43 @@
+---
+const items = [
+  ['Não cobra setup.',                  'Nem mensalidade. Nem assinatura mínima. Você paga taxa só quando vende.'],
+  ['Não trava saque.',                  'Pix D0 direto pra sua conta. Sem fila, sem reserva escondida, sem "análise".'],
+  ['Não muda taxa unilateralmente.',    'A taxa que entrou no contrato é a taxa que sai no extrato. Pra sempre.'],
+  ['Não bloqueia conta sem aviso.',     'Operação séria é tratada como séria. Se algo soar estranho, seu gerente liga — não some.'],
+  ['Não tem letra miúda.',              'Antecipação, reserva, chargeback fee, spread — tudo aberto na home. Zero surpresa no extrato.'],
+];
+---
+
+<section id="anti" class="relative py-24 sm:py-28">
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div class="absolute inset-0" style="background: radial-gradient(700px 420px at 18% 80%, rgba(50,62,84,0.18), transparent 60%);"></div>
+  </div>
+
+  <div class="section">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <span class="kicker">Cinco linhas que a gente recusou</span>
+      <h2 class="h-display mt-5 text-4xl leading-[1.04] sm:text-[3.2rem]">
+        O que a Korvex
+        <span class="font-editorial italic font-normal text-titan-gradient">não faz.</span>
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl text-pretty leading-relaxed text-chrome-300/72">
+        Cada item dessa lista é uma cláusula do "padrão da indústria" que a gente disse não.
+        <strong class="text-white">Pra valer.</strong>
+      </p>
+    </div>
+
+    <div class="reveal mx-auto mt-12 grid max-w-3xl gap-3">
+      {items.map(([t, d], i) => (
+        <div class="group flex items-start gap-4 rounded-2xl border border-suede-500/12 bg-white/[0.02] p-5 transition hover:border-suede-500/22 hover:bg-white/[0.03] sm:p-6" style={`transition-delay:${i * 60}ms`}>
+          <span class="flex h-10 w-10 flex-none items-center justify-center rounded-xl border border-suede-500/15 bg-white/[0.03] text-chrome-300/85">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="font-display text-[16px] font-bold leading-tight text-white sm:text-[17px]">{t}</p>
+            <p class="mt-1.5 text-[14px] leading-relaxed text-chrome-300/72">{d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

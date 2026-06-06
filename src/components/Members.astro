@@ -1,236 +1,125 @@
 ---
 import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
-import MemberArt from './MemberArt.astro';
-
-// Módulos da Mentoria 7D Global — cada um com arte e estado próprios
-const modules = [
-  {
-    n: '01',
-    title: 'Fundamentos da Operação Global',
-    lessons: 8,
-    dur: '1h 42min',
-    progress: 100,
-    state: 'done',
-    art: 'fundamentos',
-  },
-  {
-    n: '02',
-    title: 'Oferta, Copy e Posicionamento',
-    lessons: 10,
-    dur: '2h 18min',
-    progress: 60,
-    state: 'progress',
-    art: 'oferta',
-  },
-  {
-    n: '03',
-    title: 'Tráfego e Escala Internacional',
-    lessons: 12,
-    dur: '3h 05min',
-    progress: 25,
-    state: 'current',
-    art: 'trafego',
-  },
-  {
-    n: '04',
-    title: 'Funis, Upsells e Monetização',
-    lessons: 9,
-    dur: '2h 40min',
-    progress: 0,
-    state: 'locked',
-    art: 'funil',
-  },
-] as const;
-
-// Aulas do módulo em foco (Módulo 03 — Tráfego e Escala Internacional)
-const lessons = [
-  { t: 'Estruturando contas de anúncio globais', d: '14:20', done: true, art: 'trafego' },
-  { t: 'Pixel, eventos e atribuição cross-border', d: '18:05', done: true, art: 'oferta' },
-  { t: 'Escala em dólar sem quebrar o ROAS', d: '22:47', done: false, current: true, art: 'trafego' },
-  { t: 'Mercados frios: EUA, Europa e LATAM', d: '16:33', done: false, art: 'funil' },
-] as const;
 ---
 
-<section id="membros" class="relative py-24 sm:py-32">
+<section id="membros" class="relative py-16 sm:py-20">
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute left-1/2 top-1/3 h-[460px] w-[840px] -translate-x-1/2 rounded-full bg-titan-600/10 blur-[150px]"></div>
+    <div data-parallax="0.1" class="ambient-drift absolute left-1/2 top-1/3 h-[460px] w-[840px] max-w-[110vw] -translate-x-1/2 rounded-full bg-titan-600/10 blur-[150px]"></div>
   </div>
 
   <div class="section">
-    <!-- header -->
-    <div class="reveal mx-auto max-w-3xl text-center">
-      <span class="kicker justify-center">Área de membros</span>
-      <h2 class="h-display mt-6 text-4xl leading-[1.05] sm:text-5xl">
-        Uma área de membros que parece <span class="text-titan-gradient">um streaming de verdade.</span>
-      </h2>
-      <p class="mx-auto mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-chrome-300/72">
-        Seu aluno entra e sente que comprou de uma marca grande — e você vende de novo lá dentro.
-        Veja uma mentoria real hospedada na Korvex.
+    <!-- header — clean editorial split -->
+    <div class="reveal grid items-end gap-6 lg:grid-cols-[1.3fr_1fr]">
+      <div>
+        <span class="kicker">Área de membros</span>
+        <h2 class="h-display mt-5 text-3xl leading-[1.04] sm:text-[2.8rem]">
+          Cara de streaming.<br />
+          <span class="font-editorial italic font-normal text-titan-gradient">Coração de checkout.</span>
+        </h2>
+      </div>
+      <p class="max-w-md text-pretty leading-relaxed text-chrome-300/72">
+        Seu aluno entra, sente que comprou de uma marca grande,
+        e <strong class="text-white">você vende de novo lá dentro</strong> — com +47% de recompra interna.
       </p>
     </div>
 
-    <!-- THE DEVICE -->
-    <div data-tilt-zone class="reveal mt-12">
-      <div data-tilt="3" class="tilt browser mx-auto max-w-5xl">
+    <!-- THE DEVICE — imagem real com moldura premium + floating accents -->
+    <div data-tilt-zone class="reveal relative mx-auto mt-12 max-w-6xl">
+      <!-- ambient glow atrás da imagem -->
+      <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[32px] bg-gradient-to-tr from-titan-600/25 via-transparent to-gold-600/10 blur-3xl"></div>
+
+      <!-- moldura do browser -->
+      <div data-tilt="4" class="tilt beam browser overflow-hidden">
         <div class="browser-bar">
           <span class="dot bg-[#ff5f57]/80"></span>
           <span class="dot bg-[#febc2e]/80"></span>
           <span class="dot bg-[#28c840]/80"></span>
           <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">alunos.7dglobal.com</span>
+          <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex">
+            <span class="relative flex h-1.5 w-1.5">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+            </span>
+            ao vivo
+          </span>
         </div>
+        <img
+          src="/assets/members-dashboard.jpg"
+          alt="Área de membros da Mentoria 7D Global hospedada na Korvex"
+          class="block w-full"
+          loading="lazy"
+          width="2000"
+          height="1125"
+        />
+      </div>
 
-        <!-- app top bar -->
-        <div class="flex items-center justify-between border-b border-suede-500/10 px-5 py-3">
+      <!-- Floating accent 1: "1.247 alunos online" (top-right) -->
+      <div class="absolute hidden lg:block animate-floaty" style="top:-18px; right:-50px">
+        <div class="rounded-2xl border border-emerald-500/30 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
           <div class="flex items-center gap-2.5">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-titan-400 to-titan-600 font-display text-[11px] font-bold text-white">7D</span>
-            <span class="font-display text-sm font-semibold text-white">7D Global</span>
-            <nav class="ml-4 hidden gap-4 text-[12px] text-chrome-300/60 md:flex">
-              <span class="text-white">Início</span><span>Meus cursos</span><span>Comunidade</span><span>Suporte</span>
-            </nav>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="hidden h-7 items-center rounded-full bg-white/5 px-3 text-[11px] text-chrome-300/60 sm:inline-flex">🔍 Buscar aula</span>
-            <span class="h-7 w-7 rounded-full bg-gradient-to-br from-suede-400 to-navy-800"></span>
-          </div>
-        </div>
-
-        <!-- HERO interno -->
-        <div class="relative overflow-hidden">
-          <!-- cover art — usa o artwork do globo/tráfego como capa hero do curso -->
-          <div class="relative h-56 sm:h-72">
-            <MemberArt kind="trafego" />
-            <!-- Gold accent overlay for the "course cover" feel -->
-            <div class="absolute inset-0" style="background:linear-gradient(110deg, rgba(231,190,106,0.14) 0%, transparent 45%), radial-gradient(90% 90% at 10% 90%, rgba(43,95,160,0.3), transparent 55%)"></div>
-            <!-- Scrim for legibility -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/5"></div>
-            <!-- content -->
-            <div class="relative flex h-full flex-col justify-end p-6 sm:p-8">
-              <span class="inline-flex w-fit items-center gap-1.5 rounded-full border border-gold-600/40 bg-gold-600/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-gold-300">Mentoria premium</span>
-              <h3 class="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">Mentoria 7D&nbsp;Global</h3>
-              <p class="mt-1.5 max-w-md text-[13px] text-chrome-200/80">Marketing digital, vendas, escala e negócios globais — do zero à operação internacional.</p>
-              <!-- progress -->
-              <div class="mt-4 flex items-center gap-3">
-                <div class="h-1.5 w-40 overflow-hidden rounded-full bg-white/10">
-                  <div class="h-full rounded-full bg-gradient-to-r from-titan-400 to-titan-600" style="width:42%"></div>
-                </div>
-                <span class="text-[12px] font-semibold text-white">42% concluído</span>
-              </div>
-              <div class="mt-4 flex flex-wrap items-center gap-2.5">
-                <button class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-[13px] font-bold text-navy-900">
-                  <span class="h-4 w-4" set:html={icon('play')}></span> Continuar assistindo
-                </button>
-                <span class="text-[12px] text-chrome-300/70">Continue de onde parou · <span class="text-white">Módulo 03 · Aula 03</span></span>
-              </div>
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400" set:html={icon('users')}></span>
+            <div>
+              <p class="font-display text-sm font-bold leading-none text-white" style="font-feature-settings:'tnum';">1.247</p>
+              <p class="mt-0.5 text-[10px] text-chrome-300/70">alunos online agora</p>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- LESSONS row (Netflix-style) do módulo atual -->
-        <div class="px-5 pt-5 sm:px-7">
-          <div class="flex items-center justify-between">
-            <p class="font-display text-sm font-semibold text-white">Módulo 03 · Tráfego e Escala Internacional</p>
-            <span class="text-[11px] text-chrome-300/55">Continue assistindo →</span>
-          </div>
-          <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {lessons.map((l) => (
-              <div class="group cursor-pointer">
-                <div class="relative aspect-video overflow-hidden rounded-lg ring-1 ring-white/5">
-                  <MemberArt kind={l.art as any} />
-                  <!-- subtle scrim for legibility -->
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/15"></div>
-                  <div class="absolute left-2 top-2 rounded bg-black/55 px-1.5 py-0.5 text-[9px] font-semibold text-chrome-100 backdrop-blur">{l.d}</div>
-                  {l.done && <div class="absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-white"><svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m4 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>}
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100"><span class="h-4 w-4" set:html={icon('play')}></span></span>
-                  </div>
-                  {l.current && <div class="absolute bottom-0 left-0 h-1 bg-titan-400" style="width:38%"></div>}
-                </div>
-                <p class="mt-2 line-clamp-2 text-[12px] font-medium leading-snug text-chrome-200/90">{l.t}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- MODULES list -->
-        <div class="px-5 pb-2 pt-6 sm:px-7">
-          <p class="font-display text-sm font-semibold text-white">Todos os módulos</p>
-          <div class="mt-3 space-y-2.5">
-            {modules.map((m) => (
-              <div class={`flex items-center gap-4 rounded-xl border p-3 ${m.state === 'current' ? 'border-titan-500/40 bg-titan-600/[0.06]' : m.state === 'locked' ? 'border-suede-500/10 bg-white/[0.01] opacity-70' : 'border-suede-500/12 bg-white/[0.02]'}`}>
-                <!-- thumb -->
-                <div class="relative h-14 w-24 flex-none overflow-hidden rounded-lg ring-1 ring-white/5">
-                  <MemberArt kind={m.art as any} />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10"></div>
-                  <span class="absolute bottom-1 left-1.5 font-display text-[13px] font-bold text-white/95 drop-shadow">{m.n}</span>
-                  {m.state === 'locked' && (
-                    <div class="absolute inset-0 flex items-center justify-center bg-black/55 backdrop-blur-[1px]">
-                      <svg class="h-4 w-4 text-chrome-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
-                    </div>
-                  )}
-                </div>
-                <!-- info -->
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-2">
-                    <p class="truncate font-display text-[13px] font-semibold text-white">Módulo {m.n}: {m.title}</p>
-                    {m.state === 'current' && <span class="flex-none rounded bg-titan-600/25 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-titan-300">Assistindo</span>}
-                    {m.state === 'done' && <span class="flex-none rounded bg-emerald-500/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-400">Concluído</span>}
-                  </div>
-                  <p class="mt-0.5 text-[11px] text-chrome-300/55">{m.lessons} aulas · {m.dur}</p>
-                  {m.state !== 'locked' ? (
-                    <div class="mt-1.5 h-1 w-full max-w-[220px] overflow-hidden rounded-full bg-white/8">
-                      <div class={`h-full rounded-full ${m.progress === 100 ? 'bg-emerald-500' : 'bg-titan-400'}`} style={`width:${m.progress}%`}></div>
-                    </div>
-                  ) : (
-                    <p class="mt-1 text-[11px] text-chrome-300/45">Conclua o Módulo 03 para desbloquear</p>
-                  )}
-                </div>
-                <span class={`flex-none ${m.state === 'locked' ? 'text-chrome-300/30' : 'text-titan-400'}`}>
-                  <span class="block h-5 w-5" set:html={icon(m.state === 'locked' ? 'shield' : 'play')}></span>
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- UPSELL dentro da área de membros -->
-        <div class="m-5 mt-4 overflow-hidden rounded-xl border border-gold-600/30 bg-gradient-to-r from-[#221806]/80 via-[#15233b]/70 to-[#0a1a2f]/80 p-4 sm:m-7 sm:mt-4 sm:p-5">
-          <div class="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-            <div class="flex items-center gap-3">
-              <span class="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="rounded bg-gold-600/20 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-gold-300">Upgrade disponível</span>
-                </div>
-                <p class="mt-1 font-display text-sm font-bold text-white">7D Global Advanced — mentorias ao vivo + bastidores de operação</p>
-                <p class="text-[11px] text-chrome-300/65">Desbloqueie calls semanais, templates e o módulo de negócios cross-border.</p>
-              </div>
+      <!-- Floating accent 2: "Upsell vendido +R$497" (bottom-left) -->
+      <div class="absolute hidden lg:block animate-floaty" style="bottom:-12px; left:-50px; animation-delay:1.2s">
+        <div class="rounded-2xl border border-gold-600/35 bg-ink/95 px-3.5 py-2.5 shadow-gold backdrop-blur-xl">
+          <div class="flex items-center gap-2.5">
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
+            <div>
+              <p class="font-display text-sm font-bold leading-none text-white">+R$ 497</p>
+              <p class="mt-0.5 text-[10px] text-gold-300">Upsell vendido na área</p>
             </div>
-            <button class="flex-none rounded-lg bg-gradient-to-b from-gold-300 to-gold-600 px-4 py-2 text-[13px] font-bold text-[#1c1608] shadow-gold">Fazer upgrade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating accent 3: "+47% recompra" (mid-right) -->
+      <div class="absolute hidden xl:flex animate-floaty" style="top:42%; right:-40px; animation-delay:0.6s">
+        <div class="rounded-2xl border border-titan-500/35 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
+          <div class="flex items-center gap-2.5">
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/15 text-titan-400">
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div>
+              <p class="font-display text-sm font-bold leading-none text-white">+47%</p>
+              <p class="mt-0.5 text-[10px] text-titan-400">recompra interna</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating accent 4: certificate (mid-left) -->
+      <div class="absolute hidden xl:flex animate-floaty" style="top:30%; left:-32px; animation-delay:1.8s">
+        <div class="rounded-2xl border border-suede-500/35 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
+          <div class="flex items-center gap-2.5">
+            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-500/15 text-purple-300">
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="5"/><path d="M9 13l-2 7 5-3 5 3-2-7"/></svg>
+            </span>
+            <div>
+              <p class="font-display text-sm font-bold leading-none text-white">Certificado</p>
+              <p class="mt-0.5 text-[10px] text-purple-300/80">emitido · 2s</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- value band + CTA -->
-    <div class="reveal mx-auto mt-10 flex max-w-5xl flex-col items-center justify-between gap-5 rounded-2xl border border-suede-500/15 bg-white/[0.02] p-6 sm:flex-row sm:p-7">
-      <div class="grid gap-4 sm:grid-cols-3">
-        {[
-          ['play', 'Experiência de streaming', 'Trilhas, módulos, progresso e "continue assistindo".'],
-          ['bolt', 'Upsell dentro da área', 'Venda o próximo nível no pico de atenção do aluno.'],
-          ['link', 'Domínio e marca própria', 'Tudo no seu domínio, com a sua identidade.'],
-        ].map(([ic, t, d]) => (
-          <div class="flex items-start gap-3">
-            <span class="mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-lg border border-suede-500/25 bg-titan-600/10 p-2 text-titan-400" set:html={icon(ic)} />
-            <div>
-              <p class="text-[13px] font-semibold text-white">{t}</p>
-              <p class="text-[11px] leading-snug text-chrome-300/60">{d}</p>
-            </div>
-          </div>
-        ))}
+    <!-- compact band + CTA -->
+    <div class="reveal mx-auto mt-10 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-suede-500/15 bg-white/[0.02] px-6 py-5 sm:flex-row">
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[12px] text-chrome-300/75 sm:justify-start">
+        <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-titan-400"></span>Streaming premium</span>
+        <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-titan-400"></span>Upsell interno</span>
+        <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-titan-400"></span>Domínio próprio</span>
       </div>
       <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic flex-none">
-        Criar minha área de membros
+        Quero essa área
         <span class="h-4 w-4" set:html={icon('arrow')}></span>
       </a>
     </div>

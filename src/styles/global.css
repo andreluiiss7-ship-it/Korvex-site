@@ -4,6 +4,36 @@
 
 :root {
   color-scheme: dark;
+
+  /* ===== Korvex × Claude Design tokens ===== */
+  --bg-0:#050B14;
+  --bg-1:#0A1220;
+  --bg-2:#0F1726;
+  --bg-3:#16203A;
+  --bg-4:#1C2745;
+
+  --line-1:rgba(255,255,255,0.06);
+  --line-2:rgba(255,255,255,0.10);
+  --line-3:rgba(255,255,255,0.16);
+
+  --t-1:#F4F6FB;
+  --t-2:#A8B0C2;
+  --t-3:#6A7388;
+  --t-4:#454C61;
+
+  --blue:#3B82F6;
+  --blue-2:#6FA0FF;
+  --blue-glow:rgba(59,130,246,0.35);
+  --blue-tint:rgba(59,130,246,0.08);
+
+  --gold-1:#C9A35E;
+  --gold-2:#E2C386;
+  --gold-tint:rgba(201,163,94,0.10);
+
+  --silver:#B8C0CC;
+  --green:#34D399;
+
+  --shadow-card:0 1px 0 rgba(255,255,255,0.04) inset, 0 30px 60px -30px rgba(0,0,0,0.6);
 }
 
 html {
@@ -12,13 +42,55 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+/* ---- Kill horizontal scroll globally ---- */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Sections clip decorative overflow on X but keep Y reveals/sticky working */
+section {
+  overflow-x: clip;
+}
+
+/* Images never blow past their container */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Safety net: nothing should exceed the viewport width */
+*,
+*::before,
+*::after {
+  min-width: 0;
+}
+
+/* Long words/headlines wrap nicely on narrow screens */
+h1, h2, h3 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Hide scrollbars on horizontal scroll containers but keep functionality */
+.scroll-x-hide::-webkit-scrollbar { display: none; }
+.scroll-x-hide { scrollbar-width: none; }
+
 body {
   @apply bg-abyss text-chrome-200 font-sans antialiased;
+  font-feature-settings: 'ss01', 'cv11', 'kern' 1;
+  letter-spacing: -0.005em;
   background-image:
-    radial-gradient(1100px 600px at 82% -12%, rgba(43, 95, 160, 0.2), transparent 60%),
+    radial-gradient(1100px 600px at 82% -12%, rgba(59, 130, 246, 0.16), transparent 60%),
     radial-gradient(800px 600px at -8% 8%, rgba(62, 92, 126, 0.14), transparent 55%),
     radial-gradient(600px 600px at 50% 120%, rgba(201, 146, 58, 0.05), transparent 60%);
   background-attachment: fixed;
+}
+
+/* Mono for data labels (transaction amounts, dates, codes) */
+.font-mono, [class*="font-mono"] {
+  font-feature-settings: 'tnum' 1, 'ss01' 1;
 }
 
 ::selection {
@@ -26,10 +98,56 @@ body {
   color: #fff;
 }
 
-/* ---- Typography helpers ---- */
+/* ===== Korvex Type System v2 ===== */
+:root {
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+}
+
 .h-display {
-  @apply font-display font-semibold tracking-tight text-white;
+  @apply font-display font-bold text-white;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+/* Editorial serif accent (used in 4 pivot moments only: Hero, Problem, Awards, FinalCTA) */
+.font-editorial {
+  font-feature-settings: 'liga' 1, 'kern' 1;
+  letter-spacing: -0.015em;
+}
+
+/* Unified mono micro-label (replaces 23+ inline font-family declarations) */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(176, 179, 184, 0.55);
+}
+.label-mono-md {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.label-mono-tnum { font-feature-settings: 'tnum' 1, 'kern' 1; }
+
+/* Lead paragraphs — 2 sizes only */
+.lead    { font-size: 17.5px; line-height: 1.55; color: rgba(176, 179, 184, 0.78); }
+.lead-sm { font-size: 14.5px; line-height: 1.5;  color: rgba(176, 179, 184, 0.72); }
+
+/* Stat big — used in Hero stats row */
+.stat-big {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 800;
   letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  color: #fff;
+  line-height: 1;
 }
 
 .text-balance { text-wrap: balance; }
@@ -169,15 +287,27 @@ body {
   mix-blend-mode: overlay;
 }
 
-/* Section eyebrow with a leading hairline — more editorial than a pill */
+/* Section eyebrow — Geist Mono with luminous tick dot (Claude Design language) */
 .kicker {
-  @apply inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-suede-300;
+  @apply inline-flex items-center gap-2.5 text-[11px] font-medium uppercase text-titan-400;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  letter-spacing: 0.22em;
 }
 .kicker::before {
   content: '';
-  width: 28px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(111, 163, 224, 0.8));
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6FA0FF;
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.55);
+  flex: none;
+}
+.kicker.gold {
+  color: #E2C386;
+}
+.kicker.gold::before {
+  background: #C9A35E;
+  box-shadow: 0 0 14px rgba(201, 163, 94, 0.55);
 }
 
 /* Conic beam border for hero / spotlight cards */
@@ -286,3 +416,695 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .beam::before, .feed-item, .animate-spin-slow, .animate-spin-rev { animation: none !important; }
 }
+
+/* ============================================================
+   PREMIUM POLISH v3 — subtle 3D, hover lift, link underlines
+   ============================================================ */
+
+/* Slightly stronger lift + sheen on .card */
+.card {
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(111, 163, 224, 0.32);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 30px 70px -35px rgba(43, 95, 160, 0.6),
+    0 0 0 1px rgba(111, 163, 224, 0.08);
+}
+
+/* Sheen sweep on cards (super subtle) */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.08) 50%, transparent 70%);
+  background-size: 250% 100%;
+  background-position: -100% 0;
+  opacity: 0;
+  transition: opacity 0.6s, background-position 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.card:hover::before {
+  opacity: 1;
+  background-position: 200% 0;
+}
+
+/* Animated link underline */
+.link-anim {
+  position: relative;
+  display: inline-block;
+}
+.link-anim::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(111, 163, 224, 0.9), rgba(245, 217, 139, 0.7));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.link-anim:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Stronger button feedback */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--bx, 50%) var(--by, 50%), rgba(255, 255, 255, 0.18), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.btn:hover::after { opacity: 1; }
+
+/* Scroll-reveal stagger helper (used by .reveal-stagger) — children get .reveal via JS */
+
+/* Better image render in browser frames */
+.browser img { display: block; }
+
+/* Slow float for hero glow (subtle ambient motion) */
+@keyframes ambient-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(20px, -16px, 0); }
+}
+.ambient-drift { animation: ambient-drift 12s ease-in-out infinite; will-change: transform; }
+
+/* Number tick highlight */
+.tick-flash {
+  animation: tick-flash 1.6s ease-out;
+}
+@keyframes tick-flash {
+  0%   { color: rgba(111, 163, 224, 1); }
+  100% { color: inherit; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-drift { animation: none !important; }
+}
+
+/* Mobile perf — kill heavy float animations + blurs on small screens */
+@media (max-width: 1023px) {
+  .animate-floaty, .ambient-drift { animation: none !important; }
+  .backdrop-blur-xl, .backdrop-blur-lg, .backdrop-blur { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .beam::before { display: none !important; }
+}
+
+/* ============================================================
+   MOTION INNOVATION v4 — word reveal, magnetic 3D, scroll polish
+   ============================================================ */
+
+/* Word-by-word reveal: wrap each word in a .word span and add .text-reveal to parent */
+.text-reveal .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--word-index, 0) * 70ms);
+}
+.text-reveal.in .word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Magnetic card hover — entire card tilts toward cursor (more refined than data-tilt) */
+.mag-card {
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+              border-color 0.4s,
+              box-shadow 0.4s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.mag-card:hover {
+  border-color: rgba(111, 163, 224, 0.4);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.10) inset,
+    0 40px 80px -30px rgba(43, 95, 160, 0.5),
+    0 0 0 1px rgba(111, 163, 224, 0.10);
+}
+
+/* Scroll-snap-ish soft entrance */
+.lift-on-scroll {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.lift-on-scroll.in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Animated count-up flash */
+.num-counter {
+  font-feature-settings: 'tnum' 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Refined eyebrow underline */
+.kicker-line {
+  position: relative;
+  padding-bottom: 8px;
+}
+.kicker-line::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(111, 163, 224, 0.9), transparent);
+}
+
+/* Halo follow on data-magnetic elements (different from .magnetic) */
+[data-magnet] {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+/* Editorial signature line */
+.sig-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: rgba(199, 210, 221, 0.7);
+}
+.sig-line::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: rgba(199, 210, 221, 0.25);
+}
+
+/* Smooth scroll snap moments for hero/awards */
+.scroll-snap-section { scroll-snap-align: start; }
+
+@media (prefers-reduced-motion: reduce) {
+  .text-reveal .word { opacity: 1 !important; transform: none !important; }
+  .lift-on-scroll { opacity: 1 !important; transform: none !important; }
+}
+
+/* ============================================================
+   CLAUDE DESIGN PORT — premium components
+   ============================================================ */
+
+/* ---- Compare table (gateway comum vs Korvex) ---- */
+.cmp-table {
+  border-radius: 24px;
+  border: 1px solid var(--line-1);
+  background: var(--bg-1);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.cmp-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  border-top: 1px solid var(--line-1);
+}
+.cmp-row:first-child { border-top: 0; }
+.cmp-row > div {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+.cmp-feat { font-size: 15px; font-weight: 500; color: var(--t-1); letter-spacing: -0.01em; }
+.cmp-feat span { color: var(--t-3); font-size: 12.5px; font-weight: 400; letter-spacing: 0; line-height: 1.45; margin-top: 2px; }
+.cmp-cell { font-size: 14px; color: var(--t-2); }
+.cmp-cell.bad { color: var(--t-3); }
+.cmp-cell.good {
+  color: var(--t-1);
+  background: linear-gradient(180deg, rgba(59,130,246,0.05), transparent);
+  position: relative;
+}
+/* the animated blue beam on the Korvex column */
+.cmp-cell.good::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--blue) 30%, var(--blue-2) 50%, var(--blue) 70%, transparent);
+  background-size: 100% 200%;
+  background-position: 0 -100%;
+  animation: cmp-beam 3.5s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+@keyframes cmp-beam {
+  0%   { background-position: 0 -100%; opacity: 0.3; }
+  50%  { background-position: 0 100%; opacity: 1; }
+  100% { background-position: 0 300%; opacity: 0.3; }
+}
+.cmp-cell b { font-weight: 550; color: var(--t-1); font-size: 14.5px; letter-spacing: -0.005em; }
+.cmp-ic {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex: none;
+}
+.cmp-cell.bad .cmp-ic { background: rgba(239,68,68,0.10); color: #EF6262; }
+.cmp-cell.good .cmp-ic { background: rgba(52,211,153,0.10); color: var(--green); }
+.cmp-row.head > div {
+  padding: 18px 28px;
+  background: var(--bg-2);
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--t-3);
+  font-weight: 500;
+}
+.cmp-row.head .lbl-kx {
+  color: var(--blue-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 768px) {
+  .cmp-row { grid-template-columns: 1fr; }
+  .cmp-row > div { border-top: 1px solid var(--line-1); padding: 16px 18px; }
+  .cmp-row.head { display: none; }
+  .cmp-cell.good::before { display: none; }
+}
+
+/* ---- Live transactions card (Hero) ---- */
+.live-card {
+  position: relative;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent), var(--bg-1);
+  border: 1px solid var(--line-1);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.live-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.live-head .t {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--t-2);
+  font-weight: 500;
+}
+.live-head .t b { color: var(--t-1); font-weight: 550; }
+.live-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #22C55E;
+}
+.live-pulse .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 0 4px rgba(34,197,94,0.15);
+  animation: live-pulse-ring 1.5s ease-in-out infinite;
+}
+@keyframes live-pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(34,197,94,0.15); }
+  50%      { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+}
+.tx-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 13px 0;
+  border-top: 1px solid var(--line-1);
+}
+.tx-row:first-of-type { border-top: 0; }
+.tx-flag {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-3);
+  font-size: 16px;
+  line-height: 1;
+  border: 1px solid var(--line-1);
+}
+.tx-meta { min-width: 0; }
+.tx-meta b { display: block; font-weight: 500; font-size: 14px; letter-spacing: -0.005em; color: var(--t-1); }
+.tx-meta span { color: var(--t-3); font-size: 12px; display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.tx-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--t-4); }
+.tx-amount {
+  font-family: 'Geist Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--t-1);
+  font-feature-settings: 'tnum';
+  text-align: right;
+}
+.tx-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #22C55E;
+  font-weight: 500;
+  margin-top: 3px;
+  justify-content: flex-end;
+}
+.tx-status .d {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22C55E;
+}
+.live-foot {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.live-foot .tot { display: flex; align-items: baseline; gap: 8px; }
+.live-foot .tot b {
+  font-family: 'Geist Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--t-1);
+  font-feature-settings: 'tnum';
+}
+.live-foot .tot span { color: var(--t-3); font-size: 12px; }
+.live-foot .lbl {
+  font-family: 'Geist Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--t-3);
+}
+
+/* Hero stat strip (4 columns) */
+.hero-stats {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line-1);
+  border-bottom: 1px solid var(--line-1);
+}
+.hstat {
+  padding: 30px 24px;
+  border-right: 1px solid var(--line-1);
+}
+.hstat:last-child { border-right: 0; }
+.hstat b {
+  display: block;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--t-1);
+  font-feature-settings: 'tnum';
+  margin-bottom: 8px;
+}
+.hstat span {
+  color: var(--t-3);
+  font-size: 12px;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+@media (max-width: 1024px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .hstat { border-right: none; border-bottom: 1px solid var(--line-1); }
+  .hstat:nth-child(odd) { border-right: 1px solid var(--line-1); }
+}
+@media (max-width: 480px) {
+  .hero-stats { grid-template-columns: 1fr; }
+  .hstat { border-right: none !important; border-bottom: 1px solid var(--line-1); padding: 22px 18px; }
+  .hstat:last-child { border-bottom: 0; }
+}
+
+/* ---- Tier cards (Premiações) ---- */
+.tier {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0A0B10;
+  border: 1px solid var(--line-1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), border-color 0.3s, box-shadow 0.3s;
+}
+.tier:hover {
+  transform: translateY(-6px);
+  border-color: var(--line-3);
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7);
+}
+.tier-img {
+  aspect-ratio: 3/4;
+  background: #0A0B10;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.tier-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tier-img.bracelet {
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 60%, rgba(184,192,204,0.08), transparent 60%),
+    #0A0B10;
+}
+.tier-img.bracelet img {
+  object-fit: contain;
+  width: auto;
+  max-height: 75%;
+  filter: drop-shadow(0 30px 40px rgba(0,0,0,0.5));
+}
+.tier-body {
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--line-1);
+}
+.tier-lvl {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--t-3);
+}
+.tier-amount {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-feature-settings: 'tnum';
+  margin-top: 4px;
+}
+.tier-name {
+  font-size: 14px;
+  color: var(--t-2);
+  font-weight: 450;
+  margin-top: 2px;
+}
+.tier.silver .tier-amount { color: var(--silver); }
+.tier.blue   .tier-amount { color: var(--blue-2); }
+.tier.steel  .tier-amount { color: #D8DEE8; }
+.tier.gold   .tier-amount { color: var(--gold-2); }
+.tier.gold {
+  border-color: rgba(201,163,94,0.18);
+  background:
+    radial-gradient(400px 200px at 50% 0%, rgba(201,163,94,0.10), transparent 60%),
+    #0A0B10;
+}
+.tier.gold::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from 0deg, transparent, rgba(226,195,134,0.5), transparent 30%, transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  animation: tier-gold-rotate 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes tier-gold-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Millionaire stage ---- */
+.mil-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 56px;
+  align-items: center;
+  border-radius: 32px;
+  overflow: hidden;
+  background:
+    radial-gradient(500px 300px at 10% 50%, rgba(201,163,94,0.14), transparent 60%),
+    linear-gradient(180deg, #0A0B10, #06070A);
+  border: 1px solid rgba(201,163,94,0.22);
+  box-shadow: 0 40px 80px -40px rgba(201,163,94,0.22);
+}
+.mil-img {
+  aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+}
+.mil-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 1024px) {
+  .mil-stage { grid-template-columns: 1fr; }
+  .mil-img { aspect-ratio: 16/10; }
+}
+
+/* Confetti dorada cayendo lentamente sobre el milionario stage */
+.mil-stage .sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold-2);
+  box-shadow: 0 0 10px rgba(226,195,134,0.7);
+  pointer-events: none;
+  opacity: 0;
+  animation: sparkle-fall var(--dur, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes sparkle-fall {
+  0%   { opacity: 0; transform: translateY(-30px) scale(0.5); }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(60vh) scale(1); }
+}
+
+/* ---- Payout list (Pricing) ---- */
+.payout {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-1);
+  transition: transform 0.3s cubic-bezier(0.2,0.7,0.2,1), border-color 0.3s, box-shadow 0.3s;
+}
+.payout:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-2);
+  box-shadow: 0 20px 40px -25px rgba(0,0,0,0.5);
+}
+.payout-i {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--bg-3);
+  display: grid;
+  place-items: center;
+  color: var(--blue-2);
+  border: 1px solid var(--line-2);
+}
+.payout-i svg { width: 18px; height: 18px; }
+.payout b { display: block; font-size: 15px; font-weight: 550; letter-spacing: -0.01em; margin-bottom: 3px; color: var(--t-1); }
+.payout span { color: var(--t-2); font-size: 13px; line-height: 1.5; }
+.payout-tag {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  color: var(--blue-2);
+  font-weight: 500;
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: var(--blue-tint);
+  border: 1px solid rgba(59,130,246,0.2);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.payout.gold {
+  background: linear-gradient(180deg, rgba(201,163,94,0.06), transparent), var(--bg-2);
+  border-color: rgba(201,163,94,0.20);
+}
+.payout.gold .payout-i {
+  background: var(--gold-tint);
+  color: var(--gold-2);
+  border-color: rgba(201,163,94,0.25);
+}
+.payout.gold .payout-tag {
+  background: var(--gold-tint);
+  color: var(--gold-2);
+  border-color: rgba(201,163,94,0.3);
+}
+
+/* ---- Globe orbital effects (Cross-border) ---- */
+@keyframes orbit-rotate {
+  to { transform: rotate(360deg); }
+}
+@keyframes globe-particle {
+  0%   { transform: translateX(0) scale(0); opacity: 0; }
+  20%  { opacity: 1; transform: scale(1); }
+  80%  { opacity: 1; }
+  100% { transform: translateX(-160px) scale(0); opacity: 0; }
+}
+@keyframes pulse-station {
+  0%, 100% { box-shadow: 0 0 0 0 var(--pulse-c, rgba(111,160,255,0.7)); }
+  50%      { box-shadow: 0 0 0 12px transparent; }
+}
+
+/* ---- Currency floating symbols ---- */
+.cb-symbol {
+  position: absolute;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: rgba(255,255,255,0.65);
+  text-shadow: 0 0 24px rgba(0,0,0,0.65);
+  font-size: clamp(28px, 4vw, 56px);
+  animation: cb-symbol-drift var(--dur, 10s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes cb-symbol-drift {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(-12px); opacity: 0.9; }
+}
+
+/* ---- Number counters ---- */
+[data-counter] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
