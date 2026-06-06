@@ -86,7 +86,48 @@ const stats = [
   @media (min-width: 1024px) {
     .founders-frame { aspect-ratio: auto; height: 100%; min-height: 520px; }
   }
+
   /* Foto centralizada — object-position ajustado pra centrar nos fundadores */
   .founders-photo { object-position: center 50%; }
   @media (min-width: 1024px) { .founders-photo { object-position: center 35%; } }
+
+  /* Atmosfera de esfumaçamento na entrada (fallback IntersectionObserver) */
+  .founders-photo {
+    opacity: 0;
+    filter: blur(28px) saturate(0.6);
+    transform: scale(1.12);
+    transition: opacity 1.4s ease, filter 1.4s ease, transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in .founders-photo { opacity: 1; filter: blur(0) saturate(1); transform: scale(1); }
+  /* Mobile: mantém leve zoom no final pra Ken Burns feel */
+  @media (max-width: 640px) {
+    .reveal.in .founders-photo { transform: scale(1.06); }
+  }
+
+  /* Scroll-driven (browsers modernos) — entrada gradual com blur que se dissolve conforme a seção sobe */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .founders-photo {
+        animation: founders-smoke-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 35%;
+        transition: none;
+        opacity: 1;
+        filter: none;
+        transform: none;
+      }
+      @keyframes founders-smoke-in {
+        0%   { opacity: 0; filter: blur(32px) saturate(0.55); transform: scale(1.15); }
+        60%  { opacity: 0.85; filter: blur(8px) saturate(0.85); transform: scale(1.08); }
+        100% { opacity: 1; filter: blur(0) saturate(1); transform: scale(1); }
+      }
+      @media (max-width: 640px) {
+        @keyframes founders-smoke-in {
+          0%   { opacity: 0; filter: blur(36px) saturate(0.5); transform: scale(1.22); }
+          60%  { opacity: 0.9; filter: blur(8px) saturate(0.85); transform: scale(1.12); }
+          100% { opacity: 1; filter: blur(0) saturate(1); transform: scale(1.06); }
+        }
+      }
+    }
+  }
 </style>
