@@ -37,7 +37,7 @@ const tiers = [
       {tiers.map((t, i) => (
         <div class={`tier tier-compact ${t.variant}`} style={`transition-delay:${i * 80}ms`}>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
-            <img src={t.img} alt={t.name} loading="lazy" />
+            <img src={t.img} alt={t.name} loading="lazy" decoding="async" />
           </div>
           <div class="tier-body">
             <div class="tier-lvl">{t.lvl}</div>
@@ -61,7 +61,7 @@ const tiers = [
       <span class="sparkle" style="top:6%;left:74%;--dur:12s;--delay:0.6s;"></span>
 
       <div class="mil-img">
-        <img src="/assets/placa-1mm.jpg" alt="Placa R$1.000.000" loading="lazy" />
+        <img src="/assets/placa-1mm.jpg" alt="Placa R$1.000.000" loading="lazy" decoding="async" />
         <!-- conic gold glow rotating behind -->
         <div class="pointer-events-none absolute inset-0 mix-blend-screen" style="background: conic-gradient(from 0deg, transparent 0deg, rgba(226,195,134,0.15) 90deg, transparent 180deg, rgba(226,195,134,0.10) 270deg, transparent 360deg); animation: orbit-rotate 14s linear infinite;"></div>
         <!-- top spotlight -->

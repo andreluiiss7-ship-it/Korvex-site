@@ -127,7 +127,7 @@ const falling = [
               const c = byId[f.id];
               return (
                 <div class="falling absolute" style={`--delay:${f.delay}s; --x:${f.x}%; --rot:${f.rot}deg`}>
-                  <img src={`/assets/competitors/${c.file}`} alt={c.name} class="logo-square falling-square" loading="lazy" />
+                  <img src={`/assets/competitors/${c.file}`} alt={c.name} class="logo-square falling-square" loading="lazy" decoding="async" />
                 </div>
               );
             })}

@@ -29,8 +29,18 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#050B14" />
 
-    <!-- Preload critical font (Inter Tight 700 — usado no h1 do Hero) -->
+    <!-- Resource hints — destrava conexões críticas o quanto antes -->
+    <link rel="dns-prefetch" href="https://wa.me" />
+    <link rel="dns-prefetch" href="https://app.korvex.com.br" />
+    <link rel="preconnect" href="https://app.korvex.com.br" crossorigin />
+
+    <!-- Preload assets críticos pra cima da dobra -->
     <link rel="preload" as="image" href="/assets/icon.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/logo-white.png" fetchpriority="high" />
+
+    <!-- Prefetch (low-priority) assets do segundo viewport -->
+    <link rel="prefetch" as="image" href="/assets/founders.jpg" />
+    <link rel="prefetch" as="image" href="/assets/dashboard.jpg" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
