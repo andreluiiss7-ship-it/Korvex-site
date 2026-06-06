@@ -54,6 +54,12 @@ section {
   overflow-x: clip;
 }
 
+/* Perf: skip painting of offscreen sections (não afeta visual, só ganha render budget) */
+section[id]:not(#topo) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
 /* Images never blow past their container */
 img {
   max-width: 100%;

@@ -29,6 +29,9 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#050B14" />
 
+    <!-- Preload critical font (Inter Tight 700 — usado no h1 do Hero) -->
+    <link rel="preload" as="image" href="/assets/icon.png" fetchpriority="high" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
