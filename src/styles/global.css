@@ -1012,7 +1012,9 @@ section[id].in-view::before { opacity: 1; }
 /* Mobile: tiers compactos (10K, 100K, 500K) — só o 1MM finale fica grande */
 @media (max-width: 640px) {
   .tier-compact { border-radius: 14px; }
-  .tier-compact .tier-img { aspect-ratio: 1 / 1; }
+  /* Mantém o aspect 3/4 original pra não cortar o topo das placas */
+  .tier-compact .tier-img { aspect-ratio: 3 / 4; }
+  .tier-compact .tier-img img { object-position: center; }
   .tier-compact .tier-img.bracelet { padding: 10px; }
   .tier-compact .tier-img.bracelet img { max-height: 80%; }
   .tier-compact .tier-body { padding: 8px 8px 10px; gap: 2px; }
