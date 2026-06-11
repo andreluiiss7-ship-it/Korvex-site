@@ -104,6 +104,14 @@ body {
   color: #fff;
 }
 
+/* A11y: navegação por teclado visível */
+:focus-visible {
+  outline: 2px solid #6FA3E0;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
 /* ===== Korvex Type System v2 ===== */
 :root {
   --font-display: 'Inter Tight', system-ui, sans-serif;

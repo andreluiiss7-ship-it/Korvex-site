@@ -18,10 +18,12 @@ const pile = [
   { id:'perfectpay', bottom:18, left:78, rot:12,  scale:0.92, z:3 },
 ];
 
-// Falling
+// Falling — delays sobrepostos: sempre tem algo caindo
 const falling = [
-  { id:'kirvano', delay:0,   x:38, rot:-22 },
-  { id:'cakto',   delay:2.4, x:62, rot:18 },
+  { id:'kirvano', delay:0,   x:36, rot:-22 },
+  { id:'cakto',   delay:1.7, x:62, rot:18 },
+  { id:'hotmart', delay:3.4, x:48, rot:-12 },
+  { id:'kiwify',  delay:5.1, x:28, rot:15 },
 ];
 ---
 
@@ -36,7 +38,7 @@ const falling = [
       <span class="kicker">A conta que ninguém te mostra</span>
       <h2 class="h-display mt-5 text-4xl leading-[1.02] sm:text-[3.6rem]">
         Eles dizem 4,99%.
-        <span class="block font-editorial italic font-normal text-chrome-300/55">A real é o dobro.</span>
+        <span class="block font-editorial italic font-normal text-chrome-300/60">A real é o dobro.</span>
       </h2>
       <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/80">
         Você assina por 4,99% e fecha o mês com <strong class="text-white">12% no buraco</strong>. Antecipação, reserva, chargeback, spread — cada nome, um pedaço seu virando lucro deles.
@@ -104,6 +106,9 @@ const falling = [
 
             <!-- INNER MOUTH (dark hole) -->
             <ellipse cx="300" cy="95" rx="240" ry="34" fill="url(#binMouth)"/>
+            <!-- Luz interna sutil: dá leitura de profundidade em vez de buraco preto -->
+            <ellipse cx="300" cy="100" rx="200" ry="24" fill="rgba(111,163,224,0.05)" filter="url(#innerShadow)"/>
+            <ellipse cx="300" cy="360" rx="180" ry="200" fill="rgba(62,92,126,0.05)" filter="url(#innerShadow)"/>
 
             <!-- Inner rim shadow (depth) -->
             <ellipse cx="300" cy="102" rx="232" ry="28" fill="none" stroke="rgba(0,0,0,0.85)" stroke-width="4"/>
@@ -134,7 +139,7 @@ const falling = [
           </div>
 
           <!-- PILE inside the bin (apenas as logos) -->
-          <div class="absolute inset-x-[14%] bottom-[8%] z-10">
+          <div class="absolute inset-x-[14%] bottom-[10%] z-10">
             <div class="relative h-44">
               {pile.map(p => {
                 const c = byId[p.id];
@@ -164,7 +169,7 @@ const falling = [
         </span>
 
         <h3 class="relative font-display mt-6 text-[1.7rem] font-bold leading-[1.05] text-white sm:text-[2.1rem]">
-          O gateway que <span class="font-editorial italic font-normal text-titan-gradient">devolve dinheiro</span> pro seu bolso.
+          O gateway que <span class="font-editorial italic font-normal text-chrome-100">devolve dinheiro</span> pro seu bolso.
         </h3>
 
         <ul class="relative mt-7 space-y-4">
@@ -186,7 +191,7 @@ const falling = [
         <div class="relative mt-8 rounded-2xl border border-titan-500/25 bg-titan-600/8 p-4">
           <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-titan-300/80 font-mono">A diferença na sua conta</p>
           <p class="mt-2 font-display text-[15.5px] leading-snug text-white">
-            Em <b>R$ 1.000.000</b> faturados, você fica com até <b class="text-titan-gradient">+R$ 50.000</b> no bolso.
+            Em <b>R$ 1.000.000</b> faturados, você fica com até <b class="text-titan-400">+R$ 50.000</b> no bolso.
           </p>
         </div>
       </div>
@@ -198,18 +203,19 @@ const falling = [
   .bin-canvas {
     width: 100%;
     aspect-ratio: 600 / 680;
-    max-height: 640px;
+    max-height: 480px;
+    margin-inline: auto;
     container-type: size;
     container-name: bin;
   }
   @media (max-width: 640px) {
-    .bin-canvas { max-height: 520px; }
+    .bin-canvas { max-height: 420px; }
   }
 
   /* Logo quadrada com cantos arredondados — sem moldura, sem texto, com blur (concorrentes anonimizados) */
   .logo-square {
-    width: 84px; height: 84px;
-    border-radius: 20px;
+    width: 72px; height: 72px;
+    border-radius: 18px;
     object-fit: cover;
     display: block;
     box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.06) inset;

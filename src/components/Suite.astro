@@ -1,71 +1,60 @@
 ---
-import { icon } from '../lib/icons';
-
 const types = [
-  { icon: 'play',    label: 'Curso gravado', desc: 'Módulos, aulas e área de membros.' },
-  { icon: 'headset', label: 'Mentoria',      desc: 'Presencial ou online, com área privada.' },
-  { icon: 'users',   label: 'Comunidade',    desc: 'Assinatura recorrente com área exclusiva.' },
-  { icon: 'ticket',  label: 'Evento',        desc: 'Ingressos, lotes e check-in digital.' },
-  { icon: 'repeat',  label: 'Assinatura',    desc: 'Cobrança automática, menos inadimplência.' },
-  { icon: 'globe',   label: 'Produto global',desc: 'Venda em qualquer moeda, em qualquer país.' },
+  { label: 'Curso',      desc: 'módulos, aulas e área de membros' },
+  { label: 'Mentoria',   desc: 'presencial ou online, com área privada' },
+  { label: 'Comunidade', desc: 'assinatura recorrente, área exclusiva' },
+  { label: 'Evento',     desc: 'ingressos, lotes e check-in digital' },
+  { label: 'Assinatura', desc: 'cobrança automática, menos inadimplência' },
+  { label: 'Global',     desc: 'qualquer moeda, qualquer país' },
 ];
 
 const specs = [
-  { icon: 'repeat', title: 'Recorrência',     desc: 'Assinaturas com cobrança automática.' },
-  { icon: 'users',  title: 'Coprodução',      desc: 'Split automático entre parceiros.' },
-  { icon: 'link',   title: 'Domínio próprio', desc: 'Checkout no seu domínio.' },
-  { icon: 'pix',    title: 'Pix automático',  desc: 'Identificado e baixado na hora.' },
-  { icon: 'ticket', title: 'Ingressos',       desc: 'Eventos com lotes e check-in.' },
-  { icon: 'clock',  title: 'Tempo real',      desc: 'Cada venda e saque ao vivo.' },
+  'Recorrência com cobrança automática',
+  'Coprodução com split automático',
+  'Checkout no seu domínio próprio',
+  'Pix identificado e baixado na hora',
+  'Ingressos com lotes e check-in',
+  'Cada venda e saque em tempo real',
 ];
 ---
 
 <section id="tipos" class="relative py-16 sm:py-20">
   <div class="section">
     <!-- header — split editorial -->
-    <div class="reveal grid items-end gap-6 border-b border-suede-500/12 pb-8 lg:grid-cols-[1.3fr_1fr]">
-      <div>
-        <span class="kicker">O que você vende?</span>
-        <h2 class="h-display mt-5 text-3xl leading-[1.04] sm:text-[2.6rem]">
-          Curso, mentoria, evento.<br class="hidden sm:block" />
-          <span class="font-display font-black">Tanto faz.</span>
-        </h2>
-      </div>
+    <div class="reveal grid items-end gap-6 lg:grid-cols-[1.3fr_1fr]">
+      <h2 class="h-display text-3xl leading-[1.04] sm:text-[2.6rem]">
+        Curso, mentoria, evento.<br class="hidden sm:block" />
+        <span class="font-display font-black">Tanto faz.</span>
+      </h2>
       <p class="max-w-md text-pretty leading-relaxed text-chrome-300/72 lg:text-right">
         Não importa o formato. A estrutura é a mesma — e <strong class="text-white">6 recursos a mais</strong> já vêm dentro, sem custo extra.
       </p>
     </div>
 
-    <!-- product types — 6 chips compactos -->
-    <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    <!-- FORMATOS — linha editorial tipográfica, sem cards -->
+    <div class="reveal mt-10 border-y border-suede-500/12">
       {types.map((t, i) => (
-        <div class="reveal mag-card spotlight card group flex flex-col gap-3 p-5 transition-colors hover:border-titan-500/35" style={`transition-delay:${i * 40}ms`}>
-          <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-suede-500/20 bg-titan-600/10 p-2 text-titan-400 transition-colors group-hover:text-white" set:html={icon(t.icon)}></span>
-          <div>
-            <p class="font-display text-[13px] font-semibold text-white">{t.label}</p>
-            <p class="mt-0.5 text-[11px] leading-snug text-chrome-300/55">{t.desc}</p>
-          </div>
+        <div class={`type-row group flex flex-wrap items-baseline gap-x-5 gap-y-1 py-5 sm:py-6 ${i > 0 ? 'border-t border-suede-500/10' : ''}`}>
+          <span class="font-mono text-[11px] text-chrome-300/40" style="font-feature-settings:'tnum';">{String(i + 1).padStart(2, '0')}</span>
+          <span class="font-display text-2xl font-bold tracking-[-0.02em] text-white transition-colors duration-300 group-hover:text-titan-400 sm:text-[2rem]">{t.label}</span>
+          <span class="text-[13.5px] text-chrome-300/60 sm:ml-auto sm:text-right">{t.desc}</span>
         </div>
       ))}
     </div>
 
-    <!-- specs — 6 quick features -->
-    <div class="mt-10 border-t border-suede-500/12 pt-8">
-      <div class="reveal mb-6 flex items-end justify-between gap-4">
-        <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-chrome-300/55">+6 recursos · sem custo extra</p>
-        <p class="hidden text-[11px] text-chrome-300/40 sm:block">tudo dentro do mesmo gateway</p>
-      </div>
-      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        {specs.map((f, i) => (
-          <div class="reveal spotlight card flex items-center gap-3 p-4 transition-colors hover:border-titan-500/40" style={`transition-delay:${i * 40}ms`}>
-            <span class="flex h-9 w-9 flex-none items-center justify-center rounded-lg border border-suede-500/20 bg-white/[0.03] p-2 text-titan-400" set:html={icon(f.icon)}></span>
-            <div class="min-w-0">
-              <h4 class="font-display text-[13px] font-semibold leading-tight text-white">{f.title}</h4>
-              <p class="mt-0.5 text-[11px] leading-snug text-chrome-300/55">{f.desc}</p>
-            </div>
-          </div>
+    <!-- RECURSOS EXTRAS — lista compacta 2 colunas, sem cards -->
+    <div class="reveal mt-8">
+      <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-chrome-300/60">+6 recursos · sem custo extra</p>
+      <ul class="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-2">
+        {specs.map((s) => (
+          <li class="flex items-start gap-3 text-[14.5px] leading-snug text-chrome-200/85">
+            <span class="mt-1 flex h-4 w-4 flex-none items-center justify-center rounded-full bg-titan-500/20 text-titan-300">
+              <svg class="h-2 w-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="m5 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            {s}
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </div>
 </section>

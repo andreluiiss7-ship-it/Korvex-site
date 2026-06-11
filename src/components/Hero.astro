@@ -11,10 +11,10 @@ const pills = [
 ];
 
 const stats = [
-  { big: 'R$ 129M+', label: 'transacionados' },
-  { big: '400+',     label: 'players ativos' },
-  { big: '94%',      label: 'aprovação no cartão' },
-  { big: '99,9%',    label: 'uptime no pico' },
+  { big: 'R$ 129M+', n: 129,  prefix: 'R$ ', suffix: 'M+', dec: 0, label: 'transacionados' },
+  { big: '400+',     n: 400,  prefix: '',    suffix: '+',  dec: 0, label: 'players ativos' },
+  { big: '94%',      n: 94,   prefix: '',    suffix: '%',  dec: 0, label: 'aprovação no cartão' },
+  { big: '99,9%',    n: 99.9, prefix: '',    suffix: '%',  dec: 1, label: 'uptime no pico' },
 ];
 ---
 
@@ -106,9 +106,13 @@ const stats = [
       {stats.map((s, i) => (
         <>
           {i > 0 && <span class="hidden h-4 w-px bg-suede-500/15 sm:block"></span>}
-          <div class="inline-flex items-baseline justify-center gap-1.5">
-            <span class="font-display text-base font-bold leading-none text-white sm:text-lg" style="font-feature-settings:'tnum';">{s.big}</span>
-            <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-chrome-300/55 sm:text-[10px]">{s.label}</span>
+          <div class="inline-flex items-baseline justify-center gap-2">
+            <span
+              class="hero-stat font-display font-extrabold leading-none text-white"
+              style="font-feature-settings:'tnum';font-size:clamp(20px,2.4vw,28px);letter-spacing:-0.02em;"
+              data-stat={s.n} data-prefix={s.prefix} data-suffix={s.suffix} data-dec={s.dec}
+            >{s.big}</span>
+            <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-chrome-300/60 sm:text-[10px]">{s.label}</span>
           </div>
         </>
       ))}
@@ -116,6 +120,31 @@ const stats = [
   </div>
 </section>
 
+<script is:inline>
+  (() => {
+    const els = document.querySelectorAll('.hero-stat');
+    if (!els.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const run = (el) => {
+      const target = parseFloat(el.dataset.stat);
+      const dec = parseInt(el.dataset.dec || '0');
+      const pre = el.dataset.prefix || '';
+      const suf = el.dataset.suffix || '';
+      const t0 = performance.now();
+      const dur = 1400;
+      const tick = (t) => {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 4);
+        el.textContent = pre + (target * eased).toLocaleString('pt-BR', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  })();
+</script>
 
 <style>
   .persona-cta {

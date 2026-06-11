@@ -12,7 +12,6 @@ const faqs = [
 <section id="faq" class="relative py-24 sm:py-28">
   <div class="section grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
     <div class="reveal">
-      <span class="kicker">Dúvidas frequentes</span>
       <h2 class="h-display mt-5 text-3xl sm:text-[2.4rem] leading-[1.1]">
         Tudo o que você precisa saber.
       </h2>
@@ -23,8 +22,8 @@ const faqs = [
 
     <div class="reveal space-y-3">
       {
-        faqs.map((f) => (
-          <details class="group card overflow-hidden">
+        faqs.map((f, i) => (
+          <details class="group card overflow-hidden" open={i === 0}>
             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5">
               <span class="font-display text-[15px] font-semibold text-white">{f.q}</span>
               <span class="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-suede-500/25 text-titan-400 transition-transform duration-300 group-open:rotate-45">

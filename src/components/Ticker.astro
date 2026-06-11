@@ -7,14 +7,14 @@ const items = [
 const doubled = [...items, ...items];
 ---
 
-<div class="relative overflow-hidden border-y border-suede-500/10 bg-ink/30 py-3">
+<div class="ticker-wrap relative overflow-hidden border-y border-suede-500/10 bg-ink/30 py-3">
   <div
-    class="flex w-max items-center"
+    class="ticker-track flex w-max items-center"
     style="animation: ticker-korvex 38s linear infinite; white-space: nowrap;"
   >
     {doubled.map((item) => (
       <span
-        class="inline-flex shrink-0 items-center gap-3 px-7 text-[11px] font-semibold uppercase tracking-widest text-chrome-300/50"
+        class="inline-flex shrink-0 items-center gap-3 px-7 text-[11px] font-semibold uppercase tracking-widest text-chrome-300/60"
         style="letter-spacing: 0.18em;"
       >
         <span class="inline-block h-1 w-1 shrink-0 rounded-full bg-titan-400/55"></span>
@@ -29,4 +29,6 @@ const doubled = [...items, ...items];
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
+  /* Pausa no hover — convida a ler */
+  .ticker-wrap:hover .ticker-track { animation-play-state: paused !important; }
 </style>

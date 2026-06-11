@@ -1,0 +1,35 @@
+---
+import { REGISTER_URL } from '../lib/site';
+---
+
+<!-- Sticky CTA mobile — aparece após 30% de scroll, some perto do FinalCTA -->
+<div id="sticky-cta" class="fixed inset-x-3 bottom-3 z-50 translate-y-[120%] opacity-0 transition-all duration-500 sm:hidden" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1);">
+  <a href={REGISTER_URL} target="_blank" rel="noopener"
+     class="flex items-center justify-between gap-3 rounded-2xl border border-titan-400/40 bg-gradient-to-r from-titan-600 to-navy-800 px-5 py-3.5 shadow-glow backdrop-blur-xl">
+    <span class="font-display text-[14px] font-bold text-white">Taxa 6,99% · Saque D0</span>
+    <span class="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white">
+      Criar conta
+      <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </a>
+</div>
+
+<script is:inline>
+  (() => {
+    const bar = document.getElementById('sticky-cta');
+    if (!bar) return;
+    const finalCta = document.getElementById('contato');
+    let visible = false;
+    const onScroll = () => {
+      const pct = scrollY / (document.documentElement.scrollHeight - innerHeight);
+      const nearEnd = finalCta && finalCta.getBoundingClientRect().top < innerHeight;
+      const show = pct > 0.12 && !nearEnd;
+      if (show !== visible) {
+        visible = show;
+        bar.style.transform = show ? 'translateY(0)' : 'translateY(120%)';
+        bar.style.opacity = show ? '1' : '0';
+      }
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>

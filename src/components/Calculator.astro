@@ -14,7 +14,6 @@ import { icon } from '../lib/icons';
 
         <!-- LEFT: copy + slider -->
         <div>
-          <span class="kicker">A conta na sua frente</span>
           <h2 class="h-display mt-4 text-3xl leading-[1.04] sm:text-[2.6rem]">
             Quanto você está
             <span class="font-display font-black text-chrome-300/65">doando</span>
@@ -26,10 +25,10 @@ import { icon } from '../lib/icons';
           </p>
 
           <div class="mt-8">
-            <label class="text-[11px] font-bold uppercase tracking-[0.18em] text-chrome-300/55 font-mono">Seu faturamento mensal</label>
+            <label class="text-[11px] font-bold uppercase tracking-[0.18em] text-chrome-300/60 font-mono">Seu faturamento mensal</label>
             <div class="mt-3 flex items-baseline gap-2">
               <span class="font-display text-3xl font-bold text-white sm:text-4xl" id="calc-rev" style="font-feature-settings:'tnum';">R$ 300.000</span>
-              <span class="text-xs text-chrome-300/55">/mês</span>
+              <span class="text-xs text-chrome-300/60">/mês</span>
             </div>
             <input id="calc-slider" type="range" min="50000" max="2000000" step="10000" value="300000" class="calc-slider mt-5 w-full" aria-label="Faturamento mensal" />
             <div class="mt-1.5 flex justify-between text-[10px] text-chrome-300/40 font-mono">
@@ -43,12 +42,12 @@ import { icon } from '../lib/icons';
         <!-- RIGHT: result -->
         <div class="rounded-[24px] border border-suede-500/15 bg-white/[0.02] p-6 sm:p-8">
           <div>
-            <p class="text-[10.5px] font-bold uppercase tracking-[0.18em] text-chrome-300/55 font-mono">
+            <p class="text-[10.5px] font-bold uppercase tracking-[0.18em] text-chrome-300/60 font-mono">
               <span class="inline-block h-1 w-1 align-middle rounded-full bg-chrome-300/50"></span>
               Hoje você está doando
             </p>
             <p class="mt-2 font-display text-[40px] font-bold leading-none text-chrome-300/85 sm:text-[44px]" id="calc-loss" style="font-feature-settings:'tnum';">R$ 36.000</p>
-            <p class="mt-1 text-[12px] text-chrome-300/55">/mês pra plataforma "famosa"</p>
+            <p class="mt-1 text-[12px] text-chrome-300/60">/mês pra plataforma "famosa"</p>
           </div>
 
           <div class="my-5 h-px bg-suede-500/12"></div>
@@ -59,7 +58,7 @@ import { icon } from '../lib/icons';
               Com a Korvex, fica
             </p>
             <p class="mt-2 font-display text-[40px] font-bold leading-none text-titan-gradient sm:text-[44px]" id="calc-save" style="font-feature-settings:'tnum';">+R$ 15.000</p>
-            <p class="mt-1 text-[12px] text-chrome-300/55">/mês de volta no seu caixa</p>
+            <p class="mt-1 text-[12px] text-chrome-300/60">/mês de volta no seu caixa</p>
           </div>
 
           <div class="mt-6 rounded-2xl border border-titan-500/25 bg-titan-600/10 p-4">
@@ -71,7 +70,7 @@ import { icon } from '../lib/icons';
             Quero essa economia agora
             <span class="h-4 w-4" set:html={icon('arrow')}></span>
           </a>
-          <p class="mt-3 text-center text-[11px] text-chrome-300/50">Cálculo conservador. Negociável pra +R$500K/mês.</p>
+          <p class="mt-3 text-center text-[11px] text-chrome-300/60">Cálculo conservador. Negociável pra +R$500K/mês.</p>
         </div>
       </div>
     </div>
@@ -89,15 +88,32 @@ import { icon } from '../lib/icons';
     const fmt = (n) => 'R$ ' + n.toLocaleString('pt-BR', { maximumFractionDigits: 0 });
     const COMPETITOR = 0.12;
     const KORVEX = 0.07;
+    // Tween suave dos números (300ms) em vez de troca seca
+    const current = { loss: 0, save: 0, year: 0 };
+    let raf = null;
+    const animateTo = (t) => {
+      if (raf) cancelAnimationFrame(raf);
+      const from = { ...current };
+      const t0 = performance.now();
+      const dur = 300;
+      const tick = (now) => {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        current.loss = from.loss + (t.loss - from.loss) * e;
+        current.save = from.save + (t.save - from.save) * e;
+        current.year = from.year + (t.year - from.year) * e;
+        loss.textContent = fmt(current.loss);
+        save.textContent = '+' + fmt(current.save);
+        year.textContent = fmt(current.year) + ' a mais no seu bolso';
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    };
     const update = () => {
       const r = parseFloat(slider.value);
-      const lossM = r * COMPETITOR;
-      const saveM = r * (COMPETITOR - KORVEX);
-      const yearTotal = saveM * 12;
       rev.textContent = fmt(r);
-      loss.textContent = fmt(lossM);
-      save.textContent = '+' + fmt(saveM);
-      year.textContent = fmt(yearTotal) + ' a mais no seu bolso';
+      const saveM = r * (COMPETITOR - KORVEX);
+      animateTo({ loss: r * COMPETITOR, save: saveM, year: saveM * 12 });
     };
     slider.addEventListener('input', update);
     update();
