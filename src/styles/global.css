@@ -104,6 +104,59 @@ body {
   color: #fff;
 }
 
+/* ===== Korvex bracket motif — a linguagem do logo [K vira sistema gráfico ===== */
+/* Corner brackets em 1 pseudo-element (8 gradientes posicionados) */
+.kframe { position: relative; }
+.kframe::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  z-index: 30;
+  --kc: rgba(111, 163, 224, 0.55);
+  --kw: 26px;
+  --kt: 1.5px;
+  background:
+    linear-gradient(var(--kc), var(--kc)) 0 0 / var(--kw) var(--kt),
+    linear-gradient(var(--kc), var(--kc)) 0 0 / var(--kt) var(--kw),
+    linear-gradient(var(--kc), var(--kc)) 100% 0 / var(--kw) var(--kt),
+    linear-gradient(var(--kc), var(--kc)) 100% 0 / var(--kt) var(--kw),
+    linear-gradient(var(--kc), var(--kc)) 0 100% / var(--kw) var(--kt),
+    linear-gradient(var(--kc), var(--kc)) 0 100% / var(--kt) var(--kw),
+    linear-gradient(var(--kc), var(--kc)) 100% 100% / var(--kw) var(--kt),
+    linear-gradient(var(--kc), var(--kc)) 100% 100% / var(--kt) var(--kw);
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.9s ease 0.3s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+.reveal.in .kframe::after,
+.kframe.in::after { opacity: 1; transform: scale(1); }
+.kframe.gold::after { --kc: rgba(226, 195, 134, 0.5); }
+
+/* Número de capítulo — tour do produto [ 01 ] … [ 05 ] */
+.chapter {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  color: rgba(111, 163, 224, 0.75);
+}
+.chapter::before { content: '[ '; color: rgba(111, 163, 224, 0.4); }
+.chapter::after  { content: ' ]'; color: rgba(111, 163, 224, 0.4); }
+
+/* Sweep de luz nos CTAs primários */
+.btn-primary { position: relative; overflow: hidden; }
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.22) 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.btn-primary:hover::before { transform: translateX(120%); }
+
 /* A11y: navegação por teclado visível */
 :focus-visible {
   outline: 2px solid #6FA3E0;

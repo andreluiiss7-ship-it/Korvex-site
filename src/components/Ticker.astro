@@ -14,11 +14,12 @@ const doubled = [...items, ...items];
   >
     {doubled.map((item) => (
       <span
-        class="inline-flex shrink-0 items-center gap-3 px-7 text-[11px] font-semibold uppercase tracking-widest text-chrome-300/60"
-        style="letter-spacing: 0.18em;"
+        class="inline-flex shrink-0 items-baseline px-6 font-mono text-[11px] font-semibold uppercase text-chrome-300/65"
+        style="letter-spacing: 0.16em;"
       >
-        <span class="inline-block h-1 w-1 shrink-0 rounded-full bg-titan-400/55"></span>
+        <span class="mr-2 text-titan-400/45">[</span>
         {item}
+        <span class="ml-2 text-titan-400/45">]</span>
       </span>
     ))}
   </div>
