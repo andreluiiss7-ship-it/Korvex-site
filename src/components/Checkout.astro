@@ -42,20 +42,12 @@ const customizable = [
       </p>
     </div>
 
-    <!-- THEME SELECTOR (visual chips replicating the Korvex dropdown) -->
+    <!-- THEME SELECTOR — chips na linguagem bracket do logo -->
     <div class="reveal mt-12 mx-auto max-w-5xl">
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+      <div class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 sm:gap-x-2">
         {themes.map((t, i) => (
-          <button
-            data-ck={t.key}
-            class={`ck-tab group relative inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-semibold transition-all ${
-              i === 0
-                ? 'border-titan-500/60 bg-gradient-to-b from-titan-500/25 to-titan-600/15 text-white shadow-glow'
-                : 'border-suede-500/20 bg-white/[0.02] text-chrome-300/75 hover:border-titan-500/40 hover:text-white'
-            }`}
-          >
-            <span class={`h-1.5 w-1.5 rounded-full ${i === 0 ? 'bg-titan-300 shadow-[0_0_8px_2px_rgba(111,163,224,0.7)]' : 'bg-suede-500/40'}`}></span>
-            {t.name}
+          <button data-ck={t.key} class={`ck-tab${i === 0 ? ' active' : ''}`}>
+            <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
           </button>
         ))}
       </div>
@@ -65,7 +57,7 @@ const customizable = [
     <div data-tilt-zone class="mt-10 grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
       <!-- LEFT: live preview that changes structure -->
       <div class="reveal">
-        <div data-tilt="5" class="tilt browser relative">
+        <div data-tilt="5" class="tilt browser kframe relative">
           <div class="browser-bar">
             <span class="dot bg-[#ff5f57]/80"></span>
             <span class="dot bg-[#febc2e]/80"></span>
@@ -360,27 +352,62 @@ const customizable = [
     fluxo: 'Tema Fluxo',
     etapas: 'Fluxo em Etapas',
   };
+  let busy = false;
   tabs.forEach((t) => {
     t.addEventListener('click', () => {
+      if (busy || t.classList.contains('active')) return;
+      busy = true;
       const key = t.dataset.ck!;
-      tabs.forEach((x) => {
-        x.classList.remove('border-titan-500/60', 'bg-gradient-to-b', 'from-titan-500/25', 'to-titan-600/15', 'text-white', 'shadow-glow');
-        x.classList.add('border-suede-500/20', 'bg-white/[0.02]', 'text-chrome-300/75');
-        const dot = x.querySelector('span');
-        if (dot) {
-          dot.classList.remove('bg-titan-300', 'shadow-[0_0_8px_2px_rgba(111,163,224,0.7)]');
-          dot.classList.add('bg-suede-500/40');
-        }
-      });
-      t.classList.remove('border-suede-500/20', 'bg-white/[0.02]', 'text-chrome-300/75');
-      t.classList.add('border-titan-500/60', 'bg-gradient-to-b', 'from-titan-500/25', 'to-titan-600/15', 'text-white', 'shadow-glow');
-      const dot = t.querySelector('span');
-      if (dot) {
-        dot.classList.remove('bg-suede-500/40');
-        dot.classList.add('bg-titan-300', 'shadow-[0_0_8px_2px_rgba(111,163,224,0.7)]');
-      }
-      views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
-      if (labelEl) labelEl.textContent = labels[key] || 'Tema';
+      tabs.forEach((x) => x.classList.toggle('active', x === t));
+      // fade-out → troca de estrutura → fade-in
+      const visible = [...views].find((el) => !el.classList.contains('hidden'));
+      const next = [...views].find((el) => el.dataset.view === key);
+      const swap = () => {
+        views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
+        if (labelEl) labelEl.textContent = labels[key] || 'Tema';
+        if (next) {
+          next.style.opacity = '0';
+          next.style.transform = 'translateY(6px)';
+          requestAnimationFrame(() => {
+            next.style.transition = 'opacity .35s ease, transform .35s cubic-bezier(0.16,1,0.3,1)';
+            next.style.opacity = '1';
+            next.style.transform = 'none';
+            setTimeout(() => { next.style.transition = ''; busy = false; }, 380);
+          });
+        } else { busy = false; }
+      };
+      if (visible) {
+        visible.style.transition = 'opacity .18s ease';
+        visible.style.opacity = '0';
+        setTimeout(() => { visible.style.opacity = ''; visible.style.transition = ''; swap(); }, 180);
+      } else swap();
     });
   });
 </script>
+
+<style>
+  /* Chips de tema — linguagem bracket do logo [K */
+  .ck-tab {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 8px 10px;
+    color: rgba(199, 210, 221, 0.65);
+    transition: color 0.25s ease;
+  }
+  .ck-tab .ck-br {
+    color: rgba(111, 163, 224, 0);
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+  }
+  .ck-tab .ck-label { padding: 0 6px; transition: color 0.25s ease; }
+  .ck-tab:hover { color: #fff; }
+  .ck-tab:hover .ck-br { color: rgba(111, 163, 224, 0.45); }
+  .ck-tab.active { color: #fff; }
+  .ck-tab.active .ck-br { color: rgba(111, 163, 224, 0.9); }
+  .ck-tab.active .ck-label {
+    color: #fff;
+    text-shadow: 0 0 18px rgba(111, 163, 224, 0.55);
+  }
+</style>
