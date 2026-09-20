@@ -3,10 +3,11 @@ import { icon } from '../lib/icons';
 import { waUrl, REGISTER_URL } from '../lib/site';
 
 const payouts = [
-  { icon: 'bolt',  title: 'Pix · Saque D0',           desc: 'Solicitou, caiu. Receba no mesmo dia, com fluxo de caixa pra reinvestir sem medo.', tag: '+ rápido', accent: 'blue' },
-  { icon: 'card',  title: 'Cartão · D+30',            desc: 'Padrão de mercado para vendas no crédito, com previsibilidade total do caixa.',     tag: 'padrão',   accent: 'blue' },
-  { icon: 'clock', title: 'Antecipação · D+14 ou D+2',desc: 'Precisa do dinheiro antes? Antecipe o cartão mediante taxa sob consulta.',          tag: 'flex',     accent: 'blue' },
-  { icon: 'spark', title: 'Já fatura alto?',          desc: 'Sellers com volume têm condição personalizada — de taxa a atendimento prioritário.', tag: 'Negociar', accent: 'gold', link: true },
+  { icon: 'bolt',  title: 'Pix · Saque D0',           desc: 'Pediu, caiu. Caixa pra reinvestir no mesmo dia, em 1 clique.', tag: '+ rápido', accent: 'blue' },
+  { icon: 'card',  title: 'Cartão · D+30',            desc: 'Padrão de mercado no crédito, com previsibilidade total do caixa.',     tag: 'padrão',   accent: 'blue' },
+  { icon: 'clock', title: 'Antecipação · D+14 ou D+2',desc: 'Precisa antes? Antecipe o cartão mediante taxa sob consulta.', tag: 'flex', accent: 'blue' },
+  { icon: 'globe', title: 'Cripto · saque',            desc: 'Saque em criptomoeda quando fizer sentido pro seu caixa.', tag: 'novo', accent: 'blue' },
+  { icon: 'spark', title: 'Já fatura alto?',          desc: 'Volume alto tem condição própria, da taxa ao atendimento.', tag: 'Negociar', accent: 'gold', link: true },
 ];
 ---
 
@@ -21,15 +22,15 @@ const payouts = [
         </h2>
       </div>
       <p class="max-w-md text-pretty leading-relaxed text-chrome-300/72">
-        Transparente, sem letra miúda. Da liquidez imediata no Pix à antecipação do cartão —
-        <strong class="text-white">você decide quando recebe</strong>, e a taxa cai conforme seu faturamento cresce.
+        Sem letra miúda. Do Pix imediato à antecipação do cartão,
+        <strong class="text-white">você decide quando recebe</strong>. A taxa cai conforme você cresce.
       </p>
     </div>
 
     <!-- price-hero + payout-list -->
     <div class="reveal mt-12 grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-stretch">
       <!-- Price hero card -->
-      <div class="kframe relative overflow-hidden rounded-3xl border border-suede-500/15 p-10" style="background: radial-gradient(600px 400px at 0% 0%, rgba(59,130,246,0.10), transparent 60%), linear-gradient(180deg, var(--bg-1), var(--bg-0)); box-shadow: var(--shadow-card);">
+      <div class="kframe relative overflow-hidden rounded-3xl border border-[--line-1] p-10" style="background: radial-gradient(600px 400px at 0% 0%, rgba(59,130,246,0.10), transparent 60%), linear-gradient(180deg, var(--bg-1), var(--bg-0)); box-shadow: var(--shadow-card);">
         <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-chrome-300/60">Taxa padrão</p>
         <div class="mt-3 flex items-baseline gap-3">
           <span class="font-display text-[4.5rem] font-bold leading-none text-white sm:text-[5rem]" style="letter-spacing: -0.04em; font-feature-settings: 'tnum';" data-counter data-target="6.99" data-decimals="2" data-suffix="%">6,99%</span>
@@ -39,7 +40,7 @@ const payouts = [
           Sem mensalidade, sem letra miúda. Volume alto vira condição personalizada.
         </p>
 
-        <hr class="my-7 border-t border-suede-500/12" />
+        <hr class="my-7 border-t border-[--line-1]" />
 
         <ul class="space-y-3">
           <li class="flex items-center gap-3 text-[14px] text-chrome-200/90">
@@ -62,7 +63,7 @@ const payouts = [
           </li>
         </ul>
 
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-7">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-7">
           Criar minha conta na Korvex
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>

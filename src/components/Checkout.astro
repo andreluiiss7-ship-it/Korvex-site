@@ -17,28 +17,25 @@ const customizable = [
   'Cores, fontes, logo e identidade visual da sua marca',
   'Campos, ordem, order bump, prova social e selos',
   'Timer, depoimentos, garantia e gatilhos de conversão',
-  'Domínio próprio — o checkout é seu, não da plataforma',
+  'Domínio próprio. O checkout é seu.',
 ];
 ---
 
 <section id="checkout" class="relative py-16 sm:py-20">
-  <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute left-1/2 top-1/4 h-[440px] w-[760px] -translate-x-1/2 rounded-full bg-titan-600/10 blur-[140px]"></div>
-  </div>
-
+  
   <div class="section">
     <!-- header — split: headline left, copy right, with inline serif accent -->
-    <div class="reveal grid items-end gap-8 border-b border-suede-500/12 pb-10 lg:grid-cols-[1.15fr_0.85fr]">
+    <div class="reveal grid items-end gap-8 border-b border-[--line-1] pb-10 lg:grid-cols-[1.15fr_0.85fr]">
       <div>
-        <span class="chapter">02 · Checkout</span>
+        <span class="chapter">01 · Checkout</span>
         <h2 class="h-display mt-6 text-4xl leading-[1.0] sm:text-[3.2rem]">
           7 checkouts.<br />
           Um <span class="font-display font-black text-chrome-300/75">pra cada oferta.</span>
         </h2>
       </div>
       <p class="max-w-md text-pretty text-lg leading-relaxed text-chrome-300/72">
-        Cada tema é uma estrutura própria — do tradicional ao fluxo em etapas —
-        e <strong class="text-white">todos 100% personalizáveis</strong> com a sua marca.
+        Cada tema é uma estrutura diferente, do tradicional ao fluxo em etapas.
+        <strong class="text-white">Todos com a sua marca, no seu domínio.</strong>
       </p>
     </div>
 
@@ -51,7 +48,8 @@ const customizable = [
           </button>
         ))}
       </div>
-      <p class="mt-4 text-center text-[12px] text-chrome-300/60">Clique em um tema — a estrutura do checkout muda de verdade.</p>
+      <p class="mt-4 text-center text-[12px] text-chrome-300/60">Clique num tema. A estrutura muda de verdade.</p>
+      <p class="mt-6 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-chrome-300/60">Curso · Mentoria · Comunidade · Evento · Assinatura · Global. A mesma estrutura pra qualquer formato.</p>
     </div>
 
     <div data-tilt-zone class="mt-10 grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
@@ -91,7 +89,7 @@ const customizable = [
                   <span class="mt-0.5 flex h-4 w-4 items-center justify-center rounded bg-titan-600 text-white" set:html={icon('check')}></span>
                   <div>
                     <p class="text-[12px] font-semibold text-white">Sim, quero o bônus avançado</p>
-                    <p class="text-[11px] text-chrome-300/60">+ R$97 — leve junto com 1 clique</p>
+                    <p class="text-[11px] text-chrome-300/60">+ R$97, leve junto com 1 clique</p>
                   </div>
                 </div>
               </div>
@@ -317,7 +315,7 @@ const customizable = [
             Cada tema vira <span class="text-white">a cara da sua marca.</span>
           </h3>
           <p class="mt-3 text-[14px] leading-relaxed text-chrome-300/70">
-            O comprador vê a sua operação do começo ao fim — não a de uma plataforma. Mais percepção de marca,
+            O comprador vê a sua operação do começo ao fim, não a de uma plataforma. Mais percepção de marca,
             menos atrito, mais aprovação.
           </p>
           <ul class="mt-5 space-y-2.5">
@@ -328,7 +326,7 @@ const customizable = [
               </li>
             ))}
           </ul>
-          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-6 w-full justify-center">
+          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-6 w-full justify-center">
             Montar meu checkout
             <span class="h-4 w-4" set:html={icon('arrow')}></span>
           </a>

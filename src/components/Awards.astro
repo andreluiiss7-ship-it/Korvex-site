@@ -13,7 +13,6 @@ const tiers = [
   <!-- ambient gold + soft top spotlight -->
   <div class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute inset-0" style="background: radial-gradient(800px 500px at 50% 0%, rgba(201,163,94,0.10), transparent 60%), linear-gradient(180deg, var(--bg-0), #08090E 50%, var(--bg-0));"></div>
-    <div data-parallax="0.07" class="absolute right-[5%] top-[40%] h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(201,163,94,0.10),transparent_60%)] blur-[120px]"></div>
   </div>
 
   <div class="section">
@@ -27,15 +26,14 @@ const tiers = [
         </span>
       </h2>
       <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/72">
-        Cada marco da sua operação é reconhecido de verdade — <strong class="text-white">em metal,
-        não em e-mail automático.</strong>
+        Cada marco é reconhecido <strong class="text-white">em metal, não em e-mail automático.</strong>
       </p>
     </div>
 
     <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
     <div class="reveal mt-14 grid grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
       {tiers.map((t, i) => (
-        <div class={`tier tier-compact ${t.variant}`} style={`transition-delay:${i * 80}ms`}>
+        <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone style={`transition-delay:${i * 80}ms`}>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
             <img src={t.img} alt={t.name} loading="lazy" decoding="async" />
           </div>
@@ -50,21 +48,8 @@ const tiers = [
 
     <!-- MILIONARIO STAGE — cinematic -->
     <div class="reveal mil-stage kframe gold mt-12">
-      <!-- sparkle confetti -->
-      <span class="sparkle" style="top:8%;left:12%;--dur:9s;--delay:0s;"></span>
-      <span class="sparkle" style="top:6%;left:28%;--dur:11s;--delay:1.4s;"></span>
-      <span class="sparkle" style="top:4%;left:48%;--dur:10s;--delay:2.6s;"></span>
-      <span class="sparkle" style="top:10%;left:66%;--dur:12s;--delay:3.8s;"></span>
-      <span class="sparkle" style="top:7%;left:82%;--dur:9s;--delay:5s;"></span>
-      <span class="sparkle" style="top:5%;left:38%;--dur:11s;--delay:6.2s;"></span>
-      <span class="sparkle" style="top:9%;left:56%;--dur:10s;--delay:7.4s;"></span>
-      <span class="sparkle" style="top:6%;left:74%;--dur:12s;--delay:0.6s;"></span>
-
       <div class="mil-img">
-        <img src="/assets/placa-1mm.jpg" alt="Placa R$1.000.000" loading="lazy" decoding="async" />
-        <!-- conic gold glow rotating behind -->
-        <div class="pointer-events-none absolute inset-0 mix-blend-screen" style="background: conic-gradient(from 0deg, transparent 0deg, rgba(226,195,134,0.15) 90deg, transparent 180deg, rgba(226,195,134,0.10) 270deg, transparent 360deg); animation: orbit-rotate 14s linear infinite;"></div>
-        <!-- top spotlight -->
+        <img src="/assets/placa-1mm.jpg" alt="Placa R$1.000.000" loading="lazy" decoding="async" />        <!-- top spotlight -->
         <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2" style="background: radial-gradient(circle at 50% 0%, rgba(245,217,139,0.32), transparent 65%);"></div>
       </div>
 
@@ -80,23 +65,22 @@ const tiers = [
         </h3>
 
         <p class="mt-5 max-w-lg text-pretty leading-relaxed text-chrome-200/85">
-          A placa que poucos alcançam — e que muda o nível do jogo. Junto com a placa, você concorre a
-          <strong class="text-white">prêmios surpresa</strong>.
+          A placa que poucos alcançam. Com ela, você concorre a <strong class="text-white">prêmios surpresa</strong>.
         </p>
 
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <div class="spotlight rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
+          <div class="rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
             <p class="font-display text-[14.5px] font-semibold text-white">Viagem internacional</p>
             <p class="mt-1 text-[12.5px] text-chrome-300/65">Destinos de elite, all-in.</p>
           </div>
-          <div class="spotlight rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
+          <div class="rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
             <p class="font-display text-[14.5px] font-semibold text-white">Prêmios em dinheiro</p>
             <p class="mt-1 text-[12.5px] text-chrome-300/65">E outras surpresas reservadas.</p>
           </div>
         </div>
 
         <a href={REGISTER_URL} target="_blank" rel="noopener"
-           class="btn magnetic mt-7 inline-flex"
+           class="btn mt-7 inline-flex"
            style="background:linear-gradient(180deg,#E0BD79,#B68C3F);color:#1A1306;box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 14px 30px -10px rgba(201,163,94,0.5);">
           Quero a placa do milhão
           <span class="h-4 w-4" set:html={icon('arrow')}></span>

@@ -1,41 +1,44 @@
 ---
 import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
+
+const aulas = [
+  { n: '01', t: 'O que é uma operação de escala e como ela funciona', state: 'done' },
+  { n: '02', t: 'Termos e conceitos essenciais do funil de vendas', state: 'done' },
+  { n: '03', t: 'Oferta, order bump e upsell em 1 clique', state: 'on' },
+  { n: '04', t: 'Tráfego, métricas e o papel do gateway', state: 'lock' },
+];
+const materiais = [
+  { name: 'Planilha de metas e projeção.xlsx', meta: 'XLSX · 87,7 KB' },
+  { name: 'Mapa do funil de upsell.pdf', meta: 'PDF · 81,7 KB' },
+];
 ---
 
-<section id="membros" class="relative py-16 sm:py-20">
-  <div class="pointer-events-none absolute inset-0 -z-10">
-    <div data-parallax="0.1" class="ambient-drift absolute left-1/2 top-1/3 h-[460px] w-[840px] max-w-[110vw] -translate-x-1/2 rounded-full bg-titan-600/10 blur-[150px]"></div>
-  </div>
-
+<section id="membros" class="relative py-24 sm:py-32">
   <div class="section">
-    <!-- header — clean editorial split -->
+    <!-- header -->
     <div class="reveal grid items-end gap-6 lg:grid-cols-[1.3fr_1fr]">
       <div>
-        <span class="chapter">04 · Membros</span>
+        <span class="chapter">03 · Membros</span>
         <h2 class="h-display mt-5 text-3xl leading-[1.04] sm:text-[2.8rem]">
           Cara de streaming.<br />
-          <span class="font-editorial italic font-normal text-titan-gradient">Vende de novo lá dentro.</span>
+          <span class="font-display font-black text-chrome-300/75">Vende de novo lá dentro.</span>
         </h2>
       </div>
       <p class="max-w-md text-pretty leading-relaxed text-chrome-300/72">
-        Seu aluno entra, sente que comprou de uma marca grande,
-        e <strong class="text-white">você vende de novo lá dentro</strong> — com +47% de recompra interna.
+        Seu aluno entra e sente marca grande. Você vende de novo lá dentro:
+        <strong class="text-white">+47% de recompra interna</strong>.
       </p>
     </div>
 
-    <!-- THE DEVICE — imagem real com moldura premium + floating accents -->
+    <!-- mockup real da área de membros, recolorido Korvex, sem rostos -->
     <div data-tilt-zone class="reveal relative mx-auto mt-12 max-w-6xl">
-      <!-- ambient glow atrás da imagem -->
-      <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[32px] bg-gradient-to-tr from-titan-600/25 via-transparent to-gold-600/10 blur-3xl"></div>
-
-      <!-- moldura do browser -->
-      <div data-tilt="4" class="tilt beam browser overflow-hidden">
+      <div data-tilt="3" class="tilt browser kframe overflow-hidden">
         <div class="browser-bar">
           <span class="dot bg-[#ff5f57]/80"></span>
           <span class="dot bg-[#febc2e]/80"></span>
           <span class="dot bg-[#28c840]/80"></span>
-          <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">alunos.7dglobal.com</span>
+          <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">alunos.metodoescala.com</span>
           <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex">
             <span class="relative flex h-1.5 w-1.5">
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
@@ -44,84 +47,193 @@ import { REGISTER_URL } from '../lib/site';
             ao vivo
           </span>
         </div>
-        <img
-          src="/assets/members-dashboard.jpg"
-          alt="Área de membros da Mentoria 7D Global hospedada na Korvex"
-          class="block w-full"
-          loading="lazy"
-          width="2000"
-          height="1125"
-        />
-      </div>
 
-      <!-- Floating accent 1: "1.247 alunos online" (top-right) -->
-      <div class="absolute z-20 animate-floaty top-2 right-2 lg:top-[-18px] lg:right-[-50px]">
-        <div class="rounded-2xl border border-emerald-500/30 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
-          <div class="flex items-center gap-2.5">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400" set:html={icon('users')}></span>
-            <div>
-              <p class="font-display text-sm font-bold leading-none text-white" style="font-feature-settings:'tnum';">1.247</p>
-              <p class="mt-0.5 text-[10px] text-chrome-300/70">alunos online agora</p>
+        <div class="ma" aria-label="Área de membros Korvex, exemplo ilustrativo">
+          <!-- sidebar -->
+          <aside class="ma-side">
+            <div class="ma-brand">
+              <span class="ma-logo">[K</span>
+              <span class="ma-brand-t">KORVEX<small>área de membros</small></span>
             </div>
-          </div>
+            <p class="ma-navlbl">Navegação</p>
+            <span class="ma-nav on">▣ Início</span>
+            <span class="ma-nav">▤ Materiais</span>
+            <div class="ma-user"><span class="ma-avatar">AS</span><span>Aluno</span></div>
+          </aside>
+
+          <!-- main -->
+          <main class="ma-main">
+            <div class="ma-hero">
+              <div class="ma-hero-copy">
+                <p class="ma-kicker">Curso · Método Escala 7</p>
+                <h4>Área de Membros Exclusiva</h4>
+                <p class="ma-sub">Bem-vindo ao início dessa jornada.</p>
+                <span class="ma-cta">▶ Começar agora</span>
+              </div>
+              <div class="ma-hero-art" aria-hidden="true">
+                <span style="--h:64%;--d:0s"></span><span style="--h:82%;--d:.2s"></span><span style="--h:48%;--d:.4s"></span>
+                <span style="--h:92%;--d:.6s"></span><span style="--h:70%;--d:.8s"></span><span style="--h:100%;--d:1s"></span>
+                <span style="--h:58%;--d:1.2s"></span><span style="--h:86%;--d:1.4s"></span>
+              </div>
+            </div>
+
+            <p class="ma-row-title">Módulo 1 · Fundamentos da Operação</p>
+            <div class="ma-grid">
+              {aulas.map((a) => (
+                <div class={`ma-card ${a.state}`}>
+                  <div class="ma-card-top">
+                    <span class="ma-card-lbl">Aula</span>
+                    <b>{a.n}</b>
+                  </div>
+                  <p>{a.t}</p>
+                  <span class="ma-chev">›</span>
+                </div>
+              ))}
+            </div>
+
+            <p class="ma-row-title">Materiais</p>
+            <div class="ma-files">
+              {materiais.map((m) => (
+                <div class="ma-file">
+                  <span class="ma-file-i">▤</span>
+                  <div><b>{m.name}</b><span>{m.meta}</span></div>
+                  <span class="ma-dl">⤓</span>
+                </div>
+              ))}
+            </div>
+          </main>
         </div>
       </div>
 
-      <!-- Floating accent 2: "Upsell vendido +R$497" (bottom-left) -->
-      <div class="absolute z-20 animate-floaty -bottom-3 left-2 lg:bottom-[-12px] lg:left-[-50px]" style="animation-delay:1.2s">
-        <div class="rounded-2xl border border-gold-600/35 bg-ink/95 px-3.5 py-2.5 shadow-gold backdrop-blur-xl">
-          <div class="flex items-center gap-2.5">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
-            <div>
-              <p class="font-display text-sm font-bold leading-none text-white">+R$ 497</p>
-              <p class="mt-0.5 text-[10px] text-gold-300">Upsell vendido na área</p>
-            </div>
+      <!-- floating accents -->
+      <div class="material absolute right-2 top-2 z-20 rounded-2xl px-3.5 py-2.5 lg:right-[-50px] lg:top-[-18px] lg:animate-floaty">
+        <div class="flex items-center gap-2.5">
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400" set:html={icon('users')}></span>
+          <div>
+            <p class="font-display text-sm font-bold leading-none text-white" style="font-feature-settings:'tnum';">1.247</p>
+            <p class="mt-0.5 text-[10px] text-chrome-300/70">alunos online agora</p>
           </div>
         </div>
       </div>
-
-      <!-- Floating accent 3: "+47% recompra" (mid-right) -->
-      <div class="absolute hidden xl:flex animate-floaty" style="top:42%; right:-40px; animation-delay:0.6s">
-        <div class="rounded-2xl border border-titan-500/35 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
-          <div class="flex items-center gap-2.5">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/15 text-titan-400">
-              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <div>
-              <p class="font-display text-sm font-bold leading-none text-white">+47%</p>
-              <p class="mt-0.5 text-[10px] text-titan-400">recompra interna</p>
-            </div>
+      <div class="material absolute -bottom-3 left-2 z-20 rounded-2xl px-3.5 py-2.5 lg:bottom-[-12px] lg:left-[-50px] lg:animate-floaty" style="animation-delay:1.2s">
+        <div class="flex items-center gap-2.5">
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
+          <div>
+            <p class="font-display text-sm font-bold leading-none text-white">+R$ 497</p>
+            <p class="mt-0.5 text-[10px] text-gold-300">Upsell vendido na área</p>
           </div>
         </div>
       </div>
-
-      <!-- Floating accent 4: certificate (mid-left) -->
-      <div class="absolute hidden xl:flex animate-floaty" style="top:30%; left:-32px; animation-delay:1.8s">
-        <div class="rounded-2xl border border-suede-500/35 bg-ink/95 px-3.5 py-2.5 shadow-glow backdrop-blur-xl">
-          <div class="flex items-center gap-2.5">
-            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-500/15 text-purple-300">
-              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="5"/><path d="M9 13l-2 7 5-3 5 3-2-7"/></svg>
-            </span>
-            <div>
-              <p class="font-display text-sm font-bold leading-none text-white">Certificado</p>
-              <p class="mt-0.5 text-[10px] text-purple-300/80">emitido · 2s</p>
-            </div>
+      <div class="material absolute hidden rounded-2xl px-3.5 py-2.5 xl:flex xl:animate-floaty" style="top:42%; right:-40px; animation-delay:0.6s">
+        <div class="flex items-center gap-2.5">
+          <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/15 text-titan-400">
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <p class="font-display text-sm font-bold leading-none text-white">+47%</p>
+            <p class="mt-0.5 text-[10px] text-titan-400">recompra interna</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- compact band + CTA -->
-    <div class="reveal mx-auto mt-10 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-suede-500/15 bg-white/[0.02] px-6 py-5 sm:flex-row">
+    <!-- band + CTA -->
+    <div class="reveal mx-auto mt-10 flex max-w-3xl flex-col items-center justify-between gap-4 rounded-2xl border border-[--line-1] bg-white/[0.02] px-6 py-5 sm:flex-row">
       <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[12px] text-chrome-300/75 sm:justify-start">
         <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-titan-400"></span>Streaming premium</span>
         <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-titan-400"></span>Upsell interno</span>
         <span class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-titan-400"></span>Domínio próprio</span>
       </div>
-      <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic flex-none">
-        Quero essa área
+      <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary flex-none">
+        Liberar minha área de membros
         <span class="h-4 w-4" set:html={icon('arrow')}></span>
       </a>
     </div>
   </div>
 </section>
+
+<style>
+  .ma {
+    --mb: #0B0F17; --ms: #0E1421; --mc: #121a29;
+    --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388;
+    --ac: #3B82F6; --ac2: #6FA0FF;
+    display: grid;
+    grid-template-columns: 148px 1fr;
+    aspect-ratio: 16 / 9;
+    background: var(--mb);
+    font-size: clamp(7px, 0.85vw, 12px);
+    color: var(--mt2);
+    font-family: var(--font-display);
+    overflow: hidden;
+  }
+  .ma-side {
+    background: var(--ms);
+    border-right: 1px solid rgba(255,255,255,.06);
+    padding: 1.4em 1.1em;
+    display: flex; flex-direction: column; gap: .6em;
+  }
+  .ma-brand { display: flex; align-items: center; gap: .6em; margin-bottom: 1.4em; }
+  .ma-logo { font-weight: 800; font-size: 1.5em; color: var(--mt); letter-spacing: -.05em; }
+  .ma-brand-t { font-weight: 700; font-size: .9em; color: var(--mt); letter-spacing: .06em; line-height: 1.1; }
+  .ma-brand-t small { display: block; font-weight: 500; font-size: .7em; color: var(--ac2); letter-spacing: .1em; text-transform: uppercase; }
+  .ma-navlbl { font-family: var(--font-mono); font-size: .7em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); margin-bottom: .2em; }
+  .ma-nav { display: block; padding: .6em .9em; border-radius: .6em; font-size: 1em; color: var(--mt2); }
+  .ma-nav.on { background: var(--ac); color: #fff; font-weight: 600; }
+  .ma-user { margin-top: auto; display: flex; align-items: center; gap: .6em; font-size: .9em; color: var(--mt2); }
+  .ma-avatar { width: 2em; height: 2em; border-radius: 50%; background: var(--mc); border: 1px solid rgba(255,255,255,.1); display: grid; place-items: center; font-size: .75em; font-weight: 700; color: var(--mt); }
+
+  .ma-main { padding: 1.4em 1.6em; overflow: hidden; }
+  .ma-hero {
+    position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 1em;
+    border-radius: 1em; overflow: hidden;
+    background: linear-gradient(120deg, #101a2e 0%, #0b1220 60%, #0a0f1a 100%);
+    border: 1px solid rgba(255,255,255,.06);
+    padding: 1.6em 1.8em;
+    min-height: 9em;
+  }
+  .ma-kicker { font-family: var(--font-mono); font-size: .7em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); }
+  .ma-hero h4 { margin-top: .5em; font-size: 1.9em; font-weight: 700; letter-spacing: -.02em; color: var(--mt); line-height: 1.05; }
+  .ma-sub { margin-top: .5em; font-size: .95em; color: var(--mt2); }
+  .ma-cta { display: inline-block; margin-top: 1.1em; background: var(--ac); color: #fff; font-weight: 700; font-size: .9em; padding: .55em 1.1em; border-radius: .5em; }
+  .ma-hero-art { position: relative; display: flex; align-items: flex-end; gap: .45em; padding: .4em 0; }
+  .ma-hero-art span {
+    flex: 1; height: var(--h); border-radius: .3em .3em 0 0;
+    background: linear-gradient(180deg, rgba(111,160,255,.9), rgba(59,130,246,.15));
+    transform-origin: bottom; animation: ma-bar 3.2s var(--d) ease-in-out infinite alternate;
+  }
+  @keyframes ma-bar { from { transform: scaleY(.55); opacity: .55; } to { transform: scaleY(1); opacity: 1; } }
+
+  .ma-row-title { margin: 1.4em 0 .7em; font-size: 1em; font-weight: 700; color: var(--mt); }
+  .ma-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8em; }
+  .ma-card {
+    position: relative; border-radius: .8em; padding: .9em 1em 1.6em;
+    background: var(--mc); border: 1px solid rgba(255,255,255,.06);
+    display: flex; flex-direction: column; gap: .5em;
+  }
+  .ma-card-top { display: flex; flex-direction: column; align-items: center; padding: .4em 0 .6em; border-bottom: 1px solid rgba(255,255,255,.05); }
+  .ma-card-lbl { font-family: var(--font-mono); font-size: .7em; letter-spacing: .2em; text-transform: uppercase; color: var(--mt3); }
+  .ma-card b { font-size: 2.2em; font-weight: 800; color: var(--mt); letter-spacing: -.04em; line-height: 1; }
+  .ma-card p { font-size: .8em; line-height: 1.35; color: var(--mt2); }
+  .ma-chev { position: absolute; right: .9em; bottom: .6em; color: var(--mt3); font-size: 1.2em; }
+  .ma-card.done .ma-card-top::after { content: '✓'; position: absolute; top: .6em; right: .7em; font-size: .75em; color: #34D399; }
+  .ma-card.on { border-color: var(--ac); box-shadow: 0 0 0 1px rgba(59,130,246,.35) inset; }
+  .ma-card.on b { color: var(--ac2); }
+  .ma-card.lock { opacity: .55; }
+  .ma-card.lock .ma-card-top::after { content: '🔒'; position: absolute; top: .6em; right: .7em; font-size: .75em; }
+
+  .ma-files { display: grid; gap: .6em; }
+  .ma-file { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .9em; padding: .8em 1em; border-radius: .7em; background: var(--mc); border: 1px solid rgba(255,255,255,.06); }
+  .ma-file-i { width: 2.4em; height: 2.4em; border-radius: .5em; background: rgba(59,130,246,.15); color: var(--ac2); display: grid; place-items: center; font-size: 1em; }
+  .ma-file b { display: block; font-size: .85em; font-weight: 600; color: var(--mt); }
+  .ma-file span { font-family: var(--font-mono); font-size: .7em; color: var(--mt3); }
+  .ma-dl { color: var(--ac2); font-size: 1.2em; }
+
+  @media (max-width: 640px) {
+    .ma { grid-template-columns: 1fr; aspect-ratio: 4 / 5; font-size: 9px; }
+    .ma-side { display: none; }
+    .ma-hero { grid-template-columns: 1fr; }
+    .ma-hero-art { display: none; }
+    .ma-grid { grid-template-columns: repeat(2, 1fr); }
+    .ma-files { display: none; }
+  }
+</style>

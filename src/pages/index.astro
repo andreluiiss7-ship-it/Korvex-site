@@ -2,19 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Ticker from '../components/Ticker.astro';
-import Dashboard from '../components/Dashboard.astro';
 import Problem from '../components/Problem.astro';
 import Calculator from '../components/Calculator.astro';
+import Founder from '../components/Founder.astro';
 import Checkout from '../components/Checkout.astro';
 import Funnel from '../components/Funnel.astro';
 import Members from '../components/Members.astro';
 import GlobalPayments from '../components/GlobalPayments.astro';
-import Suite from '../components/Suite.astro';
 import Awards from '../components/Awards.astro';
 import Payments from '../components/Payments.astro';
-import AntiFeatures from '../components/AntiFeatures.astro';
-import Founders from '../components/Founders.astro';
 import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Footer from '../components/Footer.astro';
@@ -24,46 +20,17 @@ import StickyCTA from '../components/StickyCTA.astro';
 <Base>
   <Nav />
   <main>
-    <!-- 1. Hero -->
     <Hero />
-
-    <!-- 2. Ticker -->
-    <Ticker />
-
-    <!-- 4. Comparativo — dor primeiro -->
     <Problem />
-
-    <!-- 5. Calculadora — quantifica a dor + valida a promessa -->
     <Calculator />
-
-    <!-- 6. Origem / Founders — autoridade no meio do funil -->
-    <Founders />
-
-    <!-- 7. Dashboard showcase -->
-    <Dashboard />
-
-    <!-- 8-11. Spotlight de cada funcionalidade -->
+    <Founder />
     <Checkout />
     <Funnel />
     <Members />
     <GlobalPayments />
-
-    <!-- 12. Suite -->
-    <Suite />
-
-    <!-- 13. Premiações -->
     <Awards />
-
-    <!-- 14. Taxas -->
     <Payments />
-
-    <!-- 15. AntiFeatures — declaração pública do que não fazemos -->
-    <AntiFeatures />
-
-    <!-- 16. FAQ -->
     <FAQ />
-
-    <!-- 17. Fechamento manifesto -->
     <FinalCTA />
   </main>
   <Footer />

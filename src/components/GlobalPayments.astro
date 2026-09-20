@@ -28,21 +28,21 @@ const settle = [
 <section id="internacional" class="relative overflow-hidden py-28 sm:py-36">
   <!-- ambient: aurora + grid + vignette -->
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute inset-0 vignette bg-grid-faint [background-size:60px_60px] opacity-40"></div>
-    <div class="absolute left-1/2 top-1/2 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[conic-gradient(from_120deg,rgba(43,95,160,0.22),rgba(111,163,224,0.06),rgba(201,146,58,0.08),rgba(43,95,160,0.22))] blur-[120px] opacity-70"></div>
+    <div class="absolute inset-0 bg-grid-faint [background-size:60px_60px] opacity-40"></div>
+    <div class="absolute left-1/2 top-1/2 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[conic-gradient(from_120deg,rgba(43,95,160,0.22),rgba(111,163,224,0.06),rgba(201,146,58,0.08),rgba(43,95,160,0.22))] blur-[120px] opacity-50"></div>
   </div>
 
   <div class="section">
     <!-- header — centered cinematic (mantém pq é o climax do produto) -->
     <div class="reveal mx-auto max-w-3xl text-center">
-      <span class="chapter">05 · Global</span>
+      <span class="chapter">04 · Global</span>
       <h2 class="h-display mt-6 text-4xl leading-[1.02] sm:text-[3.4rem]">
         Seu produto não tem fronteira.<br />
         Seu recebimento <span class="font-editorial italic font-normal text-chrome-100">também não.</span>
       </h2>
       <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/75">
-        Cobre o cliente na moeda dele, liquide na sua. A Korvex processa em
-        <strong class="text-white"> 135+ moedas</strong>, com checkout no idioma de quem compra.
+        Cobre na moeda do cliente, receba na sua.
+        <strong class="text-white">135+ moedas</strong>, checkout no idioma de quem compra.
       </p>
     </div>
 
@@ -57,7 +57,7 @@ const settle = [
             <div class="absolute inset-0" style={`transform: rotate(${i * 90}deg)`}>
               <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" style={`transform: translate(-50%,-50%) rotate(${-i * 90}deg)`}>
                 <div class="animate-spin-rev">
-                  <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-suede-500/25 bg-ink/85 font-display text-sm font-bold text-chrome-100 shadow-glow backdrop-blur">
+                  <div class="flex h-12 w-12 items-center justify-center material rounded-2xl font-display text-sm font-bold text-chrome-100">
                     {m.s}
                   </div>
                 </div>
@@ -128,7 +128,7 @@ const settle = [
 
         <!-- floating FX cards -->
         <div class="absolute -left-4 top-[12%] animate-floaty">
-          <div class="flex items-center gap-2.5 rounded-xl border border-suede-500/25 bg-ink/85 px-3 py-2 shadow-glow backdrop-blur">
+          <div class="flex items-center gap-2.5 material rounded-xl px-3 py-2">
             <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400 text-xs font-bold">$</span>
             <div>
               <p class="text-[11px] font-semibold text-white">USD 1.200,00</p>
@@ -137,7 +137,7 @@ const settle = [
           </div>
         </div>
         <div class="absolute -right-2 top-[40%] animate-floaty" style="animation-delay:1.2s">
-          <div class="flex items-center gap-2.5 rounded-xl border border-suede-500/25 bg-ink/85 px-3 py-2 shadow-glow backdrop-blur">
+          <div class="flex items-center gap-2.5 material rounded-xl px-3 py-2">
             <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/20 text-titan-400 text-xs font-bold">€</span>
             <div>
               <p class="text-[11px] font-semibold text-white">EUR 980,00</p>
@@ -146,7 +146,7 @@ const settle = [
           </div>
         </div>
         <div class="absolute bottom-[10%] left-[14%] animate-floaty" style="animation-delay:0.6s">
-          <div class="flex items-center gap-2.5 rounded-xl border border-gold-600/25 bg-ink/85 px-3 py-2 shadow-gold backdrop-blur">
+          <div class="flex items-center gap-2.5 material rounded-xl px-3 py-2">
             <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300 text-xs font-bold">R$</span>
             <div>
               <p class="text-[11px] font-semibold text-white">BRL 6.420,00</p>
@@ -158,7 +158,7 @@ const settle = [
 
       <!-- RIGHT: cross-border settlement panel + stats -->
       <div class="reveal">
-        <div class="kframe beam card spotlight overflow-hidden rounded-3xl p-6 sm:p-7">
+        <div class="kframe card overflow-hidden rounded-3xl p-6 sm:p-7">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="h-8 w-8 rounded-lg bg-titan-600/15 p-2 text-titan-400" set:html={icon('globe')}></span>
@@ -199,7 +199,7 @@ const settle = [
           </div>
         </div>
 
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary magnetic mt-5">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-5">
           Quero vender no mundo todo
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>

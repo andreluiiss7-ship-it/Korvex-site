@@ -14,8 +14,8 @@ interface Props {
 }
 
 const {
-  title = 'Korvex — Infraestrutura de pagamentos para infoprodutores que escalam',
-  description = 'Gateway completo para infoprodutores sérios: saque D0 no Pix, checkout 100% personalizável, funil com upsell one-click, área de membros estilo Netflix e vendas internacionais. Mais de R$129 milhões transacionados.',
+  title = 'Korvex: infraestrutura de pagamentos para infoprodutores que escalam',
+  description = 'Gateway completo para infoprodutores sérios: saque D0 no Pix, checkout 100% personalizável, funil com upsell one-click, área de membros própria, saque em cripto e vendas internacionais. Mais de R$129 milhões transacionados.',
 } = Astro.props;
 ---
 
@@ -39,8 +39,7 @@ const {
     <link rel="preload" as="image" href="/assets/logo-white.png" fetchpriority="high" />
 
     <!-- Prefetch (low-priority) assets do segundo viewport -->
-    <link rel="prefetch" as="image" href="/assets/founders.jpg" />
-    <link rel="prefetch" as="image" href="/assets/dashboard.jpg" />
+    <link rel="prefetch" as="image" href="/assets/founder-andre.jpg" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -52,7 +51,7 @@ const {
 
     <!-- Fonts: self-hosted via @fontsource (importadas no frontmatter) — sem chamada Google Fonts -->
   </head>
-  <body class="grain">
+  <body>
     <!-- Scroll progress bar (top) -->
     <div id="scroll-progress" class="pointer-events-none fixed left-0 top-0 z-[60] h-[2px] w-full origin-left scale-x-0 bg-titan-400/80" style="will-change:transform"></div>
 
@@ -75,11 +74,6 @@ const {
         },
         { threshold: 0.12 }
       );
-      // Section sweep border on enter
-      const sectionIo = new IntersectionObserver(
-        (entries) => entries.forEach((e) => e.target.classList.toggle('in-view', e.isIntersecting)),
-        { threshold: 0.05 }
-      );
       const mount = () => {
         // auto-stagger siblings inside the same parent (.reveal-stagger)
         document.querySelectorAll<HTMLElement>('.reveal-stagger').forEach((parent) => {
@@ -89,7 +83,6 @@ const {
           });
         });
         document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-        document.querySelectorAll('section[id]').forEach((s) => sectionIo.observe(s));
       };
       if (document.readyState !== 'loading') mount();
       else document.addEventListener('DOMContentLoaded', mount);
@@ -126,75 +119,11 @@ const {
         onScrollParallax();
       }
 
-      // ---- Word-by-word text reveal (.text-reveal)
-      // Only words DIRECTLY inside the .text-reveal element are split.
-      // Nested <span> elements (gradient text, etc) are left intact and treated
-      // as a single "word" so background-clip:text keeps working.
-      const splitWords = (el: HTMLElement) => {
-        if (el.dataset.split === '1') return;
-        el.dataset.split = '1';
-        let wi = 0;
-        const children = Array.from(el.childNodes);
-        children.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            const tag = (node as Element).tagName;
-            if (tag === 'BR') return;
-            // Treat whole nested element as one word unit so gradients/italics stay intact
-            const wrap = document.createElement('span');
-            wrap.className = 'word';
-            wrap.style.setProperty('--word-index', String(wi++));
-            (node as Element).parentNode!.insertBefore(wrap, node);
-            wrap.appendChild(node);
-          } else if (node.nodeType === Node.TEXT_NODE) {
-            const text = (node as Text).nodeValue || '';
-            const parts = text.split(/(\s+)/);
-            const frag = document.createDocumentFragment();
-            parts.forEach((p) => {
-              if (!p) return;
-              if (/^\s+$/.test(p)) {
-                frag.appendChild(document.createTextNode(p));
-              } else {
-                const span = document.createElement('span');
-                span.className = 'word';
-                span.style.setProperty('--word-index', String(wi++));
-                span.textContent = p;
-                frag.appendChild(span);
-              }
-            });
-            (node as Text).replaceWith(frag);
-          }
-        });
-      };
-      // text-reveal currently behaves like a normal fade-in (no word split)
-      // — splitting nested gradient spans was unreliable across edge cases.
-      document.querySelectorAll<HTMLElement>('.text-reveal').forEach((el) => {
-        el.classList.add('reveal');
-        io.observe(el);
-      });
-
-      // ---- 3D Magnetic cards (.mag-card) — entire card tilts toward cursor ----
-      if (fine && !reduced) {
-        document.querySelectorAll<HTMLElement>('.mag-card').forEach((card) => {
-          const max = 6; // deg
-          card.addEventListener('pointermove', (e) => {
-            const r = card.getBoundingClientRect();
-            const px = (e.clientX - r.left) / r.width - 0.5;
-            const py = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform = `perspective(1100px) rotateX(${-py * max}deg) rotateY(${px * max}deg) translateY(-3px)`;
-          });
-          card.addEventListener('pointerleave', () => {
-            card.style.transform = 'perspective(1100px) rotateX(0) rotateY(0) translateY(0)';
-          });
-        });
-      }
-
-      // ---- Lift-on-scroll (.lift-on-scroll) — soft scale+fade ----
-      document.querySelectorAll('.lift-on-scroll').forEach((el) => io.observe(el));
 
       // ---- Safety fallback: ensure every reveal element becomes visible after 2.5s
       //      so we never end up with permanently-hidden content if IO misses anything
       window.setTimeout(() => {
-        document.querySelectorAll<HTMLElement>('.reveal,.text-reveal,.lift-on-scroll').forEach((el) => {
+        document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
           if (!el.classList.contains('in')) el.classList.add('in');
         });
       }, 2500);
@@ -237,17 +166,6 @@ const {
       );
       document.querySelectorAll<HTMLElement>('[data-count],[data-counter]').forEach((el) => cio.observe(el));
 
-      // ---- Spotlight follow (cards with .spotlight) — desktop only ----
-      if (fine) {
-        document.querySelectorAll<HTMLElement>('.spotlight').forEach((el) => {
-          el.addEventListener('pointermove', (e) => {
-            const r = el.getBoundingClientRect();
-            el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-            el.style.setProperty('--my', `${e.clientY - r.top}px`);
-          });
-        });
-      }
-
       // ---- 3D tilt (elements with .tilt[data-tilt]) ----
       if (fine) {
         document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
@@ -263,19 +181,6 @@ const {
           parent.addEventListener('pointerleave', () => {
             el.style.setProperty('--rx', '0deg');
             el.style.setProperty('--ry', '0deg');
-          });
-        });
-
-        // ---- Magnetic buttons (.magnetic) ----
-        document.querySelectorAll<HTMLElement>('.magnetic').forEach((el) => {
-          el.addEventListener('pointermove', (e) => {
-            const r = el.getBoundingClientRect();
-            const x = (e.clientX - r.left - r.width / 2) * 0.25;
-            const y = (e.clientY - r.top - r.height / 2) * 0.35;
-            el.style.transform = `translate(${x}px, ${y}px)`;
-          });
-          el.addEventListener('pointerleave', () => {
-            el.style.transform = 'translate(0,0)';
           });
         });
       }

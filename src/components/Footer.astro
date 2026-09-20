@@ -5,8 +5,8 @@ const cols = [
   {
     title: 'Plataforma',
     links: [
-      { label: 'Funcionalidades', href: '#funcionalidades' },
       { label: 'Checkout', href: '#checkout' },
+      { label: 'Funil', href: '#funil' },
       { label: 'Recebimento', href: '#pagamentos' },
       { label: 'Área de membros', href: '#membros' },
     ],
@@ -15,7 +15,7 @@ const cols = [
     title: 'Korvex',
     links: [
       { label: 'Premiações', href: '#premiacoes' },
-      { label: 'Korvex vs. comum', href: '#comparativo' },
+      { label: 'Korvex vs. comum', href: '#problema' },
       { label: 'Dúvidas frequentes', href: '#faq' },
       { label: 'Falar com o time', href: WHATSAPP_URL },
     ],
@@ -32,14 +32,14 @@ const cols = [
 ];
 ---
 
-<footer class="relative mt-12 border-t border-suede-500/15 pt-16">
+<footer class="relative mt-12 border-t border-[--line-1] pt-16">
   <div class="section pb-12">
     <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
         <img src="/assets/logo-white.png" alt="Korvex" class="h-7 w-auto" />
         <p class="mt-4 max-w-xs text-pretty text-sm leading-relaxed text-chrome-300/60">
-          A infraestrutura de pagamentos para infoprodutores que levam a operação a sério.
-          Receba no mesmo dia, venda no mundo todo, escale com padrão.
+          Pagamentos para infoprodutores que levam a operação a sério.
+          Receba no dia, venda no mundo, escale com padrão.
         </p>
         <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost mt-6 !py-2.5 text-[13px]">
           Falar no WhatsApp
@@ -63,7 +63,7 @@ const cols = [
     </div>
   </div>
 
-  <div class="border-t border-suede-500/10">
+  <div class="border-t border-[--line-1]">
     <div class="section flex flex-col items-center justify-between gap-3 py-6 sm:flex-row">
       <p class="text-[12px] text-chrome-300/60">© 2026 Korvex Tecnologia. Todos os direitos reservados.</p>
       <p class="text-[12px] text-chrome-300/60">Feito para quem vende sério.</p>

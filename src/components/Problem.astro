@@ -18,7 +18,7 @@ const pile = [
   { id:'perfectpay', bottom:18, left:78, rot:12,  scale:0.92, z:3 },
 ];
 
-// Falling — delays sobrepostos: sempre tem algo caindo
+// Falling: delays sobrepostos: sempre tem algo caindo
 const falling = [
   { id:'kirvano', delay:0,   x:36, rot:-22 },
   { id:'cakto',   delay:1.7, x:62, rot:18 },
@@ -28,12 +28,9 @@ const falling = [
 ---
 
 <section id="problema" class="relative overflow-hidden py-24 sm:py-32">
-  <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute inset-0" style="background: radial-gradient(720px 420px at 22% 18%, rgba(50,62,84,0.20), transparent 60%), radial-gradient(640px 420px at 86% 80%, rgba(59,130,246,0.10), transparent 60%);"></div>
-  </div>
 
   <div class="section">
-    <!-- HEADER — direto ao ponto -->
+    <!-- HEADER: direto ao ponto -->
     <div class="reveal mx-auto max-w-2xl text-center">
       <span class="kicker">A conta que ninguém te mostra</span>
       <h2 class="h-display mt-5 text-4xl leading-[1.02] sm:text-[3.6rem]">
@@ -41,7 +38,7 @@ const falling = [
         <span class="block font-editorial italic font-normal text-chrome-300/60">A real é o dobro.</span>
       </h2>
       <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/80">
-        Você assina por 4,99% e fecha o mês com <strong class="text-white">12% no buraco</strong>. Antecipação, reserva, chargeback, spread — cada nome, um pedaço seu virando lucro deles.
+        Você assina por 4,99% e fecha o mês com <strong class="text-white">12% no buraco</strong>: antecipação, reserva, chargeback, spread. Cada nome, um pedaço seu.
       </p>
     </div>
 
@@ -160,8 +157,8 @@ const falling = [
       </div>
 
       <!-- KORVEX CONTRAST CARD -->
-      <div class="relative overflow-hidden rounded-[36px] border border-titan-500/30 bg-gradient-to-br from-titan-600/14 via-ink to-ink p-8 shadow-glow sm:p-10">
-        <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-titan-500/15 blur-3xl"></div>
+      <div class="relative overflow-hidden rounded-[var(--radius-xl)] border border-[--line-2] bg-[--bg-1] p-8 shadow-depth sm:p-10">
+        
 
         <span class="relative inline-flex items-center gap-2 rounded-full border border-titan-400/40 bg-titan-600/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-titan-200 font-mono">
           <img src="/assets/icon.png" alt="" style="height:13px;width:auto" />
@@ -174,16 +171,16 @@ const falling = [
 
         <ul class="relative mt-7 space-y-4">
           {[
-            ['6,99% + R$ 1,99','negociável pra quem fatura alto.'],
+            ['6,99% + R,99','negociável pra quem fatura alto.'],
             ['Saque D0 no Pix','sem fila, sem reserva, sem desculpa.'],
-            ['Gerente humano','dedicado — não bot, não ticket, não fila.'],
+            ['Gerente humano','dedicado: não bot, não ticket, não fila.'],
             ['Zero bloqueio aleatório','operação séria tratada como séria.'],
           ].map(([t,d]) => (
             <li class="flex items-start gap-3">
               <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-titan-500/20 text-titan-300">
                 <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="m5 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
-              <p class="text-[14.5px] leading-snug text-chrome-200/85"><b class="text-white">{t}</b> — {d}</p>
+              <p class="text-[14.5px] leading-snug text-chrome-200/85"><b class="text-white">{t}</b>, {d}</p>
             </li>
           ))}
         </ul>
@@ -191,7 +188,7 @@ const falling = [
         <div class="relative mt-8 rounded-2xl border border-titan-500/25 bg-titan-600/8 p-4">
           <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-titan-300/80 font-mono">A diferença na sua conta</p>
           <p class="mt-2 font-display text-[15.5px] leading-snug text-white">
-            Em <b>R$ 1.000.000</b> faturados, você fica com até <b class="text-gold-gradient">+R$ 50.000</b> no bolso.
+            Em <b>R$ 1.000.000</b> faturados, até <b class="text-gold-gradient">+R$ 50.000</b> ficam com você.
           </p>
         </div>
       </div>
@@ -212,7 +209,7 @@ const falling = [
     .bin-canvas { max-height: 420px; }
   }
 
-  /* Logo quadrada com cantos arredondados — sem moldura, sem texto, com blur (concorrentes anonimizados) */
+  /* Logo quadrada com cantos arredondados: sem moldura, sem texto, com blur (concorrentes anonimizados) */
   .logo-square {
     width: 72px; height: 72px;
     border-radius: 18px;
@@ -223,7 +220,7 @@ const falling = [
   }
   .falling-square { transform: translateX(-50%); transform-origin: center; }
 
-  /* Fall through the bin opening into the pile — usa cqh do .bin-canvas pra responsividade */
+  /* Fall through the bin opening into the pile: usa cqh do .bin-canvas pra responsividade */
   @keyframes fall {
     0%   { transform: translate3d(0,-8cqh,0) rotate(0deg); opacity: 0; }
     8%   { opacity: 1; }

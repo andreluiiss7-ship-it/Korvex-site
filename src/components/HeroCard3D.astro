@@ -1,0 +1,59 @@
+---
+---
+<div id="kcard" class="kcard relative mx-auto w-full max-w-[520px] lg:max-w-none" data-state="static" style="aspect-ratio:1.586;">
+  <!-- Fallback estático: cartão CSS (0 bytes). Vira o 3D quando WebGL carrega. -->
+  <div class="kcard-static" aria-hidden="true">
+    <span class="kcard-logo">[K</span>
+    <span class="kcard-chip"></span>
+    <span class="kcard-brand">KORVEX</span>
+    <span class="kcard-num">•••• 7291</span>
+    <span class="kcard-sheen"></span>
+  </div>
+  <canvas class="kcard-canvas" aria-hidden="true"></canvas>
+</div>
+
+<script>
+  const root = document.getElementById('kcard') as HTMLElement;
+  const nav = navigator as any;
+  const ok =
+    matchMedia('(min-width:1024px) and (pointer:fine)').matches &&
+    !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    (nav.hardwareConcurrency ?? 4) >= 4 &&
+    (nav.deviceMemory ?? 8) >= 4 &&
+    !nav.connection?.saveData &&
+    !!document.createElement('canvas').getContext('webgl2');
+  if (ok) {
+    const start = () =>
+      import('../scripts/card3d')
+        .then((m) => m.mount(root))
+        .catch(() => { root.dataset.state = 'static'; });
+    if ('requestIdleCallback' in window) (window as any).requestIdleCallback(start, { timeout: 2500 });
+    else setTimeout(start, 1200);
+  }
+</script>
+
+<style>
+  .kcard { overflow: visible; }
+  .kcard-static {
+    position: absolute; inset: 0;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #1a1f28 0%, #0b0e14 55%, #151a22 100%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: perspective(1400px) rotateY(-14deg) rotateX(8deg);
+    transition: opacity 0.6s var(--ease-out);
+    overflow: hidden;
+  }
+  .kcard[data-state="webgl"] .kcard-static { opacity: 0; }
+  .kcard-canvas {
+    position: absolute; inset: -12%; width: 124%; height: 124%;
+    opacity: 0; transition: opacity 0.8s var(--ease-out);
+    pointer-events: none;
+  }
+  .kcard[data-state="webgl"] .kcard-canvas { opacity: 1; }
+  .kcard-logo { position: absolute; left: 8%; top: 9%; font: 800 clamp(28px, 4vw, 48px) var(--font-display); color: #e6e9ef; letter-spacing: -0.04em; }
+  .kcard-chip { position: absolute; left: 8%; bottom: 24%; width: 12%; aspect-ratio: 1.3; border-radius: 6px; background: linear-gradient(135deg, #d8b46a, #8a6a2c); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+  .kcard-brand { position: absolute; left: 8%; bottom: 10%; font: 500 11px var(--font-mono); letter-spacing: .22em; color: rgba(255,255,255,.55); }
+  .kcard-num { position: absolute; right: 8%; bottom: 10%; font: 500 12px var(--font-mono); color: rgba(255,255,255,.5); letter-spacing: .14em; }
+  .kcard-sheen { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.06) 50%, transparent 70%); }
+</style>
