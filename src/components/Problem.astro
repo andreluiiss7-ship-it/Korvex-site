@@ -2,13 +2,30 @@
 import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
 
-const cols = ['Gateway', 'Taxa anunciada', 'Seu Pix cai em', 'Reserva / retenção', 'Quem te atende'];
-const rows = [
-  { g: 'Hotmart', fee: '9,9%',             pix: 'D+30',              res: 'prazo de garantia',            sup: 'ticket' },
-  { g: 'Kiwify',  fee: '8,99% + R$ 2,49',  pix: 'D+2 a D+15',        res: '4% a 10% retidos',             sup: 'chat e IA' },
-  { g: 'Kirvano', fee: '7,49% + R$ 2,00',  pix: 'liberação faseada', res: 'até D+60',                     sup: 'ticket' },
-  { g: 'Ticto',   fee: '6,99% + R$ 1,00',  pix: 'D+30',              res: 'R$ 4,80 a R$ 8,90 por saque',  sup: 'ticket' },
-  { g: 'Korvex',  fee: '6,99% + R$ 1,99',  pix: 'D0',                res: 'zero',                         sup: 'gerente humano em 1h', k: true },
+const gw = ['Hotmart', 'Kiwify', 'Kirvano', 'Ticto', 'Korvex'];
+// Taxa anunciada (% + fixo). Barra proporcional ao %, máx 9,9.
+const fee = [
+  { pct: 9.9,  fixed: '',          w: 1 },
+  { pct: 8.99, fixed: '+ R$ 2,49', w: 0.908 },
+  { pct: 7.49, fixed: '+ R$ 1,00', w: 0.757 },
+  { pct: 6.99, fixed: '+ R$ 2,49', w: 0.706 },
+  { pct: 6.99, fixed: '+ R$ 1,99', w: 0.706 },
+];
+// Reserva / retenção sobre a venda. Barra proporcional, máx 40.
+const res = [
+  { v: '10%',     note: 'ao acelerar o cartão',  w: 0.25 },
+  { v: '4 a 10%', note: 'do saldo',             w: 0.25 },
+  { v: '10%',     note: 'do Pix até D+60',       w: 0.25 },
+  { v: '40%',     note: 'na antecipação',        w: 1 },
+  { v: 'zero',    note: '',                      w: 0 },
+];
+// Pix cai em: índice 0 = D0, 1 = D+1, 2 = D+2
+const pix = [
+  { d: 2, label: 'D+2' },
+  { d: 2, label: 'D+2' },
+  { d: 0, label: 'D0*' },
+  { d: 0, label: 'D0' },
+  { d: 0, label: 'D0' },
 ];
 ---
 
@@ -21,49 +38,59 @@ const rows = [
         <span class="block font-editorial italic font-normal text-chrome-300/60">Escondem o resto.</span>
       </h2>
       <p class="lead mx-auto mt-4">
-        Reserva de segurança, retenção até D+60, taxa por saque, suporte por robô. Cada linha miúda é um pedaço do seu caixa parado na conta deles.
+        Reserva retida, Pix que só cai em dois dias, taxa por saque. Cada linha miúda é um pedaço do seu caixa parado na conta deles.
       </p>
     </div>
 
     <div class="cmp reveal mt-[--gap-lg]">
-      <div class="cmp-grid">
-        <!-- tabela nominal -->
-        <div class="tb" role="table" aria-label="Comparativo de gateways">
-          <div class="tb-head" role="row">
-            {cols.map((c) => <span role="columnheader">{c}</span>)}
-          </div>
-          <div class="reveal-stagger">
-            {rows.map((r) => (
-              <div class={`tb-row${r.k ? ' tb-row--k' : ''}`} role="row">
-                <span class="tb-g" role="cell">
-                  {r.k && <span class="tb-check" set:html={icon('check')} />}{r.g}
-                </span>
-                <span role="cell" data-l={cols[1]}>{r.fee}</span>
-                <span role="cell" data-l={cols[2]}>{r.pix}</span>
-                <span role="cell" data-l={cols[3]}>{r.res}</span>
-                <span role="cell" data-l={cols[4]}>{r.sup}</span>
-              </div>
+      <div class="charts">
+        <!-- taxa -->
+        <div class="chart">
+          <p class="chart-t">Taxa anunciada</p>
+          <ul class="reveal-stagger">
+            {gw.map((g, i) => (
+              <li class={`bar-row${i === 4 ? ' is-k' : ''}`}>
+                <span class="bar-n">{g}</span>
+                <span class="bar"><i style={`--w:${fee[i].w}`}></i></span>
+                <span class="bar-v">{fee[i].pct.toLocaleString('pt-BR')}%<small>{fee[i].fixed}</small></span>
+              </li>
             ))}
-          </div>
-          <p class="tb-note">Taxas e prazos públicos nos sites oficiais e no Reclame Aqui, consulta em setembro de 2026. Korvex: contrato padrão.</p>
+          </ul>
         </div>
 
-        <!-- custo real -->
-        <aside class="cmp-real">
-          <div>
-            <span class="chapter">Gateway comum</span>
-            <p class="cmp-big"><span data-counter data-target="12" data-suffix="%">12%</span></p>
-            <p class="cmp-sub">custo real por venda, somando tudo</p>
-            <div class="cmp-bar" style="--w:1"><i></i></div>
-          </div>
-          <div>
-            <span class="chapter cmp-k">Korvex</span>
-            <p class="cmp-big cmp-big--k"><span data-counter data-target="7" data-suffix="%">7%</span></p>
-            <p class="cmp-sub">tudo incluso, sem letra miúda</p>
-            <div class="cmp-bar cmp-bar--k" style="--w:0.583"><i></i></div>
-          </div>
-        </aside>
+        <!-- reserva -->
+        <div class="chart">
+          <p class="chart-t">Reserva retida da venda</p>
+          <ul class="reveal-stagger">
+            {gw.map((g, i) => (
+              <li class={`bar-row${i === 4 ? ' is-k' : ''}`}>
+                <span class="bar-n">{g}</span>
+                <span class="bar"><i style={`--w:${res[i].w}`}></i></span>
+                <span class="bar-v">{res[i].v}<small>{res[i].note}</small></span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- pix -->
+        <div class="chart">
+          <p class="chart-t">Seu Pix cai em</p>
+          <ul class="reveal-stagger">
+            {gw.map((g, i) => (
+              <li class={`bar-row${i === 4 ? ' is-k' : ''}`}>
+                <span class="bar-n">{g}</span>
+                <span class="days" aria-hidden="true">
+                  {[0, 1, 2].map((d) => <b class={d === pix[i].d ? 'on' : d < pix[i].d ? 'past' : ''}></b>)}
+                </span>
+                <span class="bar-v">{pix[i].label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+      <p class="tb-note">
+        * Kirvano libera 90% do Pix em D0 e retém 10% até D+60. Hotmart e Kiwify: Pix em 2 dias; reserva de 10% ao acelerar o cartão. Ticto: antecipa 60%, retém 40%. Dados das centrais de ajuda oficiais, setembro de 2026.
+      </p>
 
       <!-- calculadora embutida -->
       <div id="calculadora" class="calc reveal mt-[--gap-lg]">
@@ -159,42 +186,29 @@ const rows = [
   .cmp-grid { display: grid; gap: 28px; }
   @media (min-width: 1024px) { .cmp-grid { grid-template-columns: 1.45fr 0.55fr; gap: clamp(28px, 4vw, 56px); align-items: start; } }
 
-  /* tabela */
-  .tb { min-width: 0; }
-  .tb-head { display: none; }
-  .tb-row {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px;
-    padding: 14px 14px; border-radius: 14px;
-    border: 1px solid var(--line-1); margin-top: 8px;
-    font-size: 13.5px; line-height: 1.4; color: var(--t-2);
-  }
-  .tb-row:first-child { margin-top: 0; }
-  .tb-row [data-l]::before { content: attr(data-l); display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-4); margin-bottom: 3px; }
-  .tb-g { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--t-1); letter-spacing: -0.01em; }
-  .tb-check { flex: none; width: 18px; height: 18px; padding: 3px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-2); }
-  .tb-row--k { border-color: rgba(111,163,224,0.35); background: linear-gradient(180deg, rgba(59,130,246,0.10), rgba(59,130,246,0.03)); color: var(--t-1); }
-  .tb-row--k .tb-g { color: #fff; }
-  .tb-note { margin-top: 12px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; line-height: 1.5; color: var(--t-4); }
-  @media (min-width: 900px) {
-    .tb-head, .tb-row { display: grid; grid-template-columns: 120px 1.1fr 1fr 1.25fr 1.1fr; gap: 0 18px; align-items: center; }
-    .tb-head { padding: 0 14px 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-4); border-bottom: 1px solid var(--line-2); }
-    .tb-row { margin-top: 0; border: 0; border-bottom: 1px solid var(--line-1); border-radius: 0; padding: 14px; }
-    .tb-row [data-l]::before { display: none; }
-    .tb-g { grid-column: auto; }
-    .tb-row--k { border-radius: 14px; border: 1px solid rgba(111,163,224,0.35); margin-top: 10px; }
-  }
-
-  /* custo real */
-  .cmp-real { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: end; }
-  @media (min-width: 1024px) { .cmp-real { grid-template-columns: 1fr; gap: 28px; padding-top: 6px; } }
-  .cmp-k { color: var(--blue-2); }
-  .cmp-big { margin-top: 10px; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.045em; line-height: 1; font-size: clamp(2.6rem, 6vw, 4.5rem); color: var(--t-3); font-feature-settings: 'tnum'; }
-  .cmp-big--k { color: #fff; }
-  .cmp-sub { margin-top: 6px; font-size: 12.5px; color: var(--t-3); }
-  .cmp-bar { margin-top: 12px; height: 6px; border-radius: 999px; background: var(--line-1); overflow: hidden; }
-  .cmp-bar i { display: block; height: 100%; width: 100%; border-radius: inherit; background: var(--t-4); transform: scaleX(0); transform-origin: left; transition: transform 1.4s var(--ease-out) 0.2s; }
-  .cmp-bar--k i { background: linear-gradient(90deg, var(--blue), var(--blue-2)); transition-delay: 0.35s; }
-  .reveal.in .cmp-bar i { transform: scaleX(var(--w)); }
+  /* gráficos */
+  .charts { display: grid; gap: 22px; }
+  @media (min-width: 900px) { .charts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); } }
+  .chart { border: 1px solid var(--line-1); border-radius: 18px; padding: 18px 18px 14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); }
+  .chart-t { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--t-3); margin-bottom: 12px; }
+  .bar-row { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 7px 0; }
+  .bar-n { font-size: 12.5px; color: var(--t-3); letter-spacing: -0.01em; white-space: nowrap; }
+  .bar { height: 8px; border-radius: 999px; background: var(--line-1); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: inherit; background: var(--t-4); width: 100%; transform: scaleX(var(--w)); transform-origin: left; transition: transform 1.1s var(--ease-out); }
+  .bar-v { font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--t-2); font-feature-settings: 'tnum'; text-align: right; line-height: 1.1; min-width: 44px; }
+  .bar-v small { display: block; font-family: var(--font-mono); font-weight: 400; font-size: 9.5px; letter-spacing: 0.04em; color: var(--t-4); margin-top: 2px; white-space: nowrap; }
+  .days { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .days b { display: block; height: 8px; border-radius: 999px; background: var(--line-1); }
+  .days b.past { background: var(--t-4); }
+  .days b.on { background: var(--t-3); }
+  .bar-row.is-k { margin-top: 6px; padding: 10px 10px; margin-inline: -10px; border-radius: 12px; background: linear-gradient(90deg, rgba(59,130,246,0.12), rgba(59,130,246,0.03)); border: 1px solid rgba(111,163,224,0.28); }
+  .bar-row.is-k .bar-n { color: #fff; font-weight: 600; }
+  .bar-row.is-k .bar-v { color: #fff; }
+  .bar-row.is-k .bar i { background: linear-gradient(90deg, var(--blue), var(--blue-2)); }
+  .bar-row.is-k .days b.on { background: var(--blue-2); box-shadow: 0 0 12px rgba(111,163,224,0.6); }
+  .bar-row.is-k .bar i[style*="--w:0"] { transform: scaleX(0.02); }
+  .bar-row:not(.in) .bar i { transform: scaleX(0); }
+  .tb-note { margin-top: 14px; max-width: 78ch; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; line-height: 1.55; color: var(--t-4); }
 
   /* calculadora */
   .calc { display: grid; gap: 24px; scroll-margin-top: 96px; }
@@ -214,5 +228,5 @@ const rows = [
 
   .cmp-punch { margin-top: var(--gap-md); text-align: center; font-size: clamp(1.3rem, 2.4vw, 1.85rem); letter-spacing: -0.02em; line-height: 1.2; color: var(--t-2); text-wrap: balance; }
   .cmp-punch b { font-family: var(--font-display); font-weight: 700; }
-  @media (prefers-reduced-motion: reduce) { .cmp-bar i { transition: none; transform: scaleX(var(--w)); } }
+  @media (prefers-reduced-motion: reduce) { .bar i { transition: none !important; transform: scaleX(var(--w)) !important; } }
 </style>
