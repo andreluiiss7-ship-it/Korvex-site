@@ -1,256 +1,109 @@
 ---
-// Gateways concorrentes (foco BR: infoproduto)
-const competitors = [
-  { id:'hotmart',    file:'hotmart.jpg',    name:'Hotmart',    pain:'9,9% + R$1 · saque D+30' },
-  { id:'kiwify',     file:'kiwify.jpg',     name:'Kiwify',     pain:'7,99% + R$1 · reserva 7d' },
-  { id:'eduzz',      file:'eduzz.png',      name:'Eduzz',      pain:'8,9% · saque D+15' },
-  { id:'kirvano',    file:'kirvano.avif',   name:'Kirvano',    pain:'taxas crescentes · D+2' },
-  { id:'cakto',      file:'cakto.png',      name:'Cakto',      pain:'reserva variável · D+2' },
-  { id:'perfectpay', file:'perfectpay.png', name:'PerfectPay', pain:'8,9% + R$1 · D+14' },
-];
-const byId = Object.fromEntries(competitors.map(c=>[c.id,c]));
+import { icon } from '../lib/icons';
 
-// Pile inside the bin (already discarded)
-const pile = [
-  { id:'eduzz',      bottom:6,  left:18, rot:-14, scale:0.9,  z:2 },
-  { id:'hotmart',    bottom:22, left:38, rot:8,   scale:1.0,  z:6 },
-  { id:'kiwify',     bottom:6,  left:58, rot:-10, scale:0.94, z:4 },
-  { id:'perfectpay', bottom:18, left:78, rot:12,  scale:0.92, z:3 },
-];
-
-// Falling: delays sobrepostos: sempre tem algo caindo
-const falling = [
-  { id:'kirvano', delay:0,   x:36, rot:-22 },
-  { id:'cakto',   delay:1.7, x:62, rot:18 },
-  { id:'hotmart', delay:3.4, x:48, rot:-12 },
-  { id:'kiwify',  delay:5.1, x:28, rot:15 },
+const rows = [
+  { k: 'Taxa real', a: '~12%: 4,99% na vitrine, mais antecipação, reserva e spread', b: '6,99% + R$ 1,99. Só isso.' },
+  { k: 'Saque',     a: 'D+14 a D+30, com fila',                                       b: 'D0 no Pix' },
+  { k: 'Reserva',   a: 'Parte da venda retida por até 90 dias',                       b: 'Zero' },
+  { k: 'Suporte',   a: 'Ticket, bot e espera',                                        b: 'Gerente humano em até 1h' },
 ];
 ---
 
-<section id="problema" class="relative overflow-hidden py-24 sm:py-32">
-
+<section id="problema" class="sec relative">
   <div class="section">
-    <!-- HEADER: direto ao ponto -->
     <div class="reveal mx-auto max-w-2xl text-center">
       <span class="kicker">A conta que ninguém te mostra</span>
-      <h2 class="h-display mt-5 text-4xl leading-[1.02] sm:text-[3.6rem]">
+      <h2 class="h2 mt-5">
         Eles dizem 4,99%.
         <span class="block font-editorial italic font-normal text-chrome-300/60">A real é o dobro.</span>
       </h2>
-      <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/80">
-        Você assina por 4,99% e fecha o mês com <strong class="text-white">12% no buraco</strong>: antecipação, reserva, chargeback, spread. Cada nome, um pedaço seu.
+      <p class="lead mx-auto mt-6">
+        Você assina por 4,99% e fecha o mês com <strong>12% no buraco</strong>: antecipação, reserva, chargeback, spread. Cada nome, um pedaço seu.
       </p>
     </div>
 
-    <!-- BIN + KORVEX -->
-    <div class="reveal mt-16 grid gap-8 lg:grid-cols-[1.15fr_1fr]">
-
-      <!-- LIXEIRA -->
-      <div class="relative">
-        <!-- Bin canvas: SVG silhouette + HTML logo overlay -->
-        <div class="bin-canvas relative">
-
-          <!-- SVG silhouette: real trash bin shape -->
-          <svg class="absolute inset-0 h-full w-full" viewBox="0 0 600 680" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <defs>
-              <linearGradient id="binBody" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#0a0c12"/>
-                <stop offset="0.18" stop-color="#1a1f2a"/>
-                <stop offset="0.5" stop-color="#22293a"/>
-                <stop offset="0.82" stop-color="#1a1f2a"/>
-                <stop offset="1" stop-color="#0a0c12"/>
-              </linearGradient>
-              <linearGradient id="binMouth" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#000"/>
-                <stop offset="0.6" stop-color="#000"/>
-                <stop offset="1" stop-color="#05060a"/>
-              </linearGradient>
-              <linearGradient id="rimChrome" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="rgba(184,176,160,0)"/>
-                <stop offset="0.5" stop-color="rgba(216,218,221,0.7)"/>
-                <stop offset="1" stop-color="rgba(184,176,160,0)"/>
-              </linearGradient>
-              <radialGradient id="baseShadow" cx="0.5" cy="0.5" r="0.5">
-                <stop offset="0" stop-color="rgba(0,0,0,0.85)"/>
-                <stop offset="1" stop-color="rgba(0,0,0,0)"/>
-              </radialGradient>
-              <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
-              </filter>
-            </defs>
-
-            <!-- Ground shadow ellipse -->
-            <ellipse cx="300" cy="660" rx="220" ry="14" fill="url(#baseShadow)"/>
-
-            <!-- BIN BODY (tapered cylinder, front view) -->
-            <path d="M 60 95
-                     L 540 95
-                     L 510 615
-                     Q 510 650 300 650
-                     Q 90 650 90 615
-                     Z"
-                  fill="url(#binBody)"
-                  stroke="rgba(184,176,160,0.22)" stroke-width="1"/>
-
-            <!-- Subtle vertical ribbing on body -->
-            <g stroke="rgba(255,255,255,0.06)" stroke-width="0.6" fill="none">
-              <path d="M 150 120 L 138 620"/>
-              <path d="M 220 120 L 212 625"/>
-              <path d="M 300 120 L 300 630"/>
-              <path d="M 380 120 L 388 625"/>
-              <path d="M 450 120 L 462 620"/>
-            </g>
-
-            <!-- INNER MOUTH (dark hole) -->
-            <ellipse cx="300" cy="95" rx="240" ry="34" fill="url(#binMouth)"/>
-            <!-- Luz interna sutil: dá leitura de profundidade em vez de buraco preto -->
-            <ellipse cx="300" cy="100" rx="200" ry="24" fill="rgba(111,163,224,0.05)" filter="url(#innerShadow)"/>
-            <ellipse cx="300" cy="360" rx="180" ry="200" fill="rgba(62,92,126,0.05)" filter="url(#innerShadow)"/>
-
-            <!-- Inner rim shadow (depth) -->
-            <ellipse cx="300" cy="102" rx="232" ry="28" fill="none" stroke="rgba(0,0,0,0.85)" stroke-width="4"/>
-            <ellipse cx="300" cy="106" rx="225" ry="22" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="2"/>
-
-            <!-- TOP RIM (chrome metallic highlight) -->
-            <ellipse cx="300" cy="95" rx="240" ry="34" fill="none" stroke="url(#rimChrome)" stroke-width="2"/>
-            <ellipse cx="300" cy="91" rx="238" ry="32" fill="none" stroke="rgba(216,218,221,0.35)" stroke-width="1"/>
-
-            <!-- Side highlights (vertical metallic edges) -->
-            <path d="M 62 100 L 92 615" stroke="rgba(216,218,221,0.18)" stroke-width="1.5" fill="none"/>
-            <path d="M 538 100 L 508 615" stroke="rgba(216,218,221,0.18)" stroke-width="1.5" fill="none"/>
-
-            <!-- Bottom inside arc (suggests interior floor) -->
-            <ellipse cx="300" cy="615" rx="210" ry="14" fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="1.5"/>
-          </svg>
-
-          <!-- FALLING logos (apenas a logo quadrada arredondada) -->
-          <div class="pointer-events-none absolute inset-0 z-20">
-            {falling.map(f => {
-              const c = byId[f.id];
-              return (
-                <div class="falling absolute" style={`--delay:${f.delay}s; --x:${f.x}%; --rot:${f.rot}deg`}>
-                  <img src={`/assets/competitors/${c.file}`} alt={c.name} class="logo-square falling-square" loading="lazy" decoding="async" />
-                </div>
-              );
-            })}
-          </div>
-
-          <!-- PILE inside the bin (apenas as logos) -->
-          <div class="absolute inset-x-[14%] bottom-[10%] z-10">
-            <div class="relative h-44">
-              {pile.map(p => {
-                const c = byId[p.id];
-                return (
-                  <img
-                    src={`/assets/competitors/${c.file}`}
-                    alt={c.name}
-                    class="logo-square absolute"
-                    loading="lazy"
-                    decoding="async"
-                    style={`bottom:${p.bottom}px;left:${p.left}%;transform:translateX(-50%) rotate(${p.rot}deg) scale(${p.scale});z-index:${p.z};filter:blur(5.5px) saturate(0.85) brightness(0.85);`}
-                  />
-                );
-              })}
-            </div>
-          </div>
+    <div class="cmp reveal mt-16">
+      <div class="cmp-head">
+        <div>
+          <span class="chapter">Gateway comum</span>
+          <p class="cmp-big"><span data-counter data-target="12" data-suffix="%">12%</span></p>
+          <p class="cmp-sub">custo real por venda</p>
+          <div class="cmp-bar" style="--w:1"><i></i></div>
+        </div>
+        <div>
+          <span class="chapter cmp-k">Korvex</span>
+          <p class="cmp-big cmp-big--k"><span data-counter data-target="7" data-suffix="%">7%</span></p>
+          <p class="cmp-sub">tudo incluso, sem letra miúda</p>
+          <div class="cmp-bar cmp-bar--k" style="--w:0.583"><i></i></div>
         </div>
       </div>
 
-      <!-- KORVEX CONTRAST CARD -->
-      <div class="relative overflow-hidden rounded-[var(--radius-xl)] border border-[--line-2] bg-[--bg-1] p-8 shadow-depth sm:p-10">
-        
+      <dl class="cmp-rows reveal-stagger">
+        {rows.map((r) => (
+          <div class="cmp-row">
+            <dt>{r.k}</dt>
+            <dd class="cmp-a">{r.a}</dd>
+            <dd class="cmp-b"><span class="cmp-check" set:html={icon('check')} />{r.b}</dd>
+          </div>
+        ))}
+      </dl>
 
-        <span class="relative inline-flex items-center gap-2 rounded-full border border-titan-400/40 bg-titan-600/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-titan-200 font-mono">
-          <img src="/assets/icon.png" alt="" style="height:13px;width:auto" />
-          Korvex
-        </span>
-
-        <h3 class="relative font-display mt-6 text-[1.7rem] font-bold leading-[1.05] text-white sm:text-[2.1rem]">
-          O gateway que <span class="font-editorial italic font-normal text-chrome-100">devolve dinheiro</span> pro seu bolso.
-        </h3>
-
-        <ul class="relative mt-7 space-y-4">
-          {[
-            ['6,99% + R,99','negociável pra quem fatura alto.'],
-            ['Saque D0 no Pix','sem fila, sem reserva, sem desculpa.'],
-            ['Gerente humano','dedicado: não bot, não ticket, não fila.'],
-            ['Zero bloqueio aleatório','operação séria tratada como séria.'],
-          ].map(([t,d]) => (
-            <li class="flex items-start gap-3">
-              <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-titan-500/20 text-titan-300">
-                <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="m5 12 5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <p class="text-[14.5px] leading-snug text-chrome-200/85"><b class="text-white">{t}</b>, {d}</p>
-            </li>
-          ))}
-        </ul>
-
-        <div class="relative mt-8 rounded-2xl border border-titan-500/25 bg-titan-600/8 p-4">
-          <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-titan-300/80 font-mono">A diferença na sua conta</p>
-          <p class="mt-2 font-display text-[15.5px] leading-snug text-white">
-            Em <b>R$ 1.000.000</b> faturados, até <b class="text-gold-gradient">+R$ 50.000</b> ficam com você.
-          </p>
-        </div>
-      </div>
+      <p class="cmp-punch reveal">
+        <b class="text-gold-gradient">R$ 50.000</b> <span class="font-editorial italic text-chrome-100">ficam com você</span> a cada R$ 1 milhão.
+      </p>
     </div>
   </div>
 </section>
 
 <style>
-  .bin-canvas {
-    width: 100%;
-    aspect-ratio: 600 / 680;
-    max-height: 480px;
-    margin-inline: auto;
-    container-type: size;
-    container-name: bin;
+  .cmp { max-width: 960px; margin-inline: auto; }
+  .cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); align-items: end; }
+  .cmp-k { color: var(--blue-2); }
+  .cmp-big {
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--t-3);
+    font-feature-settings: 'tnum';
   }
-  @media (max-width: 640px) {
-    .bin-canvas { max-height: 420px; }
+  .cmp-big--k { color: #fff; }
+  .cmp-sub { margin-top: 8px; font-size: 13px; color: var(--t-3); }
+  .cmp-bar { margin-top: 18px; height: 6px; border-radius: 999px; background: var(--line-1); overflow: hidden; }
+  .cmp-bar i {
+    display: block; height: 100%; width: 100%; border-radius: inherit;
+    background: var(--t-4);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 1.4s var(--ease-out) 0.2s;
   }
+  .cmp-bar--k i { background: linear-gradient(90deg, var(--blue), var(--blue-2)); transition-delay: 0.35s; }
+  .reveal.in .cmp-bar i { transform: scaleX(var(--w)); }
 
-  /* Logo quadrada com cantos arredondados: sem moldura, sem texto, com blur (concorrentes anonimizados) */
-  .logo-square {
-    width: 72px; height: 72px;
-    border-radius: 18px;
-    object-fit: cover;
-    display: block;
-    box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.06) inset;
-    filter: blur(5.5px) saturate(1.1);
+  .cmp-rows { margin-top: 44px; border-top: 1px solid var(--line-2); }
+  .cmp-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px clamp(20px, 4vw, 48px);
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line-1);
   }
-  .falling-square { transform: translateX(-50%); transform-origin: center; }
-
-  /* Fall through the bin opening into the pile: usa cqh do .bin-canvas pra responsividade */
-  @keyframes fall {
-    0%   { transform: translate3d(0,-8cqh,0) rotate(0deg); opacity: 0; }
-    8%   { opacity: 1; }
-    55%  { transform: translate3d(0,72cqh,0) rotate(var(--rot)); opacity: 1; }
-    63%  { transform: translate3d(0,68cqh,0) rotate(calc(var(--rot) * 0.55)); }
-    70%  { transform: translate3d(0,72cqh,0) rotate(var(--rot)); }
-    92%  { transform: translate3d(0,72cqh,0) rotate(var(--rot)); opacity: 0.4; }
-    100% { transform: translate3d(0,72cqh,0) rotate(var(--rot)); opacity: 0; }
+  .cmp-row dt { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--t-3); }
+  .cmp-row dd { font-size: 14.5px; line-height: 1.45; max-width: 44ch; }
+  .cmp-a { color: var(--t-3); }
+  .cmp-b { color: var(--t-1); display: flex; gap: 10px; align-items: flex-start; }
+  .cmp-check { flex: none; width: 18px; height: 18px; margin-top: 1px; padding: 3px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-2); }
+  @media (min-width: 768px) {
+    .cmp-row { grid-template-columns: 140px 1fr 1fr; padding: 22px 0; align-items: baseline; }
+    .cmp-row dt { grid-column: auto; }
+    .cmp-head { padding-left: calc(140px + clamp(20px, 4vw, 48px)); }
   }
-  .falling {
-    left: var(--x); top: 0;
-    transform-origin: center;
-    animation: fall 6.8s cubic-bezier(.55,.05,.78,.34) infinite;
-    animation-delay: var(--delay);
-    will-change: transform, opacity;
+  .cmp-punch {
+    margin-top: 44px; text-align: center;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    letter-spacing: -0.02em; line-height: 1.2;
+    color: var(--t-2); text-wrap: balance;
   }
-  /* Fallback pra browsers sem container queries */
-  @supports not (container-type: size) {
-    @keyframes fall {
-      0%   { transform: translate3d(0,-50px,0) rotate(0deg); opacity: 0; }
-      8%   { opacity: 1; }
-      55%  { transform: translate3d(0,420px,0) rotate(var(--rot)); opacity: 1; }
-      70%  { transform: translate3d(0,420px,0) rotate(var(--rot)); }
-      100% { transform: translate3d(0,420px,0) rotate(var(--rot)); opacity: 0; }
-    }
-  }
-  @media (max-width: 640px) {
-    .logo-square { width: 68px; height: 68px; border-radius: 16px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .falling { animation: none; opacity: 0; }
-  }
+  .cmp-punch b { font-family: var(--font-display); font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) { .cmp-bar i { transition: none; transform: scaleX(var(--w)); } }
 </style>

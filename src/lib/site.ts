@@ -17,5 +17,4 @@ export const STATS = {
   players: '400+',
   volume: 'R$129M+',
   approval: '94%',
-  countries: '46+',
 };

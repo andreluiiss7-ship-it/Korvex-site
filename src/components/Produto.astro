@@ -1,0 +1,234 @@
+---
+import { icon } from '../lib/icons';
+import { REGISTER_URL } from '../lib/site';
+import ProductCheckoutPanel from './ProductCheckoutPanel.astro';
+import ProductFunnelPanel from './ProductFunnelPanel.astro';
+import ProductMembersPanel from './ProductMembersPanel.astro';
+
+const themes = [
+  { key: 'padrao',   name: 'Padrão' },
+  { key: 'longo',    name: 'Formulário longo' },
+  { key: 'box',      name: 'Box' },
+  { key: 'moderno',  name: 'Moderno' },
+  { key: 'classico', name: 'Clássico' },
+  { key: 'fluxo',    name: 'Fluxo' },
+  { key: 'etapas',   name: 'Fluxo (Etapas)' },
+];
+
+const chapters = [
+  {
+    id: 'checkout', n: '01', label: 'Checkout',
+    h: '7 checkouts. Um pra cada oferta.',
+    p: 'Cada tema é uma estrutura diferente, do tradicional ao fluxo em etapas. Todos com a sua marca, no seu domínio.',
+    bullets: ['Cores, fontes e logo da sua marca', 'Order bump, prova social e selos', 'Domínio próprio'],
+  },
+  {
+    id: 'funil', n: '02', label: 'Funil',
+    h: 'O ticket sobe a cada bloco que você solta.',
+    p: 'Arraste, conecte, veja a conversão de cada nó ao vivo. Você desenha, a Korvex executa.',
+    bullets: ['Upsell, downsell e order bump em 1 clique', 'Conversão por nó em tempo real', 'Pronto em 3 minutos'],
+    stat: { target: 62, label: 'receita por venda' },
+  },
+  {
+    id: 'membros', n: '03', label: 'Membros',
+    h: 'Cara de streaming. Vende de novo lá dentro.',
+    p: 'Seu aluno entra e sente marca grande. Você vende de novo lá dentro: +47% de recompra interna.',
+    bullets: ['Área própria no seu domínio', 'Upsell interno', 'Materiais e certificados'],
+  },
+];
+---
+
+<section id="produto" class="sec relative">
+  <div class="section">
+    <header class="reveal max-w-xl">
+      <span class="chapter">Produto</span>
+      <h2 class="h2 mt-6">Do checkout à área de membros.<br />Tudo com a sua marca.</h2>
+      <p class="lead mt-5">Três peças que trabalham juntas: o checkout que converte, o funil que sobe o ticket e a área que vende de novo.</p>
+    </header>
+
+    <div class="pv mt-16" data-pv>
+      <nav class="pv-rail" aria-label="Capítulos do produto">
+        {chapters.map((c, i) => (
+          <a href={`#${c.id}`} class="pv-mark" aria-current={i === 0 ? 'step' : undefined}>
+            <span class="pv-br">[</span><span class="pv-n">{c.n}</span><span class="pv-br">]</span>
+          </a>
+        ))}
+      </nav>
+
+      {chapters.map((c, i) => (
+        <>
+          <article id={c.id} class="pv-chapter reveal" data-chapter={i} style={`--row:${i + 1}`}>
+            <span class="chapter">{c.n} · {c.label}</span>
+            <h3 class="pv-h3 mt-5">{c.h}</h3>
+            <p class="pv-p mt-4">{c.p}</p>
+            <ul class="pv-list mt-6">
+              {c.bullets.map((b) => (
+                <li><span class="pv-check" set:html={icon('check')} />{b}</li>
+              ))}
+            </ul>
+
+            {i === 0 && (
+              <div class="pv-chips mt-7" role="tablist" aria-label="Temas de checkout">
+                {themes.map((t, j) => (
+                  <button type="button" role="tab" data-ck={t.key} aria-selected={j === 0 ? 'true' : 'false'} class={`ck-tab${j === 0 ? ' active' : ''}`}>
+                    <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {c.stat && (
+              <p class="pv-stat mt-7">
+                <b data-counter data-target={c.stat.target} data-prefix="+" data-suffix="%">+{c.stat.target}%</b>
+                <span>{c.stat.label}</span>
+              </p>
+            )}
+          </article>
+
+          <div class="pv-panel" data-panel={i} data-active={i === 0 ? 'true' : 'false'} style={`--row:${i + 1}`}>
+            {i === 0 && <ProductCheckoutPanel />}
+            {i === 1 && <ProductFunnelPanel />}
+            {i === 2 && <ProductMembersPanel />}
+          </div>
+        </>
+      ))}
+    </div>
+
+    <div class="reveal mt-14 flex flex-wrap items-center gap-x-6 gap-y-3">
+      <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary">
+        Montar minha operação
+        <span class="h-4 w-4" set:html={icon('arrow')}></span>
+      </a>
+      <p class="text-[13px] text-[--t-3]">Checkout, funil e membros no mesmo painel. Sem plugin, sem integração.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Sticky scrollytelling: painel + marca do rail seguem o capítulo na banda central da viewport
+  const root = document.querySelector<HTMLElement>('[data-pv]');
+  if (root) {
+    const chapters = [...root.querySelectorAll<HTMLElement>('.pv-chapter')];
+    const panels = [...root.querySelectorAll<HTMLElement>('.pv-panel')];
+    const marks = [...root.querySelectorAll<HTMLElement>('.pv-mark')];
+    const mq = matchMedia('(min-width: 1024px)');
+    let io: IntersectionObserver | null = null;
+
+    const activate = (i: number) => {
+      panels.forEach((p, j) => { p.dataset.active = String(j === i); p.setAttribute('aria-hidden', String(j !== i)); });
+      marks.forEach((m, j) => (j === i ? m.setAttribute('aria-current', 'step') : m.removeAttribute('aria-current')));
+    };
+    const start = () => {
+      io?.disconnect();
+      io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) activate(Number((e.target as HTMLElement).dataset.chapter)); });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      chapters.forEach((c) => io!.observe(c));
+    };
+    const stop = () => {
+      io?.disconnect(); io = null;
+      panels.forEach((p) => { p.dataset.active = 'true'; p.removeAttribute('aria-hidden'); });
+    };
+    const apply = () => (mq.matches ? start() : stop());
+    apply();
+    mq.addEventListener('change', apply);
+  }
+
+  // Chips de tema trocam a estrutura do checkout no painel
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.ck-tab');
+  const views = document.querySelectorAll<HTMLElement>('[data-view]');
+  const labelEl = document.querySelector<HTMLSpanElement>('[data-current-theme]');
+  const labels: Record<string, string> = {
+    padrao: 'Tema Padrão', longo: 'Formulário longo', box: 'Tema Box', moderno: 'Tema Moderno',
+    classico: 'Tema Clássico', fluxo: 'Tema Fluxo', etapas: 'Fluxo em Etapas',
+  };
+  let busy = false;
+  tabs.forEach((t) => {
+    t.addEventListener('click', () => {
+      if (busy || t.classList.contains('active')) return;
+      busy = true;
+      const key = t.dataset.ck!;
+      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', String(on)); });
+      const visible = [...views].find((el) => !el.classList.contains('hidden'));
+      const next = [...views].find((el) => el.dataset.view === key);
+      const swap = () => {
+        views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
+        if (labelEl) labelEl.textContent = labels[key] || 'Tema';
+        if (next) {
+          next.style.opacity = '0'; next.style.transform = 'translateY(6px)';
+          requestAnimationFrame(() => {
+            next.style.transition = 'opacity .35s ease, transform .35s var(--ease-out)';
+            next.style.opacity = '1'; next.style.transform = 'none';
+            setTimeout(() => { next.style.transition = ''; busy = false; }, 380);
+          });
+        } else busy = false;
+      };
+      if (visible) {
+        visible.style.transition = 'opacity .18s ease'; visible.style.opacity = '0';
+        setTimeout(() => { visible.style.opacity = ''; visible.style.transition = ''; swap(); }, 180);
+      } else swap();
+    });
+  });
+</script>
+
+<style>
+  /* mobile-first: uma coluna, painéis estáticos, rail oculto */
+  .pv { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 2.5rem; }
+  .pv-rail { display: none; }
+  .pv-panel { min-width: 0; }
+  .pv-chapter + .pv-panel { margin-top: -0.5rem; }
+  .pv-panel + .pv-chapter { margin-top: 2.5rem; }
+
+  .pv-h3 { font-family: var(--font-display); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(1.75rem, 2.6vw, 2.5rem); text-wrap: balance; }
+  .pv-p { font-size: 16.5px; line-height: 1.55; color: var(--t-2); max-width: 46ch; text-wrap: pretty; }
+  .pv-list { display: grid; gap: 10px; }
+  .pv-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; line-height: 1.45; color: var(--t-1); }
+  .pv-check { flex: none; margin-top: 2px; width: 18px; height: 18px; padding: 3px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-2); }
+  .pv-stat { display: flex; align-items: baseline; gap: 10px; }
+  .pv-stat b { font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.03em; color: var(--blue-2); font-feature-settings: 'tnum'; }
+  .pv-stat span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-3); }
+  .pv-chips { display: flex; flex-wrap: wrap; gap: 0 2px; margin-left: -10px; }
+
+  .ck-tab { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; padding: 12px 10px; min-height: 44px; color: rgba(199,210,221,0.65); transition: color .25s ease; }
+  .ck-tab .ck-br { color: rgba(111,163,224,0); display: inline-block; transition: color .25s ease; }
+  .ck-tab .ck-label { padding: 0 6px; }
+  .ck-tab:hover { color: #fff; }
+  .ck-tab:hover .ck-br { color: rgba(111,163,224,0.45); }
+  .ck-tab.active { color: #fff; }
+  .ck-tab.active .ck-br { color: rgba(111,163,224,0.9); }
+  .ck-tab.active .ck-label { text-shadow: 0 0 18px rgba(111,163,224,0.55); }
+
+  .pv-mark { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--t-4); transition: color .3s; }
+  .pv-mark .pv-br { color: transparent; transition: color .3s; }
+  .pv-mark .pv-n { padding: 0 5px; }
+  .pv-mark:hover { color: var(--t-2); }
+  .pv-mark[aria-current="step"] { color: #fff; }
+  .pv-mark[aria-current="step"] .pv-br { color: var(--blue-2); }
+
+  /* desktop: rail | copy | stage sticky */
+  @media (min-width: 1024px) {
+    .pv {
+      grid-template-columns: 48px minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-rows: repeat(3, auto);
+      column-gap: clamp(2rem, 4vw, 4.5rem);
+      row-gap: 0;
+      align-items: start;
+    }
+    .pv-rail { display: flex; flex-direction: column; gap: 4px; grid-column: 1; grid-row: 1 / 4; position: sticky; top: 50vh; transform: translateY(-50%); align-self: start; }
+    .pv-chapter { grid-column: 2; grid-row: var(--row); min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding-block: 10vh; margin: 0; }
+    .pv-panel {
+      grid-column: 3; grid-row: 1 / 4;
+      position: sticky; top: 15vh; align-self: start; margin: 0;
+      opacity: 0; transform: translateY(18px) scale(0.985);
+      pointer-events: none; visibility: hidden;
+      transition: opacity .55s var(--ease-out), transform .7s var(--ease-out), visibility 0s linear .55s;
+    }
+    .pv-panel[data-active="true"] {
+      opacity: 1; transform: none; pointer-events: auto; visibility: visible; z-index: 2;
+      transition: opacity .55s var(--ease-out) .1s, transform .7s var(--ease-out) .1s, visibility 0s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pv-panel, .ck-tab, .pv-mark { transition: none !important; }
+  }
+</style>

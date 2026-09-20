@@ -54,9 +54,9 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-html, body { max-width: 100%; overflow-x: hidden; }
+html, body { max-width: 100%; overflow-x: clip; }
 section { overflow-x: clip; }
-section[id]:not(#topo) {
+section[id]:not(#topo):not(#produto) {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
 }
@@ -90,7 +90,21 @@ body {
   line-height: 1.15;
   padding-bottom: 0.08em;
 }
-.lead { font-size: 17.5px; line-height: 1.55; color: rgba(176, 179, 184, 0.78); }
+/* ---------- Ritmo de seção ---------- */
+.sec { padding-block: clamp(88px, 11vw, 150px); scroll-margin-top: 84px; }
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+  font-size: clamp(2.25rem, 4.6vw, 3.6rem);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.h2 .muted { font-weight: 800; color: rgba(199, 210, 221, 0.75); }
+.lead { font-size: 17.5px; line-height: 1.55; color: var(--t-2); max-width: 60ch; text-wrap: pretty; }
+.lead strong { color: #fff; font-weight: 600; }
 .text-pretty { text-wrap: pretty; }
 
 .text-titan-gradient {
@@ -231,7 +245,7 @@ body {
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    main > section[id]:not(#topo) > .section {
+    main > section[id]:not(#topo):not(#produto) > .section {
       animation: section-fade-in linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 45%;
@@ -250,15 +264,6 @@ body {
   will-change: transform;
 }
 
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-@keyframes spin-rev { to { transform: rotate(-360deg); } }
-@keyframes dash-travel { to { stroke-dashoffset: -1000; } }
-@keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(3.2); opacity: 0; }
-}
-.animate-spin-slow { animation: spin-slow 60s linear infinite; }
-.animate-spin-rev { animation: spin-rev 48s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }

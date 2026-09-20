@@ -6,6 +6,7 @@ export const icons: Record<string, string> = {
   bolt: P('<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/>'),
   card: P('<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19"/><path d="M6 15h4"/>'),
   globe: P('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/>'),
+  coin: P('<circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M9.5 9.5h3.6a1.75 1.75 0 0 1 0 3.5H9.5m0 0h3.9a1.75 1.75 0 0 1 0 3.5H9.5"/>'),
   funnel: P('<path d="M3 4h18l-7 8v6l-4 2v-8L3 4Z"/>'),
   paint: P('<path d="M4 20s2-1 4-1 3 1 5 1 4-1 4-1"/><rect x="4" y="4" width="16" height="11" rx="2"/><path d="M8 9h.01M12 9h.01M16 9h.01"/>'),
   cursor: P('<path d="m4 4 7 17 2.5-7L21 11 4 4Z"/>'),

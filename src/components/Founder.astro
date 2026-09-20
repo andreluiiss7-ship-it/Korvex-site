@@ -5,24 +5,24 @@ const stats = [
 ];
 ---
 
-<section id="fundador" class="relative py-24 sm:py-32">
+<section id="fundador" class="sec relative">
   <div class="section">
     <div class="reveal grid items-stretch gap-10 overflow-hidden rounded-[var(--radius-xl)] border border-[--line-1] bg-[--bg-1] shadow-depth lg:grid-cols-[1fr_1fr] lg:gap-0">
       <!-- copy -->
       <div class="relative p-8 sm:p-10 lg:p-14">
         <span class="chapter">Quem construiu</span>
-        <h2 class="h-display mt-6 text-3xl leading-[1.04] sm:text-[2.6rem] lg:text-[3rem]">
+        <h2 class="h2 mt-6">
           Construída por quem<br />
           já <span class="font-editorial italic font-normal text-titan-gradient">operou no jogo.</span>
         </h2>
-        <p class="mt-6 max-w-xl text-pretty leading-relaxed text-chrome-300/80">
+        <p class="lead mt-6">
           André vendeu mais de <strong class="text-white">R$ 25 milhões</strong> na internet antes de abrir a Korvex.
           Cada regra aqui nasceu de uma fatura que ele mesmo pagou.
         </p>
         <div class="sig-line mt-7 text-lg">
           André <span class="ml-2 font-sans text-[11px] uppercase not-italic tracking-[0.18em] text-chrome-300/60">Fundador</span>
         </div>
-        <dl class="mt-9 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-[--line-1] pt-7 sm:gap-x-12">
+        <dl class="reveal-stagger mt-9 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-[--line-1] pt-7 sm:gap-x-12">
           {stats.map((s) => (
             <div>
               <dt class="font-display text-3xl font-extrabold leading-none tracking-[-0.03em] text-white sm:text-4xl" style="font-feature-settings:'tnum';">{s.big}</dt>

@@ -9,7 +9,7 @@ const tiers = [
 ];
 ---
 
-<section id="premiacoes" class="relative overflow-hidden py-24 sm:py-28">
+<section id="premiacoes" class="sec relative overflow-hidden">
   <!-- ambient gold + soft top spotlight -->
   <div class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute inset-0" style="background: radial-gradient(800px 500px at 50% 0%, rgba(201,163,94,0.10), transparent 60%), linear-gradient(180deg, var(--bg-0), #08090E 50%, var(--bg-0));"></div>
@@ -19,21 +19,21 @@ const tiers = [
     <!-- HEADER -->
     <div class="reveal mx-auto max-w-3xl text-center">
       <span class="kicker gold justify-center">Reconhecimento</span>
-      <h2 class="h-display mt-6 text-[2.5rem] leading-[1.02] sm:text-[3.4rem]">
+      <h2 class="h2 mt-6">
         Aqui, faturamento alto
-        <span class="block font-editorial text-[2.8rem] italic sm:text-[4.4rem]">
+        <span class="block font-editorial italic font-normal" style="font-size:1.18em">
           <span class="text-gold-gradient">vira troféu na parede.</span>
         </span>
       </h2>
-      <p class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-chrome-300/72">
+      <p class="lead mx-auto mt-6">
         Cada marco é reconhecido <strong class="text-white">em metal, não em e-mail automático.</strong>
       </p>
     </div>
 
     <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
-    <div class="reveal mt-14 grid grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
+    <div class="reveal-stagger mt-14 grid grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
       {tiers.map((t, i) => (
-        <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone style={`transition-delay:${i * 80}ms`}>
+        <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
             <img src={t.img} alt={t.name} loading="lazy" decoding="async" />
           </div>
@@ -70,8 +70,8 @@ const tiers = [
 
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
           <div class="rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
-            <p class="font-display text-[14.5px] font-semibold text-white">Viagem internacional</p>
-            <p class="mt-1 text-[12.5px] text-chrome-300/65">Destinos de elite, all-in.</p>
+            <p class="font-display text-[14.5px] font-semibold text-white">Experiência exclusiva</p>
+            <p class="mt-1 text-[12.5px] text-chrome-300/65">Imersão presencial com o time Korvex.</p>
           </div>
           <div class="rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
             <p class="font-display text-[14.5px] font-semibold text-white">Prêmios em dinheiro</p>

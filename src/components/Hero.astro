@@ -3,7 +3,7 @@ import { waUrl, REGISTER_URL } from '../lib/site';
 import { icon } from '../lib/icons';
 import HeroCard3D from './HeroCard3D.astro';
 
-const pills = ['Saque D0 no Pix', 'Saque em cripto', '135+ moedas', 'Upsell one-click'];
+const pills = ['Saque D0 no Pix', 'Saque em cripto', 'Upsell one-click', 'Área de membros'];
 
 const stats = [
   { big: 'R$ 129M+', n: 129,  prefix: 'R$ ', suffix: 'M+', dec: 0, label: 'transacionados' },
@@ -13,9 +13,9 @@ const stats = [
 ];
 
 const flow = [
-  { flag: '🇧🇷', v: 'R$ 1.997,00', m: 'Pix · aprovada', d0: true },
-  { flag: '🇺🇸', v: 'USD 497,00',  m: 'Cartão · aprovada', d0: false },
-  { flag: '🇧🇷', v: 'R$ 6.420,00', m: 'Pix · aprovada', d0: true },
+  { v: 'R$ 1.997,00', m: 'Pix · aprovada',    tag: 'D0' },
+  { v: 'R$ 497,00',   m: 'Cartão · aprovada', tag: 'D+30' },
+  { v: 'R$ 6.420,00', m: 'Pix · aprovada',    tag: 'D0' },
 ];
 ---
 
@@ -90,12 +90,12 @@ const flow = [
           <div class="space-y-1.5">
             {flow.map((tx) => (
               <div class="flex items-center gap-2 rounded-lg bg-white/[0.03] px-2.5 py-1.5">
-                <span class="text-sm leading-none">{tx.flag}</span>
+                <span class="h-1.5 w-1.5 flex-none rounded-full bg-emerald-400/80"></span>
                 <div class="min-w-0 flex-1">
                   <p class="truncate font-mono text-[11px] font-semibold text-white" style="font-feature-settings:'tnum';">{tx.v}</p>
                   <p class="truncate text-[9.5px] text-chrome-300/60">{tx.m}</p>
                 </div>
-                {tx.d0 && <span class="rounded bg-titan-600/20 px-1 py-0.5 font-mono text-[8px] font-bold text-titan-300">D0</span>}
+                <span class="rounded bg-titan-600/20 px-1 py-0.5 font-mono text-[8px] font-bold text-titan-300">{tx.tag}</span>
               </div>
             ))}
           </div>

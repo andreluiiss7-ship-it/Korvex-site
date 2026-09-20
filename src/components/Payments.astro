@@ -6,22 +6,23 @@ const payouts = [
   { icon: 'bolt',  title: 'Pix · Saque D0',           desc: 'Pediu, caiu. Caixa pra reinvestir no mesmo dia, em 1 clique.', tag: '+ rápido', accent: 'blue' },
   { icon: 'card',  title: 'Cartão · D+30',            desc: 'Padrão de mercado no crédito, com previsibilidade total do caixa.',     tag: 'padrão',   accent: 'blue' },
   { icon: 'clock', title: 'Antecipação · D+14 ou D+2',desc: 'Precisa antes? Antecipe o cartão mediante taxa sob consulta.', tag: 'flex', accent: 'blue' },
-  { icon: 'globe', title: 'Cripto · saque',            desc: 'Saque em criptomoeda quando fizer sentido pro seu caixa.', tag: 'novo', accent: 'blue' },
+  { icon: 'coin', title: 'Cripto · saque',            desc: 'Saque em criptomoeda quando fizer sentido pro seu caixa.', tag: 'novo', accent: 'blue' },
   { icon: 'spark', title: 'Já fatura alto?',          desc: 'Volume alto tem condição própria, da taxa ao atendimento.', tag: 'Negociar', accent: 'gold', link: true },
 ];
 ---
 
-<section id="pagamentos" class="relative py-16 sm:py-20">
+<section id="pagamentos" class="sec relative">
   <div class="section">
     <!-- header -->
     <div class="reveal grid items-end gap-8 lg:grid-cols-[1.2fr_0.8fr]">
       <div>
-        <h2 class="h-display mt-6 text-4xl leading-[1.0] sm:text-[3.2rem]">
+        <span class="chapter">Taxas</span>
+        <h2 class="h2 mt-6">
           6,99% + R$ 1,99
-          <span class="block font-display font-black text-chrome-300/75">por venda.</span>
+          <span class="block muted">por venda.</span>
         </h2>
       </div>
-      <p class="max-w-md text-pretty leading-relaxed text-chrome-300/72">
+      <p class="lead max-w-md">
         Sem letra miúda. Do Pix imediato à antecipação do cartão,
         <strong class="text-white">você decide quando recebe</strong>. A taxa cai conforme você cresce.
       </p>
@@ -70,7 +71,7 @@ const payouts = [
       </div>
 
       <!-- Payout list -->
-      <div class="flex flex-col gap-3.5">
+      <div class="reveal-stagger flex flex-col gap-3.5">
         {payouts.map((p) => (
           <div class={`payout ${p.accent === 'gold' ? 'gold' : ''}`}>
             <div class="payout-i" set:html={icon(p.icon)}></div>

@@ -1,61 +1,8 @@
 ---
 import { icon } from '../lib/icons';
-import { REGISTER_URL } from '../lib/site';
-
-// 7 temas REAIS de checkout da Korvex
-const themes = [
-  { key: 'padrao',    name: 'Padrão',           note: 'Layout clean em 2 colunas. Resumo direita, pagamento esquerda.', tag: 'Mais usado' },
-  { key: 'longo',     name: 'Formulário longo', note: 'Tudo vertical, ideal pra carta de vendas + checkout junto.',     tag: 'Long-form' },
-  { key: 'box',       name: 'Box',              note: 'Card central focado. Menos distração, mais foco no botão.',     tag: 'Foco' },
-  { key: 'moderno',   name: 'Moderno',          note: 'Visual editorial com imagem e destaque pra prova social.',       tag: 'Premium' },
-  { key: 'classico',  name: 'Clássico',         note: 'Estilo tradicional, máxima familiaridade pro comprador.',        tag: 'Conversão' },
-  { key: 'fluxo',     name: 'Fluxo',            note: 'Conduzido por blocos. Cada bloco abre o próximo na mesma tela.', tag: 'Smart' },
-  { key: 'etapas',    name: 'Fluxo (Etapas)',   note: 'Steps clássicos: dados → pagamento → confirmação. Menos chargeback.', tag: 'Multi-step' },
-];
-
-const customizable = [
-  'Cores, fontes, logo e identidade visual da sua marca',
-  'Campos, ordem, order bump, prova social e selos',
-  'Timer, depoimentos, garantia e gatilhos de conversão',
-  'Domínio próprio. O checkout é seu.',
-];
 ---
 
-<section id="checkout" class="relative py-16 sm:py-20">
-  
-  <div class="section">
-    <!-- header — split: headline left, copy right, with inline serif accent -->
-    <div class="reveal grid items-end gap-8 border-b border-[--line-1] pb-10 lg:grid-cols-[1.15fr_0.85fr]">
-      <div>
-        <span class="chapter">01 · Checkout</span>
-        <h2 class="h-display mt-6 text-4xl leading-[1.0] sm:text-[3.2rem]">
-          7 checkouts.<br />
-          Um <span class="font-display font-black text-chrome-300/75">pra cada oferta.</span>
-        </h2>
-      </div>
-      <p class="max-w-md text-pretty text-lg leading-relaxed text-chrome-300/72">
-        Cada tema é uma estrutura diferente, do tradicional ao fluxo em etapas.
-        <strong class="text-white">Todos com a sua marca, no seu domínio.</strong>
-      </p>
-    </div>
-
-    <!-- THEME SELECTOR — chips na linguagem bracket do logo -->
-    <div class="reveal mt-12 mx-auto max-w-5xl">
-      <div class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 sm:gap-x-2">
-        {themes.map((t, i) => (
-          <button data-ck={t.key} class={`ck-tab${i === 0 ? ' active' : ''}`}>
-            <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
-          </button>
-        ))}
-      </div>
-      <p class="mt-4 text-center text-[12px] text-chrome-300/60">Clique num tema. A estrutura muda de verdade.</p>
-      <p class="mt-6 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-chrome-300/60">Curso · Mentoria · Comunidade · Evento · Assinatura · Global. A mesma estrutura pra qualquer formato.</p>
-    </div>
-
-    <div data-tilt-zone class="mt-10 grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-      <!-- LEFT: live preview that changes structure -->
-      <div class="reveal">
-        <div data-tilt="5" class="tilt browser kframe relative">
+<div data-tilt="3" class="tilt browser kframe in relative">
           <div class="browser-bar">
             <span class="dot bg-[#ff5f57]/80"></span>
             <span class="dot bg-[#febc2e]/80"></span>
@@ -67,6 +14,7 @@ const customizable = [
             </span>
           </div>
 
+  <div class="ck-stage">
           <!-- VARIANT: padrão (2 colunas) -->
           <div data-view="padrao" class="grid gap-0 sm:grid-cols-[1.2fr_1fr]">
             <div class="border-b border-suede-500/10 p-6 sm:border-b-0 sm:border-r">
@@ -304,109 +252,10 @@ const customizable = [
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: customization checklist + customizable card -->
-      <div class="reveal">
-        <div class="card spotlight overflow-hidden p-6 sm:p-7">
-          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-titan-300/80">Personalização total</p>
-          <h3 class="h-display mt-4 text-2xl leading-tight">
-            Cada tema vira <span class="text-white">a cara da sua marca.</span>
-          </h3>
-          <p class="mt-3 text-[14px] leading-relaxed text-chrome-300/70">
-            O comprador vê a sua operação do começo ao fim, não a de uma plataforma. Mais percepção de marca,
-            menos atrito, mais aprovação.
-          </p>
-          <ul class="mt-5 space-y-2.5">
-            {customizable.map((c) => (
-              <li class="flex items-start gap-3">
-                <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-titan-600/20 text-titan-400" set:html={icon('check')} />
-                <span class="text-[13px] leading-snug text-chrome-200/90">{c}</span>
-              </li>
-            ))}
-          </ul>
-          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-6 w-full justify-center">
-            Montar meu checkout
-            <span class="h-4 w-4" set:html={icon('arrow')}></span>
-          </a>
-        </div>
-
-      </div>
-    </div>
   </div>
-</section>
-
-<script>
-  const tabs = document.querySelectorAll<HTMLButtonElement>('.ck-tab');
-  const views = document.querySelectorAll<HTMLElement>('[data-view]');
-  const labelEl = document.querySelector<HTMLSpanElement>('[data-current-theme]');
-  const labels: Record<string, string> = {
-    padrao: 'Tema Padrão',
-    longo: 'Formulário longo',
-    box: 'Tema Box',
-    moderno: 'Tema Moderno',
-    classico: 'Tema Clássico',
-    fluxo: 'Tema Fluxo',
-    etapas: 'Fluxo em Etapas',
-  };
-  let busy = false;
-  tabs.forEach((t) => {
-    t.addEventListener('click', () => {
-      if (busy || t.classList.contains('active')) return;
-      busy = true;
-      const key = t.dataset.ck!;
-      tabs.forEach((x) => x.classList.toggle('active', x === t));
-      // fade-out → troca de estrutura → fade-in
-      const visible = [...views].find((el) => !el.classList.contains('hidden'));
-      const next = [...views].find((el) => el.dataset.view === key);
-      const swap = () => {
-        views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
-        if (labelEl) labelEl.textContent = labels[key] || 'Tema';
-        if (next) {
-          next.style.opacity = '0';
-          next.style.transform = 'translateY(6px)';
-          requestAnimationFrame(() => {
-            next.style.transition = 'opacity .35s ease, transform .35s cubic-bezier(0.16,1,0.3,1)';
-            next.style.opacity = '1';
-            next.style.transform = 'none';
-            setTimeout(() => { next.style.transition = ''; busy = false; }, 380);
-          });
-        } else { busy = false; }
-      };
-      if (visible) {
-        visible.style.transition = 'opacity .18s ease';
-        visible.style.opacity = '0';
-        setTimeout(() => { visible.style.opacity = ''; visible.style.transition = ''; swap(); }, 180);
-      } else swap();
-    });
-  });
-</script>
+</div>
 
 <style>
-  /* Chips de tema — linguagem bracket do logo [K */
-  .ck-tab {
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    padding: 12px 10px;
-    min-height: 44px;
-    color: rgba(199, 210, 221, 0.65);
-    transition: color 0.25s ease;
-  }
-  .ck-tab .ck-br {
-    color: rgba(111, 163, 224, 0);
-    transition: color 0.25s ease, transform 0.25s ease;
-    display: inline-block;
-  }
-  .ck-tab .ck-label { padding: 0 6px; transition: color 0.25s ease; }
-  .ck-tab:hover { color: #fff; }
-  .ck-tab:hover .ck-br { color: rgba(111, 163, 224, 0.45); }
-  .ck-tab.active { color: #fff; }
-  .ck-tab.active .ck-br { color: rgba(111, 163, 224, 0.9); }
-  .ck-tab.active .ck-label {
-    color: #fff;
-    text-shadow: 0 0 18px rgba(111, 163, 224, 0.55);
-  }
+  .ck-stage { position: relative; }
+  @media (min-width: 1024px) { .ck-stage { min-height: 400px; } }
 </style>

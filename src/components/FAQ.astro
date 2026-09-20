@@ -8,25 +8,24 @@ const faqs = [
   { q: 'A taxa pode mudar depois?', a: 'Não. A taxa do contrato é a taxa do extrato. Qualquer mudança passa por você antes, nunca por e-mail automático.' },
   { q: 'A Korvex bloqueia conta sem aviso?', a: 'Não. Operação séria é tratada como séria. Se algo soar estranho, seu gerente liga antes de qualquer ação.' },
   { q: 'Existe letra miúda?', a: 'Não. Antecipação, reserva, chargeback e spread estão abertos nesta página. Zero surpresa no extrato.' },
-  { q: 'Vende pra fora do Brasil?', a: '135+ moedas, checkout no idioma do comprador e liquidação no seu caixa no Brasil.' },
   { q: 'Como funciona a migração?', a: 'Você fala com o time no WhatsApp, a gente analisa a operação, define a condição e conduz a migração. Você não para de vender.' },
   { q: 'É seguro?', a: 'KYC, AML e KYT em toda transação, criptografia de ponta e antifraude em camadas.' },
 ];
 ---
 
-<section id="faq" class="relative py-24 sm:py-32">
+<section id="faq" class="sec relative">
   <div class="section grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
     <div class="reveal">
-      <h2 class="h-display text-3xl sm:text-[2.6rem]">
+      <h2 class="h2">
         Perguntas diretas.<br />Respostas diretas.
       </h2>
-      <p class="mt-4 max-w-sm text-pretty leading-relaxed text-chrome-300/70">
+      <p class="lead mt-4 max-w-sm">
         Sobrou dúvida? Fala com o time. Gente, não robô.
       </p>
       <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost mt-6 !py-2.5 text-[13px]">Falar no WhatsApp</a>
     </div>
 
-    <div class="reveal divide-y divide-white/[0.08] border-y border-white/[0.08]">
+    <div class="reveal-stagger divide-y divide-white/[0.08] border-y border-white/[0.08]">
       {faqs.map((f, i) => (
         <details class="group" open={i === 0}>
           <summary class="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4">
