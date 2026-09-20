@@ -39,11 +39,11 @@ const nodes = [
       </div>
 
       <svg class="fb-wires" viewBox="0 0 1000 704" preserveAspectRatio="none" aria-hidden="true">
-        <path class="ok" d="M200 158 C236 158 234 118 270 118" />
-        <path class="ok" d="M440 118 C476 118 474 158 510 158" />
-        <path class="ok" d="M680 158 C726 158 724 278 770 278" />
-        <path class="no" d="M595 196 C595 260 595 280 595 340" />
-        <path class="ok" d="M680 378 C726 378 724 278 770 278" />
+        <path class="ok" d="M215 162 C243 162 242 122 270 122" />
+        <path class="ok" d="M455 122 C483 122 482 162 510 162" />
+        <path class="ok" d="M695 162 C733 162 732 282 770 282" />
+        <path class="no" d="M602 204 C602 260 602 280 602 340" />
+        <path class="ok" d="M695 382 C733 382 732 282 770 282" />
       </svg>
 
       {nodes.map((n) => (
@@ -72,8 +72,8 @@ const nodes = [
 
 <style>
   .fb {
-    --fb-bg: #111111; --fb-rail: #151515; --fb-card: #1B1B1B; --ln: rgba(255,255,255,.07);
-    --mt: #F4F2EE; --mt2: #B5B0A8; --mt3: #837F78; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399; --no: rgba(255,255,255,.28);
+    --fb-bg: #0B0F17; --fb-rail: #0E1421; --fb-card: #121a29; --ln: rgba(255,255,255,.07);
+    --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399; --no: rgba(255,255,255,.28);
     display: grid; grid-template-columns: 9.5em 1fr; aspect-ratio: 16/9; overflow: hidden;
     font-size: clamp(7px, .85vw, 12px); font-family: var(--font-display); color: var(--mt2); background: var(--fb-bg);
   }
@@ -92,13 +92,13 @@ const nodes = [
   .fb-wires .ok { stroke: var(--ok); }
   .fb-wires .no { stroke: var(--no); animation-duration: 2.4s; }
   .fb-node {
-    position: absolute; left: var(--x); top: var(--y); width: 17%; height: 10.8%; z-index: 1;
+    position: absolute; left: var(--x); top: var(--y); width: 18.5%; height: 12%; z-index: 1;
     display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: .55em; align-items: center; align-content: center;
     padding: .45em .65em; border-radius: .6em; background: var(--fb-card); border: 1px solid var(--ln); box-shadow: 0 8px 20px -12px rgba(0,0,0,.8);
   }
   .fb-ni { grid-row: 1 / 3; width: 1.9em; height: 1.9em; padding: .45em; border-radius: .45em; background: rgba(255,255,255,.06); color: var(--mt2); }
-  .fb-node b { font-size: .8em; font-weight: 700; color: var(--mt); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .fb-node em { font-style: normal; font-family: var(--font-mono); font-size: .6em; letter-spacing: .04em; color: var(--ok); }
+  .fb-node b { font-size: .86em; font-weight: 700; color: var(--mt); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fb-node em { font-style: normal; font-family: var(--font-mono); font-size: .64em; letter-spacing: .04em; color: var(--ok); }
   .fb-node.on { border-color: var(--ac); box-shadow: 0 0 0 1px rgba(59,130,246,.35) inset, 0 8px 20px -12px rgba(0,0,0,.8); }
   .fb-node.on .fb-ni { color: var(--ac2); background: rgba(59,130,246,.15); }
   .fb-node::before, .fb-node::after, .fb-node > .p { content: ''; position: absolute; top: 50%; width: .7em; height: .7em; border-radius: 50%; background: var(--fb-bg); border: 1.5px solid var(--ok); transform: translateY(-50%); }
@@ -108,12 +108,12 @@ const nodes = [
   .fb-node.in-top::before { left: 50%; top: 0; transform: translate(-50%, -50%); border-color: var(--no); }
   .fb-node > .p { top: auto; bottom: -.35em; left: 50%; transform: translateX(-50%); border-color: var(--no); }
   .fb-ghost .fb-node::before, .fb-ghost .fb-node::after { display: none; }
-  .fb-slot { position: absolute; left: 27%; top: 71%; width: 17%; height: 10.8%; border: 1px dashed rgba(255,255,255,.2); border-radius: .6em; opacity: 0; animation: fb-slot 8s infinite; }
-  .fb-ghost { position: absolute; left: 27%; top: 71%; width: 17%; height: 10.8%; z-index: 3; animation: fb-drag 8s var(--ease-out) infinite; }
+  .fb-slot { position: absolute; left: 27%; top: 71%; width: 18.5%; height: 12%; border: 1px dashed rgba(255,255,255,.2); border-radius: .6em; opacity: 0; animation: fb-slot 8s infinite; }
+  .fb-ghost { position: absolute; left: 27%; top: 71%; width: 18.5%; height: 12%; z-index: 3; animation: fb-drag 8s var(--ease-out) infinite; }
   .fb-ghost .fb-node { position: static; width: 100%; height: 100%; box-shadow: 0 18px 30px -14px rgba(0,0,0,.9), 0 0 0 1px rgba(59,130,246,.35); }
   .fb-cur { position: absolute; left: -.4em; top: -.4em; width: 1.4em; height: 1.4em; color: #fff; filter: drop-shadow(0 2px 3px rgba(0,0,0,.7)); }
   .fb-cur :global(svg) { fill: #fff; stroke: #000; stroke-width: 1.2; }
-  .fb-insp { display: none; position: absolute; right: 1em; bottom: 1em; z-index: 2; width: 11em; padding: .9em 1em; border-radius: .7em; background: rgba(27,27,27,.92); border: 1px solid var(--ln); backdrop-filter: blur(8px); }
+  .fb-insp { display: none; position: absolute; right: 1em; bottom: 1em; z-index: 2; width: 11em; padding: .9em 1em; border-radius: .7em; background: rgba(18,26,41,.92); border: 1px solid var(--ln); backdrop-filter: blur(8px); }
   .fb-kv { display: flex; justify-content: space-between; gap: .6em; font-size: .7em; padding: .35em 0; border-top: 1px solid var(--ln); }
   .fb-kv span { color: var(--mt3); } .fb-kv b { color: var(--mt); font-weight: 600; } .fb-kv b.ok { color: var(--ok); }
   @media (min-width: 1280px) { .fb-insp { display: block; } }

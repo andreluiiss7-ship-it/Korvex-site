@@ -10,7 +10,7 @@ const others = [
 ];
 ---
 
-<section id="problema" class="sec relative">
+<section id="problema" class="sec relative" data-surface="light">
   <div class="section">
     <div class="reveal mx-auto max-w-2xl text-center">
       <h2 class="h2">
@@ -222,5 +222,13 @@ const others = [
   .other { display: grid; gap: 2px; min-width: 190px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-1); background: rgba(255,255,255,0.02); font-family: var(--font-mono); font-size: 11px; color: var(--t-3); letter-spacing: 0.02em; }
   .other b { font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; letter-spacing: -0.01em; }
   @media (min-width: 1024px) { .other { min-width: 0; flex: 1; } }
+  [data-surface="light"] .calc-slider { background: linear-gradient(to right, rgba(11,18,32,0.14), rgba(11,18,32,0.42)); }
+  [data-surface="light"] .rc { background: #FFFFFF; box-shadow: var(--shadow-card); }
+  [data-surface="light"] .rc--k { background: linear-gradient(180deg, rgba(138,106,36,0.07), transparent 40%), #FFFFFF; border-color: rgba(138,106,36,0.35); }
+  [data-surface="light"] .rc-title, [data-surface="light"] .rc-line b, [data-surface="light"] .rc-total > b, [data-surface="light"] .other b { color: var(--t-1); }
+  [data-surface="light"] .rc-link { color: var(--t-2); text-decoration-color: rgba(11,18,32,0.3); }
+  [data-surface="light"] .rc-link:hover { color: var(--t-1); }
+  [data-surface="light"] .other { background: #FFFFFF; border-color: var(--line-2); }
+  [data-surface="light"] .rc-total > small em, [data-surface="light"] .rc-diff em { color: var(--gold-1) !important; }
   @media (prefers-reduced-motion: reduce) { .calc-slider::-webkit-slider-thumb { transition: none; } }
 </style>

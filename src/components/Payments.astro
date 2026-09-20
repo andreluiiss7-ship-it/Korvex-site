@@ -11,13 +11,13 @@ const payouts = [
 ];
 const timeline = [
   { d: 'D0',   l: 'Pix · API Pix', w: 0 },
-  { d: 'D+2',  l: 'antecipação',   w: 0.067 },
+  { d: 'D+2',  l: 'antecipação',   w: 0.067, quiet: true },
   { d: 'D+14', l: 'antecipação',   w: 0.467 },
   { d: 'D+30', l: 'cartão',        w: 1 },
 ];
 ---
 
-<section id="pagamentos" class="sec relative">
+<section id="pagamentos" class="sec relative" data-surface="light">
   <div class="section">
     <!-- header -->
     <div class="reveal grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr]">
@@ -36,7 +36,7 @@ const timeline = [
     <!-- price-hero + payout-list -->
     <div class="reveal mt-[--gap-md] grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-8 lg:items-stretch">
       <!-- Price hero card -->
-      <div class="kframe relative overflow-hidden rounded-3xl border border-[--line-1] p-8" style="background: radial-gradient(600px 400px at 0% 0%, rgba(201,163,94,0.08), transparent 60%), linear-gradient(180deg, var(--bg-1), var(--bg-0)); box-shadow: var(--shadow-card);">
+      <div class="kframe relative overflow-hidden rounded-3xl border border-[--line-1] p-8" style="background: radial-gradient(600px 400px at 0% 0%, rgba(37,99,235,0.08), transparent 60%), linear-gradient(180deg, var(--bg-1), var(--bg-0)); box-shadow: var(--shadow-card);">
         <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-chrome-300/60">Taxa padrão</p>
         <div class="mt-3 flex items-baseline gap-3">
           <span class="font-display text-[4.5rem] font-bold leading-none text-white sm:text-[5rem]" style="letter-spacing: -0.04em; font-feature-settings: 'tnum';" data-counter data-target="6.99" data-decimals="2" data-suffix="%">6,99%</span>
@@ -65,7 +65,7 @@ const timeline = [
       <div class="flex flex-col gap-2.5">
         <div class="reveal tl" aria-label="Quando o dinheiro cai">
           <div class="tl-track"><i></i>{timeline.map((t) => <b style={`--x:${t.w}`}></b>)}</div>
-          <div class="tl-labels">{timeline.map((t) => <span style={`--x:${t.w}`}><em>{t.d}</em>{t.l}</span>)}</div>
+          <div class="tl-labels">{timeline.filter((t) => !t.quiet).map((t) => <span style={`--x:${t.w}`}><em>{t.d}</em>{t.l}</span>)}</div>
         </div>
         <div class="reveal-stagger flex flex-col gap-2.5">
         {payouts.map((p) => (
@@ -95,7 +95,8 @@ const timeline = [
   .tl-labels span { position: absolute; left: calc(var(--x) * 100%); transform: translateX(-50%); display: grid; text-align: center; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-4); white-space: nowrap; }
   .tl-labels span:first-child { transform: none; text-align: left; }
   .tl-labels span:last-child { transform: translateX(-100%); text-align: right; }
+  .tl-labels span:nth-child(2) { transform: translateX(-50%); }
   .tl-labels em { font-style: normal; font-weight: 700; font-size: 11px; color: var(--t-2); }
   .tl-labels span:first-child em { color: var(--accent-live); }
-  @media (max-width: 640px) { .tl-labels span:nth-child(2), .tl-track b:nth-of-type(2) { display: none; } }
+  @media (max-width: 640px) { .tl-track b:nth-of-type(2) { display: none; } }
 </style>

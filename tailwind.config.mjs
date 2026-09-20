@@ -5,14 +5,14 @@ export default {
     extend: {
       colors: {
         // Base neutra (grafite da marca)
-        abyss: '#0D0D0F',
-        ink: '#111111',
-        // Cinza quente para hairlines e superfícies de mockup
-        ash: {
-          600: '#3F3E3A',
-          500: '#5E5C57',
-          400: '#7C7A74',
-          300: '#A09D96',
+        abyss: '#050B14',
+        ink: '#07101D',
+        // Azul camurça (hairlines e superfícies de mockup)
+        suede: {
+          600: '#2B4866',
+          500: '#3E5C7E',
+          400: '#5A7DA1',
+          300: '#7E9CBD',
         },
         // Azul titânio (accent)
         titan: {
@@ -22,20 +22,20 @@ export default {
         },
         // Prata / cromado
         chrome: {
-          300: '#C9C4BB',
-          200: '#DEDAD2',
-          100: '#F0EDE7',
+          300: '#C7D2DD',
+          200: '#DCE5EE',
+          100: '#EEF3F8',
         },
         // Verde: dinheiro que caiu / aprovado / ao vivo
         live: {
           400: '#34D399',
           500: '#22C08A',
         },
-        // Osso: a única seção clara
+        // Branco-azulado: seções claras intercaladas
         bone: {
-          50: '#F3EEE6',
-          100: '#EDE7DD',
-          200: '#E6DFD3',
+          50: '#F5F7FB',
+          100: '#EEF2F8',
+          200: '#E4EAF2',
         },
         // Ouro — reservado ao marco de R$1MM
         gold: {
@@ -56,7 +56,7 @@ export default {
       },
       backgroundImage: {
         'grid-faint':
-          'linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px)',
+          'linear-gradient(to right, rgba(126,156,189,0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(126,156,189,0.07) 1px, transparent 1px)',
       },
       keyframes: {
         floaty: {

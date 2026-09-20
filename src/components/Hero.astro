@@ -25,8 +25,9 @@ const week = [
 
 <section id="topo" class="relative overflow-hidden pt-28 pb-6 sm:pt-32">
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute inset-0" style="background: radial-gradient(900px 480px at 50% -10%, rgba(255,224,178,0.07), transparent 60%);"></div>
-    <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-50 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,#000_10%,transparent_70%)]"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(900px 480px at 50% -10%, rgba(59,130,246,0.14), transparent 60%);"></div>
+    <div class="hero-aurora" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-60 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,#000_10%,transparent_70%)]"></div>
   </div>
 
   <div class="section">
@@ -184,6 +185,11 @@ const week = [
     text-wrap: balance;
   }
   .hero-h1 span { font-size: 1.06em; letter-spacing: -0.02em; }
+  .hero-aurora { position: absolute; left: 50%; top: -6%; width: min(1100px, 120vw); height: 520px; transform: translateX(-50%); filter: blur(70px); opacity: .9; pointer-events: none;
+    background: radial-gradient(closest-side at 38% 45%, rgba(59,130,246,0.34), transparent 70%), radial-gradient(closest-side at 68% 40%, rgba(111,160,255,0.22), transparent 70%), radial-gradient(closest-side at 55% 75%, rgba(52,211,153,0.12), transparent 70%);
+    animation: hero-aurora 16s var(--ease-out) infinite alternate; }
+  @keyframes hero-aurora { 0% { transform: translateX(-54%) scale(1); } 100% { transform: translateX(-46%) scale(1.08) rotate(3deg); } }
+  @media (prefers-reduced-motion: reduce) { .hero-aurora { animation: none; } }
   .hero-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; height: 72px; align-items: end; }
   .hero-bar { display: grid; grid-template-rows: 1fr auto; height: 100%; gap: 6px; }
   .hero-bar i { display: block; align-self: end; height: calc(var(--h) * 100%); min-height: 6px; border-radius: 5px 5px 2px 2px; background: var(--accent-live); opacity: calc(0.35 + var(--h) * 0.65); transform: scaleY(0); transform-origin: bottom; transition: transform .9s var(--ease-out); }
