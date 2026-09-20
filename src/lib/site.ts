@@ -2,7 +2,7 @@
 export const WHATSAPP_NUMBER = '5512997391545';
 
 const baseMsg = encodeURIComponent(
-  'Olá! Vim pelo site da Korvex e quero falar com um especialista sobre migrar minha operação.'
+  'Olá! Vim pelo site da Korvex e quero receber a condição pra migrar minha operação.'
 );
 
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${baseMsg}`;

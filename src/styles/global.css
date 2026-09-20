@@ -46,6 +46,11 @@
   --font-display: 'Inter Tight', system-ui, sans-serif;
   --font-editorial: 'Instrument Serif', Georgia, serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  /* espaçamento vertical (v5 compacta) */
+  --sec-y:  clamp(44px, 5.5vw, 64px);
+  --gap-lg: clamp(32px, 3.5vw, 44px);
+  --gap-md: clamp(24px, 2.5vw, 32px);
 }
 
 /* ---------- Base ---------- */
@@ -58,7 +63,21 @@ html, body { max-width: 100%; overflow-x: clip; }
 section { overflow-x: clip; }
 section[id]:not(#topo):not(#produto) {
   content-visibility: auto;
-  contain-intrinsic-size: auto 720px;
+  contain-intrinsic-size: auto var(--cis, 640px);
+}
+#problema   { --cis: 1240px; }
+#fundador   { --cis: 600px; }
+#premiacoes { --cis: 1380px; }
+#pagamentos { --cis: 800px; }
+#faq        { --cis: 620px; }
+#contato    { --cis: 500px; }
+@media (max-width: 1023px) {
+  #problema   { --cis: 1500px; }
+  #fundador   { --cis: 900px; }
+  #premiacoes { --cis: 1100px; }
+  #pagamentos { --cis: 1150px; }
+  #faq        { --cis: 820px; }
+  #contato    { --cis: 520px; }
 }
 img { max-width: 100%; height: auto; }
 *, *::before, *::after { min-width: 0; }
@@ -91,12 +110,12 @@ body {
   padding-bottom: 0.08em;
 }
 /* ---------- Ritmo de seção ---------- */
-.sec { padding-block: clamp(88px, 11vw, 150px); scroll-margin-top: 84px; }
+.sec { padding-block: var(--sec-y); scroll-margin-top: 84px; }
 .h2 {
   font-family: var(--font-display);
   font-weight: 700;
   color: #fff;
-  font-size: clamp(2.25rem, 4.6vw, 3.6rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.25rem);
   letter-spacing: -0.035em;
   line-height: 1.02;
   text-wrap: balance;
@@ -326,7 +345,7 @@ body {
 }
 .tier-img.bracelet img { object-fit: contain; width: auto; max-height: 75%; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.5)); }
 .tier-body {
-  padding: 22px 22px 24px;
+  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -355,27 +374,27 @@ body {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  gap: 56px;
-  align-items: center;
+  gap: 40px;
+  align-items: stretch;
   border-radius: 32px;
   overflow: hidden;
   background: radial-gradient(500px 300px at 10% 50%, rgba(201, 163, 94, 0.12), transparent 60%), linear-gradient(180deg, #0A0B10, #06070A);
   border: 1px solid rgba(201, 163, 94, 0.22);
 }
-.mil-img { aspect-ratio: 3/4; position: relative; overflow: hidden; }
+.mil-img { aspect-ratio: auto; min-height: 440px; height: 100%; position: relative; overflow: hidden; }
 .mil-img img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 1024px) {
   .mil-stage { grid-template-columns: 1fr; }
-  .mil-img { aspect-ratio: 16/10; }
+  .mil-img { aspect-ratio: 16/10; min-height: 0; height: auto; }
 }
 
 /* ---------- Taxas / payouts ---------- */
 .payout {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 18px;
+  gap: 14px;
   align-items: center;
-  padding: 22px 24px;
+  padding: 16px 18px;
   border-radius: 16px;
   background: var(--bg-1);
   border: 1px solid var(--line-1);
@@ -401,6 +420,3 @@ body {
   letter-spacing: 0.04em;
   white-space: nowrap;
 }
-.payout.gold { background: linear-gradient(180deg, rgba(201, 163, 94, 0.06), transparent), var(--bg-1); border-color: rgba(201, 163, 94, 0.20); }
-.payout.gold .payout-i { background: var(--gold-tint); color: var(--gold-2); border-color: rgba(201, 163, 94, 0.25); }
-.payout.gold .payout-tag { background: var(--gold-tint); color: var(--gold-2); border-color: rgba(201, 163, 94, 0.3); }

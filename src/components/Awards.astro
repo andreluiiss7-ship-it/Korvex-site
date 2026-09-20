@@ -19,19 +19,19 @@ const tiers = [
     <!-- HEADER -->
     <div class="reveal mx-auto max-w-3xl text-center">
       <span class="kicker gold justify-center">Reconhecimento</span>
-      <h2 class="h2 mt-6">
-        Aqui, faturamento alto
+      <h2 class="h2 mt-4">
+        Faturamento alto
         <span class="block font-editorial italic font-normal" style="font-size:1.18em">
-          <span class="text-gold-gradient">vira troféu na parede.</span>
+          <span class="text-gold-gradient">vira metal na parede.</span>
         </span>
       </h2>
-      <p class="lead mx-auto mt-6">
-        Cada marco é reconhecido <strong class="text-white">em metal, não em e-mail automático.</strong>
+      <p class="lead mx-auto mt-4">
+        Pulseira aos 10K. Placa aos 100K e 500K. No milhão, <strong class="text-white">prêmios em dinheiro e imersão presencial</strong> com o time Korvex.
       </p>
     </div>
 
     <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
-    <div class="reveal-stagger mt-14 grid grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
+    <div class="reveal-stagger mx-auto mt-[--gap-lg] grid max-w-4xl grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
       {tiers.map((t, i) => (
         <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
@@ -47,40 +47,29 @@ const tiers = [
     </div>
 
     <!-- MILIONARIO STAGE — cinematic -->
-    <div class="reveal mil-stage kframe gold mt-12">
+    <div class="reveal mil-stage kframe gold mt-[--gap-md]">
       <div class="mil-img">
         <img src="/assets/placa-1mm.jpg" alt="Placa R$1.000.000" loading="lazy" decoding="async" />        <!-- top spotlight -->
         <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2" style="background: radial-gradient(circle at 50% 0%, rgba(245,217,139,0.32), transparent 65%);"></div>
       </div>
 
-      <div class="relative p-10 sm:p-14">
+      <div class="relative p-7 sm:p-10">
         <span class="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-[10.5px] font-bold uppercase font-mono" style="letter-spacing:0.22em;color:var(--gold-2);background:var(--gold-tint);border:1px solid rgba(201,163,94,0.25);">
           <span class="inline-block h-1.5 w-1.5 rounded-full bg-[--gold-1]"></span>
           O marco do milhão
         </span>
 
-        <h3 class="mt-5 leading-[0.95]">
+        <h3 class="mt-4 leading-[0.95]">
           <span class="font-editorial italic block text-5xl sm:text-7xl text-gold-gradient" data-counter data-target="1000000" data-prefix="R$ ">R$ 1.000.000</span>
           <span class="mt-2 block h-display text-2xl sm:text-3xl text-white">em vendas.</span>
         </h3>
 
-        <p class="mt-5 max-w-lg text-pretty leading-relaxed text-chrome-200/85">
-          A placa que poucos alcançam. Com ela, você concorre a <strong class="text-white">prêmios surpresa</strong>.
+        <p class="mt-4 max-w-lg text-pretty leading-relaxed text-chrome-200/85">
+          A placa que poucos alcançam. Com ela, você concorre a <strong class="text-white">prêmios em dinheiro</strong> e experiências reservadas a quem chegou lá.
         </p>
 
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <div class="rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
-            <p class="font-display text-[14.5px] font-semibold text-white">Experiência exclusiva</p>
-            <p class="mt-1 text-[12.5px] text-chrome-300/65">Imersão presencial com o time Korvex.</p>
-          </div>
-          <div class="rounded-2xl border border-gold-600/22 bg-white/[0.025] p-4">
-            <p class="font-display text-[14.5px] font-semibold text-white">Prêmios em dinheiro</p>
-            <p class="mt-1 text-[12.5px] text-chrome-300/65">E outras surpresas reservadas.</p>
-          </div>
-        </div>
-
         <a href={REGISTER_URL} target="_blank" rel="noopener"
-           class="btn mt-7 inline-flex"
+           class="btn mt-6 inline-flex"
            style="background:linear-gradient(180deg,#E0BD79,#B68C3F);color:#1A1306;box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 14px 30px -10px rgba(201,163,94,0.5);">
           Quero a placa do milhão
           <span class="h-4 w-4" set:html={icon('arrow')}></span>

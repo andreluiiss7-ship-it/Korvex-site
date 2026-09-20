@@ -1,11 +1,14 @@
 ---
 import { icon } from '../lib/icons';
+import { REGISTER_URL } from '../lib/site';
 
+const cols = ['Gateway', 'Taxa anunciada', 'Seu Pix cai em', 'Reserva / retenção', 'Quem te atende'];
 const rows = [
-  { k: 'Taxa real', a: '~12%: 4,99% na vitrine, mais antecipação, reserva e spread', b: '6,99% + R$ 1,99. Só isso.' },
-  { k: 'Saque',     a: 'D+14 a D+30, com fila',                                       b: 'D0 no Pix' },
-  { k: 'Reserva',   a: 'Parte da venda retida por até 90 dias',                       b: 'Zero' },
-  { k: 'Suporte',   a: 'Ticket, bot e espera',                                        b: 'Gerente humano em até 1h' },
+  { g: 'Hotmart', fee: '9,9%',             pix: 'D+30',              res: 'prazo de garantia',            sup: 'ticket' },
+  { g: 'Kiwify',  fee: '8,99% + R$ 2,49',  pix: 'D+2 a D+15',        res: '4% a 10% retidos',             sup: 'chat e IA' },
+  { g: 'Kirvano', fee: '7,49% + R$ 2,00',  pix: 'liberação faseada', res: 'até D+60',                     sup: 'ticket' },
+  { g: 'Ticto',   fee: '6,99% + R$ 1,00',  pix: 'D+30',              res: 'R$ 4,80 a R$ 8,90 por saque',  sup: 'ticket' },
+  { g: 'Korvex',  fee: '6,99% + R$ 1,99',  pix: 'D0',                res: 'zero',                         sup: 'gerente humano em 1h', k: true },
 ];
 ---
 
@@ -13,97 +16,203 @@ const rows = [
   <div class="section">
     <div class="reveal mx-auto max-w-2xl text-center">
       <span class="kicker">A conta que ninguém te mostra</span>
-      <h2 class="h2 mt-5">
-        Eles dizem 4,99%.
-        <span class="block font-editorial italic font-normal text-chrome-300/60">A real é o dobro.</span>
+      <h2 class="h2 mt-4">
+        Eles anunciam a taxa.
+        <span class="block font-editorial italic font-normal text-chrome-300/60">Escondem o resto.</span>
       </h2>
-      <p class="lead mx-auto mt-6">
-        Você assina por 4,99% e fecha o mês com <strong>12% no buraco</strong>: antecipação, reserva, chargeback, spread. Cada nome, um pedaço seu.
+      <p class="lead mx-auto mt-4">
+        Reserva de segurança, retenção até D+60, taxa por saque, suporte por robô. Cada linha miúda é um pedaço do seu caixa parado na conta deles.
       </p>
     </div>
 
-    <div class="cmp reveal mt-16">
-      <div class="cmp-head">
-        <div>
-          <span class="chapter">Gateway comum</span>
-          <p class="cmp-big"><span data-counter data-target="12" data-suffix="%">12%</span></p>
-          <p class="cmp-sub">custo real por venda</p>
-          <div class="cmp-bar" style="--w:1"><i></i></div>
+    <div class="cmp reveal mt-[--gap-lg]">
+      <div class="cmp-grid">
+        <!-- tabela nominal -->
+        <div class="tb" role="table" aria-label="Comparativo de gateways">
+          <div class="tb-head" role="row">
+            {cols.map((c) => <span role="columnheader">{c}</span>)}
+          </div>
+          <div class="reveal-stagger">
+            {rows.map((r) => (
+              <div class={`tb-row${r.k ? ' tb-row--k' : ''}`} role="row">
+                <span class="tb-g" role="cell">
+                  {r.k && <span class="tb-check" set:html={icon('check')} />}{r.g}
+                </span>
+                <span role="cell" data-l={cols[1]}>{r.fee}</span>
+                <span role="cell" data-l={cols[2]}>{r.pix}</span>
+                <span role="cell" data-l={cols[3]}>{r.res}</span>
+                <span role="cell" data-l={cols[4]}>{r.sup}</span>
+              </div>
+            ))}
+          </div>
+          <p class="tb-note">Taxas e prazos públicos nos sites oficiais e no Reclame Aqui, consulta em setembro de 2026. Korvex: contrato padrão.</p>
         </div>
+
+        <!-- custo real -->
+        <aside class="cmp-real">
+          <div>
+            <span class="chapter">Gateway comum</span>
+            <p class="cmp-big"><span data-counter data-target="12" data-suffix="%">12%</span></p>
+            <p class="cmp-sub">custo real por venda, somando tudo</p>
+            <div class="cmp-bar" style="--w:1"><i></i></div>
+          </div>
+          <div>
+            <span class="chapter cmp-k">Korvex</span>
+            <p class="cmp-big cmp-big--k"><span data-counter data-target="7" data-suffix="%">7%</span></p>
+            <p class="cmp-sub">tudo incluso, sem letra miúda</p>
+            <div class="cmp-bar cmp-bar--k" style="--w:0.583"><i></i></div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- calculadora embutida -->
+      <div id="calculadora" class="calc reveal mt-[--gap-lg]">
         <div>
-          <span class="chapter cmp-k">Korvex</span>
-          <p class="cmp-big cmp-big--k"><span data-counter data-target="7" data-suffix="%">7%</span></p>
-          <p class="cmp-sub">tudo incluso, sem letra miúda</p>
-          <div class="cmp-bar cmp-bar--k" style="--w:0.583"><i></i></div>
+          <label for="calc-slider" class="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-chrome-300/60">Seu faturamento mensal</label>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span class="font-display text-3xl font-bold text-white sm:text-4xl" id="calc-rev" style="font-feature-settings:'tnum';">R$ 300.000</span>
+            <span class="text-xs text-chrome-300/60">/mês</span>
+          </div>
+          <input id="calc-slider" type="range" min="50000" max="2000000" step="10000" value="300000" class="calc-slider mt-5 w-full" aria-label="Faturamento mensal" />
+          <div class="mt-1.5 flex justify-between font-mono text-[10px] text-chrome-300/40">
+            <span>R$ 50K</span><span>R$ 1MM</span><span>R$ 2MM</span>
+          </div>
+          <p class="mt-5 max-w-sm text-[13.5px] leading-relaxed text-chrome-300/65">
+            Cálculo conservador: 12% de custo real no gateway comum contra 7% na Korvex. Acima de R$ 500K/mês, condição própria.
+          </p>
+        </div>
+
+        <div class="kframe calc-box">
+          <div class="calc-row">
+            <span class="calc-l">Fica com o gateway comum</span>
+            <b class="calc-v text-chrome-300/85" id="calc-loss">R$ 36.000</b>
+            <span class="calc-u">/mês</span>
+          </div>
+          <div class="calc-row">
+            <span class="calc-l text-titan-300">Volta com a Korvex</span>
+            <b class="calc-v text-titan-gradient" id="calc-save">+R$ 15.000</b>
+            <span class="calc-u">/mês</span>
+          </div>
+          <div class="calc-row calc-row--gold">
+            <span class="calc-l text-gold-300">Em 12 meses</span>
+            <b class="calc-v text-gold-gradient" id="calc-year">R$ 180.000</b>
+            <span class="calc-u">de volta</span>
+          </div>
+          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-5 w-full justify-center !py-3">
+            Quero esse dinheiro de volta
+            <span class="h-4 w-4" set:html={icon('arrow')}></span>
+          </a>
         </div>
       </div>
 
-      <dl class="cmp-rows reveal-stagger">
-        {rows.map((r) => (
-          <div class="cmp-row">
-            <dt>{r.k}</dt>
-            <dd class="cmp-a">{r.a}</dd>
-            <dd class="cmp-b"><span class="cmp-check" set:html={icon('check')} />{r.b}</dd>
-          </div>
-        ))}
-      </dl>
-
       <p class="cmp-punch reveal">
-        <b class="text-gold-gradient">R$ 50.000</b> <span class="font-editorial italic text-chrome-100">ficam com você</span> a cada R$ 1 milhão.
+        <b class="text-gold-gradient">R$ 50.000</b> <span class="font-editorial italic text-chrome-100">ficam com você</span> a cada R$ 1 milhão. E caem no dia.
       </p>
     </div>
   </div>
 </section>
 
+<script is:inline>
+  (() => {
+    const slider = document.getElementById('calc-slider');
+    const rev = document.getElementById('calc-rev');
+    const loss = document.getElementById('calc-loss');
+    const save = document.getElementById('calc-save');
+    const year = document.getElementById('calc-year');
+    if (!slider) return;
+    const fmt = (n) => 'R$ ' + n.toLocaleString('pt-BR', { maximumFractionDigits: 0 });
+    const COMPETITOR = 0.12;
+    const KORVEX = 0.07;
+    const current = { loss: 0, save: 0, year: 0 };
+    let raf = null;
+    const animateTo = (t) => {
+      if (raf) cancelAnimationFrame(raf);
+      const from = { ...current };
+      const t0 = performance.now();
+      const dur = 300;
+      const tick = (now) => {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        current.loss = from.loss + (t.loss - from.loss) * e;
+        current.save = from.save + (t.save - from.save) * e;
+        current.year = from.year + (t.year - from.year) * e;
+        loss.textContent = fmt(current.loss);
+        save.textContent = '+' + fmt(current.save);
+        year.textContent = fmt(current.year);
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    };
+    const update = () => {
+      const r = parseFloat(slider.value);
+      rev.textContent = fmt(r);
+      const saveM = r * (COMPETITOR - KORVEX);
+      animateTo({ loss: r * COMPETITOR, save: saveM, year: saveM * 12 });
+    };
+    slider.addEventListener('input', update);
+    update();
+  })();
+</script>
+
 <style>
-  .cmp { max-width: 960px; margin-inline: auto; }
-  .cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); align-items: end; }
+  .cmp { max-width: 1040px; margin-inline: auto; }
+  .cmp-grid { display: grid; gap: 28px; }
+  @media (min-width: 1024px) { .cmp-grid { grid-template-columns: 1.45fr 0.55fr; gap: clamp(28px, 4vw, 56px); align-items: start; } }
+
+  /* tabela */
+  .tb { min-width: 0; }
+  .tb-head { display: none; }
+  .tb-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px;
+    padding: 14px 14px; border-radius: 14px;
+    border: 1px solid var(--line-1); margin-top: 8px;
+    font-size: 13.5px; line-height: 1.4; color: var(--t-2);
+  }
+  .tb-row:first-child { margin-top: 0; }
+  .tb-row [data-l]::before { content: attr(data-l); display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-4); margin-bottom: 3px; }
+  .tb-g { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--t-1); letter-spacing: -0.01em; }
+  .tb-check { flex: none; width: 18px; height: 18px; padding: 3px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-2); }
+  .tb-row--k { border-color: rgba(111,163,224,0.35); background: linear-gradient(180deg, rgba(59,130,246,0.10), rgba(59,130,246,0.03)); color: var(--t-1); }
+  .tb-row--k .tb-g { color: #fff; }
+  .tb-note { margin-top: 12px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; line-height: 1.5; color: var(--t-4); }
+  @media (min-width: 900px) {
+    .tb-head, .tb-row { display: grid; grid-template-columns: 120px 1.1fr 1fr 1.25fr 1.1fr; gap: 0 18px; align-items: center; }
+    .tb-head { padding: 0 14px 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-4); border-bottom: 1px solid var(--line-2); }
+    .tb-row { margin-top: 0; border: 0; border-bottom: 1px solid var(--line-1); border-radius: 0; padding: 14px; }
+    .tb-row [data-l]::before { display: none; }
+    .tb-g { grid-column: auto; }
+    .tb-row--k { border-radius: 14px; border: 1px solid rgba(111,163,224,0.35); margin-top: 10px; }
+  }
+
+  /* custo real */
+  .cmp-real { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: end; }
+  @media (min-width: 1024px) { .cmp-real { grid-template-columns: 1fr; gap: 28px; padding-top: 6px; } }
   .cmp-k { color: var(--blue-2); }
-  .cmp-big {
-    margin-top: 14px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.045em;
-    line-height: 1;
-    font-size: clamp(3rem, 8vw, 6rem);
-    color: var(--t-3);
-    font-feature-settings: 'tnum';
-  }
+  .cmp-big { margin-top: 10px; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.045em; line-height: 1; font-size: clamp(2.6rem, 6vw, 4.5rem); color: var(--t-3); font-feature-settings: 'tnum'; }
   .cmp-big--k { color: #fff; }
-  .cmp-sub { margin-top: 8px; font-size: 13px; color: var(--t-3); }
-  .cmp-bar { margin-top: 18px; height: 6px; border-radius: 999px; background: var(--line-1); overflow: hidden; }
-  .cmp-bar i {
-    display: block; height: 100%; width: 100%; border-radius: inherit;
-    background: var(--t-4);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 1.4s var(--ease-out) 0.2s;
-  }
+  .cmp-sub { margin-top: 6px; font-size: 12.5px; color: var(--t-3); }
+  .cmp-bar { margin-top: 12px; height: 6px; border-radius: 999px; background: var(--line-1); overflow: hidden; }
+  .cmp-bar i { display: block; height: 100%; width: 100%; border-radius: inherit; background: var(--t-4); transform: scaleX(0); transform-origin: left; transition: transform 1.4s var(--ease-out) 0.2s; }
   .cmp-bar--k i { background: linear-gradient(90deg, var(--blue), var(--blue-2)); transition-delay: 0.35s; }
   .reveal.in .cmp-bar i { transform: scaleX(var(--w)); }
 
-  .cmp-rows { margin-top: 44px; border-top: 1px solid var(--line-2); }
-  .cmp-row {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 8px clamp(20px, 4vw, 48px);
-    padding: 18px 0;
-    border-bottom: 1px solid var(--line-1);
-  }
-  .cmp-row dt { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--t-3); }
-  .cmp-row dd { font-size: 14.5px; line-height: 1.45; max-width: 44ch; }
-  .cmp-a { color: var(--t-3); }
-  .cmp-b { color: var(--t-1); display: flex; gap: 10px; align-items: flex-start; }
-  .cmp-check { flex: none; width: 18px; height: 18px; margin-top: 1px; padding: 3px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-2); }
-  @media (min-width: 768px) {
-    .cmp-row { grid-template-columns: 140px 1fr 1fr; padding: 22px 0; align-items: baseline; }
-    .cmp-row dt { grid-column: auto; }
-    .cmp-head { padding-left: calc(140px + clamp(20px, 4vw, 48px)); }
-  }
-  .cmp-punch {
-    margin-top: 44px; text-align: center;
-    font-size: clamp(1.4rem, 2.6vw, 2rem);
-    letter-spacing: -0.02em; line-height: 1.2;
-    color: var(--t-2); text-wrap: balance;
-  }
+  /* calculadora */
+  .calc { display: grid; gap: 24px; scroll-margin-top: 96px; }
+  @media (min-width: 1024px) { .calc { grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; } }
+  .calc-box { border-radius: 22px; border: 1px solid var(--line-2); background: var(--bg-1); padding: 20px; }
+  @media (min-width: 640px) { .calc-box { padding: 26px 28px; } }
+  .calc-row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; column-gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line-1); }
+  .calc-row:first-child { padding-top: 0; }
+  .calc-row--gold { border-bottom: 0; }
+  .calc-l { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-3); }
+  .calc-v { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.7rem, 3vw, 2.25rem); letter-spacing: -0.03em; line-height: 1.05; font-feature-settings: 'tnum'; }
+  .calc-u { font-size: 12px; color: var(--t-3); }
+  .calc-slider { -webkit-appearance: none; appearance: none; height: 6px; background: linear-gradient(to right, rgba(111,160,255,0.45), rgba(111,160,255,1)); border-radius: 999px; outline: none; }
+  .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid #6FA3E0; cursor: grab; box-shadow: 0 6px 16px rgba(0,0,0,0.45), 0 0 0 5px rgba(111,160,255,0.18); transition: transform .15s ease; }
+  .calc-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
+  .calc-slider::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid #6FA3E0; cursor: grab; }
+
+  .cmp-punch { margin-top: var(--gap-md); text-align: center; font-size: clamp(1.3rem, 2.4vw, 1.85rem); letter-spacing: -0.02em; line-height: 1.2; color: var(--t-2); text-wrap: balance; }
   .cmp-punch b { font-family: var(--font-display); font-weight: 700; }
   @media (prefers-reduced-motion: reduce) { .cmp-bar i { transition: none; transform: scaleX(var(--w)); } }
 </style>

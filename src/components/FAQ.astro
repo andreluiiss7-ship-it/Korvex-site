@@ -2,25 +2,23 @@
 import { WHATSAPP_URL } from '../lib/site';
 
 const faqs = [
-  { q: 'Quanto custa?', a: '6,99% + R$ 1,99 por venda aprovada. Sem setup, sem mensalidade, sem assinatura mínima. Volume alto vira condição personalizada.' },
-  { q: 'Quando o dinheiro cai?', a: 'Pix: D0, no mesmo dia. Cartão: D+30, com antecipação para D+14 ou D+2 sob consulta. Sem fila e sem reserva escondida.' },
-  { q: 'Tem saque em cripto?', a: 'Sim. Além do Pix D0, você saca em criptomoeda quando fizer sentido pro seu caixa.' },
-  { q: 'A taxa pode mudar depois?', a: 'Não. A taxa do contrato é a taxa do extrato. Qualquer mudança passa por você antes, nunca por e-mail automático.' },
-  { q: 'A Korvex bloqueia conta sem aviso?', a: 'Não. Operação séria é tratada como séria. Se algo soar estranho, seu gerente liga antes de qualquer ação.' },
-  { q: 'Existe letra miúda?', a: 'Não. Antecipação, reserva, chargeback e spread estão abertos nesta página. Zero surpresa no extrato.' },
-  { q: 'Como funciona a migração?', a: 'Você fala com o time no WhatsApp, a gente analisa a operação, define a condição e conduz a migração. Você não para de vender.' },
-  { q: 'É seguro?', a: 'KYC, AML e KYT em toda transação, criptografia de ponta e antifraude em camadas.' },
+  { q: 'Quanto custa?', a: '6,99% + R$ 1,99 por venda aprovada. Sem setup, mensalidade ou mínimo. Volume alto vira condição própria, por escrito.' },
+  { q: 'Quando o dinheiro cai?', a: 'Pix: D0, no mesmo dia. Cartão: D+30, com antecipação pra D+14 ou D+2 sob consulta. Também dá pra sacar em cripto.' },
+  { q: 'Tem reserva de segurança?', a: 'Não. Zero por cento retido, em nenhum prazo. O que você vendeu é seu.' },
+  { q: 'A Korvex bloqueia conta sem aviso?', a: 'Não. Se algo soar estranho, seu gerente liga antes de qualquer ação. Você fala com gente, não com formulário.' },
+  { q: 'A taxa pode mudar depois?', a: 'Só com a sua assinatura. A taxa do contrato é a taxa do extrato, nunca por e-mail automático.' },
+  { q: 'Como funciona a migração?', a: 'Manda a operação no WhatsApp, a gente analisa, define a condição e conduz a migração. Você não para de vender um dia.' },
 ];
 ---
 
 <section id="faq" class="sec relative">
-  <div class="section grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+  <div class="section grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
     <div class="reveal">
       <h2 class="h2">
         Perguntas diretas.<br />Respostas diretas.
       </h2>
       <p class="lead mt-4 max-w-sm">
-        Sobrou dúvida? Fala com o time. Gente, não robô.
+        Sobrou dúvida? Fala com o gerente. Gente, não robô.
       </p>
       <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost mt-6 !py-2.5 text-[13px]">Falar no WhatsApp</a>
     </div>
@@ -28,13 +26,13 @@ const faqs = [
     <div class="reveal-stagger divide-y divide-white/[0.08] border-y border-white/[0.08]">
       {faqs.map((f, i) => (
         <details class="group" open={i === 0}>
-          <summary class="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-4">
+          <summary class="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 py-3.5">
             <span class="font-display text-[16px] font-semibold text-white">{f.q}</span>
             <span class="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-white/10 text-titan-400 transition-transform duration-500 group-open:rotate-45" style="transition-timing-function:var(--ease-spring);">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
             </span>
           </summary>
-          <div class="pb-5 pr-10 text-[15px] leading-relaxed text-chrome-300/75">{f.a}</div>
+          <div class="pb-4 pr-10 text-[15px] leading-relaxed text-chrome-300/75">{f.a}</div>
         </details>
       ))}
     </div>

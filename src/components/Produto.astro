@@ -19,21 +19,21 @@ const chapters = [
   {
     id: 'checkout', n: '01', label: 'Checkout',
     h: '7 checkouts. Um pra cada oferta.',
-    p: 'Cada tema é uma estrutura diferente, do tradicional ao fluxo em etapas. Todos com a sua marca, no seu domínio.',
-    bullets: ['Cores, fontes e logo da sua marca', 'Order bump, prova social e selos', 'Domínio próprio'],
+    p: 'Do tradicional ao fluxo em etapas, no seu domínio, com sua cor e seu logo.',
+    bullets: ['Domínio próprio, marca própria', 'Order bump, prova social e selos', 'Pix, cartão e boleto no mesmo tema'],
   },
   {
     id: 'funil', n: '02', label: 'Funil',
-    h: 'O ticket sobe a cada bloco que você solta.',
+    h: 'Upsell em um clique. O ticket sobe sozinho.',
     p: 'Arraste, conecte, veja a conversão de cada nó ao vivo. Você desenha, a Korvex executa.',
-    bullets: ['Upsell, downsell e order bump em 1 clique', 'Conversão por nó em tempo real', 'Pronto em 3 minutos'],
+    bullets: ['Upsell, downsell e order bump', 'Conversão por nó em tempo real', 'Pronto em 3 minutos'],
     stat: { target: 62, label: 'receita por venda' },
   },
   {
     id: 'membros', n: '03', label: 'Membros',
-    h: 'Cara de streaming. Vende de novo lá dentro.',
-    p: 'Seu aluno entra e sente marca grande. Você vende de novo lá dentro: +47% de recompra interna.',
-    bullets: ['Área própria no seu domínio', 'Upsell interno', 'Materiais e certificados'],
+    h: 'Área de membros que vende de novo.',
+    p: 'Cara de streaming, no seu domínio. Seu aluno entra, sente marca grande e compra a próxima oferta lá dentro.',
+    bullets: ['Área própria no seu domínio', 'Upsell interno: +47% de recompra', 'Materiais e certificados'],
   },
 ];
 ---
@@ -42,11 +42,11 @@ const chapters = [
   <div class="section">
     <header class="reveal max-w-xl">
       <span class="chapter">Produto</span>
-      <h2 class="h2 mt-6">Do checkout à área de membros.<br />Tudo com a sua marca.</h2>
-      <p class="lead mt-5">Três peças que trabalham juntas: o checkout que converte, o funil que sobe o ticket e a área que vende de novo.</p>
+      <h2 class="h2 mt-4">Checkout, funil e membros.<br />Um painel. Sua marca.</h2>
+      <p class="lead mt-4">Tudo que fica entre o clique e o aluno, sem plugin e sem integração. O cliente nunca vê o nome Korvex, só o seu.</p>
     </header>
 
-    <div class="pv mt-16" data-pv>
+    <div class="pv mt-[--gap-lg]" data-pv>
       <nav class="pv-rail" aria-label="Capítulos do produto">
         {chapters.map((c, i) => (
           <a href={`#${c.id}`} class="pv-mark" aria-current={i === 0 ? 'step' : undefined}>
@@ -59,16 +59,16 @@ const chapters = [
         <>
           <article id={c.id} class="pv-chapter reveal" data-chapter={i} style={`--row:${i + 1}`}>
             <span class="chapter">{c.n} · {c.label}</span>
-            <h3 class="pv-h3 mt-5">{c.h}</h3>
-            <p class="pv-p mt-4">{c.p}</p>
-            <ul class="pv-list mt-6">
+            <h3 class="pv-h3 mt-4">{c.h}</h3>
+            <p class="pv-p mt-3">{c.p}</p>
+            <ul class="pv-list mt-5">
               {c.bullets.map((b) => (
                 <li><span class="pv-check" set:html={icon('check')} />{b}</li>
               ))}
             </ul>
 
             {i === 0 && (
-              <div class="pv-chips mt-7" role="tablist" aria-label="Temas de checkout">
+              <div class="pv-chips mt-5" role="tablist" aria-label="Temas de checkout">
                 {themes.map((t, j) => (
                   <button type="button" role="tab" data-ck={t.key} aria-selected={j === 0 ? 'true' : 'false'} class={`ck-tab${j === 0 ? ' active' : ''}`}>
                     <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
@@ -78,7 +78,7 @@ const chapters = [
             )}
 
             {c.stat && (
-              <p class="pv-stat mt-7">
+              <p class="pv-stat mt-5">
                 <b data-counter data-target={c.stat.target} data-prefix="+" data-suffix="%">+{c.stat.target}%</b>
                 <span>{c.stat.label}</span>
               </p>
@@ -94,12 +94,12 @@ const chapters = [
       ))}
     </div>
 
-    <div class="reveal mt-14 flex flex-wrap items-center gap-x-6 gap-y-3">
+    <div class="reveal mt-[--gap-md] flex flex-wrap items-center gap-x-6 gap-y-3">
       <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary">
         Montar minha operação
         <span class="h-4 w-4" set:html={icon('arrow')}></span>
       </a>
-      <p class="text-[13px] text-[--t-3]">Checkout, funil e membros no mesmo painel. Sem plugin, sem integração.</p>
+      <p class="text-[13px] text-[--t-3]">Migração assistida. Você não para de vender um dia.</p>
     </div>
   </div>
 </section>
@@ -173,11 +173,11 @@ const chapters = [
 
 <style>
   /* mobile-first: uma coluna, painéis estáticos, rail oculto */
-  .pv { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 2.5rem; }
+  .pv { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 2rem; }
   .pv-rail { display: none; }
   .pv-panel { min-width: 0; }
   .pv-chapter + .pv-panel { margin-top: -0.5rem; }
-  .pv-panel + .pv-chapter { margin-top: 2.5rem; }
+  .pv-panel + .pv-chapter { margin-top: 1rem; }
 
   .pv-h3 { font-family: var(--font-display); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(1.75rem, 2.6vw, 2.5rem); text-wrap: balance; }
   .pv-p { font-size: 16.5px; line-height: 1.55; color: var(--t-2); max-width: 46ch; text-wrap: pretty; }
@@ -215,7 +215,7 @@ const chapters = [
       align-items: start;
     }
     .pv-rail { display: flex; flex-direction: column; gap: 4px; grid-column: 1; grid-row: 1 / 4; position: sticky; top: 50vh; transform: translateY(-50%); align-self: start; }
-    .pv-chapter { grid-column: 2; grid-row: var(--row); min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding-block: 10vh; margin: 0; }
+    .pv-chapter { grid-column: 2; grid-row: var(--row); min-height: clamp(460px, 58vh, 560px); display: flex; flex-direction: column; justify-content: center; padding-block: clamp(24px, 4vh, 40px); margin: 0; scroll-margin-top: 96px; }
     .pv-panel {
       grid-column: 3; grid-row: 1 / 4;
       position: sticky; top: 15vh; align-self: start; margin: 0;

@@ -1,40 +1,41 @@
 ---
 import { icon } from '../lib/icons';
-import { WHATSAPP_URL, waUrl, REGISTER_URL } from '../lib/site';
+import { waUrl, REGISTER_URL } from '../lib/site';
 ---
 
 <section id="contato" class="sec relative">
   <div class="section">
-    <div class="reveal relative overflow-hidden rounded-[var(--radius-xl)] border border-[--line-2] bg-[--bg-1] p-10 text-center shadow-depth sm:p-16">
+    <div class="reveal relative overflow-hidden rounded-[var(--radius-xl)] border border-[--line-2] bg-[--bg-1] p-8 text-center shadow-depth sm:p-12">
       <div class="pointer-events-none absolute inset-0 -z-10">
         <div class="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-titan-600/10 blur-[120px]"></div>
         <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-30 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000,transparent_75%)]"></div>
       </div>
 
-      <img src="/assets/logo-white.png" alt="Korvex" class="mx-auto h-8 w-auto opacity-90" />
+      <span class="kicker gold justify-center">Sua condição em 1h</span>
 
-      <h2 class="h2 mx-auto mt-7 max-w-3xl">
+      <h2 class="h2 mx-auto mt-4 max-w-3xl">
         A Korvex não é pra todo mundo.
-        <span class="block text-titan-gradient">É pra quem decidiu não dividir o lucro.</span>
+        <span class="block text-titan-gradient">É pra quem cansou de pedir o próprio dinheiro.</span>
       </h2>
-      <p class="lead mx-auto mt-5">
-        Mande sua operação pra análise e receba a condição do seu volume.
-        Migração assistida, sem parar de vender um dia.
+      <p class="lead mx-auto mt-4">
+        Mande sua operação. Em até 1h um gerente humano responde com a condição do seu volume e conduz a migração sem parar de vender.
       </p>
 
-      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary !px-7 !py-3.5 text-[15px]">
-          Começar agora
-          <span class="h-4 w-4" set:html={icon('arrow')}></span>
-        </a>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost !px-7 !py-3.5 text-[15px]">
+      <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+        <a href={waUrl('Olá! Quero receber a condição da Korvex pra minha operação em até 1h.')} target="_blank" rel="noopener"
+           class="btn !px-7 !py-3.5 text-[15px]"
+           style="background:linear-gradient(180deg,#E0BD79,#B68C3F);color:#1A1306;box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 14px 30px -10px rgba(201,163,94,0.5);">
           <span class="h-5 w-5" set:html={icon('headset')}></span>
-          Falar com um especialista
+          Receber minha condição em 1h
+        </a>
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-ghost !px-7 !py-3.5 text-[15px]">
+          Abrir conta grátis
+          <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>
       </div>
 
-      <p class="mt-6 text-[13px] text-chrome-300/60">
-        400+ players · R$ 129M+ transacionados · Pix D0 · Saque em cripto
+      <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.12em] text-chrome-300/55">
+        400+ operações · R$ 129M+ transacionados · Pix D0 · Zero reserva
       </p>
     </div>
   </div>

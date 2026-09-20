@@ -15,7 +15,7 @@ const cols = [
     title: 'Korvex',
     links: [
       { label: 'Premiações', href: '#premiacoes' },
-      { label: 'Korvex vs. comum', href: '#problema' },
+      { label: 'Comparativo de taxas', href: '#problema' },
       { label: 'Dúvidas frequentes', href: '#faq' },
       { label: 'Falar com o time', href: WHATSAPP_URL },
     ],
@@ -32,18 +32,15 @@ const cols = [
 ];
 ---
 
-<footer class="relative mt-12 border-t border-[--line-1] pt-16">
-  <div class="section pb-12">
-    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+<footer class="relative mt-0 border-t border-[--line-1] pt-12">
+  <div class="section pb-10">
+    <div class="grid gap-8 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
         <img src="/assets/logo-white.png" alt="Korvex" class="h-7 w-auto" />
         <p class="mt-4 max-w-xs text-pretty text-sm leading-relaxed text-chrome-300/60">
-          Pagamentos para infoprodutores que levam a operação a sério.
-          Receba no dia, venda na sua marca, escale com padrão.
+          Gateway pra quem quer o próprio dinheiro no próprio dia. Pix D0, zero reserva, taxa travada em contrato.
         </p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost mt-6 !py-2.5 text-[13px]">
-          Falar no WhatsApp
-        </a>
+        <p class="mt-4 font-mono text-[10.5px] uppercase tracking-[0.16em] text-chrome-300/45">KYC · AML · KYT em toda transação</p>
       </div>
 
       {
@@ -64,7 +61,7 @@ const cols = [
   </div>
 
   <div class="border-t border-[--line-1]">
-    <div class="section flex flex-col items-center justify-between gap-3 py-6 sm:flex-row">
+    <div class="section flex flex-col items-center justify-between gap-3 py-5 sm:flex-row">
       <p class="text-[12px] text-chrome-300/60">© 2026 Korvex Tecnologia. Todos os direitos reservados.</p>
       <p class="text-[12px] text-chrome-300/60">Feito para quem vende sério.</p>
     </div>
