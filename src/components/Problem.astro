@@ -105,6 +105,41 @@ const others = [
       </article>
     </div>
 
+    <!-- caixa em 90 dias -->
+    <div class="cash reveal mx-auto mt-6 max-w-[960px]">
+      <div class="cash-head">
+        <div>
+          <p class="anchor-l !mt-0">Caixa disponível pra sacar · primeiros 90 dias</p>
+          <div class="cash-legend">
+            <span><i class="cash-dot k"></i>Korvex · Pix D0</span>
+            <span><i class="cash-dot c"></i>Gateway comum · D+30 e 10% retido</span>
+          </div>
+        </div>
+        <div class="cash-diff">
+          <b id="cash-diff" class="text-gold-gradient">+R$ 361.800</b>
+          <span class="anchor-l">a mais no seu caixa no dia 90</span>
+        </div>
+      </div>
+      <svg class="cash-svg" viewBox="0 0 600 210" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="cashFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3B82F6" stop-opacity=".32" />
+            <stop offset="1" stop-color="#3B82F6" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <g class="cash-grid">
+          <line x1="0" y1="180" x2="600" y2="180" /><line x1="0" y1="127" x2="600" y2="127" /><line x1="0" y1="74" x2="600" y2="74" /><line x1="0" y1="21" x2="600" y2="21" />
+          <line x1="200" y1="14" x2="200" y2="186" /><line x1="400" y1="14" x2="400" y2="186" />
+        </g>
+        <path id="cash-area" class="cash-area" d="M0 180 L600 20 L600 180 Z" />
+        <path id="cash-c" class="cash-c" d="M0 180 L200 180 Q214 180 224 172 L600 96" />
+        <path id="cash-k" class="cash-k" d="M0 180 L600 20" />
+        <circle id="cash-kdot" class="cash-kdot" cx="600" cy="20" r="4" />
+        <circle id="cash-cdot" class="cash-cdot" cx="600" cy="96" r="4" />
+      </svg>
+      <div class="cash-x"><span>dia 0</span><span>dia 30</span><span>dia 60</span><span>dia 90</span></div>
+    </div>
+
     <!-- concorrentes, compacto -->
     <div class="reveal mx-auto mt-8 max-w-[960px]">
       <div class="rail others lg:justify-between">
@@ -155,11 +190,20 @@ const others = [
       };
       raf = requestAnimationFrame(tick);
     };
+    const cashDiff = $('cash-diff'), cashC = $('cash-c'), cashCdot = $('cash-cdot');
     const update = () => {
       const r = parseFloat(slider.value);
       const cFee = r * COMUM_FEE, cExtra = r * COMUM_EXTRA, cRes = r * COMUM_RES;
       const cNet = r - cFee - cExtra; const kFee = r * KORVEX; const kNet = r - kFee;
       animateTo({ rev: r, cFee, cExtra, cRes, cNet, kFee, kNet, diffM: kNet - cNet, diffY: (kNet - cNet) * 12 });
+      // caixa em 90 dias: Korvex libera D0 (93%), comum libera 88% em D+30 e segura 10% até D+90
+      const daily = r / 30;
+      const k90 = 90 * daily * 0.93;
+      const c90 = 60 * daily * 0.88 * 0.9;
+      if (cashDiff) cashDiff.textContent = '+' + fmt(k90 - c90);
+      const y90 = 180 - (c90 / k90) * 160;
+      if (cashC) cashC.setAttribute('d', `M0 180 L200 180 Q214 180 224 ${(180 - (y90 < 176 ? 6 : 0)).toFixed(1)} L600 ${y90.toFixed(1)}`);
+      if (cashCdot) cashCdot.setAttribute('cy', y90.toFixed(1));
     };
     slider.addEventListener('input', update);
     update();
@@ -217,6 +261,30 @@ const others = [
   .rc-cta { margin-top: 16px; display: grid; gap: 10px; justify-items: center; }
   .rc-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-2); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,0.25); }
   .rc-link:hover { color: #fff; }
+
+  .cash { border-radius: 18px; border: 1px solid var(--line-2); background: var(--bg-1); padding: 20px 20px 16px; }
+  .cash-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+  .cash-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; color: var(--t-3); }
+  .cash-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .cash-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
+  .cash-dot.k { background: var(--accent-product); box-shadow: 0 0 10px rgba(59,130,246,.6); }
+  .cash-dot.c { background: var(--t-4); }
+  .cash-diff { text-align: right; }
+  @media (max-width: 640px) { .cash-diff { text-align: left; width: 100%; } }
+  .cash-diff b { display: block; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.03em; line-height: 1; font-feature-settings: 'tnum'; }
+  .cash-svg { display: block; width: 100%; height: clamp(150px, 22vw, 210px); margin-top: 14px; }
+  .cash-grid line { stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .cash-area { fill: url(#cashFill); opacity: 0; transition: opacity 1.2s var(--ease-out) .6s; }
+  .cash-k, .cash-c { fill: none; stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 1.8s var(--ease-out) .2s, d .35s ease; }
+  .cash-k { stroke: var(--accent-product); filter: drop-shadow(0 0 8px rgba(59,130,246,.55)); }
+  .cash-c { stroke: var(--t-4); stroke-dasharray: 1200; }
+  .cash-kdot { fill: var(--accent-product); stroke: #fff; stroke-width: 2; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .4s ease 1.8s; }
+  .cash-cdot { fill: var(--t-4); opacity: 0; transition: opacity .4s ease 1.8s, cy .35s ease; }
+  .reveal.in .cash-k, .reveal.in .cash-c { stroke-dashoffset: 0; }
+  .reveal.in .cash-area, .reveal.in .cash-kdot, .reveal.in .cash-cdot { opacity: 1; }
+  .cash-x { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-4); }
+  [data-surface="light"] .cash { background: #FFFFFF; box-shadow: var(--shadow-card); }
+  @media (prefers-reduced-motion: reduce) { .cash-k, .cash-c { stroke-dashoffset: 0; transition: none; } .cash-area, .cash-kdot, .cash-cdot { opacity: 1; transition: none; } }
 
   .others { gap: 10px; }
   .other { display: grid; gap: 2px; min-width: 190px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-1); background: rgba(255,255,255,0.02); font-family: var(--font-mono); font-size: 11px; color: var(--t-3); letter-spacing: 0.02em; }

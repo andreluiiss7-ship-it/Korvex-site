@@ -2,6 +2,7 @@
 import { waUrl, REGISTER_URL } from '../lib/site';
 import { icon } from '../lib/icons';
 import HeroCard3D from './HeroCard3D.astro';
+import Mosaic from './Mosaic.astro';
 
 const stats = [
   { big: 'R$ 129M+', n: 129,  prefix: 'R$ ', suffix: 'M+', dec: 0, label: 'transacionados' },
@@ -25,9 +26,9 @@ const week = [
 
 <section id="topo" class="relative overflow-hidden pt-28 pb-6 sm:pt-32">
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute inset-0" style="background: radial-gradient(900px 480px at 50% -10%, rgba(59,130,246,0.14), transparent 60%);"></div>
+    <Mosaic tiles={640} seed={11} />
+    <div class="hero-beam" aria-hidden="true"></div>
     <div class="hero-aurora" aria-hidden="true"></div>
-    <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-60 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,#000_10%,transparent_70%)]"></div>
   </div>
 
   <div class="section">
@@ -35,7 +36,7 @@ const week = [
     <div class="mx-auto max-w-3xl text-center">
       <h1 class="reveal hero-h1">
         O gateway que
-        <span class="block font-editorial italic font-normal">paga no dia.</span>
+        <span class="hero-h1-b"><i class="hero-streak" aria-hidden="true"></i>paga no dia.</span>
       </h1>
 
       <p class="reveal mx-auto mt-5 max-w-2xl text-pretty text-[1.05rem] leading-relaxed text-chrome-300/80 sm:text-[1.15rem]">
@@ -60,7 +61,7 @@ const week = [
 
     <!-- painel de produto -->
     <div class="relative mx-auto mt-12 max-w-[1080px] lg:mt-16">
-      <div class="reveal hero-panel browser kframe blue in relative" data-tilt="2">
+      <div class="reveal hero-panel browser kframe blue in relative glow-blue" data-tilt="2">
         <div class="browser-bar">
           <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
           <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/painel</span>
@@ -179,12 +180,18 @@ const week = [
     font-family: var(--font-display);
     font-weight: 700;
     color: #fff;
-    font-size: clamp(2.7rem, 7.2vw, 5.6rem);
-    letter-spacing: -0.045em;
-    line-height: 0.98;
+    text-transform: uppercase;
+    font-size: clamp(2.4rem, 6.6vw, 5.2rem);
+    letter-spacing: -0.035em;
+    line-height: 0.96;
     text-wrap: balance;
   }
-  .hero-h1 span { font-size: 1.06em; letter-spacing: -0.02em; }
+  .hero-h1-b { position: relative; display: block; color: var(--blue-2); }
+  .hero-streak { position: absolute; left: 50%; top: 50%; width: 140%; height: 1.6em; transform: translate(-50%, -50%); z-index: -1; pointer-events: none;
+    background: radial-gradient(ellipse 50% 60% at 50% 50%, rgba(59,130,246,0.42), transparent 70%); filter: blur(18px); }
+  .hero-beam { position: absolute; left: 50%; top: -12%; width: min(1400px, 160vw); height: 78%; transform: translateX(-50%); pointer-events: none;
+    background: conic-gradient(from 180deg at 50% 0%, transparent 43%, rgba(59,130,246,0.16) 49%, rgba(111,160,255,0.22) 50%, rgba(59,130,246,0.16) 51%, transparent 57%);
+    filter: blur(26px); opacity: .9; }
   .hero-aurora { position: absolute; left: 50%; top: -6%; width: min(1100px, 120vw); height: 520px; transform: translateX(-50%); filter: blur(70px); opacity: .9; pointer-events: none;
     background: radial-gradient(closest-side at 38% 45%, rgba(59,130,246,0.34), transparent 70%), radial-gradient(closest-side at 68% 40%, rgba(111,160,255,0.22), transparent 70%), radial-gradient(closest-side at 55% 75%, rgba(52,211,153,0.12), transparent 70%);
     animation: hero-aurora 16s var(--ease-out) infinite alternate; }

@@ -424,6 +424,10 @@ body {
 }
 .payout-tag.live { color: var(--accent-live); background: var(--accent-live-tint); border-color: rgba(52, 211, 153, 0.25); }
 
+/* ---------- brilho de produto (estilo mockup iluminado) ---------- */
+.glow-blue { box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 120px -40px rgba(59,130,246,0.55), 0 30px 80px -40px rgba(0,0,0,0.8); }
+.glow-gold { box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 120px -40px rgba(201,163,94,0.45), 0 30px 80px -40px rgba(0,0,0,0.8); }
+
 /* ---------- v6: assinaturas visuais ---------- */
 #faq { background: linear-gradient(180deg, var(--bg-1), var(--bg-0)); }
 .anchor-num { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 6vw, 4rem); letter-spacing: -0.04em; line-height: 1; color: #fff; font-feature-settings: 'tnum'; }

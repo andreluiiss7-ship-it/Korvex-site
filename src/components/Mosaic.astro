@@ -1,0 +1,34 @@
+---
+// Campo de quadradinhos iluminados (estilo mosaico). Determinístico no build.
+interface Props { tiles?: number; accent?: 'blue' | 'gold'; seed?: number; class?: string }
+const { tiles = 520, accent = 'blue', seed = 7, class: cls = '' } = Astro.props;
+let s = seed;
+const rnd = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+const items = Array.from({ length: tiles }, (_, i) => {
+  const r = rnd();
+  const lit = r < 0.07 ? 2 : r < 0.2 ? 1 : 0;
+  return { lit, d: (rnd() * 6).toFixed(2), o: (0.35 + rnd() * 0.65).toFixed(2) };
+});
+---
+
+<div class={`mosaic ${accent} ${cls}`} aria-hidden="true">
+  {items.map((t) => <i class={t.lit === 2 ? 'lit' : t.lit === 1 ? 'dim' : ''} style={`--d:${t.d}s;--o:${t.o}`}></i>)}
+</div>
+
+<style>
+  .mosaic {
+    --tile: 44px; --c: 59, 130, 246; --c2: 111, 160, 255;
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    display: grid; grid-template-columns: repeat(auto-fill, var(--tile)); grid-auto-rows: var(--tile);
+    justify-content: center; align-content: start; overflow: hidden;
+    mask-image: radial-gradient(ellipse 72% 62% at 50% 34%, #000 15%, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse 72% 62% at 50% 34%, #000 15%, transparent 72%);
+  }
+  .mosaic.gold { --c: 201, 163, 94; --c2: 226, 195, 134; }
+  .mosaic i { display: block; width: calc(var(--tile) - 8px); height: calc(var(--tile) - 8px); margin: 4px; border-radius: 9px; background: rgba(var(--c2), 0.045); }
+  .mosaic i.dim { background: rgba(var(--c2), 0.09); }
+  .mosaic i.lit { background: rgba(var(--c), calc(0.16 * var(--o))); box-shadow: 0 0 22px rgba(var(--c), calc(0.28 * var(--o))), inset 0 0 0 1px rgba(var(--c2), 0.18); animation: tile 5s ease-in-out infinite alternate; animation-delay: calc(var(--d) * -1); }
+  @keyframes tile { from { opacity: .45; } to { opacity: 1; } }
+  @media (max-width: 640px) { .mosaic { --tile: 34px; } }
+  @media (prefers-reduced-motion: reduce) { .mosaic i.lit { animation: none; } }
+</style>
