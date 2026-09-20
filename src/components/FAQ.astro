@@ -28,8 +28,8 @@ const faqs = [
       {faqs.map((f, i) => (
         <details class="group">
           <summary class="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 py-3.5">
-            <span class="flex items-center gap-3 font-display text-[16px] font-semibold text-white"><span class="h-[18px] w-[18px] flex-none text-titan-400" set:html={icon(f.icon)} />{f.q}</span>
-            <span class="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-white/10 text-titan-400 transition-transform duration-500 group-open:rotate-45" style="transition-timing-function:var(--ease-spring);">
+            <span class="flex items-center gap-3 font-display text-[16px] font-semibold text-white"><span class="h-[18px] w-[18px] flex-none text-[--t-3]" set:html={icon(f.icon)} />{f.q}</span>
+            <span class="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-white/10 text-chrome-300 transition-transform duration-500 group-open:rotate-45" style="transition-timing-function:var(--ease-spring);">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
             </span>
           </summary>

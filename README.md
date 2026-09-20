@@ -26,7 +26,7 @@ automaticamente (build `astro build`, output `dist`).
 - `src/lib/site.ts` — WhatsApp, URL do app e números de autoridade (**editar aqui**)
 - `src/lib/icons.ts` — ícones SVG inline
 - `src/styles/global.css` — design tokens, glass, cards, botões
-- `tailwind.config.mjs` — paleta (navy/suede/titan/chrome/gold) e animações
+- `tailwind.config.mjs` — paleta (ash/titan/chrome/gold/live/bone) e animações
 - `public/assets/` — logos, placas reais, dashboard real, mockups
 
 ## Pontos para personalizar
@@ -39,8 +39,9 @@ automaticamente (build `astro build`, output `dist`).
 - **Links legais** no footer estão como `#` — apontar para as páginas reais.
 
 ## Paleta
-- Base marinho: `#050B14` / `#0A1A2F`
-- Azul camurça (suede): `#3E5C7E` / `#5A7DA1`
-- Azul titânio (accent): `#2B5FA0` → `#6FA3E0`
-- Prata/cromado: `#C7D2DD`
-- Ouro (só no marco de R$1MM): `#C9923A` → `#F5D98B`
+- Base grafite neutra: `#0D0D0F` / `#141414` / `#1A1A1A` (tokens `--bg-0..4`)
+- Texto cinza quente: `#F4F2EE` / `#B5B0A8` / `#837F78`
+- Azul titânio = produto e interação: `#3B82F6` / `#6FA0FF` (só em botões, foco e telas do produto)
+- Ouro = dinheiro que fica e marcos: `#C9A35E` → `#E2C386`
+- Verde = dinheiro que caiu, aprovado, D0: `#34D399`
+- Osso = uma seção clara (Fundador): `#F3EEE6` via `[data-surface="light"]`

@@ -1,16 +1,152 @@
 ---
+import { icon } from '../lib/icons';
+
+const rail = [
+  ['card', 'Checkout'], ['layers', 'Order bump'], ['repeat', 'Upsell'], ['repeat', 'Downsell'],
+  ['check', 'Obrigado'], ['pix', 'Pix'], ['card', 'Cartão'],
+];
+// canvas em viewBox 1000×704; nó 170×76. --x = x/10 %, --y = y/7.04 %
+const nodes = [
+  { i: 'card',   t: 'Checkout',   c: 'conv. 4,8%',  x: 30,  y: 120, k: 'first' },
+  { i: 'layers', t: 'Order bump', c: 'aceite 31%',  x: 270, y: 80,  k: '' },
+  { i: 'repeat', t: 'Upsell 1',   c: 'conv. 34%',   x: 510, y: 120, k: 'on has-no' },
+  { i: 'repeat', t: 'Downsell',   c: 'conv. 18%',   x: 510, y: 340, k: 'in-top' },
+  { i: 'check',  t: 'Obrigado',   c: 'ticket +62%', x: 770, y: 240, k: 'last' },
+];
 ---
 
-<div data-tilt="3" class="tilt browser relative overflow-hidden rounded-2xl shadow-depth">
-          <div class="browser-bar">
-            <span class="dot bg-[#ff5f57]/80"></span>
-            <span class="dot bg-[#febc2e]/80"></span>
-            <span class="dot bg-[#28c840]/80"></span>
-            <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/funil-de-vendas</span>
-            <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Auto-save
-            </span>
-          </div>
-  <img src="/assets/funnel-builder.jpg" width="1600" height="711" alt="Construtor de funil Korvex, arrastar e soltar" class="block w-full" style="aspect-ratio:1600/711" loading="lazy" decoding="async" />
+<div data-tilt="3" class="tilt browser kframe blue in relative">
+  <div class="browser-bar">
+    <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
+    <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/funil</span>
+    <span class="ml-auto hidden items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-chrome-300/60 sm:flex">
+      <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-live-400"></span>Auto-save
+    </span>
+  </div>
+
+  <div class="fb" aria-label="Construtor de funil da Korvex, exemplo ilustrativo">
+    <aside class="fb-rail">
+      <p class="fb-lbl">Blocos</p>
+      {rail.map(([i, l]) => (
+        <span class="fb-block"><span class="fb-grip" set:html={icon('grip')} /><span class="fb-bi" set:html={icon(i)} />{l}</span>
+      ))}
+    </aside>
+
+    <div class="fb-canvas">
+      <div class="fb-top">
+        <span class="fb-crumb">Funil · Mentoria Escala 7</span>
+        <span class="fb-btn">Salvar</span>
+      </div>
+
+      <svg class="fb-wires" viewBox="0 0 1000 704" preserveAspectRatio="none" aria-hidden="true">
+        <path class="ok" d="M200 158 C236 158 234 118 270 118" />
+        <path class="ok" d="M440 118 C476 118 474 158 510 158" />
+        <path class="ok" d="M680 158 C726 158 724 278 770 278" />
+        <path class="no" d="M595 196 C595 260 595 280 595 340" />
+        <path class="ok" d="M680 378 C726 378 724 278 770 278" />
+      </svg>
+
+      {nodes.map((n) => (
+        <div class={`fb-node ${n.k}`} style={`--x:${n.x / 10}%;--y:${(n.y / 7.04).toFixed(1)}%`}>
+          <span class="fb-ni" set:html={icon(n.i)} /><b>{n.t}</b><em>{n.c}</em>
+          {n.k.includes('has-no') && <i class="p"></i>}
+        </div>
+      ))}
+
+      <div class="fb-slot" aria-hidden="true"></div>
+      <div class="fb-ghost" aria-hidden="true">
+        <div class="fb-node"><span class="fb-ni" set:html={icon('repeat')} /><b>Upsell 2</b><em>novo</em></div>
+        <span class="fb-cur" set:html={icon('cursor')} />
+      </div>
+
+      <aside class="fb-insp">
+        <p class="fb-lbl">Upsell 1</p>
+        <div class="fb-kv"><span>Oferta</span><b>Mentoria + Grupo</b></div>
+        <div class="fb-kv"><span>Preço</span><b>R$ 497</b></div>
+        <div class="fb-kv"><span>Aceite</span><b>1 clique</b></div>
+        <div class="fb-kv"><span>Conversão</span><b class="ok">34%</b></div>
+      </aside>
+    </div>
+  </div>
 </div>
+
+<style>
+  .fb {
+    --fb-bg: #111111; --fb-rail: #151515; --fb-card: #1B1B1B; --ln: rgba(255,255,255,.07);
+    --mt: #F4F2EE; --mt2: #B5B0A8; --mt3: #837F78; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399; --no: rgba(255,255,255,.28);
+    display: grid; grid-template-columns: 9.5em 1fr; aspect-ratio: 16/9; overflow: hidden;
+    font-size: clamp(7px, .85vw, 12px); font-family: var(--font-display); color: var(--mt2); background: var(--fb-bg);
+  }
+  .fb-rail { background: var(--fb-rail); border-right: 1px solid var(--ln); padding: 1.2em 1em; display: flex; flex-direction: column; gap: .5em; }
+  .fb-lbl { font-family: var(--font-mono); font-size: .65em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); margin-bottom: .6em; }
+  .fb-block { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: .5em; padding: .55em .7em; border-radius: .55em; background: var(--fb-card); border: 1px solid var(--ln); font-size: .85em; font-weight: 600; color: var(--mt); cursor: grab; }
+  .fb-grip { width: 1em; height: 1em; color: rgba(255,255,255,.3); }
+  .fb-grip :global(svg) { stroke-width: 0; fill: currentColor; }
+  .fb-bi { width: 1.1em; height: 1.1em; color: var(--mt3); }
+  .fb-canvas { position: relative; background: radial-gradient(rgba(255,255,255,.075) 1px, transparent 1.2px) 0 0 / 1.6em 1.6em; }
+  .fb-top { position: absolute; inset: 0 0 auto 0; z-index: 2; height: 3em; display: flex; align-items: center; justify-content: space-between; padding: 0 1em; }
+  .fb-crumb { font-family: var(--font-mono); font-size: .7em; letter-spacing: .06em; color: var(--mt3); }
+  .fb-btn { background: var(--ac); color: #fff; font-weight: 700; font-size: .8em; padding: .5em 1.1em; border-radius: .5em; box-shadow: inset 0 1px 0 rgba(255,255,255,.18); }
+  .fb-wires { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .fb-wires path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 5 7; animation: fb-flow 1.6s linear infinite; }
+  .fb-wires .ok { stroke: var(--ok); }
+  .fb-wires .no { stroke: var(--no); animation-duration: 2.4s; }
+  .fb-node {
+    position: absolute; left: var(--x); top: var(--y); width: 17%; height: 10.8%; z-index: 1;
+    display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: .55em; align-items: center; align-content: center;
+    padding: .45em .65em; border-radius: .6em; background: var(--fb-card); border: 1px solid var(--ln); box-shadow: 0 8px 20px -12px rgba(0,0,0,.8);
+  }
+  .fb-ni { grid-row: 1 / 3; width: 1.9em; height: 1.9em; padding: .45em; border-radius: .45em; background: rgba(255,255,255,.06); color: var(--mt2); }
+  .fb-node b { font-size: .8em; font-weight: 700; color: var(--mt); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fb-node em { font-style: normal; font-family: var(--font-mono); font-size: .6em; letter-spacing: .04em; color: var(--ok); }
+  .fb-node.on { border-color: var(--ac); box-shadow: 0 0 0 1px rgba(59,130,246,.35) inset, 0 8px 20px -12px rgba(0,0,0,.8); }
+  .fb-node.on .fb-ni { color: var(--ac2); background: rgba(59,130,246,.15); }
+  .fb-node::before, .fb-node::after, .fb-node > .p { content: ''; position: absolute; top: 50%; width: .7em; height: .7em; border-radius: 50%; background: var(--fb-bg); border: 1.5px solid var(--ok); transform: translateY(-50%); }
+  .fb-node::before { left: -.35em; }
+  .fb-node::after { right: -.35em; }
+  .fb-node.first::before, .fb-node.last::after { display: none; }
+  .fb-node.in-top::before { left: 50%; top: 0; transform: translate(-50%, -50%); border-color: var(--no); }
+  .fb-node > .p { top: auto; bottom: -.35em; left: 50%; transform: translateX(-50%); border-color: var(--no); }
+  .fb-ghost .fb-node::before, .fb-ghost .fb-node::after { display: none; }
+  .fb-slot { position: absolute; left: 27%; top: 71%; width: 17%; height: 10.8%; border: 1px dashed rgba(255,255,255,.2); border-radius: .6em; opacity: 0; animation: fb-slot 8s infinite; }
+  .fb-ghost { position: absolute; left: 27%; top: 71%; width: 17%; height: 10.8%; z-index: 3; animation: fb-drag 8s var(--ease-out) infinite; }
+  .fb-ghost .fb-node { position: static; width: 100%; height: 100%; box-shadow: 0 18px 30px -14px rgba(0,0,0,.9), 0 0 0 1px rgba(59,130,246,.35); }
+  .fb-cur { position: absolute; left: -.4em; top: -.4em; width: 1.4em; height: 1.4em; color: #fff; filter: drop-shadow(0 2px 3px rgba(0,0,0,.7)); }
+  .fb-cur :global(svg) { fill: #fff; stroke: #000; stroke-width: 1.2; }
+  .fb-insp { display: none; position: absolute; right: 1em; bottom: 1em; z-index: 2; width: 11em; padding: .9em 1em; border-radius: .7em; background: rgba(27,27,27,.92); border: 1px solid var(--ln); backdrop-filter: blur(8px); }
+  .fb-kv { display: flex; justify-content: space-between; gap: .6em; font-size: .7em; padding: .35em 0; border-top: 1px solid var(--ln); }
+  .fb-kv span { color: var(--mt3); } .fb-kv b { color: var(--mt); font-weight: 600; } .fb-kv b.ok { color: var(--ok); }
+  @media (min-width: 1280px) { .fb-insp { display: block; } }
+
+  @keyframes fb-flow { to { stroke-dashoffset: -12; } }
+  @keyframes fb-drag {
+    0%   { opacity: 0; transform: translate(-20.5em, -12.7em) scale(.96); }
+    6%   { opacity: 1; transform: translate(-20.5em, -12.7em) scale(1); }
+    40%  { transform: translate(0, 0) rotate(-2.5deg) scale(1.03); }
+    46%  { transform: translate(0, 0) rotate(0) scale(1.07); }
+    52%  { transform: translate(0, 0) scale(.97); }
+    57%  { transform: translate(0, 0) scale(1); }
+    84%  { opacity: 1; transform: translate(0, 0) scale(1); }
+    92%  { opacity: 0; }
+    100% { opacity: 0; transform: translate(-20.5em, -12.7em) scale(.96); }
+  }
+  @keyframes fb-slot {
+    0%, 30% { opacity: 0; }
+    38% { opacity: 1; border-color: rgba(255,255,255,.25); }
+    46%, 52% { opacity: 1; border-color: #34D399; }
+    58%, 100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fb-wires path, .fb-ghost, .fb-slot { animation: none; }
+    .fb-ghost { opacity: 1; transform: none; }
+    .fb-slot, .fb-cur { display: none; }
+  }
+  @media (max-width: 640px) {
+    .fb { grid-template-columns: 1fr; aspect-ratio: 4/5; font-size: 9px; }
+    .fb-rail, .fb-insp, .fb-wires, .fb-ghost, .fb-slot { display: none; }
+    .fb-canvas { display: flex; flex-direction: column; gap: 1.4em; padding: 4em 1.4em 1.4em; }
+    .fb-node { position: static; width: auto; height: auto; }
+    .fb-node:nth-child(4), .fb-node:nth-child(6) { display: none; }
+    .fb-node::before, .fb-node::after, .fb-node > .p { display: none; }
+  }
+</style>

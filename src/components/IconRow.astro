@@ -1,12 +1,12 @@
 ---
 import { icon } from '../lib/icons';
-interface Props { items: { icon: string; label: string }[]; variant?: 'x'; class?: string }
+interface Props { items: { icon: string; label: string }[]; variant?: 'x' | 'gold' | 'product' | 'live'; class?: string }
 const { items, variant, class: cls = '' } = Astro.props;
 ---
 
 <ul class={`grid gap-2.5 ${cls}`}>
   {items.map((i) => (
-    <li class={`irow${variant === 'x' ? ' x' : ''}`}>
+    <li class={`irow${variant ? ' ' + variant : ''}`}>
       <span class="irow-i" set:html={icon(i.icon)} />
       <span>{i.label}</span>
     </li>

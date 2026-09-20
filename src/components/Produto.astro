@@ -44,7 +44,7 @@ const chapters = [
   <div class="section">
     <header class="reveal max-w-xl">
       <span class="chapter hidden lg:inline-flex">Produto</span>
-      <h2 class="h2 mt-4">Checkout, funil e membros.<br />Um painel. Sua marca.</h2>
+      <h2 class="h2 mt-4">Checkout, funil e membros.<br /><span class="muted">Um painel. Sua marca.</span></h2>
       <p class="lead mt-4 hidden lg:block">Tudo entre o clique e o aluno. Sem plugin. O cliente só vê a sua marca.</p>
     </header>
 
@@ -63,7 +63,7 @@ const chapters = [
             <span class="chapter">{c.n} · {c.label}</span>
             <h3 class="pv-h3 mt-4">{c.h}</h3>
             <p class="pv-p mt-3">{c.p}</p>
-            <IconRow class="mt-5 hidden lg:grid" items={c.bullets} />
+            <IconRow class="mt-5 hidden lg:grid" variant="product" items={c.bullets} />
 
             {i === 0 && (
               <div class="pv-chips rail mt-5" role="tablist" aria-label="Temas de checkout">
@@ -91,13 +91,13 @@ const chapters = [
           {i === 0 && (
             <div class="reveal-stagger grid grid-cols-2 gap-3 lg:hidden">
               <a href="#funil" class="pv-tile">
-                <span class="irow-i" set:html={icon('funnel')} />
+                <span class="irow-i product" set:html={icon('funnel')} />
                 <span class="pv-tile-n">Funil</span>
                 <b data-counter data-target="62" data-prefix="+" data-suffix="%">+62%</b>
                 <span class="anchor-l">receita por venda</span>
               </a>
               <a href="#membros" class="pv-tile">
-                <span class="irow-i" set:html={icon('users')} />
+                <span class="irow-i product" set:html={icon('users')} />
                 <span class="pv-tile-n">Membros</span>
                 <b data-counter data-target="47" data-prefix="+" data-suffix="%">+47%</b>
                 <span class="anchor-l">recompra</span>
@@ -195,17 +195,14 @@ const chapters = [
 
   .pv-h3 { font-family: var(--font-display); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(1.75rem, 2.6vw, 2.5rem); text-wrap: balance; }
   .pv-p { font-size: 16.5px; line-height: 1.55; color: var(--t-2); max-width: 46ch; text-wrap: pretty; }
-  .pv-list { display: grid; gap: 10px; }
-  .pv-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; line-height: 1.45; color: var(--t-1); }
-  .pv-check { flex: none; margin-top: 2px; width: 18px; height: 18px; padding: 3px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-2); }
   .pv-stat { display: flex; align-items: baseline; gap: 10px; }
-  .pv-stat b { font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.03em; color: var(--blue-2); font-feature-settings: 'tnum'; }
+  .pv-stat b { font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.03em; color: #fff; font-feature-settings: 'tnum'; }
   .pv-stat span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-3); }
   .pv-chips { gap: 0 2px; }
   @media (min-width: 1024px) { .pv-chips { margin-left: -10px; } }
   .pv-tile { display: grid; gap: 6px; padding: 16px 14px; border-radius: 16px; border: 1px solid var(--line-1); background: var(--bg-1); }
   .pv-tile-n { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: #fff; margin-top: 4px; }
-  .pv-tile b { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; letter-spacing: -0.03em; color: var(--blue-2); font-feature-settings: 'tnum'; line-height: 1; }
+  .pv-tile b { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; letter-spacing: -0.03em; color: #fff; font-feature-settings: 'tnum'; line-height: 1; }
   .pv-tile .anchor-l { margin-top: 0; }
 
 
@@ -214,7 +211,7 @@ const chapters = [
   .pv-mark .pv-n { padding: 0 5px; }
   .pv-mark:hover { color: var(--t-2); }
   .pv-mark[aria-current="step"] { color: #fff; }
-  .pv-mark[aria-current="step"] .pv-br { color: var(--blue-2); }
+  .pv-mark[aria-current="step"] .pv-br { color: rgba(255,255,255,0.85); }
 
   /* desktop: rail | copy | stage sticky */
   @media (min-width: 1024px) {

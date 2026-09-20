@@ -1,10 +1,11 @@
 ---
 import { icon } from '../lib/icons';
-const aulas = [
-  { n: '01', t: 'O que é uma operação de escala e como ela funciona', state: 'done' },
-  { n: '02', t: 'Termos e conceitos essenciais do funil de vendas', state: 'done' },
-  { n: '03', t: 'Oferta, order bump e upsell em 1 clique', state: 'on' },
-  { n: '04', t: 'Tráfego, métricas e o papel do gateway', state: 'lock' },
+const mods = [
+  { n: '01', t: 'Fundamentos', slug: '01-fundamentos', acc: '#C9A35E', state: 'done' },
+  { n: '02', t: 'Oferta',      slug: '02-oferta',      acc: '#D08A4A', state: 'on' },
+  { n: '03', t: 'Tráfego',     slug: '03-trafego',     acc: '#3B82F6', state: 'lock' },
+  { n: '04', t: 'Conversão',   slug: '04-conversao',   acc: '#34D399', state: 'lock' },
+  { n: '05', t: 'Escala',      slug: '05-escala',      acc: '#D9D7D2', state: 'lock' },
 ];
 const materiais = [
   { name: 'Planilha de metas e projeção.xlsx', meta: 'XLSX · 87,7 KB' },
@@ -13,73 +14,72 @@ const materiais = [
 ---
 
 <div class="relative">
-  <div data-tilt="3" class="tilt browser kframe in overflow-hidden">
+  <div data-tilt="3" class="tilt browser kframe blue in overflow-hidden">
     <div class="browser-bar">
       <span class="dot bg-[#ff5f57]/80"></span>
       <span class="dot bg-[#febc2e]/80"></span>
       <span class="dot bg-[#28c840]/80"></span>
       <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">alunos.metodoescala.com</span>
     </div>
-        <div class="ma" aria-label="Área de membros Korvex, exemplo ilustrativo">
-          <!-- sidebar -->
-          <aside class="ma-side">
-            <div class="ma-brand">
-              <span class="ma-logo">[K</span>
-              <span class="ma-brand-t">KORVEX<small>área de membros</small></span>
-            </div>
-            <p class="ma-navlbl">Navegação</p>
-            <span class="ma-nav on">▣ Início</span>
-            <span class="ma-nav">▤ Materiais</span>
-            <div class="ma-user"><span class="ma-avatar">AS</span><span>Aluno</span></div>
-          </aside>
-
-          <!-- main -->
-          <main class="ma-main">
-            <div class="ma-hero">
-              <div class="ma-hero-copy">
-                <p class="ma-kicker">Curso · Método Escala 7</p>
-                <h4>Área de Membros Exclusiva</h4>
-                <p class="ma-sub">Bem-vindo ao início dessa jornada.</p>
-                <span class="ma-cta">▶ Começar agora</span>
-              </div>
-              <div class="ma-hero-art" aria-hidden="true">
-                <span style="--h:64%;--d:0s"></span><span style="--h:82%;--d:.2s"></span><span style="--h:48%;--d:.4s"></span>
-                <span style="--h:92%;--d:.6s"></span><span style="--h:70%;--d:.8s"></span><span style="--h:100%;--d:1s"></span>
-                <span style="--h:58%;--d:1.2s"></span><span style="--h:86%;--d:1.4s"></span>
-              </div>
-            </div>
-
-            <p class="ma-row-title">Módulo 1 · Fundamentos da Operação</p>
-            <div class="ma-grid">
-              {aulas.map((a) => (
-                <div class={`ma-card ${a.state}`}>
-                  <div class="ma-card-top">
-                    <span class="ma-card-lbl">Aula</span>
-                    <b>{a.n}</b>
-                  </div>
-                  <p>{a.t}</p>
-                  <span class="ma-chev">›</span>
-                </div>
-              ))}
-            </div>
-
-            <p class="ma-row-title">Materiais</p>
-            <div class="ma-files">
-              {materiais.map((m) => (
-                <div class="ma-file">
-                  <span class="ma-file-i">▤</span>
-                  <div><b>{m.name}</b><span>{m.meta}</span></div>
-                  <span class="ma-dl">⤓</span>
-                </div>
-              ))}
-            </div>
-          </main>
+    <div class="ma" aria-label="Área de membros Korvex, exemplo ilustrativo">
+      <!-- sidebar -->
+      <aside class="ma-side">
+        <div class="ma-brand">
+          <span class="ma-logo">[K</span>
+          <span class="ma-brand-t">KORVEX<small>área de membros</small></span>
         </div>
+        <p class="ma-navlbl">Navegação</p>
+        <span class="ma-nav on"><span class="ma-nav-i" set:html={icon('play')} />Início</span>
+        <span class="ma-nav"><span class="ma-nav-i" set:html={icon('file')} />Materiais</span>
+        <div class="ma-user"><span class="ma-avatar">AS</span><span>Aluno</span></div>
+      </aside>
+
+      <main class="ma-main">
+        <!-- banner -->
+        <div class="ma-banner">
+          <img src="/assets/members/banner-metodo-escala.webp" alt="" width="1280" height="549" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+          <div class="ma-banner-copy">
+            <p class="ma-kicker">Continuar assistindo</p>
+            <h4>Método Escala</h4>
+            <p class="ma-sub">Aula 03 · Oferta, order bump e upsell em 1 clique</p>
+            <div class="ma-prog" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100"><i style="--p:38%"></i></div>
+            <p class="ma-prog-l">Módulo 2 de 6 · 38%</p>
+            <span class="ma-cta"><span class="ma-cta-i" set:html={icon('play')} />Continuar aula</span>
+          </div>
+        </div>
+
+        <!-- módulos -->
+        <p class="ma-row-title">Módulos</p>
+        <div class="ma-mods">
+          {mods.map((m) => (
+            <div class={`ma-mod ${m.state}`} style={`--acc:${m.acc}`}>
+              <img src={`/assets/members/cover-${m.slug}.webp`} alt="" width="400" height="600" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+              <span class="ma-mod-n">{m.n}</span>
+              <span class="ma-mod-t">{m.t}</span>
+              {m.state === 'done' && <span class="ma-mod-s done" set:html={icon('check')} />}
+              {m.state === 'lock' && <span class="ma-mod-s" set:html={icon('lock')} />}
+            </div>
+          ))}
+        </div>
+
+        <!-- materiais -->
+        <p class="ma-row-title">Materiais</p>
+        <div class="ma-files">
+          {materiais.map((f) => (
+            <div class="ma-file">
+              <span class="ma-file-i" set:html={icon('file')} />
+              <span><b>{f.name}</b><span>{f.meta}</span></span>
+              <span class="ma-dl" set:html={icon('download')} />
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
   </div>
 
   <div class="material absolute right-2 top-2 z-20 rounded-2xl px-3.5 py-2.5 lg:right-[-14px] lg:top-[-14px] lg:animate-floaty">
     <div class="flex items-center gap-2.5">
-      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400" set:html={icon('users')}></span>
+      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-live-400/15 text-live-400" set:html={icon('users')}></span>
       <div>
         <p class="font-display text-sm font-bold leading-none text-white" style="font-feature-settings:'tnum';">1.247</p>
         <p class="mt-0.5 text-[10px] text-chrome-300/70">alunos online agora</p>
@@ -99,86 +99,75 @@ const materiais = [
 
 <style>
   .ma {
-    --mb: #0B0F17; --ms: #0E1421; --mc: #121a29;
-    --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388;
+    --mb: #111111; --ms: #151515; --mc: #1B1B1B;
+    --mt: #F4F2EE; --mt2: #B5B0A8; --mt3: #837F78;
     --ac: #3B82F6; --ac2: #6FA0FF;
     display: grid;
     grid-template-columns: 148px 1fr;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 11;
     background: var(--mb);
     font-size: clamp(7px, 0.85vw, 12px);
     color: var(--mt2);
     font-family: var(--font-display);
     overflow: hidden;
   }
-  .ma-side {
-    background: var(--ms);
-    border-right: 1px solid rgba(255,255,255,.06);
-    padding: 1.4em 1.1em;
-    display: flex; flex-direction: column; gap: .6em;
-  }
+  .ma-side { background: var(--ms); border-right: 1px solid rgba(255,255,255,.06); padding: 1.4em 1.1em; display: flex; flex-direction: column; gap: .6em; }
   .ma-brand { display: flex; align-items: center; gap: .6em; margin-bottom: 1.4em; }
   .ma-logo { font-weight: 800; font-size: 1.5em; color: var(--mt); letter-spacing: -.05em; }
   .ma-brand-t { font-weight: 700; font-size: .9em; color: var(--mt); letter-spacing: .06em; line-height: 1.1; }
-  .ma-brand-t small { display: block; font-weight: 500; font-size: .7em; color: var(--ac2); letter-spacing: .1em; text-transform: uppercase; }
+  .ma-brand-t small { display: block; font-weight: 500; font-size: .7em; color: var(--mt3); letter-spacing: .1em; text-transform: uppercase; }
   .ma-navlbl { font-family: var(--font-mono); font-size: .7em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); margin-bottom: .2em; }
-  .ma-nav { display: block; padding: .6em .9em; border-radius: .6em; font-size: 1em; color: var(--mt2); }
+  .ma-nav { display: flex; align-items: center; gap: .6em; padding: .6em .9em; border-radius: .6em; font-size: 1em; color: var(--mt2); }
+  .ma-nav-i { width: 1.1em; height: 1.1em; }
   .ma-nav.on { background: var(--ac); color: #fff; font-weight: 600; }
   .ma-user { margin-top: auto; display: flex; align-items: center; gap: .6em; font-size: .9em; color: var(--mt2); }
   .ma-avatar { width: 2em; height: 2em; border-radius: 50%; background: var(--mc); border: 1px solid rgba(255,255,255,.1); display: grid; place-items: center; font-size: .75em; font-weight: 700; color: var(--mt); }
 
-  .ma-main { padding: 1.4em 1.6em; overflow: hidden; }
-  .ma-hero {
-    position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 1em;
-    border-radius: 1em; overflow: hidden;
-    background: linear-gradient(120deg, #101a2e 0%, #0b1220 60%, #0a0f1a 100%);
-    border: 1px solid rgba(255,255,255,.06);
-    padding: 1.6em 1.8em;
-    min-height: 9em;
-  }
-  .ma-kicker { font-family: var(--font-mono); font-size: .7em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); }
-  .ma-hero h4 { margin-top: .5em; font-size: 1.9em; font-weight: 700; letter-spacing: -.02em; color: var(--mt); line-height: 1.05; }
-  .ma-sub { margin-top: .5em; font-size: .95em; color: var(--mt2); }
-  .ma-cta { display: inline-block; margin-top: 1.1em; background: var(--ac); color: #fff; font-weight: 700; font-size: .9em; padding: .55em 1.1em; border-radius: .5em; }
-  .ma-hero-art { position: relative; display: flex; align-items: flex-end; gap: .45em; padding: .4em 0; }
-  .ma-hero-art span {
-    flex: 1; height: var(--h); border-radius: .3em .3em 0 0;
-    background: linear-gradient(180deg, rgba(111,160,255,.9), rgba(59,130,246,.15));
-    transform-origin: bottom; animation: ma-bar 3.2s var(--d) ease-in-out infinite alternate;
-  }
-  @keyframes ma-bar { from { transform: scaleY(.55); opacity: .55; } to { transform: scaleY(1); opacity: 1; } }
+  .ma-main { padding: 1.2em 1.6em; overflow: hidden; }
 
-  .ma-row-title { margin: 1.4em 0 .7em; font-size: 1em; font-weight: 700; color: var(--mt); }
-  .ma-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8em; }
-  .ma-card {
-    position: relative; border-radius: .8em; padding: .9em 1em 1.6em;
-    background: var(--mc); border: 1px solid rgba(255,255,255,.06);
-    display: flex; flex-direction: column; gap: .5em;
-  }
-  .ma-card-top { display: flex; flex-direction: column; align-items: center; padding: .4em 0 .6em; border-bottom: 1px solid rgba(255,255,255,.05); }
-  .ma-card-lbl { font-family: var(--font-mono); font-size: .7em; letter-spacing: .2em; text-transform: uppercase; color: var(--mt3); }
-  .ma-card b { font-size: 2.2em; font-weight: 800; color: var(--mt); letter-spacing: -.04em; line-height: 1; }
-  .ma-card p { font-size: .8em; line-height: 1.35; color: var(--mt2); }
-  .ma-chev { position: absolute; right: .9em; bottom: .6em; color: var(--mt3); font-size: 1.2em; }
-  .ma-card.done .ma-card-top::after { content: '✓'; position: absolute; top: .6em; right: .7em; font-size: .75em; color: #34D399; }
-  .ma-card.on { border-color: var(--ac); box-shadow: 0 0 0 1px rgba(59,130,246,.35) inset; }
-  .ma-card.on b { color: var(--ac2); }
-  .ma-card.lock { opacity: .55; }
-  .ma-card.lock .ma-card-top::after { content: '🔒'; position: absolute; top: .6em; right: .7em; font-size: .75em; }
+  .ma-banner { position: relative; height: 8.8em; border-radius: 1em; overflow: hidden; border: 1px solid rgba(255,255,255,.06);
+    background: radial-gradient(60% 140% at 85% 50%, rgba(201,163,94,.22), transparent 60%), linear-gradient(120deg, #1A1A1A, #0F0F10 60%, #141414); }
+  .ma-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; }
+  .ma-banner::after { content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(17,17,17,.96) 0%, rgba(17,17,17,.78) 40%, rgba(17,17,17,.12) 72%, transparent),
+                linear-gradient(0deg, rgba(17,17,17,.55), transparent 45%); }
+  .ma-banner-copy { position: relative; z-index: 1; max-width: 62%; height: 100%; padding: 1.1em 1.6em; display: flex; flex-direction: column; justify-content: center; }
+  .ma-kicker { font-family: var(--font-mono); font-size: .62em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); }
+  .ma-banner h4 { margin-top: .3em; font-size: 1.8em; font-weight: 700; letter-spacing: -.025em; color: var(--mt); line-height: 1; }
+  .ma-sub { margin-top: .4em; font-size: .8em; color: var(--mt2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ma-prog { margin-top: .7em; width: 15em; height: .4em; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .ma-prog i { display: block; height: 100%; width: var(--p); border-radius: inherit; background: linear-gradient(90deg, var(--ac), var(--ac2)); }
+  .ma-prog-l { margin-top: .35em; font-family: var(--font-mono); font-size: .62em; letter-spacing: .12em; text-transform: uppercase; color: var(--mt3); }
+  .ma-cta { margin-top: .6em; align-self: flex-start; display: inline-flex; align-items: center; gap: .45em; font-size: .8em; font-weight: 700; padding: .45em 1em; border-radius: .5em; background: var(--ac); color: #fff; }
+  .ma-cta-i { width: 1.1em; height: 1.1em; }
 
-  .ma-files { display: grid; gap: .6em; }
-  .ma-file { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .9em; padding: .8em 1em; border-radius: .7em; background: var(--mc); border: 1px solid rgba(255,255,255,.06); }
-  .ma-file-i { width: 2.4em; height: 2.4em; border-radius: .5em; background: rgba(59,130,246,.15); color: var(--ac2); display: grid; place-items: center; font-size: 1em; }
+  .ma-row-title { margin: .9em 0 .45em; font-family: var(--font-mono); font-size: .68em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); }
+  .ma-mods { display: grid; grid-template-columns: repeat(5, 1fr); gap: .7em; }
+  .ma-mod { position: relative; aspect-ratio: 3 / 4; border-radius: .7em; overflow: hidden; isolation: isolate; border: 1px solid rgba(255,255,255,.07);
+    background: linear-gradient(165deg, var(--acc) -45%, #141414 58%, #101010 100%); }
+  .ma-mod img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+  .ma-mod::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 38%, rgba(10,10,10,.92)); }
+  .ma-mod-n { position: absolute; left: .55em; top: .4em; z-index: 2; font-weight: 800; font-size: 1.9em; letter-spacing: -.05em; line-height: 1; color: rgba(255,255,255,.92); text-shadow: 0 2px 12px rgba(0,0,0,.55); }
+  .ma-mod-t { position: absolute; left: .7em; right: .5em; bottom: .6em; z-index: 2; font-size: .78em; font-weight: 600; color: var(--mt); line-height: 1.15; }
+  .ma-mod-s { position: absolute; right: .5em; top: .5em; z-index: 2; width: 1.3em; height: 1.3em; padding: .25em; border-radius: 50%; background: rgba(0,0,0,.55); color: rgba(255,255,255,.75); }
+  .ma-mod-s.done { color: #34D399; }
+  .ma-mod.on { box-shadow: 0 0 0 1.5px var(--ac) inset; }
+  .ma-mod.lock { opacity: .62; }
+
+  .ma-files { display: grid; gap: .5em; }
+  .ma-file { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8em; padding: .55em .9em; border-radius: .7em; background: var(--mc); border: 1px solid rgba(255,255,255,.06); }
+  .ma-file-i { width: 2em; height: 2em; padding: .45em; border-radius: .5em; background: rgba(255,255,255,.06); color: var(--mt2); }
   .ma-file b { display: block; font-size: .85em; font-weight: 600; color: var(--mt); }
-  .ma-file span { font-family: var(--font-mono); font-size: .7em; color: var(--mt3); }
-  .ma-dl { color: var(--ac2); font-size: 1.2em; }
+  .ma-file > span > span { font-family: var(--font-mono); font-size: .68em; color: var(--mt3); }
+  .ma-dl { width: 1.3em; height: 1.3em; color: var(--mt2); }
 
   @media (max-width: 640px) {
     .ma { grid-template-columns: 1fr; aspect-ratio: 4 / 5; font-size: 9px; }
-    .ma-side { display: none; }
-    .ma-hero { grid-template-columns: 1fr; }
-    .ma-hero-art { display: none; }
-    .ma-grid { grid-template-columns: repeat(2, 1fr); }
-    .ma-files { display: none; }
+    .ma-side, .ma-files { display: none; }
+    .ma-banner { height: 11em; }
+    .ma-banner-copy { max-width: 82%; }
+    .ma-mods { display: flex; overflow-x: auto; gap: .6em; margin-inline: -1.6em; padding-inline: 1.6em; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .ma-mods::-webkit-scrollbar { display: none; }
+    .ma-mod { flex: 0 0 30%; scroll-snap-align: start; }
   }
 </style>
