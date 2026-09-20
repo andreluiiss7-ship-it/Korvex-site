@@ -11,30 +11,34 @@ import { waUrl, REGISTER_URL } from '../lib/site';
         <div class="absolute inset-0 bg-grid-faint [background-size:48px_48px] opacity-30 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000,transparent_75%)]"></div>
       </div>
 
-      <span class="kicker gold justify-center">Sua condição em 1h</span>
+      <span class="kicker gold !hidden justify-center lg:!inline-flex">Sua condição em 1h</span>
 
       <h2 class="h2 mx-auto mt-4 max-w-3xl">
         A Korvex não é pra todo mundo.
         <span class="block text-titan-gradient">É pra quem cansou de pedir o próprio dinheiro.</span>
       </h2>
-      <p class="lead mx-auto mt-4">
-        Mande sua operação. Em até 1h um gerente humano responde com a condição do seu volume e conduz a migração sem parar de vender.
+      <p class="lead mx-auto mt-4 hidden lg:block">
+        Mande sua operação. Em 1h um gerente humano responde com a condição do seu volume.
       </p>
+      <div class="mt-5 lg:hidden">
+        <span class="anchor-num text-gold-gradient">1h</span>
+        <span class="anchor-l">resposta de um gerente humano</span>
+      </div>
 
       <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
         <a href={waUrl('Olá! Quero receber a condição da Korvex pra minha operação em até 1h.')} target="_blank" rel="noopener"
-           class="btn !px-7 !py-3.5 text-[15px]"
+           class="btn w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto"
            style="background:linear-gradient(180deg,#E0BD79,#B68C3F);color:#1A1306;box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 14px 30px -10px rgba(201,163,94,0.5);">
           <span class="h-5 w-5" set:html={icon('headset')}></span>
           Receber minha condição em 1h
         </a>
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-ghost !px-7 !py-3.5 text-[15px]">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-ghost w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
           Abrir conta grátis
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>
       </div>
 
-      <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.12em] text-chrome-300/55">
+      <p class="mt-5 hidden font-mono text-[11px] uppercase tracking-[0.12em] text-chrome-300/55 lg:block">
         400+ operações · R$ 129M+ transacionados · Pix D0 · Zero reserva
       </p>
     </div>

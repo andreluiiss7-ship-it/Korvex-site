@@ -1,11 +1,12 @@
 ---
 import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
+import IconRow from './IconRow.astro';
 
 const tiers = [
-  { variant: 'steel', amount: 'R$ 10.000',    name: 'Pulseira Korvex', lvl: 'Tier 01', img: '/assets/pulseira-10k.png', bracelet: true  },
-  { variant: 'blue',  amount: 'R$ 100.000',   name: 'Placa 100K',      lvl: 'Tier 02', img: '/assets/placa-100k.jpg',    bracelet: false },
-  { variant: 'silver', amount: 'R$ 500.000',  name: 'Placa 500K',      lvl: 'Tier 03', img: '/assets/placa-500k.jpg',    bracelet: false },
+  { variant: 'steel', amount: 'R$ 10.000',    name: 'Pulseira', lvl: 'Tier 01', img: '/assets/pulseira-10k.png', bracelet: true  },
+  { variant: 'blue',  amount: 'R$ 100.000',   name: 'Placa',      lvl: 'Tier 02', img: '/assets/placa-100k.jpg',    bracelet: false },
+  { variant: 'silver', amount: 'R$ 500.000',  name: 'Placa',      lvl: 'Tier 03', img: '/assets/placa-500k.jpg',    bracelet: false },
 ];
 ---
 
@@ -18,20 +19,26 @@ const tiers = [
   <div class="section">
     <!-- HEADER -->
     <div class="reveal mx-auto max-w-3xl text-center">
-      <span class="kicker gold justify-center">Reconhecimento</span>
+      <span class="kicker gold !hidden justify-center lg:!inline-flex">Reconhecimento</span>
       <h2 class="h2 mt-4">
         Faturamento alto
         <span class="block font-editorial italic font-normal" style="font-size:1.18em">
           <span class="text-gold-gradient">vira metal na parede.</span>
         </span>
       </h2>
-      <p class="lead mx-auto mt-4">
-        Pulseira aos 10K. Placa aos 100K e 500K. No milhão, <strong class="text-white">prêmios em dinheiro e imersão presencial</strong> com o time Korvex.
+      <p class="lead mx-auto mt-4 hidden lg:block">
+        No milhão, <strong class="text-white">prêmio em dinheiro e imersão presencial</strong> com o time.
       </p>
     </div>
 
+    <div class="reveal ladder mx-auto mt-[--gap-md] max-w-4xl">
+      {['10K', '100K', '500K', '1MM'].map((m, i) => (
+        <span class={`ladder-s${i === 3 ? ' gold' : ''}`}><i></i><span>{m}</span></span>
+      ))}
+    </div>
+
     <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
-    <div class="reveal-stagger mx-auto mt-[--gap-lg] grid max-w-4xl grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
+    <div class="reveal-stagger mx-auto mt-4 grid max-w-4xl grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
       {tiers.map((t, i) => (
         <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
@@ -64,9 +71,7 @@ const tiers = [
           <span class="mt-2 block h-display text-2xl sm:text-3xl text-white">em vendas.</span>
         </h3>
 
-        <p class="mt-4 max-w-lg text-pretty leading-relaxed text-chrome-200/85">
-          A placa que poucos alcançam. Com ela, você concorre a <strong class="text-white">prêmios em dinheiro</strong> e experiências reservadas a quem chegou lá.
-        </p>
+        <IconRow class="mt-5" items={[{ icon: 'coin', label: 'Prêmio em dinheiro' }, { icon: 'users', label: 'Imersão presencial' }]} />
 
         <a href={REGISTER_URL} target="_blank" rel="noopener"
            class="btn mt-6 inline-flex"
@@ -78,3 +83,14 @@ const tiers = [
     </div>
   </div>
 </section>
+
+<style>
+  .ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .ladder-s { display: grid; gap: 8px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--t-3); }
+  .ladder-s i { display: block; height: 6px; border-radius: 999px; background: var(--line-2); transform: scaleX(0); transform-origin: left; transition: transform .9s var(--ease-out); }
+  .ladder-s:nth-child(2) i { transition-delay: .15s; } .ladder-s:nth-child(3) i { transition-delay: .3s; } .ladder-s:nth-child(4) i { transition-delay: .45s; }
+  .reveal.in .ladder-s i { transform: scaleX(1); }
+  .ladder-s.gold { color: var(--gold-2); }
+  .ladder-s.gold i { background: linear-gradient(90deg, var(--gold-1), var(--gold-2)); }
+  @media (prefers-reduced-motion: reduce) { .ladder-s i { transform: none; transition: none; } }
+</style>

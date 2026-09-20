@@ -1,6 +1,7 @@
 ---
+import IconRow from './IconRow.astro';
 const stats = [
-  { big: 'R$ 25M+', label: 'vendidos online' },
+  { big: 'R$ 25M+', label: 'vendidos online', n: 25, prefix: 'R$ ', suffix: 'M+' },
   { big: '1h', label: 'resposta do gerente' },
 ];
 ---
@@ -10,23 +11,28 @@ const stats = [
     <div class="reveal grid items-stretch gap-6 overflow-hidden rounded-[var(--radius-xl)] border border-[--line-1] bg-[--bg-1] shadow-depth lg:grid-cols-[1fr_1fr] lg:gap-0">
       <!-- copy -->
       <div class="relative p-7 sm:p-8 lg:p-10">
-        <span class="chapter">Quem construiu</span>
+        <span class="chapter hidden lg:inline-flex">Quem construiu</span>
         <h2 class="h2 mt-4">
           Construída por quem<br />
           <span class="font-editorial italic font-normal text-titan-gradient">já teve saque preso.</span>
         </h2>
-        <p class="lead mt-4">
-          André vendeu mais de <strong class="text-white">R$ 25 milhões</strong> na internet antes de abrir a Korvex.
-          Conheceu taxa mudada por e-mail, saldo "em análise" e suporte por robô. Cada regra da Korvex existe pra isso não acontecer com você.
+        <p class="lead mt-4 hidden lg:block">
+          André vendeu <strong class="text-white">R$ 25 milhões</strong> online antes da Korvex.
+          Cada regra daqui existe pra o que ele passou não acontecer com você.
         </p>
         <dl class="reveal-stagger mt-6 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-[--line-1] pt-5 sm:gap-x-12">
           {stats.map((s) => (
             <div>
-              <dt class="font-display text-3xl font-extrabold leading-none tracking-[-0.03em] text-white sm:text-4xl" style="font-feature-settings:'tnum';">{s.big}</dt>
+              <dt class="anchor-num whitespace-nowrap" style="font-size:clamp(1.7rem,4vw,2.75rem)" data-counter={s.n !== undefined ? '' : undefined} data-target={s.n} data-prefix={s.prefix} data-suffix={s.suffix}>{s.big}</dt>
               <dd class="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-chrome-300/60">{s.label}</dd>
             </div>
           ))}
         </dl>
+        <IconRow class="mt-6" variant="x" items={[
+          { icon: 'x', label: 'Taxa mudada por e-mail' },
+          { icon: 'x', label: 'Saldo em análise' },
+          { icon: 'x', label: 'Suporte por robô' },
+        ]} />
       </div>
 
       <!-- retrato -->

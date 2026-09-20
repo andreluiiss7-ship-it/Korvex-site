@@ -3,13 +3,19 @@ import { waUrl, REGISTER_URL } from '../lib/site';
 import { icon } from '../lib/icons';
 import HeroCard3D from './HeroCard3D.astro';
 
-const pills = ['Pix D0', 'Zero reserva', 'Taxa em contrato', 'API Pix', 'Saque em cripto'];
+const pills = [
+  { icon: 'bolt', label: 'Pix D0' },
+  { icon: 'shield', label: 'Zero reserva' },
+  { icon: 'ticket', label: 'Taxa em contrato' },
+  { icon: 'pix', label: 'API Pix' },
+  { icon: 'coin', label: 'Saque em cripto' },
+];
 
 const stats = [
   { big: 'R$ 129M+', n: 129,  prefix: 'R$ ', suffix: 'M+', dec: 0, label: 'transacionados' },
-  { big: '400+',     n: 400,  prefix: '',    suffix: '+',  dec: 0, label: 'operações ativas' },
-  { big: '94%',      n: 94,   prefix: '',    suffix: '%',  dec: 0, label: 'aprovação no cartão' },
-  { big: '99,9%',    n: 99.9, prefix: '',    suffix: '%',  dec: 1, label: 'uptime no pico' },
+  { big: '400+',     n: 400,  prefix: '',    suffix: '+',  dec: 0, label: 'operações' },
+  { big: '94%',      n: 94,   prefix: '',    suffix: '%',  dec: 0, label: 'aprovação' },
+  { big: '99,9%',    n: 99.9, prefix: '',    suffix: '%',  dec: 1, label: 'uptime' },
 ];
 
 const flow = [
@@ -30,7 +36,7 @@ const flow = [
 
       <!-- manifesto -->
       <div class="text-center lg:text-left">
-        <div class="reveal inline-flex items-center gap-2.5 font-mono text-[10px] uppercase sm:text-[11px]" style="letter-spacing:0.22em;color:var(--blue-2);">
+        <div class="reveal hidden items-center gap-2.5 font-mono lg:inline-flex text-[10px] uppercase sm:text-[11px]" style="letter-spacing:0.22em;color:var(--blue-2);">
           <span class="inline-block h-1.5 w-1.5 flex-none rounded-full bg-[--blue]"></span>
           Korvex · O gateway que não segura seu dinheiro
         </div>
@@ -40,22 +46,30 @@ const flow = [
           <span class="block font-editorial italic font-normal text-titan-gradient">na conta de ninguém.</span>
         </h1>
 
-        <p class="reveal mx-auto mt-5 max-w-xl text-pretty text-[1.05rem] leading-relaxed text-chrome-300/80 sm:text-[1.1rem] lg:mx-0">
-          Gateway comum retém até 10% da venda por até 90 dias e chama isso de segurança.
-          A Korvex paga o Pix no dia, não retém nada e trava a taxa em contrato: <strong class="text-white">6,99% + R$ 1,99</strong>.
+        <p class="reveal mx-auto mt-5 hidden max-w-xl text-pretty text-[1.05rem] leading-relaxed text-chrome-300/80 sm:text-[1.1rem] lg:mx-0 lg:block">
+          Gateway comum retém até 10% da venda por 90 dias. A Korvex paga o Pix no dia, não retém nada e trava
+          <strong class="text-white">6,99% + R$ 1,99</strong> em contrato.
           <strong class="text-white">A cada R$ 1 milhão, <span class="text-gold-gradient font-extrabold">R$ 50 mil</span> voltam pro seu caixa.</strong>
         </p>
 
+        <div class="reveal mt-6 flex items-center justify-center gap-4 lg:hidden">
+          <span class="irow-i flex-none" style="width:44px;height:44px;color:var(--gold-2);background:var(--gold-tint);border-color:rgba(201,163,94,0.25)" set:html={icon('coin')}></span>
+          <div class="text-left">
+            <span class="anchor-num text-gold-gradient" data-counter data-target="50" data-prefix="R$ " data-suffix=" mil">R$ 50 mil</span>
+            <span class="anchor-l">de volta a cada R$ 1 milhão</span>
+          </div>
+        </div>
+
         <div class="reveal mt-7 grid gap-3 sm:grid-cols-2">
           <a href={waUrl('Olá! Faturo R$100K+/mês e quero receber a condição da Korvex pra minha operação.')} target="_blank" rel="noopener" class="persona-cta primary group">
-            <span class="persona-q">Faturando R$ 100K+ / mês?</span>
+            <span class="persona-q hidden sm:block">Faturando R$ 100K+ / mês?</span>
             <span class="persona-a">
               Receber proposta em 1h
               <span class="h-4 w-4" set:html={icon('arrow')}></span>
             </span>
           </a>
           <a href={REGISTER_URL} target="_blank" rel="noopener" class="persona-cta ghost group">
-            <span class="persona-q">Começando ou validando?</span>
+            <span class="persona-q hidden sm:block">Começando ou validando?</span>
             <span class="persona-a">
               Abrir conta grátis
               <span class="h-4 w-4" set:html={icon('arrow')}></span>
@@ -63,13 +77,11 @@ const flow = [
           </a>
         </div>
 
-        <p class="reveal mt-6 font-mono text-[11px] leading-relaxed tracking-[0.08em] text-chrome-300/60">
-          {pills.map((p, i) => (
-            <span class="inline-block whitespace-nowrap">
-              <span class="text-titan-400/50">[&nbsp;</span><span class="text-chrome-200">{p}</span><span class="text-titan-400/50">&nbsp;]</span>{i < pills.length - 1 && <span class="mx-1.5"> </span>}
-            </span>
+        <div class="reveal rail mt-6 lg:justify-start">
+          {pills.map((p) => (
+            <span class="chip"><span set:html={icon(p.icon)} />{p.label}</span>
           ))}
-        </p>
+        </div>
       </div>
 
       <!-- cartão 3D + aprovações ao vivo -->

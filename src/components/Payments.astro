@@ -3,11 +3,17 @@ import { icon } from '../lib/icons';
 import { waUrl, REGISTER_URL } from '../lib/site';
 
 const payouts = [
-  { icon: 'bolt',  title: 'Pix · D0',                  desc: 'Pediu, caiu. No mesmo dia, sem reserva.', tag: '+ rápido' },
+  { icon: 'bolt',  title: 'Pix · D0',                  desc: 'Cai no mesmo dia. Sem reserva.', tag: '+ rápido' },
   { icon: 'card',  title: 'Cartão · D+30',             desc: 'Previsível. Sem surpresa no extrato.', tag: 'padrão' },
-  { icon: 'clock', title: 'Antecipação · D+14 ou D+2', desc: 'Precisa antes? Antecipe com taxa combinada antes, não descoberta depois.', tag: 'flex' },
-  { icon: 'coin',  title: 'Cripto · saque',            desc: 'Saque em criptomoeda quando fizer sentido pro seu caixa.', tag: 'novo' },
-  { icon: 'pix',   title: 'API Pix · integração',     desc: 'Gere cobranças Pix do seu próprio sistema e receba a confirmação por webhook. Cai em D0 do mesmo jeito.', tag: 'dev' },
+  { icon: 'clock', title: 'Antecipação · D+14 ou D+2', desc: 'Taxa combinada antes, não descoberta depois.', tag: 'flex' },
+  { icon: 'coin',  title: 'Cripto · saque',            desc: 'Quando fizer sentido pro seu caixa.', tag: 'novo' },
+  { icon: 'pix',   title: 'API Pix · integração',      desc: 'Cobrança do seu sistema, webhook de confirmação, D0 igual.', tag: 'dev' },
+];
+const timeline = [
+  { d: 'D0',   l: 'Pix · API Pix', w: 0 },
+  { d: 'D+2',  l: 'antecipação',   w: 0.067 },
+  { d: 'D+14', l: 'antecipação',   w: 0.467 },
+  { d: 'D+30', l: 'cartão',        w: 1 },
 ];
 ---
 
@@ -16,14 +22,14 @@ const payouts = [
     <!-- header -->
     <div class="reveal grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr]">
       <div>
-        <span class="chapter">Taxas</span>
+        <span class="chapter hidden lg:inline-flex">Taxas</span>
         <h2 class="h2 mt-4">
           6,99% + R$ 1,99.
           <span class="block muted">Travado em contrato.</span>
         </h2>
       </div>
-      <p class="lead max-w-md">
-        A taxa que você assina é a taxa do extrato. <strong class="text-white">Só muda com a sua assinatura</strong>, nunca por e-mail automático.
+      <p class="lead hidden max-w-md lg:block">
+        A taxa do contrato é a taxa do extrato. <strong class="text-white">Só muda com a sua assinatura.</strong>
       </p>
     </div>
 
@@ -36,32 +42,18 @@ const payouts = [
           <span class="font-display text-[4.5rem] font-bold leading-none text-white sm:text-[5rem]" style="letter-spacing: -0.04em; font-feature-settings: 'tnum';" data-counter data-target="6.99" data-decimals="2" data-suffix="%">6,99%</span>
         </div>
         <p class="mt-4 text-[14px] text-chrome-300/65">+ R$ 1,99 por venda aprovada</p>
-        <p class="mt-5 max-w-md text-pretty text-[15px] leading-relaxed text-chrome-200/90">
-          Zero reserva de segurança. Zero taxa escondida. O que entra no checkout é o que aparece no extrato.
-        </p>
+        <div class="zeros mt-6">
+          <div class="zero"><b>0</b><span>reserva</span></div>
+          <div class="zero"><b>0</b><span>setup</span></div>
+          <div class="zero"><b>0</b><span>mensalidade</span></div>
+        </div>
 
         <hr class="my-5 border-t border-[--line-1]" />
 
-        <ul class="space-y-3">
-          <li class="flex items-center gap-3 text-[14px] text-chrome-200/90">
-            <span class="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-titan-500/30 bg-titan-600/15 text-titan-400">
-              <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Zero reserva de segurança
-          </li>
-          <li class="flex items-center gap-3 text-[14px] text-chrome-200/90">
-            <span class="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-titan-500/30 bg-titan-600/15 text-titan-400">
-              <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            Sem setup, sem mensalidade, sem mínimo
-          </li>
-          <li class="flex items-center gap-3 text-[14px] text-chrome-200/90">
-            <span class="flex h-5 w-5 flex-none items-center justify-center rounded-full border border-titan-500/30 bg-titan-600/15 text-titan-400">
-              <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <a href={waUrl('Olá! Faturo alto e quero a condição da Korvex por escrito pra minha operação.')} target="_blank" rel="noopener" class="underline decoration-titan-400/40 underline-offset-4 transition-colors hover:text-white">Volume alto: condição própria, por escrito</a>
-          </li>
-        </ul>
+        <a href={waUrl('Olá! Faturo alto e quero a condição da Korvex por escrito pra minha operação.')} target="_blank" rel="noopener" class="irow">
+          <span class="irow-i" set:html={icon('spark')} />
+          <span class="text-[14px] text-chrome-200/90">Volume alto? <span class="text-white underline decoration-titan-400/40 underline-offset-4">Condição por escrito</span></span>
+        </a>
 
         <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-6">
           Abrir conta na Korvex
@@ -70,18 +62,40 @@ const payouts = [
       </div>
 
       <!-- Payout list -->
-      <div class="reveal-stagger flex flex-col gap-2.5">
+      <div class="flex flex-col gap-2.5">
+        <div class="reveal tl" aria-label="Quando o dinheiro cai">
+          <div class="tl-track"><i></i>{timeline.map((t) => <b style={`--x:${t.w}`}></b>)}</div>
+          <div class="tl-labels">{timeline.map((t) => <span style={`--x:${t.w}`}><em>{t.d}</em>{t.l}</span>)}</div>
+        </div>
+        <div class="reveal-stagger flex flex-col gap-2.5">
         {payouts.map((p) => (
           <div class="payout">
             <div class="payout-i" set:html={icon(p.icon)}></div>
             <div>
               <b>{p.title}</b>
-              <span>{p.desc}</span>
+              <span class="hidden lg:block">{p.desc}</span>
             </div>
             <span class="payout-tag">{p.tag}</span>
           </div>
         ))}
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .tl { padding: 14px 16px 10px; border-radius: 16px; border: 1px solid var(--line-1); background: var(--bg-1); }
+  .tl-track { position: relative; height: 8px; border-radius: 999px; background: var(--line-1); margin-inline: 6px; }
+  .tl-track i { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, var(--blue-2), var(--line-2) 60%, var(--line-2)); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease-out); }
+  .reveal.in .tl-track i { transform: scaleX(1); }
+  .tl-track b { position: absolute; top: 50%; left: calc(var(--x) * 100%); width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 999px; background: var(--bg-0); border: 3px solid var(--t-4); }
+  .tl-track b:first-of-type { border-color: var(--blue-2); box-shadow: 0 0 14px rgba(111,163,224,0.6); }
+  .tl-labels { position: relative; height: 34px; margin-top: 10px; margin-inline: 6px; }
+  .tl-labels span { position: absolute; left: calc(var(--x) * 100%); transform: translateX(-50%); display: grid; text-align: center; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-4); white-space: nowrap; }
+  .tl-labels span:first-child { transform: none; text-align: left; }
+  .tl-labels span:last-child { transform: translateX(-100%); text-align: right; }
+  .tl-labels em { font-style: normal; font-weight: 700; font-size: 11px; color: var(--t-2); }
+  .tl-labels span:first-child em { color: var(--blue-2); }
+  @media (max-width: 640px) { .tl-labels span:nth-child(2), .tl-track b:nth-of-type(2) { display: none; } }
+</style>

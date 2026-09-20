@@ -4,36 +4,38 @@ import { REGISTER_URL } from '../lib/site';
 import ProductCheckoutPanel from './ProductCheckoutPanel.astro';
 import ProductFunnelPanel from './ProductFunnelPanel.astro';
 import ProductMembersPanel from './ProductMembersPanel.astro';
+import IconRow from './IconRow.astro';
 
 const themes = [
   { key: 'padrao',   name: 'Padrão' },
-  { key: 'longo',    name: 'Formulário longo' },
+  { key: 'longo',    name: 'Longo' },
   { key: 'box',      name: 'Box' },
   { key: 'moderno',  name: 'Moderno' },
   { key: 'classico', name: 'Clássico' },
   { key: 'fluxo',    name: 'Fluxo' },
-  { key: 'etapas',   name: 'Fluxo (Etapas)' },
+  { key: 'etapas',   name: 'Etapas' },
 ];
 
 const chapters = [
   {
     id: 'checkout', n: '01', label: 'Checkout',
     h: '7 checkouts. Um pra cada oferta.',
-    p: 'Do tradicional ao fluxo em etapas, no seu domínio, com sua cor e seu logo.',
-    bullets: ['Domínio próprio, marca própria', 'Order bump, prova social e selos', 'Pix, cartão e boleto no mesmo tema'],
+    p: 'Do tradicional ao fluxo em etapas. Sua cor, seu logo, seu domínio.',
+    bullets: [{ icon: 'paint', label: 'Marca própria' }, { icon: 'layers', label: 'Order bump e selos' }, { icon: 'card', label: 'Pix, cartão e boleto' }],
   },
   {
     id: 'funil', n: '02', label: 'Funil',
     h: 'Upsell em um clique. O ticket sobe sozinho.',
-    p: 'Arraste, conecte, veja a conversão de cada nó ao vivo. Você desenha, a Korvex executa.',
-    bullets: ['Upsell, downsell e order bump', 'Conversão por nó em tempo real', 'Pronto em 3 minutos'],
+    p: 'Arraste, conecte, veja a conversão de cada nó ao vivo.',
+    bullets: [{ icon: 'repeat', label: 'Upsell, downsell, order bump' }, { icon: 'cursor', label: 'Conversão por nó' }, { icon: 'clock', label: 'Pronto em 3 minutos' }],
     stat: { target: 62, label: 'receita por venda' },
   },
   {
     id: 'membros', n: '03', label: 'Membros',
     h: 'Área de membros que vende de novo.',
-    p: 'Cara de streaming, no seu domínio. Seu aluno entra, sente marca grande e compra a próxima oferta lá dentro.',
-    bullets: ['Área própria no seu domínio', 'Upsell interno: +47% de recompra', 'Materiais e certificados'],
+    p: 'Cara de streaming, no seu domínio. O aluno compra a próxima oferta lá dentro.',
+    bullets: [{ icon: 'globe', label: 'Seu domínio' }, { icon: 'repeat', label: 'Upsell interno' }, { icon: 'gift', label: 'Materiais e certificados' }],
+    stat: { target: 47, label: 'recompra' },
   },
 ];
 ---
@@ -41,9 +43,9 @@ const chapters = [
 <section id="produto" class="sec relative">
   <div class="section">
     <header class="reveal max-w-xl">
-      <span class="chapter">Produto</span>
+      <span class="chapter hidden lg:inline-flex">Produto</span>
       <h2 class="h2 mt-4">Checkout, funil e membros.<br />Um painel. Sua marca.</h2>
-      <p class="lead mt-4">Tudo que fica entre o clique e o aluno, sem plugin e sem integração. O cliente nunca vê o nome Korvex, só o seu.</p>
+      <p class="lead mt-4 hidden lg:block">Tudo entre o clique e o aluno. Sem plugin. O cliente só vê a sua marca.</p>
     </header>
 
     <div class="pv mt-[--gap-lg]" data-pv>
@@ -57,18 +59,14 @@ const chapters = [
 
       {chapters.map((c, i) => (
         <>
-          <article id={c.id} class="pv-chapter reveal" data-chapter={i} style={`--row:${i + 1}`}>
+          <article id={c.id} class={`pv-chapter reveal${i > 0 ? ' hidden lg:flex' : ''}`} data-chapter={i} style={`--row:${i + 1}`}>
             <span class="chapter">{c.n} · {c.label}</span>
             <h3 class="pv-h3 mt-4">{c.h}</h3>
             <p class="pv-p mt-3">{c.p}</p>
-            <ul class="pv-list mt-5">
-              {c.bullets.map((b) => (
-                <li><span class="pv-check" set:html={icon('check')} />{b}</li>
-              ))}
-            </ul>
+            <IconRow class="mt-5 hidden lg:grid" items={c.bullets} />
 
             {i === 0 && (
-              <div class="pv-chips mt-5" role="tablist" aria-label="Temas de checkout">
+              <div class="pv-chips rail mt-5" role="tablist" aria-label="Temas de checkout">
                 {themes.map((t, j) => (
                   <button type="button" role="tab" data-ck={t.key} aria-selected={j === 0 ? 'true' : 'false'} class={`ck-tab${j === 0 ? ' active' : ''}`}>
                     <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
@@ -85,11 +83,27 @@ const chapters = [
             )}
           </article>
 
-          <div class="pv-panel" data-panel={i} data-active={i === 0 ? 'true' : 'false'} style={`--row:${i + 1}`}>
+          <div class={`pv-panel${i > 0 ? ' hidden lg:block' : ''}`} data-panel={i} data-active={i === 0 ? 'true' : 'false'} style={`--row:${i + 1}`}>
             {i === 0 && <ProductCheckoutPanel />}
             {i === 1 && <ProductFunnelPanel />}
             {i === 2 && <ProductMembersPanel />}
           </div>
+          {i === 0 && (
+            <div class="reveal-stagger grid grid-cols-2 gap-3 lg:hidden">
+              <a href="#funil" class="pv-tile">
+                <span class="irow-i" set:html={icon('funnel')} />
+                <span class="pv-tile-n">Funil</span>
+                <b data-counter data-target="62" data-prefix="+" data-suffix="%">+62%</b>
+                <span class="anchor-l">receita por venda</span>
+              </a>
+              <a href="#membros" class="pv-tile">
+                <span class="irow-i" set:html={icon('users')} />
+                <span class="pv-tile-n">Membros</span>
+                <b data-counter data-target="47" data-prefix="+" data-suffix="%">+47%</b>
+                <span class="anchor-l">recompra</span>
+              </a>
+            </div>
+          )}
         </>
       ))}
     </div>
@@ -99,7 +113,7 @@ const chapters = [
         Montar minha operação
         <span class="h-4 w-4" set:html={icon('arrow')}></span>
       </a>
-      <p class="text-[13px] text-[--t-3]">Migração assistida. Você não para de vender um dia.</p>
+      <p class="hidden text-[13px] text-[--t-3] lg:block">Migração assistida. Você não para de vender um dia.</p>
     </div>
   </div>
 </section>
@@ -187,16 +201,13 @@ const chapters = [
   .pv-stat { display: flex; align-items: baseline; gap: 10px; }
   .pv-stat b { font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.03em; color: var(--blue-2); font-feature-settings: 'tnum'; }
   .pv-stat span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-3); }
-  .pv-chips { display: flex; flex-wrap: wrap; gap: 0 2px; margin-left: -10px; }
+  .pv-chips { gap: 0 2px; }
+  @media (min-width: 1024px) { .pv-chips { margin-left: -10px; } }
+  .pv-tile { display: grid; gap: 6px; padding: 16px 14px; border-radius: 16px; border: 1px solid var(--line-1); background: var(--bg-1); }
+  .pv-tile-n { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: #fff; margin-top: 4px; }
+  .pv-tile b { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; letter-spacing: -0.03em; color: var(--blue-2); font-feature-settings: 'tnum'; line-height: 1; }
+  .pv-tile .anchor-l { margin-top: 0; }
 
-  .ck-tab { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; padding: 12px 10px; min-height: 44px; color: rgba(199,210,221,0.65); transition: color .25s ease; }
-  .ck-tab .ck-br { color: rgba(111,163,224,0); display: inline-block; transition: color .25s ease; }
-  .ck-tab .ck-label { padding: 0 6px; }
-  .ck-tab:hover { color: #fff; }
-  .ck-tab:hover .ck-br { color: rgba(111,163,224,0.45); }
-  .ck-tab.active { color: #fff; }
-  .ck-tab.active .ck-br { color: rgba(111,163,224,0.9); }
-  .ck-tab.active .ck-label { text-shadow: 0 0 18px rgba(111,163,224,0.55); }
 
   .pv-mark { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--t-4); transition: color .3s; }
   .pv-mark .pv-br { color: transparent; transition: color .3s; }
