@@ -1,6 +1,6 @@
 ---
 import { icon } from '../lib/icons';
-import { REGISTER_URL, waUrl } from '../lib/site';
+import { REGISTER_URL, WHATSAPP_URL } from '../lib/site';
 
 const others = [
   { g: 'Hotmart', a: '9,9%',            b: 'Pix D+2' },
@@ -35,14 +35,14 @@ const others = [
       </div>
       <input id="calc-slider" type="range" min="50000" max="2000000" step="10000" value="300000" class="calc-slider mt-4 w-full" aria-label="Faturamento mensal" />
       <div class="mt-1.5 flex justify-between font-mono text-[10px] text-chrome-300/40">
-        <span>R$ 50K</span><span>R$ 1MM</span><span>R$ 2MM</span>
+        <span>R$ 50 mil</span><span>R$ 1 mi</span><span>R$ 2 mi</span>
       </div>
     </div>
 
     <!-- abas (mobile) -->
-    <div class="seg mx-auto mt-6 max-w-[960px] lg:hidden" role="tablist" aria-label="Extratos">
+    <div class="seg mx-auto mt-6 max-w-[960px] lg:hidden" role="group" aria-label="Extratos">
       {[['comum', 'Gateway comum'], ['korvex', 'Korvex']].map(([k, l], j) => (
-        <button type="button" role="tab" data-seg={k} aria-selected={j === 0 ? 'true' : 'false'} class={`seg-tab${j === 0 ? ' active' : ''}`}>
+        <button type="button" data-seg={k} aria-pressed={j === 0 ? 'true' : 'false'} class={`seg-tab${j === 0 ? ' active' : ''}`}>
           <span class="ck-br">[</span><span class="ck-label">{l}</span><span class="ck-br">]</span>
         </button>
       ))}
@@ -60,7 +60,7 @@ const others = [
           <div class="rc-line"><span>Taxa anunciada 9,9%</span><b id="rc-c-fee" class="rc-neg">- R$ 29.700</b></div>
           <div class="rc-line"><span>Antecipação + taxa fixa</span><b id="rc-c-extra" class="rc-neg">- R$ 6.300</b></div>
           <div class="rc-line">
-            <span><span class="rc-i" set:html={icon('clock')} />Reserva retida 10%<small>preso por até 90 dias</small></span>
+            <span><span class="rc-i" set:html={icon('clock')} />Reserva retida 10%<small>liberada só entre 30 e 90 dias</small></span>
             <b id="rc-c-res" class="rc-hold">R$ 30.000</b>
           </div>
           <div class="rc-line rc-line--bad">
@@ -71,7 +71,7 @@ const others = [
         <footer class="rc-total">
           <span>Sobra pra você</span>
           <b id="rc-c-net">R$ 264.000</b>
-          <small>e <em id="rc-c-late">R$ 30.000</em> só depois de 90 dias</small>
+          <small>e <em id="rc-c-late">R$ 30.000</em> só entre 30 e 90 dias</small>
         </footer>
       </article>
 
@@ -96,11 +96,11 @@ const others = [
           <small class="rc-diff"><em id="rc-diff-m">+R$ 15.000</em> por mês · <em id="rc-diff-y">R$ 180.000</em> por ano</small>
         </footer>
         <div class="rc-cta">
-          <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary w-full justify-center !py-3">
-            Quero esse extrato
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="extrato-wa" class="btn btn-primary w-full justify-center !py-3">
+            Receber proposta em 1h
             <span class="h-4 w-4" set:html={icon('arrow')}></span>
           </a>
-          <a href={waUrl('Olá! Quero receber a proposta da Korvex pra minha operação em até 1h.')} target="_blank" rel="noopener" class="rc-link">Receber proposta em 1h</a>
+          <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="extrato-register" class="rc-link">Ou abrir conta grátis</a>
         </div>
       </article>
     </div>
@@ -152,7 +152,7 @@ const others = [
         ))}
       </div>
       <p class="mt-3 hidden font-mono text-[10.5px] tracking-[0.03em] text-[--t-3] lg:block">
-        Taxas e prazos das centrais de ajuda oficiais, setembro de 2026. Korvex: contrato padrão.
+        "Gateway comum" soma práticas dos quatro ao lado (taxa, antecipação, reserva). Taxas e prazos das centrais de ajuda oficiais, setembro de 2026. Korvex: contrato padrão.
       </p>
     </div>
   </div>
@@ -213,7 +213,7 @@ const others = [
     const views = document.querySelectorAll('.rc[data-view]');
     tabs.forEach((t) => t.addEventListener('click', () => {
       const k = t.dataset.seg;
-      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', String(on)); });
+      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-pressed', String(on)); });
       views.forEach((v) => {
         const on = v.dataset.view === k;
         v.classList.toggle('on', on);
@@ -224,7 +224,8 @@ const others = [
 </script>
 
 <style>
-  .calc-slider { -webkit-appearance: none; appearance: none; height: 6px; background: linear-gradient(to right, rgba(255,255,255,0.18), rgba(255,255,255,0.5)); border-radius: 999px; outline: none; }
+  .calc-slider { -webkit-appearance: none; appearance: none; height: 6px; background: linear-gradient(to right, rgba(255,255,255,0.18), rgba(255,255,255,0.5)); border-radius: 999px; }
+  .calc-slider:focus-visible { outline: 2px solid var(--accent-product); outline-offset: 6px; border-radius: 999px; }
   .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-product); cursor: grab; box-shadow: 0 6px 16px rgba(0,0,0,0.45), 0 0 0 5px rgba(59,130,246,0.18); transition: transform .15s ease; }
   .calc-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
   .calc-slider::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-product); cursor: grab; }
@@ -234,7 +235,7 @@ const others = [
   @media (max-width: 1023px) { .rc:not(.on) { display: none; } }
 
   .rc { position: relative; border-radius: 18px; border: 1px solid var(--line-2); background: var(--bg-1); padding: 22px 22px 20px; font-family: var(--font-mono); }
-  .rc::before { content: ''; position: absolute; left: 14px; right: 14px; top: -1px; height: 8px; background: radial-gradient(circle at 4px 0, transparent 3.5px, var(--bg-0) 4px) 0 0 / 12px 8px repeat-x; opacity: .9; pointer-events: none; }
+  .rc::before { content: ''; position: absolute; left: 14px; right: 14px; top: -1px; height: 8px; background: radial-gradient(circle at 4px 0, transparent 3.5px, var(--bg-2) 4px) 0 0 / 12px 8px repeat-x; opacity: .9; pointer-events: none; }
   .rc--k { border-color: rgba(201,163,94,0.35); background: linear-gradient(180deg, rgba(201,163,94,0.06), transparent 40%), var(--bg-1); }
   .rc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--line-3); }
   .rc-title { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: #fff; text-transform: uppercase; }
@@ -242,7 +243,7 @@ const others = [
   .rc-sub { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-3); white-space: nowrap; }
   .rc-line { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--line-2); font-size: 12.5px; color: var(--t-2); }
   .rc-line > span { display: block; }
-  .rc-line small { display: block; margin-top: 2px; font-size: 10px; letter-spacing: 0.04em; color: var(--t-4); }
+  .rc-line small { display: block; margin-top: 2px; font-size: 10px; letter-spacing: 0.04em; color: var(--t-3); }
   .rc-line b { font-weight: 600; color: #fff; text-align: right; white-space: nowrap; font-feature-settings: 'tnum'; display: inline-flex; align-items: center; gap: 6px; justify-content: flex-end; }
   .rc-neg { color: var(--t-2) !important; }
   .rc-hold { color: var(--t-3) !important; }
@@ -253,13 +254,13 @@ const others = [
   .rc-total { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 4px 12px; padding-top: 14px; }
   .rc-total > span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-3); }
   .rc-total > b { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -0.03em; line-height: 1; color: #fff; font-feature-settings: 'tnum'; }
-  .rc-total > small { grid-column: 1 / -1; font-size: 10.5px; color: var(--t-4); }
+  .rc-total > small { grid-column: 1 / -1; font-size: 10.5px; color: var(--t-3); }
   .rc-total > small em { font-style: normal; color: var(--t-3); }
   .rc-total--k > b { font-size: clamp(1.9rem, 3.4vw, 2.5rem); }
   .rc-diff { font-size: 11px !important; color: var(--t-3) !important; }
   .rc-diff em { font-style: normal; font-weight: 700; color: var(--gold-2) !important; }
   .rc-cta { margin-top: 16px; display: grid; gap: 10px; justify-items: center; }
-  .rc-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-2); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,0.25); }
+  .rc-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-2); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,0.25); }
   .rc-link:hover { color: #fff; }
 
   .cash { border-radius: 18px; border: 1px solid var(--line-2); background: var(--bg-1); padding: 20px 20px 16px; }
@@ -282,7 +283,7 @@ const others = [
   .cash-cdot { fill: var(--t-4); opacity: 0; transition: opacity .4s ease 1.8s, cy .35s ease; }
   .reveal.in .cash-k, .reveal.in .cash-c { stroke-dashoffset: 0; }
   .reveal.in .cash-area, .reveal.in .cash-kdot, .reveal.in .cash-cdot { opacity: 1; }
-  .cash-x { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-4); }
+  .cash-x { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-3); }
   [data-surface="light"] .cash { background: #FFFFFF; box-shadow: var(--shadow-card); }
   @media (prefers-reduced-motion: reduce) { .cash-k, .cash-c { stroke-dashoffset: 0; transition: none; } .cash-area, .cash-kdot, .cash-cdot { opacity: 1; transition: none; } }
 

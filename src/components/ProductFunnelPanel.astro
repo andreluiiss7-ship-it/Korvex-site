@@ -15,16 +15,16 @@ const nodes = [
 ];
 ---
 
-<div data-tilt="3" class="tilt browser kframe blue in relative glow-blue">
+<div data-tilt="3" class="tilt browser kframe blue in relative glow-blue" style="container-type: inline-size;">
   <div class="browser-bar">
     <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
     <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/funil</span>
     <span class="ml-auto hidden items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-chrome-300/60 sm:flex">
-      <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-live-400"></span>Auto-save
+      <span class="h-1.5 w-1.5 rounded-full bg-live-400"></span>Salvo automaticamente
     </span>
   </div>
 
-  <div class="fb" aria-label="Construtor de funil da Korvex, exemplo ilustrativo">
+  <div class="fb" role="img" aria-label="Construtor de funil da Korvex, exemplo ilustrativo">
     <aside class="fb-rail">
       <p class="fb-lbl">Blocos</p>
       {rail.map(([i, l]) => (
@@ -34,7 +34,7 @@ const nodes = [
 
     <div class="fb-canvas">
       <div class="fb-top">
-        <span class="fb-crumb">Funil · Mentoria Escala 7</span>
+        <span class="fb-crumb">Funil · Método Escala</span>
         <span class="fb-btn">Salvar</span>
       </div>
 
@@ -75,7 +75,7 @@ const nodes = [
     --fb-bg: #0B0F17; --fb-rail: #0E1421; --fb-card: #121a29; --ln: rgba(255,255,255,.07);
     --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399; --no: rgba(255,255,255,.28);
     display: grid; grid-template-columns: 9.5em 1fr; aspect-ratio: 16/9; overflow: hidden;
-    font-size: clamp(7px, .85vw, 12px); font-family: var(--font-display); color: var(--mt2); background: var(--fb-bg);
+    font-size: clamp(7px, 1.85cqw, 12px); font-family: var(--font-display); color: var(--mt2); background: var(--fb-bg);
   }
   .fb-rail { background: var(--fb-rail); border-right: 1px solid var(--ln); padding: 1.2em 1em; display: flex; flex-direction: column; gap: .5em; }
   .fb-lbl { font-family: var(--font-mono); font-size: .65em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); margin-bottom: .6em; }
@@ -88,9 +88,9 @@ const nodes = [
   .fb-crumb { font-family: var(--font-mono); font-size: .7em; letter-spacing: .06em; color: var(--mt3); }
   .fb-btn { background: var(--ac); color: #fff; font-weight: 700; font-size: .8em; padding: .5em 1.1em; border-radius: .5em; box-shadow: inset 0 1px 0 rgba(255,255,255,.18); }
   .fb-wires { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-  .fb-wires path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 5 7; animation: fb-flow 1.6s linear infinite; }
+  .fb-wires path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 5 7; }
   .fb-wires .ok { stroke: var(--ok); }
-  .fb-wires .no { stroke: var(--no); animation-duration: 2.4s; }
+  .fb-wires .no { stroke: var(--no); }
   .fb-node {
     position: absolute; left: var(--x); top: var(--y); width: 18.5%; height: 12%; z-index: 1;
     display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: .55em; align-items: center; align-content: center;
@@ -118,7 +118,6 @@ const nodes = [
   .fb-kv span { color: var(--mt3); } .fb-kv b { color: var(--mt); font-weight: 600; } .fb-kv b.ok { color: var(--ok); }
   @media (min-width: 1280px) { .fb-insp { display: block; } }
 
-  @keyframes fb-flow { to { stroke-dashoffset: -12; } }
   @keyframes fb-drag {
     0%   { opacity: 0; transform: translate(-20.5em, -12.7em) scale(.96); }
     6%   { opacity: 1; transform: translate(-20.5em, -12.7em) scale(1); }
@@ -137,7 +136,7 @@ const nodes = [
     58%, 100% { opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .fb-wires path, .fb-ghost, .fb-slot { animation: none; }
+    .fb-ghost, .fb-slot { animation: none; }
     .fb-ghost { opacity: 1; transform: none; }
     .fb-slot, .fb-cur { display: none; }
   }

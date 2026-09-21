@@ -11,9 +11,28 @@ import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Footer from '../components/Footer.astro';
 import StickyCTA from '../components/StickyCTA.astro';
+import { faqs } from '../lib/faq';
+import { SITE_URL } from '../lib/site';
+
+const jsonld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Korvex',
+    url: SITE_URL,
+    logo: `${SITE_URL}/assets/logo-white.png`,
+    description: 'Gateway de pagamento pra infoprodutores: Pix D0, zero reserva de segurança, taxa 6,99% + R$ 1,99 travada em contrato.',
+    areaServed: 'BR',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
 ---
 
-<Base>
+<Base jsonld={jsonld}>
   <Nav />
   <main>
     <Hero />

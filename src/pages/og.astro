@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import Mosaic from '../components/Mosaic.astro';
+---
+
+<Base title="Korvex · OG" noindex={true}>
+  <div class="og relative overflow-hidden" style="width:1200px;height:630px;background:#050B14;">
+    <Mosaic lit={40} seed={11} />
+    <div class="absolute left-1/2 top-[-10%] h-[70%] w-[1400px] -translate-x-1/2" style="background:conic-gradient(from 180deg at 50% 0%, transparent 43%, rgba(59,130,246,0.18) 50%, transparent 57%);filter:blur(26px);"></div>
+    <div class="relative z-10 flex h-full flex-col items-center justify-center px-16 text-center">
+      <img src="/assets/logo-white.png" alt="Korvex" width="1352" height="352" style="height:40px;width:auto;opacity:.95" />
+      <h1 class="mt-10 font-display font-bold uppercase text-white" style="font-size:96px;line-height:.95;letter-spacing:-.04em;">O gateway que<br /><span style="color:#6FA0FF">paga no dia.</span></h1>
+      <p class="mt-8 font-mono uppercase" style="font-size:22px;letter-spacing:.18em;color:#C7D2DD;">6,99% + R$ 1,99 · Pix D0 · Zero reserva</p>
+    </div>
+  </div>
+</Base>

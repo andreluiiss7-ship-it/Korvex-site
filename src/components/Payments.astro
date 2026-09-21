@@ -1,6 +1,6 @@
 ---
 import { icon } from '../lib/icons';
-import { waUrl, REGISTER_URL } from '../lib/site';
+import { WHATSAPP_URL, REGISTER_URL } from '../lib/site';
 
 const payouts = [
   { icon: 'bolt',  title: 'Pix · D0',                  desc: 'Cai no mesmo dia. Sem reserva.', tag: '+ rápido', live: true },
@@ -50,12 +50,12 @@ const timeline = [
 
         <hr class="my-5 border-t border-[--line-1]" />
 
-        <a href={waUrl('Olá! Faturo alto e quero a condição da Korvex por escrito pra minha operação.')} target="_blank" rel="noopener" class="irow">
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="taxas-wa" class="irow min-h-[44px]">
           <span class="irow-i gold" set:html={icon('spark')} />
-          <span class="text-[14px] text-chrome-200/90">Volume alto? <span class="text-white underline decoration-white/30 underline-offset-4">Condição por escrito</span></span>
+          <span class="text-[14px] text-chrome-200/90">Volume alto? <span class="text-white underline decoration-[color:currentColor] decoration-1 underline-offset-4 [text-decoration-color:rgba(127,127,127,.5)]">Condição por escrito</span></span>
         </a>
 
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary mt-6">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="taxas-register" class="btn btn-primary mt-6">
           Abrir conta na Korvex
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>
@@ -92,7 +92,7 @@ const timeline = [
   .tl-track b { position: absolute; top: 50%; left: calc(var(--x) * 100%); width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 999px; background: var(--bg-0); border: 3px solid var(--t-4); }
   .tl-track b:first-of-type { border-color: var(--accent-live); box-shadow: 0 0 14px rgba(52,211,153,0.55); }
   .tl-labels { position: relative; height: 34px; margin-top: 10px; margin-inline: 6px; }
-  .tl-labels span { position: absolute; left: calc(var(--x) * 100%); transform: translateX(-50%); display: grid; text-align: center; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-4); white-space: nowrap; }
+  .tl-labels span { position: absolute; left: calc(var(--x) * 100%); transform: translateX(-50%); display: grid; text-align: center; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-3); white-space: nowrap; }
   .tl-labels span:first-child { transform: none; text-align: left; }
   .tl-labels span:last-child { transform: translateX(-100%); text-align: right; }
   .tl-labels span:nth-child(2) { transform: translateX(-50%); }

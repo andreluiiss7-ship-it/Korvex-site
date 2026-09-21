@@ -59,16 +59,16 @@ const chapters = [
 
       {chapters.map((c, i) => (
         <>
-          <article id={c.id} class={`pv-chapter reveal${i > 0 ? ' hidden lg:flex' : ''}`} data-chapter={i} style={`--row:${i + 1}`}>
+          <article id={c.id} class={`pv-chapter reveal${i === 0 ? ' on-m' : ''}`} data-chapter={i} style={`--row:${i + 1}`}>
             <span class="chapter">{c.n} · {c.label}</span>
             <h3 class="pv-h3 mt-4">{c.h}</h3>
             <p class="pv-p mt-3">{c.p}</p>
             <IconRow class="mt-5 hidden lg:grid" variant="product" items={c.bullets} />
 
             {i === 0 && (
-              <div class="pv-chips rail mt-5" role="tablist" aria-label="Temas de checkout">
+              <div class="pv-chips rail mt-5" role="group" aria-label="Temas de checkout">
                 {themes.map((t, j) => (
-                  <button type="button" role="tab" data-ck={t.key} aria-selected={j === 0 ? 'true' : 'false'} class={`ck-tab${j === 0 ? ' active' : ''}`}>
+                  <button type="button" data-ck={t.key} aria-pressed={j === 0 ? 'true' : 'false'} class={`ck-tab${j === 0 ? ' active' : ''}`}>
                     <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
                   </button>
                 ))}
@@ -83,25 +83,34 @@ const chapters = [
             )}
           </article>
 
-          <div class={`pv-panel${i > 0 ? ' hidden lg:block' : ''}`} data-panel={i} data-active={i === 0 ? 'true' : 'false'} style={`--row:${i + 1}`}>
+          {i === 0 && (
+            <div class="pv-mtabs seg lg:hidden" role="group" aria-label="Partes do produto">
+              {chapters.map((t, j) => (
+                <button type="button" data-mpanel={j} aria-pressed={j === 0 ? 'true' : 'false'} class={`seg-tab${j === 0 ? ' active' : ''}`}>
+                  <span class="ck-br">[</span><span class="ck-label">{t.label}</span><span class="ck-br">]</span>
+                </button>
+              ))}
+            </div>
+          )}
+          <div class={`pv-panel${i === 0 ? ' on-m' : ''}`} data-panel={i} data-active={i === 0 ? 'true' : 'false'} style={`--row:${i + 1}`}>
             {i === 0 && <ProductCheckoutPanel />}
             {i === 1 && <ProductFunnelPanel />}
             {i === 2 && <ProductMembersPanel />}
           </div>
           {i === 0 && (
-            <div class="reveal-stagger grid grid-cols-2 gap-3 lg:hidden">
-              <a href="#funil" class="pv-tile">
+            <div class="pv-tiles reveal-stagger grid grid-cols-2 gap-3 lg:hidden">
+              <div class="pv-tile">
                 <span class="irow-i product" set:html={icon('funnel')} />
                 <span class="pv-tile-n">Funil</span>
                 <b data-counter data-target="62" data-prefix="+" data-suffix="%">+62%</b>
                 <span class="anchor-l">receita por venda</span>
-              </a>
-              <a href="#membros" class="pv-tile">
+              </div>
+              <div class="pv-tile">
                 <span class="irow-i product" set:html={icon('users')} />
                 <span class="pv-tile-n">Membros</span>
                 <b data-counter data-target="47" data-prefix="+" data-suffix="%">+47%</b>
                 <span class="anchor-l">recompra</span>
-              </a>
+              </div>
             </div>
           )}
         </>
@@ -109,7 +118,7 @@ const chapters = [
     </div>
 
     <div class="reveal mt-[--gap-md] flex flex-wrap items-center gap-x-6 gap-y-3">
-      <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-primary">
+      <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="produto-register" class="btn btn-primary">
         Montar minha operação
         <span class="h-4 w-4" set:html={icon('arrow')}></span>
       </a>
@@ -150,7 +159,7 @@ const chapters = [
 
   // Chips de tema trocam a estrutura do checkout no painel
   const tabs = document.querySelectorAll<HTMLButtonElement>('.ck-tab');
-  const views = document.querySelectorAll<HTMLElement>('[data-view]');
+  const views = document.querySelectorAll<HTMLElement>('.ck-stage [data-view]');
   const labelEl = document.querySelector<HTMLSpanElement>('[data-current-theme]');
   const labels: Record<string, string> = {
     padrao: 'Tema Padrão', longo: 'Formulário longo', box: 'Tema Box', moderno: 'Tema Moderno',
@@ -162,7 +171,7 @@ const chapters = [
       if (busy || t.classList.contains('active')) return;
       busy = true;
       const key = t.dataset.ck!;
-      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-selected', String(on)); });
+      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-pressed', String(on)); });
       const visible = [...views].find((el) => !el.classList.contains('hidden'));
       const next = [...views].find((el) => el.dataset.view === key);
       const swap = () => {
@@ -183,15 +192,30 @@ const chapters = [
       } else swap();
     });
   });
+
+  // Mobile: abas Checkout / Funil / Membros trocam o mockup visível
+  const mtabs = document.querySelectorAll<HTMLButtonElement>('[data-mpanel]');
+  mtabs.forEach((t) => t.addEventListener('click', () => {
+    const i = t.dataset.mpanel;
+    mtabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-pressed', String(on)); });
+    document.querySelectorAll<HTMLElement>('.pv-panel').forEach((p) => p.classList.toggle('on-m', p.dataset.panel === i));
+    document.querySelectorAll<HTMLElement>('.pv-chapter').forEach((c) => c.classList.toggle('on-m', c.dataset.chapter === i));
+  }));
 </script>
 
 <style>
   /* mobile-first: uma coluna, painéis estáticos, rail oculto */
-  .pv { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 2rem; }
+  .pv { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 1.25rem; }
   .pv-rail { display: none; }
   .pv-panel { min-width: 0; }
-  .pv-chapter + .pv-panel { margin-top: -0.5rem; }
-  .pv-panel + .pv-chapter { margin-top: 1rem; }
+  @media (max-width: 1023px) {
+    .pv-mtabs { order: 1; margin-left: -10px; }
+    .pv-chapter { order: 2; }
+    .pv-panel { order: 3; }
+    .pv-tiles { display: none; }
+    .pv-panel:not(.on-m), .pv-chapter:not(.on-m) { display: none; }
+    .pv-chapter .chapter { display: none; }
+  }
 
   .pv-h3 { font-family: var(--font-display); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(1.75rem, 2.6vw, 2.5rem); text-wrap: balance; }
   .pv-p { font-size: 16.5px; line-height: 1.55; color: var(--t-2); max-width: 46ch; text-wrap: pretty; }
@@ -224,10 +248,11 @@ const chapters = [
     }
     .pv-rail { display: flex; flex-direction: column; gap: 4px; grid-column: 1; grid-row: 1 / 4; position: sticky; top: 50vh; transform: translateY(-50%); align-self: start; }
     .pv-chapter { grid-column: 2; grid-row: var(--row); min-height: clamp(460px, 58vh, 560px); display: flex; flex-direction: column; justify-content: center; padding-block: clamp(24px, 4vh, 40px); margin: 0; scroll-margin-top: 96px; }
+    .pv { perspective: 1400px; }
     .pv-panel {
       grid-column: 3; grid-row: 1 / 4;
       position: sticky; top: 15vh; align-self: start; margin: 0;
-      opacity: 0; transform: translateY(18px) scale(0.985);
+      opacity: 0; transform: translateZ(-90px) rotateY(7deg) translateY(12px);
       pointer-events: none; visibility: hidden;
       transition: opacity .55s var(--ease-out), transform .7s var(--ease-out), visibility 0s linear .55s;
     }

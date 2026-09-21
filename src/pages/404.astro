@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Mosaic from '../components/Mosaic.astro';
+import Nav from '../components/Nav.astro';
+import { REGISTER_URL } from '../lib/site';
+---
+
+<Base title="Página não encontrada · Korvex" noindex={true}>
+  <Nav />
+  <main class="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 text-center">
+    <Mosaic lit={30} seed={3} />
+    <div class="relative z-10 max-w-xl">
+      <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-chrome-300/70">404</p>
+      <h1 class="hero-h1 mt-4" style="font-size:clamp(2.2rem,6vw,4.4rem)">Essa página não caiu.<br /><span style="color:var(--blue-2)">Seu Pix cai.</span></h1>
+      <p class="lead mx-auto mt-5">O endereço não existe mais. Volte pro início ou abra sua conta.</p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="/" class="btn btn-primary !px-7 !py-3.5 text-[15px]">Voltar ao início</a>
+        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="404-register" class="btn btn-ghost !px-7 !py-3.5 text-[15px]">Abrir conta grátis</a>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .hero-h1 { font-family: var(--font-display); font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.96; }
+</style>

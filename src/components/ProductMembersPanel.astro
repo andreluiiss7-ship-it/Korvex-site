@@ -14,19 +14,19 @@ const materiais = [
 ---
 
 <div class="relative">
-  <div data-tilt="3" class="tilt browser kframe blue in overflow-hidden glow-blue">
+  <div data-tilt="3" class="tilt browser kframe blue in overflow-hidden glow-blue" style="container-type: inline-size;">
     <div class="browser-bar">
       <span class="dot bg-[#ff5f57]/80"></span>
       <span class="dot bg-[#febc2e]/80"></span>
       <span class="dot bg-[#28c840]/80"></span>
       <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">alunos.metodoescala.com</span>
     </div>
-    <div class="ma" aria-label="Área de membros Korvex, exemplo ilustrativo">
+    <div class="ma" role="img" aria-label="Área de membros do cliente, exemplo ilustrativo">
       <!-- sidebar -->
       <aside class="ma-side">
         <div class="ma-brand">
-          <span class="ma-logo">[K</span>
-          <span class="ma-brand-t">KORVEX<small>área de membros</small></span>
+          <span class="ma-logo">ME</span>
+          <span class="ma-brand-t">MÉTODO ESCALA<small>área de membros</small></span>
         </div>
         <p class="ma-navlbl">Navegação</p>
         <span class="ma-nav on"><span class="ma-nav-i" set:html={icon('play')} />Início</span>
@@ -106,14 +106,14 @@ const materiais = [
     grid-template-columns: 148px 1fr;
     aspect-ratio: 16 / 11;
     background: var(--mb);
-    font-size: clamp(7px, 0.85vw, 12px);
+    font-size: clamp(7px, 1.85cqw, 12px);
     color: var(--mt2);
     font-family: var(--font-display);
     overflow: hidden;
   }
   .ma-side { background: var(--ms); border-right: 1px solid rgba(255,255,255,.06); padding: 1.4em 1.1em; display: flex; flex-direction: column; gap: .6em; }
   .ma-brand { display: flex; align-items: center; gap: .6em; margin-bottom: 1.4em; }
-  .ma-logo { font-weight: 800; font-size: 1.5em; color: var(--mt); letter-spacing: -.05em; }
+  .ma-logo { font-weight: 800; font-size: 1.1em; color: var(--mt); letter-spacing: -.02em; width: 2.2em; height: 2.2em; border-radius: .6em; background: var(--ac); display: grid; place-items: center; }
   .ma-brand-t { font-weight: 700; font-size: .9em; color: var(--mt); letter-spacing: .06em; line-height: 1.1; }
   .ma-brand-t small { display: block; font-weight: 500; font-size: .7em; color: var(--mt3); letter-spacing: .1em; text-transform: uppercase; }
   .ma-navlbl { font-family: var(--font-mono); font-size: .7em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); margin-bottom: .2em; }
@@ -143,7 +143,7 @@ const materiais = [
 
   .ma-row-title { margin: .9em 0 .45em; font-family: var(--font-mono); font-size: .68em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); }
   .ma-mods { display: grid; grid-template-columns: repeat(5, 1fr); gap: .7em; }
-  .ma-mod { position: relative; aspect-ratio: 3 / 4; border-radius: .7em; overflow: hidden; isolation: isolate; border: 1px solid rgba(255,255,255,.07);
+  .ma-mod { position: relative; aspect-ratio: 3 / 4; transition: transform .35s var(--ease-out); border-radius: .7em; overflow: hidden; isolation: isolate; border: 1px solid rgba(255,255,255,.07);
     background: linear-gradient(165deg, var(--acc) -45%, #121a29 58%, #0b1220 100%); }
   .ma-mod img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
   .ma-mod::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 38%, rgba(10,10,10,.92)); }
@@ -152,6 +152,7 @@ const materiais = [
   .ma-mod-s { position: absolute; right: .5em; top: .5em; z-index: 2; width: 1.3em; height: 1.3em; padding: .25em; border-radius: 50%; background: rgba(0,0,0,.55); color: rgba(255,255,255,.75); }
   .ma-mod-s.done { color: #34D399; }
   .ma-mod.on { box-shadow: 0 0 0 1.5px var(--ac) inset; }
+  @media (hover: hover) and (pointer: fine) { .ma-mod:hover { transform: translateY(-3px) scale(1.02); } }
   .ma-mod.lock { opacity: .62; }
 
   .ma-files { display: grid; gap: .5em; }

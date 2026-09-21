@@ -5,9 +5,9 @@ import IconRow from './IconRow.astro';
 import Mosaic from './Mosaic.astro';
 
 const tiers = [
-  { variant: 'steel', amount: 'R$ 10.000',    name: 'Pulseira', lvl: 'Tier 01', img: '/assets/pulseira-10k.png', bracelet: true  },
-  { variant: 'blue',  amount: 'R$ 100.000',   name: 'Placa',      lvl: 'Tier 02', img: '/assets/placa-100k.jpg',    bracelet: false },
-  { variant: 'silver', amount: 'R$ 500.000',  name: 'Placa',      lvl: 'Tier 03', img: '/assets/placa-500k.jpg',    bracelet: false },
+  { variant: 'steel', amount: 'R$ 10 mil',   name: 'Pulseira', lvl: 'Nível 01', img: '/assets/pulseira-10k', bracelet: true  },
+  { variant: 'blue',  amount: 'R$ 100 mil',  name: 'Placa',      lvl: 'Nível 02', img: '/assets/placa-100k',    bracelet: false },
+  { variant: 'silver', amount: 'R$ 500 mil', name: 'Placa',      lvl: 'Nível 03', img: '/assets/placa-500k',    bracelet: false },
 ];
 ---
 
@@ -15,7 +15,7 @@ const tiers = [
   <!-- ambient gold + soft top spotlight -->
   <div class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute inset-0" style="background: radial-gradient(800px 500px at 50% 0%, rgba(201,163,94,0.12), transparent 60%), linear-gradient(180deg, var(--bg-0), #070B12 50%, var(--bg-0));"></div>
-    <Mosaic tiles={420} seed={5} accent="gold" />
+    <Mosaic lit={30} seed={5} accent="gold" />
   </div>
 
   <div class="section">
@@ -33,18 +33,13 @@ const tiers = [
       </p>
     </div>
 
-    <div class="reveal ladder mx-auto mt-[--gap-md] max-w-4xl">
-      {['10K', '100K', '500K', '1MM'].map((m, i) => (
-        <span class={`ladder-s${i === 3 ? ' gold' : ''}`}><i></i><span>{m}</span></span>
-      ))}
-    </div>
 
     <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
-    <div class="reveal-stagger mx-auto mt-4 grid max-w-4xl grid-cols-3 gap-2 sm:gap-3 lg:gap-4">
+    <div class="reveal-stagger tiers mx-auto mt-[--gap-lg] max-w-4xl">
       {tiers.map((t, i) => (
         <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
-            <img src={t.img} alt={t.name} loading="lazy" decoding="async" />
+            <img src={`${t.img}-960.webp`} srcset={`${t.img}-480.webp 480w, ${t.img}-960.webp 960w`} sizes="(max-width: 640px) 68vw, (max-width: 1024px) 30vw, 300px" alt={`${t.name} de ${t.amount} em vendas`} width="800" height="1000" loading="lazy" decoding="async" />
           </div>
           <div class="tier-body">
             <div class="tier-lvl">{t.lvl}</div>
@@ -56,9 +51,9 @@ const tiers = [
     </div>
 
     <!-- MILIONARIO STAGE — cinematic -->
-    <div class="reveal mil-stage kframe gold mt-[--gap-md]">
+    <div class="reveal mil-stage kframe gold glow-gold tilt mt-[--gap-md]" data-tilt="4">
       <div class="mil-img">
-        <img src="/assets/placa-1mm.jpg" alt="Placa R$1.000.000" loading="lazy" decoding="async" />        <!-- top spotlight -->
+        <img src="/assets/placa-1mm-960.webp" srcset="/assets/placa-1mm-480.webp 480w, /assets/placa-1mm-960.webp 960w" sizes="(max-width: 1024px) 100vw, 40vw" alt="Placa de R$ 1 milhão em vendas" width="800" height="1000" loading="lazy" decoding="async" />        <!-- top spotlight -->
         <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2" style="background: radial-gradient(circle at 50% 0%, rgba(245,217,139,0.32), transparent 65%);"></div>
       </div>
 
@@ -75,9 +70,7 @@ const tiers = [
 
         <IconRow class="mt-5" variant="gold" items={[{ icon: 'coin', label: 'Prêmio em dinheiro' }, { icon: 'users', label: 'Imersão presencial' }]} />
 
-        <a href={REGISTER_URL} target="_blank" rel="noopener"
-           class="btn mt-6 inline-flex"
-           style="background:linear-gradient(180deg,#E0BD79,#B68C3F);color:#1A1306;box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 14px 30px -10px rgba(201,163,94,0.5);">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="awards-register" class="btn btn-gold mt-6 inline-flex">
           Quero a placa do milhão
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>
@@ -87,12 +80,9 @@ const tiers = [
 </section>
 
 <style>
-  .ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .ladder-s { display: grid; gap: 8px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--t-3); }
-  .ladder-s i { display: block; height: 6px; border-radius: 999px; background: var(--line-2); transform: scaleX(0); transform-origin: left; transition: transform .9s var(--ease-out); }
-  .ladder-s:nth-child(2) i { transition-delay: .15s; } .ladder-s:nth-child(3) i { transition-delay: .3s; } .ladder-s:nth-child(4) i { transition-delay: .45s; }
-  .reveal.in .ladder-s i { transform: scaleX(1); }
-  .ladder-s.gold { color: var(--gold-2); }
-  .ladder-s.gold i { background: linear-gradient(90deg, var(--gold-1), var(--gold-2)); }
-  @media (prefers-reduced-motion: reduce) { .ladder-s i { transform: none; transition: none; } }
+  .tiers { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 4px 20px 12px; margin-inline: -20px; }
+  .tiers::-webkit-scrollbar { display: none; }
+  .tiers > * { flex: 0 0 68%; scroll-snap-align: center; }
+  @media (min-width: 640px) { .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; overflow: visible; padding: 0; margin-inline: 0; } .tiers > * { flex: none; } }
+  @media (min-width: 1024px) { .tiers { gap: 16px; } }
 </style>

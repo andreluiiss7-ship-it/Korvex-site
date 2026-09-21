@@ -1,6 +1,6 @@
 ---
 import { icon } from '../lib/icons';
-import { waUrl, REGISTER_URL } from '../lib/site';
+import { WHATSAPP_URL, REGISTER_URL, STATS } from '../lib/site';
 import Mosaic from './Mosaic.astro';
 ---
 
@@ -9,7 +9,7 @@ import Mosaic from './Mosaic.astro';
     <div class="reveal relative overflow-hidden rounded-[var(--radius-xl)] border border-[--line-2] bg-[--bg-1] p-8 text-center shadow-depth sm:p-12">
       <div class="pointer-events-none absolute inset-0 z-0">
         <div class="absolute left-1/2 top-0 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-titan-600/15 blur-[120px]"></div>
-        <Mosaic tiles={360} seed={23} accent="gold" />
+        <Mosaic lit={24} seed={23} accent="gold" />
       </div>
       <div class="relative z-10">
 
@@ -28,20 +28,18 @@ import Mosaic from './Mosaic.astro';
       </div>
 
       <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-        <a href={waUrl('Olá! Quero receber a condição da Korvex pra minha operação em até 1h.')} target="_blank" rel="noopener"
-           class="btn w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto"
-           style="background:linear-gradient(180deg,#E0BD79,#B68C3F);color:#1A1306;box-shadow:0 1px 0 rgba(255,255,255,0.35) inset, 0 14px 30px -10px rgba(201,163,94,0.5);">
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="final-wa" class="btn btn-gold w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
           <span class="h-5 w-5" set:html={icon('headset')}></span>
-          Receber minha condição em 1h
+          Receber proposta em 1h
         </a>
-        <a href={REGISTER_URL} target="_blank" rel="noopener" class="btn btn-ghost w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="final-register" class="btn btn-ghost w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
           Abrir conta grátis
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>
       </div>
 
-      <p class="mt-5 hidden font-mono text-[11px] uppercase tracking-[0.12em] text-chrome-300/55 lg:block">
-        400+ operações · R$ 129M+ transacionados · Pix D0 · Zero reserva
+      <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.12em] text-chrome-300/70">
+        {STATS.players} operações · {STATS.volume} transacionados · Pix D0 · Zero reserva
       </p>
       </div>
     </div>

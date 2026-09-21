@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  integrations: [tailwind()],
-  site: 'https://korvex.com',
+  integrations: [tailwind({ applyBaseStyles: false }), sitemap({ filter: (p) => !p.includes('/og') })],
+  site: 'https://www.korvexgateway.com',
   // Prefetch automático ao entrar na viewport (zero JS extra pro usuário)
   prefetch: {
     prefetchAll: true,
@@ -11,7 +12,7 @@ export default defineConfig({
   },
   build: {
     // inlina CSS pequeno no <head> pra eliminar render-blocking
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
   vite: {
     build: {

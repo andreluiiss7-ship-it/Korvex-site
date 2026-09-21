@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "korvexgateway.com" }], "destination": "https://www.korvexgateway.com/:path*", "permanent": true }
+  ]
+}

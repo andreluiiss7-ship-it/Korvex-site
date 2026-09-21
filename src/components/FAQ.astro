@@ -1,15 +1,8 @@
 ---
-import { WHATSAPP_URL } from '../lib/site';
+import { WHATSAPP_DUVIDA_URL } from '../lib/site';
 import { icon } from '../lib/icons';
 
-const faqs = [
-  { icon: 'coin',    q: 'Quanto custa?', a: '6,99% + R$ 1,99 por venda aprovada. Sem setup, mensalidade ou mínimo. Volume alto: condição por escrito.' },
-  { icon: 'clock',   q: 'Quando o dinheiro cai?', a: 'Pix D0, inclusive via API Pix. Cartão D+30, antecipação D+14 ou D+2. Saque em cripto disponível.' },
-  { icon: 'shield',  q: 'Tem reserva de segurança?', a: 'Não. Zero retido, em nenhum prazo. O que você vendeu é seu.' },
-  { icon: 'headset', q: 'A Korvex bloqueia conta sem aviso?', a: 'Não. Se algo soar estranho, seu gerente liga antes de qualquer ação.' },
-  { icon: 'ticket',  q: 'A taxa pode mudar depois?', a: 'Só com a sua assinatura. Nunca por e-mail automático.' },
-  { icon: 'repeat',  q: 'Como funciona a migração?', a: 'Manda a operação no WhatsApp. A gente define a condição e conduz a migração. Você não para de vender um dia.' },
-];
+import { faqs } from '../lib/faq';
 ---
 
 <section id="faq" class="sec relative">
@@ -21,12 +14,12 @@ const faqs = [
       <p class="lead mt-4 hidden max-w-sm lg:block">
         Sobrou dúvida? Gente, não robô.
       </p>
-      <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="btn btn-ghost mt-6 !py-2.5 text-[13px]">Falar no WhatsApp</a>
+      <a href={WHATSAPP_DUVIDA_URL} target="_blank" rel="noopener" data-cta="faq-wa" class="btn btn-ghost mt-6 !py-2.5 text-[13px]">Falar no WhatsApp</a>
     </div>
 
     <div class="reveal-stagger divide-y divide-white/[0.08] border-y border-white/[0.08]">
       {faqs.map((f, i) => (
-        <details class="group">
+        <details class="group" name="faq">
           <summary class="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 py-3.5">
             <span class="flex items-center gap-3 font-display text-[16px] font-semibold text-white"><span class="h-[18px] w-[18px] flex-none text-[--t-3]" set:html={icon(f.icon)} />{f.q}</span>
             <span class="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-white/10 text-chrome-300 transition-transform duration-500 group-open:rotate-45" style="transition-timing-function:var(--ease-spring);">

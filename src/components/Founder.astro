@@ -1,7 +1,7 @@
 ---
 import IconRow from './IconRow.astro';
 const stats = [
-  { big: 'R$ 25M+', label: 'vendidos online', n: 25, prefix: 'R$ ', suffix: 'M+' },
+  { big: 'R$ 25 mi+', label: 'vendidos online', n: 25, prefix: 'R$ ', suffix: ' mi+' },
   { big: '1h', label: 'resposta do gerente' },
 ];
 ---
@@ -37,10 +37,10 @@ const stats = [
       <!-- retrato: objeto escuro sobre papel -->
       <div class="reveal founder-frame kframe relative overflow-hidden rounded-[22px]">
         <img
-          src="/assets/founder-andre.jpg"
+          src="/assets/founder-andre-600.webp"
           alt="André, fundador da Korvex"
           width="600" height="800"
-          class="founder-photo absolute inset-0 h-full w-full object-cover"
+          class="founder-photo absolute inset-x-0 w-full object-cover" style="top:-7%;height:114%" data-parallax="0.08"
           loading="lazy" decoding="async"
         />
         <div class="pointer-events-none absolute inset-x-0 bottom-0 h-36" style="background: linear-gradient(0deg, rgba(5,11,20,0.9), rgba(5,11,20,0.35) 55%, transparent)"></div>
@@ -62,8 +62,7 @@ const stats = [
     object-position: center 30%;
     filter: saturate(0.9);
     opacity: 0;
-    transform: scale(1.04);
-    transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out);
+    transition: opacity 1s var(--ease-out);
   }
-  .reveal.in .founder-photo { opacity: 1; transform: none; }
+  .reveal.in .founder-photo { opacity: 1; }
 </style>

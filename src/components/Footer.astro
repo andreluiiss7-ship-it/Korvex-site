@@ -1,5 +1,5 @@
 ---
-import { WHATSAPP_URL } from '../lib/site';
+import { WHATSAPP_DUVIDA_URL } from '../lib/site';
 import { icon } from '../lib/icons';
 
 const cols = [
@@ -7,8 +7,8 @@ const cols = [
     title: 'Plataforma',
     links: [
       { label: 'Checkout', href: '#checkout' },
-      { label: 'Funil', href: '#funil' },
-      { label: 'Área de membros', href: '#membros' },
+      { label: 'Funil', href: '#produto' },
+      { label: 'Área de membros', href: '#produto' },
       { label: 'Taxas', href: '#pagamentos' },
     ],
   },
@@ -18,7 +18,8 @@ const cols = [
       { label: 'Premiações', href: '#premiacoes' },
       { label: 'Comparativo de taxas', href: '#problema' },
       { label: 'Dúvidas frequentes', href: '#faq' },
-      { label: 'Falar com o time', href: WHATSAPP_URL },
+      { label: 'Falar com o time', href: WHATSAPP_DUVIDA_URL, ext: true },
+      { label: 'Manifesto', href: '/manifesto' },
     ],
   },
   {
@@ -27,7 +28,7 @@ const cols = [
       { label: 'Termos de uso', href: '/termos' },
       { label: 'Política de privacidade', href: '/privacidade' },
       { label: 'Política AML / KYC', href: '/aml-kyc' },
-      { label: 'Canal de denúncias', href: WHATSAPP_URL },
+      { label: 'Canal de denúncias', href: 'mailto:compliance@korvex.com.br' }, // CONFIRMAR e-mail
     ],
   },
 ];
@@ -37,7 +38,7 @@ const cols = [
   <div class="section pb-10">
     <div class="grid gap-8 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div>
-        <img src="/assets/logo-white.png" alt="Korvex" class="h-7 w-auto" />
+        <img src="/assets/logo-white.png" alt="Korvex" width="1352" height="352" class="h-7 w-auto" />
         <p class="mt-4 hidden max-w-xs text-pretty text-sm leading-relaxed text-chrome-300/60 lg:block">
           O próprio dinheiro no próprio dia. Pix D0, zero reserva, taxa em contrato.
         </p>
@@ -53,11 +54,11 @@ const cols = [
             <ul class={c.title === 'Legal' ? 'flex flex-wrap gap-x-4 gap-y-2 lg:mt-4 lg:block lg:space-y-2.5' : 'mt-4 space-y-2.5'}>
               {c.links.map((l) => (
                 <li>
-                  <a href={l.href} class="text-sm text-chrome-300/70 transition-colors hover:text-white">{l.label}</a>
+                  <a href={l.href} target={l.ext ? '_blank' : undefined} rel={l.ext ? 'noopener' : undefined} data-cta={l.ext ? 'footer-wa' : undefined} class="inline-flex min-h-[32px] items-center text-sm text-chrome-300/70 transition-colors hover:text-white">{l.label}</a>
                 </li>
               ))}
               {c.title === 'Legal' && (
-                <li class="lg:hidden"><a href={WHATSAPP_URL} target="_blank" rel="noopener" class="text-sm text-chrome-300/70 transition-colors hover:text-white">Falar com o time</a></li>
+                <li class="lg:hidden"><a href={WHATSAPP_DUVIDA_URL} target="_blank" rel="noopener" data-cta="footer-wa" class="inline-flex min-h-[32px] items-center text-sm text-chrome-300/70 transition-colors hover:text-white">Falar com o time</a></li>
               )}
             </ul>
           </div>
