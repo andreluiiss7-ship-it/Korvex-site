@@ -178,7 +178,7 @@ const chapters = [
         views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
         if (labelEl) labelEl.textContent = labels[key] || 'Tema';
         if (next) {
-          next.style.opacity = '0'; next.style.transform = 'translateY(6px)';
+          next.style.opacity = '0'; next.style.transform = 'translateY(6px) rotateY(-5deg)';
           requestAnimationFrame(() => {
             next.style.transition = 'opacity .35s ease, transform .35s var(--ease-out)';
             next.style.opacity = '1'; next.style.transform = 'none';
