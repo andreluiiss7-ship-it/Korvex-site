@@ -39,18 +39,37 @@ const others = [
       </div>
     </div>
 
-    <!-- abas (mobile) -->
-    <div class="seg mx-auto mt-6 max-w-[960px] lg:hidden" role="group" aria-label="Extratos">
-      {[['comum', 'Gateway comum'], ['korvex', 'Korvex']].map(([k, l], j) => (
-        <button type="button" data-seg={k} aria-pressed={j === 0 ? 'true' : 'false'} class={`seg-tab${j === 0 ? ' active' : ''}`}>
-          <span class="ck-br">[</span><span class="ck-label">{l}</span><span class="ck-br">]</span>
-        </button>
-      ))}
+    <!-- comparativo compacto (mobile) -->
+    <div class="cmpm reveal mx-auto mt-6 lg:hidden">
+      <div class="cmpm-head">
+        <span>Gateway comum</span>
+        <span class="cmpm-k">Korvex</span>
+      </div>
+      <div class="cmpm-row">
+        <small>Sobra pra você</small>
+        <b id="rc-m-cnet" class="cmpm-c">R$ 264.000</b>
+        <b id="rc-m-knet">R$ 279.000</b>
+      </div>
+      <div class="cmpm-row">
+        <small>Preso na plataforma</small>
+        <b id="rc-m-res" class="cmpm-c">R$ 30.000</b>
+        <b class="cmpm-ok"><span class="rc-i" set:html={icon('check')} />R$ 0</b>
+      </div>
+      <div class="cmpm-row">
+        <small>Disponível hoje</small>
+        <b class="cmpm-c">R$ 0</b>
+        <b class="cmpm-ok"><span class="rc-i" set:html={icon('bolt')} />Agora</b>
+      </div>
+      <p class="cmpm-diff"><em id="rc-m-diffm">+R$ 15.000</em> por mês · <em id="rc-m-diffy">R$ 180.000</em> por ano com a Korvex</p>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="extrato-wa-m" class="btn btn-primary mt-4 w-full justify-center !py-3">
+        Receber proposta em 1h
+        <span class="h-4 w-4" set:html={icon('arrow')}></span>
+      </a>
     </div>
 
     <!-- dois extratos -->
-    <div class="rc-grid mx-auto mt-3 max-w-[960px] lg:mt-8">
-      <article class="rc reveal on" data-view="comum" aria-label="Extrato no gateway comum">
+    <div class="rc-grid mx-auto mt-8 hidden max-w-[960px] lg:grid">
+      <article class="rc reveal" data-view="comum" aria-label="Extrato no gateway comum">
         <header class="rc-head">
           <span class="rc-title">Gateway comum</span>
           <span class="rc-sub">taxa anunciada 9,9%</span>
@@ -106,7 +125,7 @@ const others = [
     </div>
 
     <!-- caixa em 90 dias -->
-    <div class="cash reveal mx-auto mt-6 max-w-[960px]">
+    <div class="cash reveal mx-auto mt-6 hidden max-w-[960px] lg:block">
       <div class="cash-head">
         <div>
           <p class="anchor-l !mt-0">Caixa disponível pra sacar · primeiros 90 dias</p>
@@ -165,8 +184,8 @@ const others = [
     if (!slider) return;
     const out = {
       rev: [$('calc-rev'), $('rc-c-rev'), $('rc-k-rev')],
-      cFee: [$('rc-c-fee')], cExtra: [$('rc-c-extra')], cRes: [$('rc-c-res'), $('rc-c-late')], cNet: [$('rc-c-net')],
-      kFee: [$('rc-k-fee')], kNet: [$('rc-k-net')], diffM: [$('rc-diff-m')], diffY: [$('rc-diff-y')],
+      cFee: [$('rc-c-fee')], cExtra: [$('rc-c-extra')], cRes: [$('rc-c-res'), $('rc-c-late'), $('rc-m-res')], cNet: [$('rc-c-net'), $('rc-m-cnet')],
+      kFee: [$('rc-k-fee')], kNet: [$('rc-k-net'), $('rc-m-knet')], diffM: [$('rc-diff-m'), $('rc-m-diffm')], diffY: [$('rc-diff-y'), $('rc-m-diffy')],
     };
     const NEG = new Set(['cFee', 'cExtra', 'kFee']);
     const fmt = (n) => 'R$ ' + Math.round(n).toLocaleString('pt-BR');
@@ -208,18 +227,6 @@ const others = [
     slider.addEventListener('input', update);
     update();
 
-    // abas (mobile)
-    const tabs = document.querySelectorAll('.seg-tab[data-seg]');
-    const views = document.querySelectorAll('.rc[data-view]');
-    tabs.forEach((t) => t.addEventListener('click', () => {
-      const k = t.dataset.seg;
-      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-pressed', String(on)); });
-      views.forEach((v) => {
-        const on = v.dataset.view === k;
-        v.classList.toggle('on', on);
-        if (on) v.querySelectorAll('.rc-line').forEach((l, i) => { l.classList.remove('in'); setTimeout(() => l.classList.add('in'), 40 + i * 70); });
-      });
-    }));
   })();
 </script>
 
@@ -231,8 +238,8 @@ const others = [
   .calc-slider::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-product); cursor: grab; }
 
   .rc-grid { display: grid; gap: 20px; }
+  @media (max-width: 1023px) { .rc-grid, .cash { display: none !important; } }
   @media (min-width: 1024px) { .rc-grid { grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; } }
-  @media (max-width: 1023px) { .rc:not(.on) { display: none; } }
 
   .rc { position: relative; border-radius: 18px; border: 1px solid var(--line-2); background: var(--bg-1); padding: 22px 22px 20px; font-family: var(--font-mono); }
   .rc::before { content: ''; position: absolute; left: 14px; right: 14px; top: -1px; height: 8px; background: radial-gradient(circle at 4px 0, transparent 3.5px, var(--bg-2) 4px) 0 0 / 12px 8px repeat-x; opacity: .9; pointer-events: none; }
@@ -287,6 +294,16 @@ const others = [
   [data-surface="light"] .cash { background: #FFFFFF; box-shadow: var(--shadow-card); }
   @media (prefers-reduced-motion: reduce) { .cash-k, .cash-c { stroke-dashoffset: 0; transition: none; } .cash-area, .cash-kdot, .cash-cdot { opacity: 1; transition: none; } }
 
+  .cmpm { border-radius: 20px; border: 1px solid var(--line-2); background: var(--bg-1); padding: 18px 18px 16px; box-shadow: var(--shadow-card); }
+  .cmpm-head { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line-2); font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: -0.01em; color: var(--t-3); }
+  .cmpm-k { color: var(--gold-1); }
+  .cmpm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; padding: 14px 0; border-bottom: 1px solid var(--line-1); }
+  .cmpm-row small { grid-column: 1 / -1; font-size: 11px; letter-spacing: 0.02em; color: var(--t-3); }
+  .cmpm-row b { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.25rem, 5.6vw, 1.6rem); letter-spacing: -0.03em; line-height: 1.1; color: var(--t-1); font-variant-numeric: tabular-nums; }
+  .cmpm-c { color: var(--t-3) !important; font-weight: 600 !important; }
+  .cmpm-ok { color: var(--accent-live) !important; }
+  .cmpm-diff { margin-top: 14px; font-size: 13px; line-height: 1.4; color: var(--t-2); }
+  .cmpm-diff em { font-style: normal; font-weight: 700; color: var(--gold-1); }
   .others { gap: 10px; }
   .other { display: grid; gap: 2px; min-width: 190px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-1); background: rgba(255,255,255,0.02); font-family: var(--font-mono); font-size: 11px; color: var(--t-3); letter-spacing: 0.02em; }
   .other b { font-family: var(--font-display); font-weight: 700; font-size: 13px; color: #fff; letter-spacing: -0.01em; }
