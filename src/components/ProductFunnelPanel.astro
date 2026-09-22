@@ -1,151 +1,205 @@
 ---
+// Recriação fiel do construtor de funil real da Korvex (app.korvex.com.br → Checkout → Funil de vendas).
+// Produto e hashes são fictícios (persona "Método Escala").
 import { icon } from '../lib/icons';
 
-const rail = [
-  ['card', 'Checkout'], ['layers', 'Order bump'], ['repeat', 'Upsell'], ['repeat', 'Downsell'],
-  ['check', 'Obrigado'], ['pix', 'Pix'], ['card', 'Cartão'],
+const side = [
+  { g: 'Geral',     items: [['Informações'], ['Ofertas', '2']] },
+  { g: 'Entregas',  items: [['Arquivos'], ['Área de membros']] },
+  { g: 'Checkout',  items: [['Personalizar checkout'], ['Funil de vendas', '', true]] },
+  { g: 'Parceiros', items: [['Afiliação'], ['Co produtores']] },
+  { g: 'Tráfego',   items: [['Links de divulgação'], ['Integração de pixels']] },
 ];
-// canvas em viewBox 1000×704; nó 170×76. --x = x/10 %, --y = y/7.04 %
+
+// canvas 1000 × 560; nó 210 × 82
+const NW = 210, NH = 82;
 const nodes = [
-  { i: 'card',   t: 'Checkout',   c: 'conv. 4,8%',  x: 30,  y: 120, k: 'first' },
-  { i: 'layers', t: 'Order bump', c: 'aceite 31%',  x: 270, y: 80,  k: '' },
-  { i: 'repeat', t: 'Upsell 1',   c: 'conv. 34%',   x: 510, y: 120, k: 'on has-no' },
-  { i: 'repeat', t: 'Downsell',   c: 'conv. 18%',   x: 510, y: 340, k: 'in-top' },
-  { i: 'check',  t: 'Obrigado',   c: 'ticket +62%', x: 770, y: 240, k: 'last' },
+  { id: 'f66mzsnsyo', t: 'Método Escala',   s: 'Todas as ofertas', k: 'flag',      x: 40,  y: 96 },
+  { id: 'qe6lkqhwis', t: 'Mentoria + Grupo', s: 'up1',             k: 'thumbup',   x: 330, y: 214 },
+  { id: '2847uirczs', t: 'Consultoria 1:1',  s: 'up2',             k: 'thumbup',   x: 700, y: 132 },
+  { id: 'q3stk8i6ld', t: 'Mentoria 12x',     s: 'downsell',        k: 'thumbdown', x: 452, y: 404 },
+];
+
+const rt = (n: typeof nodes[0]) => [n.x + NW, n.y + NH / 2];
+const lf = (n: typeof nodes[0]) => [n.x, n.y + NH / 2];
+const bt = (n: typeof nodes[0]) => [n.x + NW / 2, n.y + NH];
+const tp = (n: typeof nodes[0]) => [n.x + NW / 2, n.y];
+
+const hz = (a: number[], b: number[]) => {
+  const dx = Math.max(46, Math.abs(b[0] - a[0]) * 0.46);
+  return `M${a[0]} ${a[1]} C${a[0] + dx} ${a[1]}, ${b[0] - dx} ${b[1]}, ${b[0]} ${b[1]}`;
+};
+const vt = (a: number[], b: number[]) => {
+  const dy = Math.max(40, Math.abs(b[1] - a[1]) * 0.5);
+  return `M${a[0]} ${a[1]} C${a[0]} ${a[1] + dy}, ${b[0]} ${b[1] - dy}, ${b[0]} ${b[1]}`;
+};
+
+const wires = [
+  { d: hz(rt(nodes[0]), lf(nodes[1])), k: 'ok' },
+  { d: hz(rt(nodes[1]), lf(nodes[2])), k: 'ok' },
+  { d: vt(bt(nodes[1]), tp(nodes[3])), k: 'no' },
+];
+
+const pc = (x: number, y: number) => `left:${(x / 10).toFixed(2)}%;top:${(y / 5.6).toFixed(2)}%`;
+const ports = [
+  { p: rt(nodes[0]), k: 'ok' }, { p: lf(nodes[1]), k: 'ok in' },
+  { p: rt(nodes[1]), k: 'ok' }, { p: lf(nodes[2]), k: 'ok in' },
+  { p: bt(nodes[1]), k: 'no' }, { p: tp(nodes[3]), k: 'no in' },
+  { p: rt(nodes[2]), k: 'ok end' }, { p: bt(nodes[3]), k: 'no end' },
 ];
 ---
 
 <div data-tilt="3" class="tilt browser kframe blue in relative glow-blue" style="container-type: inline-size;">
   <div class="browser-bar">
     <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
-    <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/funil</span>
-    <span class="ml-auto hidden items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-chrome-300/60 sm:flex">
-      <span class="h-1.5 w-1.5 rounded-full bg-live-400"></span>Salvo automaticamente
-    </span>
+    <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/produtos/funil</span>
   </div>
 
-  <div class="fb" role="img" aria-label="Construtor de funil da Korvex, exemplo ilustrativo">
-    <aside class="fb-rail">
-      <p class="fb-lbl">Blocos</p>
-      {rail.map(([i, l]) => (
-        <span class="fb-block"><span class="fb-grip" set:html={icon('grip')} /><span class="fb-bi" set:html={icon(i)} />{l}</span>
+  <div class="fb" role="img" aria-label="Construtor de funil da Korvex com upsell, upsell 2 e downsell ligados ao checkout">
+    <aside class="fb-side">
+      {side.map((g) => (
+        <div class="fb-grp">
+          <p class="fb-glbl">{g.g}</p>
+          {g.items.map(([l, badge, on]) => (
+            <span class={`fb-sitem${on ? ' on' : ''}`}>
+              {l}{badge && <i class="fb-badge">{badge}</i>}
+            </span>
+          ))}
+        </div>
       ))}
     </aside>
 
-    <div class="fb-canvas">
-      <div class="fb-top">
-        <span class="fb-crumb">Funil · Método Escala</span>
-        <span class="fb-btn">Salvar</span>
-      </div>
-
-      <svg class="fb-wires" viewBox="0 0 1000 704" preserveAspectRatio="none" aria-hidden="true">
-        <path class="ok" d="M215 162 C243 162 242 122 270 122" />
-        <path class="ok" d="M455 122 C483 122 482 162 510 162" />
-        <path class="ok" d="M695 162 C733 162 732 282 770 282" />
-        <path class="no" d="M602 204 C602 260 602 280 602 340" />
-        <path class="ok" d="M695 382 C733 382 732 282 770 282" />
-      </svg>
-
-      {nodes.map((n) => (
-        <div class={`fb-node ${n.k}`} style={`--x:${n.x / 10}%;--y:${(n.y / 7.04).toFixed(1)}%`}>
-          <span class="fb-ni" set:html={icon(n.i)} /><b>{n.t}</b><em>{n.c}</em>
-          {n.k.includes('has-no') && <i class="p"></i>}
+    <div class="fb-main">
+      <div class="fb-head">
+        <span class="fb-thumb">ME</span>
+        <div>
+          <p class="fb-hrow"><i class="fb-live">Ativo</i><b>MÉTODO ESCALA</b></p>
+          <p class="fb-meta">Tipo: Digital</p>
+          <p class="fb-note">* As atualizações podem levar até 1 minuto para serem aplicadas no checkout</p>
         </div>
-      ))}
-
-      <div class="fb-slot" aria-hidden="true"></div>
-      <div class="fb-ghost" aria-hidden="true">
-        <div class="fb-node"><span class="fb-ni" set:html={icon('repeat')} /><b>Upsell 2</b><em>novo</em></div>
-        <span class="fb-cur" set:html={icon('cursor')} />
       </div>
 
-      <aside class="fb-insp">
-        <p class="fb-lbl">Upsell 1</p>
-        <div class="fb-kv"><span>Oferta</span><b>Mentoria + Grupo</b></div>
-        <div class="fb-kv"><span>Preço</span><b>R$ 497</b></div>
-        <div class="fb-kv"><span>Aceite</span><b>1 clique</b></div>
-        <div class="fb-kv"><span>Conversão</span><b class="ok">34%</b></div>
-      </aside>
+      <div class="fb-canvas">
+        <span class="fb-expand" set:html={icon('expand')} />
+
+        <svg class="fb-wires" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
+          {wires.map((w) => <path class={w.k} d={w.d} />)}
+        </svg>
+
+        {ports.map((o) => <i class={`fb-port ${o.k}`} style={pc(o.p[0], o.p[1])}></i>)}
+
+        {nodes.map((n) => (
+          <div class={`fb-node ${n.k}`} style={pc(n.x, n.y)}>
+            <span class="fb-ni" set:html={icon(n.k)} />
+            <span class="fb-nimg">ME</span>
+            <span class="fb-txt">
+              <em>#{n.id}</em>
+              <b>{n.t}</b>
+              <u>{n.s}</u>
+            </span>
+          </div>
+        ))}
+
+        <div class="fb-zoom">
+          <i set:html={icon('plus')} /><i set:html={icon('minus')} /><i set:html={icon('expand')} /><i set:html={icon('lock')} />
+        </div>
+
+        <aside class="fb-acts">
+          <span class="fb-act"><i set:html={icon('plus')} />Adicionar etapa<u set:html={icon('chevron')} /></span>
+          <span class="fb-act"><i set:html={icon('gear')} />Configurações do funil<u set:html={icon('chevron')} /></span>
+          <span class="fb-save">Salvar alterações</span>
+        </aside>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
   .fb {
-    --fb-bg: #0B0F17; --fb-rail: #0E1421; --fb-card: #121a29; --ln: rgba(255,255,255,.07);
-    --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399; --no: rgba(255,255,255,.28);
-    display: grid; grid-template-columns: 9.5em 1fr; aspect-ratio: 16/9; overflow: hidden;
-    font-size: clamp(7px, 1.85cqw, 12px); font-family: var(--font-display); color: var(--mt2); background: var(--fb-bg);
+    --fb-bg: #070D17; --fb-side: #0A1220; --fb-card: #101828; --ln: rgba(255,255,255,.07);
+    --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388; --ac: #2563EB; --ac2: #6FA0FF;
+    --ok: #22C55E; --no: #EF4444;
+    display: grid; grid-template-columns: 13.6em 1fr; aspect-ratio: 16/9; overflow: hidden;
+    font-size: clamp(7px, 1.16cqw, 12.5px); font-family: var(--font-display); color: var(--mt2); background: var(--fb-bg);
+    transform-style: preserve-3d;
   }
-  .fb-rail { background: var(--fb-rail); border-right: 1px solid var(--ln); padding: 1.2em 1em; display: flex; flex-direction: column; gap: .5em; }
-  .fb-lbl { font-family: var(--font-mono); font-size: .65em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); margin-bottom: .6em; }
-  .fb-block { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: .5em; padding: .55em .7em; border-radius: .55em; background: var(--fb-card); border: 1px solid var(--ln); font-size: .85em; font-weight: 600; color: var(--mt); cursor: grab; }
-  .fb-grip { width: 1em; height: 1em; color: rgba(255,255,255,.3); }
-  .fb-grip :global(svg) { stroke-width: 0; fill: currentColor; }
-  .fb-bi { width: 1.1em; height: 1.1em; color: var(--mt3); }
-  .fb-canvas { position: relative; background: radial-gradient(rgba(255,255,255,.075) 1px, transparent 1.2px) 0 0 / 1.6em 1.6em; }
-  .fb-top { position: absolute; inset: 0 0 auto 0; z-index: 2; height: 3em; display: flex; align-items: center; justify-content: space-between; padding: 0 1em; }
-  .fb-crumb { font-family: var(--font-mono); font-size: .7em; letter-spacing: .06em; color: var(--mt3); }
-  .fb-btn { background: var(--ac); color: #fff; font-weight: 700; font-size: .8em; padding: .5em 1.1em; border-radius: .5em; box-shadow: inset 0 1px 0 rgba(255,255,255,.18); }
+
+  /* navegação do produto */
+  .fb-side { padding: 1.1em .85em; background: var(--fb-side); border-right: 1px solid var(--ln); overflow: hidden; }
+  .fb-grp + .fb-grp { margin-top: .8em; }
+  .fb-glbl { padding: 0 .5em .35em; font-size: .72em; font-weight: 600; color: var(--mt3); border-bottom: 1px solid var(--ln); }
+  .fb-sitem { position: relative; display: flex; align-items: center; gap: .4em; padding: .48em .6em; margin-top: .18em; border-radius: .45em; font-size: .78em; font-weight: 500; color: var(--mt2); }
+  .fb-sitem.on { background: rgba(255,255,255,.07); color: var(--mt); font-weight: 600; }
+  .fb-sitem.on::before { content: ''; position: absolute; left: -.8em; top: 0; bottom: 0; width: .32em; border-radius: 0 .2em .2em 0; background: #3B82F6; }
+  .fb-badge { display: grid; place-items: center; min-width: 1.5em; height: 1.5em; margin-left: auto; padding: 0 .35em; border-radius: .35em; background: rgba(255,255,255,.08); font-style: normal; font-size: .82em; font-weight: 600; color: var(--mt2); }
+
+  .fb-main { display: flex; flex-direction: column; gap: .75em; padding: 1em 1.1em 1.1em; min-width: 0; }
+
+  /* card do produto */
+  .fb-head { display: flex; gap: .8em; padding: .8em .9em; border-radius: .7em; border: 1px solid var(--ln); background: var(--fb-card); }
+  .fb-thumb { display: grid; place-items: center; width: 4em; height: 4em; border-radius: .5em; background: #fff; color: #0B1220; font-size: .95em; font-weight: 800; letter-spacing: .02em; flex: none; }
+  .fb-hrow { display: flex; align-items: center; gap: .55em; }
+  .fb-hrow b { font-size: 1em; font-weight: 700; letter-spacing: .02em; color: var(--mt); }
+  .fb-live { padding: .2em .6em; border-radius: .35em; background: rgba(34,197,94,.16); color: #4ADE80; font-style: normal; font-size: .72em; font-weight: 600; }
+  .fb-meta { margin-top: .3em; font-size: .75em; color: var(--mt2); }
+  .fb-note { margin-top: .2em; font-size: .68em; color: var(--mt3); }
+
+  /* canvas */
+  .fb-canvas { position: relative; flex: 1; border-radius: .7em; border: 1px solid var(--ln); background: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.2px) 0 0 / 1.5em 1.5em, var(--fb-card); overflow: hidden; }
+  .fb-expand { position: absolute; right: .8em; top: .8em; z-index: 3; display: grid; place-items: center; width: 2em; height: 2em; padding: .45em; border-radius: .45em; background: rgba(255,255,255,.07); color: var(--mt2); }
   .fb-wires { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-  .fb-wires path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 5 7; }
+  .fb-wires path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 6 6; }
   .fb-wires .ok { stroke: var(--ok); }
   .fb-wires .no { stroke: var(--no); }
-  .fb-node {
-    position: absolute; left: var(--x); top: var(--y); width: 18.5%; height: 12%; z-index: 1;
-    display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: .55em; align-items: center; align-content: center;
-    padding: .45em .65em; border-radius: .6em; background: var(--fb-card); border: 1px solid var(--ln); box-shadow: 0 8px 20px -12px rgba(0,0,0,.8);
-  }
-  .fb-ni { grid-row: 1 / 3; width: 1.9em; height: 1.9em; padding: .45em; border-radius: .45em; background: rgba(255,255,255,.06); color: var(--mt2); }
-  .fb-node b { font-size: .86em; font-weight: 700; color: var(--mt); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .fb-node em { font-style: normal; font-family: var(--font-mono); font-size: .64em; letter-spacing: .04em; color: var(--ok); }
-  .fb-node.on { border-color: var(--ac); box-shadow: 0 0 0 1px rgba(59,130,246,.35) inset, 0 8px 20px -12px rgba(0,0,0,.8); }
-  .fb-node.on .fb-ni { color: var(--ac2); background: rgba(59,130,246,.15); }
-  .fb-node::before, .fb-node::after, .fb-node > .p { content: ''; position: absolute; top: 50%; width: .7em; height: .7em; border-radius: 50%; background: var(--fb-bg); border: 1.5px solid var(--ok); transform: translateY(-50%); }
-  .fb-node::before { left: -.35em; }
-  .fb-node::after { right: -.35em; }
-  .fb-node.first::before, .fb-node.last::after { display: none; }
-  .fb-node.in-top::before { left: 50%; top: 0; transform: translate(-50%, -50%); border-color: var(--no); }
-  .fb-node > .p { top: auto; bottom: -.35em; left: 50%; transform: translateX(-50%); border-color: var(--no); }
-  .fb-ghost .fb-node::before, .fb-ghost .fb-node::after { display: none; }
-  .fb-slot { position: absolute; left: 27%; top: 71%; width: 18.5%; height: 12%; border: 1px dashed rgba(255,255,255,.2); border-radius: .6em; opacity: 0; animation: fb-slot 8s infinite; }
-  .fb-ghost { position: absolute; left: 27%; top: 71%; width: 18.5%; height: 12%; z-index: 3; animation: fb-drag 8s var(--ease-out) infinite; }
-  .fb-ghost .fb-node { position: static; width: 100%; height: 100%; box-shadow: 0 18px 30px -14px rgba(0,0,0,.9), 0 0 0 1px rgba(59,130,246,.35); }
-  .fb-cur { position: absolute; left: -.4em; top: -.4em; width: 1.4em; height: 1.4em; color: #fff; filter: drop-shadow(0 2px 3px rgba(0,0,0,.7)); }
-  .fb-cur :global(svg) { fill: #fff; stroke: #000; stroke-width: 1.2; }
-  .fb-insp { display: none; position: absolute; right: 1em; bottom: 1em; z-index: 2; width: 11em; padding: .9em 1em; border-radius: .7em; background: rgba(18,26,41,.92); border: 1px solid var(--ln); backdrop-filter: blur(8px); }
-  .fb-kv { display: flex; justify-content: space-between; gap: .6em; font-size: .7em; padding: .35em 0; border-top: 1px solid var(--ln); }
-  .fb-kv span { color: var(--mt3); } .fb-kv b { color: var(--mt); font-weight: 600; } .fb-kv b.ok { color: var(--ok); }
-  @media (min-width: 1280px) { .fb-insp { display: block; } }
 
-  @keyframes fb-drag {
-    0%   { opacity: 0; transform: translate(-20.5em, -12.7em) scale(.96); }
-    6%   { opacity: 1; transform: translate(-20.5em, -12.7em) scale(1); }
-    40%  { transform: translate(0, 0) rotate(-2.5deg) scale(1.03); }
-    46%  { transform: translate(0, 0) rotate(0) scale(1.07); }
-    52%  { transform: translate(0, 0) scale(.97); }
-    57%  { transform: translate(0, 0) scale(1); }
-    84%  { opacity: 1; transform: translate(0, 0) scale(1); }
-    92%  { opacity: 0; }
-    100% { opacity: 0; transform: translate(-20.5em, -12.7em) scale(.96); }
+  .fb-port { position: absolute; z-index: 2; width: .78em; height: .78em; margin: -.39em 0 0 -.39em; border-radius: 999px; background: var(--fb-card); border: 1.5px solid var(--ok); }
+  .fb-port.no { border-color: var(--no); }
+  .fb-port.in::after { content: ''; position: absolute; left: 1em; top: 50%; width: 0; height: 0; transform: translateY(-50%);
+    border-left: .55em solid var(--ok); border-top: .38em solid transparent; border-bottom: .38em solid transparent; }
+  .fb-port.no.in::after { left: 50%; top: 1em; transform: translateX(-50%) rotate(90deg); border-left-color: var(--no); }
+
+  .fb-node {
+    position: absolute; z-index: 1; width: 21%; height: 14.6%;
+    display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: .5em;
+    padding: .45em .6em; border-radius: .6em; background: var(--fb-card); border: 1px solid var(--ln); box-shadow: 0 .7em 1.6em -.9em rgba(0,0,0,.9);
   }
-  @keyframes fb-slot {
-    0%, 30% { opacity: 0; }
-    38% { opacity: 1; border-color: rgba(255,255,255,.25); }
-    46%, 52% { opacity: 1; border-color: #34D399; }
-    58%, 100% { opacity: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .fb-ghost, .fb-slot { animation: none; }
-    .fb-ghost { opacity: 1; transform: none; }
-    .fb-slot, .fb-cur { display: none; }
-  }
-  @media (max-width: 640px) {
-    .fb { grid-template-columns: 1fr; aspect-ratio: 4/5; font-size: 9px; }
-    .fb-rail, .fb-insp, .fb-wires, .fb-ghost, .fb-slot { display: none; }
-    .fb-canvas { display: flex; flex-direction: column; gap: 1.4em; padding: 4em 1.4em 1.4em; }
-    .fb-node { position: static; width: auto; height: auto; }
-    .fb-node:nth-child(4), .fb-node:nth-child(6) { display: none; }
-    .fb-node::before, .fb-node::after, .fb-node > .p { display: none; }
+  .fb-node .fb-ni { display: grid; place-items: center; width: 1.9em; height: 1.9em; padding: .42em; border-radius: 999px; flex: none; }
+  .fb-node.flag .fb-ni { background: rgba(37,99,235,.2); color: var(--ac2); }
+  .fb-node.thumbup .fb-ni { background: rgba(34,197,94,.18); color: #4ADE80; }
+  .fb-node.thumbdown .fb-ni { background: rgba(249,115,22,.18); color: #FB923C; }
+  .fb-nimg { display: grid; place-items: center; width: 2.3em; height: 2.3em; border-radius: .35em; background: #fff; color: #0B1220; font-size: .72em; font-weight: 800; }
+  .fb-txt { min-width: 0; }
+  .fb-txt em { display: block; font-family: var(--font-mono); font-style: normal; font-size: .64em; color: var(--mt3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fb-txt b { display: block; font-size: .85em; font-weight: 700; color: var(--mt); line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fb-txt u { display: block; font-style: italic; text-decoration: none; font-size: .7em; color: var(--mt3); }
+
+  .fb-zoom { position: absolute; left: .9em; bottom: .9em; z-index: 3; display: flex; flex-direction: column; overflow: hidden; border-radius: .35em; box-shadow: 0 .4em 1em -.4em rgba(0,0,0,.6); }
+  .fb-zoom i { display: grid; place-items: center; width: 1.9em; height: 1.7em; padding: .42em; background: #fff; color: #1B2333; }
+  .fb-zoom i + i { border-top: 1px solid rgba(0,0,0,.12); }
+
+  .fb-acts { position: absolute; right: .9em; bottom: .9em; z-index: 3; display: flex; flex-direction: column; gap: .5em; width: 14.5em; }
+  .fb-act { display: grid; grid-template-columns: 1.15em 1fr .9em; align-items: center; gap: .55em; padding: .7em .85em; border-radius: .5em; border: 1px solid var(--ln); background: rgba(16,24,40,.92); font-size: .78em; font-weight: 500; color: var(--mt); }
+  .fb-act i, .fb-act u { display: block; width: 100%; }
+  .fb-act i { color: var(--mt2); }
+  .fb-act u { color: var(--mt3); }
+  .fb-save { padding: .75em 1em; border-radius: .5em; background: var(--ac); color: #fff; font-size: .82em; font-weight: 700; text-align: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.2); transform: translateZ(22px); }
+
+  @media (prefers-reduced-motion: reduce) { .fb-save { transform: none; } }
+
+  @media (max-width: 1023px) {
+    .fb { grid-template-columns: 1fr; aspect-ratio: auto; font-size: 11px; }
+    .fb-side, .fb-wires, .fb-zoom, .fb-expand { display: none; }
+    .fb-main { padding: .9em; gap: .7em; }
+    .fb-note { display: none; }
+    .fb-canvas { display: flex; flex-direction: column; gap: 1.6em; padding: 1.1em; min-height: 0; }
+    /* o left/top vem de style inline, então precisa de !important para soltar o nó */
+    .fb-node { position: relative; left: auto !important; top: auto !important; width: auto; height: auto; }
+    .fb-port { display: none; }
+    .fb-node + .fb-node::before { content: ''; position: absolute; left: 50%; top: -1.15em; width: 0; height: 0; transform: translateX(-50%) rotate(90deg);
+      border-left: .6em solid var(--ok); border-top: .42em solid transparent; border-bottom: .42em solid transparent; }
+    .fb-node + .fb-node.thumbdown::before { border-left-color: var(--no); }
+    .fb-acts { position: static; width: auto; margin-top: auto; }
+    .fb-act { display: none; }
+    .fb-save { transform: none; }
   }
 </style>

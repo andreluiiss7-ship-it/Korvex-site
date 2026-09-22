@@ -31,7 +31,7 @@ const materiais = [
         <p class="ma-navlbl">Navegação</p>
         <span class="ma-nav on"><span class="ma-nav-i" set:html={icon('play')} />Início</span>
         <span class="ma-nav"><span class="ma-nav-i" set:html={icon('file')} />Materiais</span>
-        <div class="ma-user"><span class="ma-avatar">AS</span><span>Aluno</span></div>
+        <div class="ma-user"><span class="ma-avatar">RM</span><span>Rafa M.</span></div>
       </aside>
 
       <main class="ma-main">
@@ -143,7 +143,7 @@ const materiais = [
 
   .ma-row-title { margin: .9em 0 .45em; font-family: var(--font-mono); font-size: .68em; letter-spacing: .18em; text-transform: uppercase; color: var(--mt3); }
   .ma-mods { display: grid; grid-template-columns: repeat(5, 1fr); gap: .7em; }
-  .ma-mod { position: relative; aspect-ratio: 3 / 4; transition: transform .35s var(--ease-out); border-radius: .7em; overflow: hidden; isolation: isolate; border: 1px solid rgba(255,255,255,.07);
+  .ma-mod { position: relative; aspect-ratio: 3 / 4; transform-style: preserve-3d; transition: transform .35s var(--ease-out); border-radius: .7em; overflow: hidden; isolation: isolate; border: 1px solid rgba(255,255,255,.07);
     background: linear-gradient(165deg, var(--acc) -45%, #121a29 58%, #0b1220 100%); }
   .ma-mod img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
   .ma-mod::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 38%, rgba(10,10,10,.92)); }

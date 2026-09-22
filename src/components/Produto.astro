@@ -258,9 +258,12 @@ const chapters = [
     }
     .pv-panel[data-active="true"] {
       opacity: 1; transform: none; pointer-events: auto; visibility: visible; z-index: 2;
-      transition: opacity .55s var(--ease-out) .1s, transform .7s var(--ease-out) .1s, visibility 0s;
+      transition: opacity .5s var(--ease-out) .08s, transform .72s var(--ease-snap) .08s, visibility 0s;
     }
   }
+  /* loops infinitos dos mockups só rodam no painel em foco */
+  .pv-panel:not([data-active="true"]):not(.on-m) :global(.animate-floaty) { animation-play-state: paused; }
+
   @media (prefers-reduced-motion: reduce) {
     .pv-panel, .ck-tab, .pv-mark { transition: none !important; }
   }

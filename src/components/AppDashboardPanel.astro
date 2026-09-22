@@ -1,0 +1,223 @@
+---
+// Recriação fiel do dashboard real da Korvex (app.korvex.com.br/dashboard).
+// Dados são da persona fictícia "Método Escala" — nunca de cliente real.
+import { icon } from '../lib/icons';
+
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+
+const nav = [
+  { i: 'home',    l: 'Dashboard',        on: true },
+  { i: 'eye',     l: 'Vitrine' },
+  { i: 'cart',    l: 'Vendas',        sub: true },
+  { i: 'wallet',  l: 'Financeiro',    sub: true },
+  { i: 'users',   l: 'Clientes',      sub: true },
+  { i: 'layers',  l: 'Produtos',      sub: true },
+  { i: 'gear',    l: 'Configurações', sub: true },
+  { i: 'plug',    l: 'Integrações' },
+  { i: 'headset', l: 'Fale com o suporte' },
+];
+
+const cards = [
+  { l: 'Lucro líquido',    v: 'R$ 284.910,00',   i: 'chart' },
+  { l: 'Saldo disponível', v: 'R$ 113.478,27',   i: 'coin',    k: 'hero' },
+  { l: 'Saldo pendente',   v: 'R$ 0,00',         i: 'clock',   k: 'zero' },
+  { l: 'Saque realizado',  v: 'R$ 1.284.660,00', i: 'cashout' },
+];
+
+const methods = [
+  { i: 'pix',     l: 'PIX',               p: 78 },
+  { i: 'card',    l: 'Cartão de crédito', p: 19 },
+  { i: 'barcode', l: 'Boleto',            p: 3 },
+];
+
+const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168 38 C 196 42 196 26 224 28 C 252 30 252 16 280 14 C 300 12 308 10 320 8';
+---
+
+<div class={`browser kframe blue in relative glow-blue tilt ${cls}`} data-tilt="2" style="container-type: inline-size;">
+  <div class="browser-bar">
+    <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
+    <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/dashboard</span>
+    <span class="ml-3 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-chrome-300/60">
+      <span class="relative inline-flex h-1.5 w-1.5">
+        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-live-400 opacity-75"></span>
+        <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-live-400"></span>
+      </span>
+      Ao vivo
+    </span>
+  </div>
+
+  <div class="dash" role="img" aria-label="Painel da Korvex: saldo disponível para saque, saldo pendente zerado, vendas por método e histórico de faturamento">
+    <aside class="dash-side">
+      <p class="dash-logo"><b>K</b>KORVEX</p>
+      <nav class="dash-nav">
+        {nav.map((n) => (
+          <span class={`dash-item${n.on ? ' on' : ''}`}>
+            <i class="dash-ic" set:html={icon(n.i)} />{n.l}
+            {n.sub && <i class="dash-ch" set:html={icon('chevron')} />}
+          </span>
+        ))}
+      </nav>
+      <span class="dash-ref"><i class="dash-ic" set:html={icon('star')} />Indique e Ganhe</span>
+    </aside>
+
+    <div class="dash-main">
+      <div class="dash-top">
+        <b>Dashboard</b>
+        <span class="dash-range"><i class="dash-ic" set:html={icon('calendar')} />Últimos 30 dias</span>
+        <span class="dash-user"><i>ME</i>Método Escala<i class="dash-ch" set:html={icon('chevron')} /></span>
+      </div>
+
+      <div class="dash-kpis">
+        {cards.map((c) => (
+          <div class={`dash-kpi${c.k ? ' ' + c.k : ''}`}>
+            <p>{c.l}</p>
+            {c.k === 'hero'
+              ? <b data-counter data-target="113478.27" data-decimals="2" data-prefix="R$ ">{c.v}</b>
+              : <b>{c.v}</b>}
+            {c.k === 'zero' && <em>sem reserva</em>}
+            <i class="dash-ic" set:html={icon(c.i)} />
+          </div>
+        ))}
+      </div>
+
+      <div class="dash-row">
+        <section class="dash-card dash-goal">
+          <p class="dash-h">Conquistas</p>
+          <div class="dash-goal-b">
+            <div>
+              <b>R$ 500.000</b>
+              <span>em vendas</span>
+              <div class="dash-bar"><i style="--p:78%"></i></div>
+              <span class="dash-pct">78%</span>
+            </div>
+            <img src="/assets/placa-500k-480.webp" alt="" width="480" height="677" loading="lazy" decoding="async" />
+          </div>
+        </section>
+
+        <section class="dash-card">
+          <p class="dash-h">Vendas por método</p>
+          {methods.map((m) => (
+            <div class="dash-m">
+              <i class="dash-ic" set:html={icon(m.i)} />
+              <span>{m.l}</span>
+              <b style={`--p:${m.p}`}><i>{m.p}%</i></b>
+            </div>
+          ))}
+        </section>
+      </div>
+
+      <section class="dash-card dash-chart">
+        <p class="dash-h">Histórico de faturamento</p>
+        <p class="dash-sub">Acompanhe o histórico de transações do seu negócio</p>
+        <svg viewBox="0 0 320 88" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="dashg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3B82F6" stop-opacity=".32" />
+              <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path class="dash-area" d={`${LINE} L320 88 L0 88 Z`} fill="url(#dashg)" />
+          <path class="dash-line" d={LINE} />
+        </svg>
+      </section>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dash {
+    --d-bg: #070D17; --d-card: #0F1726; --d-side: #0A1220; --ln: rgba(255,255,255,.07);
+    --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399;
+    display: grid; grid-template-columns: 13.2em 1fr; background: var(--d-bg); overflow: hidden;
+    font-family: var(--font-display); font-size: clamp(9px, 1.16cqw, 12.5px); color: var(--mt2);
+    transform-style: preserve-3d;
+  }
+
+  /* sidebar */
+  .dash-side { display: flex; flex-direction: column; gap: .9em; padding: 1.15em .9em 1.1em; background: var(--d-side); border-right: 1px solid var(--ln); }
+  .dash-logo { display: flex; align-items: center; gap: .5em; font-size: .95em; font-weight: 800; letter-spacing: .12em; color: var(--mt); padding: 0 .35em; }
+  .dash-logo b { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: .4em; background: var(--ac); color: #fff; font-size: .85em; }
+  .dash-nav { display: flex; flex-direction: column; gap: .12em; }
+  .dash-item { display: grid; grid-template-columns: 1.35em 1fr auto; align-items: center; gap: .6em; padding: .55em .6em; border-radius: .5em; font-size: .82em; font-weight: 500; color: var(--mt2); }
+  .dash-item.on { background: rgba(255,255,255,.07); color: var(--mt); font-weight: 600; }
+  .dash-ic { display: block; width: 1.35em; height: 1.35em; color: currentColor; }
+  .dash-ch { width: .8em; height: .8em; color: var(--mt3); }
+  .dash-ref { display: grid; grid-template-columns: 1.35em 1fr; align-items: center; gap: .6em; margin-top: auto; padding: .7em .6em; border-radius: .6em; border: 1px solid var(--ln); background: rgba(255,255,255,.03); font-size: .8em; font-weight: 600; color: var(--mt); }
+  .dash-ref .dash-ic { color: var(--gold-2, #E2C386); }
+
+  /* main */
+  .dash-main { display: flex; flex-direction: column; gap: .85em; padding: 1.15em 1.3em 1.3em; min-width: 0; }
+  .dash-top { display: flex; align-items: center; gap: .6em; }
+  .dash-top > b { font-size: 1.05em; font-weight: 700; color: var(--mt); margin-right: auto; }
+  .dash-range, .dash-user { display: inline-flex; align-items: center; gap: .45em; padding: .45em .75em; border-radius: .5em; border: 1px solid var(--ln); background: rgba(255,255,255,.03); font-size: .75em; font-weight: 500; white-space: nowrap; }
+  .dash-user i:first-child { display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 999px; background: var(--ac); color: #fff; font-style: normal; font-size: .8em; font-weight: 700; }
+
+  .dash-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: .65em; }
+  .dash-kpi { position: relative; padding: .8em .9em; border-radius: .7em; border: 1px solid var(--ln); background: var(--d-card); min-width: 0; }
+  .dash-kpi p { font-size: .72em; color: var(--mt3); white-space: nowrap; }
+  .dash-kpi b { display: block; margin-top: .25em; font-size: 1.05em; font-weight: 700; color: var(--mt); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .dash-kpi .dash-ic { position: absolute; right: .75em; top: .75em; width: 1.5em; height: 1.5em; padding: .3em; box-sizing: content-box; border-radius: .45em; background: rgba(255,255,255,.06); color: var(--mt2); }
+  .dash-kpi.hero { border-color: rgba(59,130,246,.45); background: linear-gradient(180deg, rgba(59,130,246,.12), transparent 70%), var(--d-card); transform: translateZ(14px); }
+  .dash-kpi.hero b { color: #fff; font-size: 1.22em; }
+  .dash-kpi.hero .dash-ic { background: rgba(59,130,246,.2); color: var(--ac2); }
+  .dash-kpi.zero b { color: var(--ok); }
+  .dash-kpi.zero em { display: block; margin-top: .2em; font-family: var(--font-mono); font-style: normal; font-size: .62em; letter-spacing: .1em; text-transform: uppercase; color: var(--ok); opacity: .85; }
+  .dash-kpi.zero .dash-ic { background: rgba(52,211,153,.14); color: var(--ok); }
+
+  .dash-row { display: grid; grid-template-columns: 1.25fr 1fr; gap: .65em; }
+  .dash-card { padding: .85em .95em; border-radius: .7em; border: 1px solid var(--ln); background: var(--d-card); min-width: 0; }
+  .dash-h { font-size: .85em; font-weight: 700; color: var(--mt); }
+  .dash-sub { margin-top: .15em; font-size: .68em; color: var(--mt3); }
+
+  .dash-goal-b { display: flex; align-items: center; gap: .9em; margin-top: .55em; }
+  .dash-goal-b > div { flex: 1; min-width: 0; }
+  .dash-goal-b b { font-size: 1.5em; font-weight: 800; color: var(--mt); letter-spacing: -.02em; line-height: 1.1; }
+  .dash-goal-b > div > span { display: block; font-size: .7em; color: var(--mt3); }
+  .dash-bar { position: relative; height: .6em; margin-top: .85em; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+  .dash-bar i { position: absolute; inset: 0 auto 0 0; width: var(--p); border-radius: 999px; background: linear-gradient(90deg, var(--ac), var(--ac2)); }
+  .dash-pct { display: block; margin-top: .4em; font-family: var(--font-mono); font-size: .68em; color: var(--mt2); }
+  .dash-goal-b img { width: 5.4em; height: auto; border-radius: .35em; box-shadow: 0 .7em 1.4em -.6em rgba(0,0,0,.95); }
+
+  .dash-m { display: grid; grid-template-columns: 1.6em 1fr auto; align-items: center; gap: .65em; padding: .62em 0; font-size: .82em; }
+  .dash-m + .dash-m { border-top: 1px solid var(--ln); }
+  .dash-m .dash-ic { width: 1.6em; height: 1.6em; color: var(--mt2); }
+  .dash-m b { position: relative; display: grid; place-items: center; width: 3.15em; height: 3.15em; border-radius: 999px; font-size: .9em; font-weight: 700; color: var(--mt);
+    background: conic-gradient(var(--ac2) calc(var(--p) * 1%), rgba(255,255,255,.12) 0); }
+  .dash-m b::before { content: ''; position: absolute; inset: .34em; border-radius: 999px; background: var(--d-card); }
+  .dash-m b i { position: relative; font-style: normal; }
+  .dash-m span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .dash-chart svg { display: block; width: 100%; height: 5.6em; margin-top: .5em; }
+  .dash-line { fill: none; stroke: var(--ac2); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round;
+    stroke-dasharray: 620; stroke-dashoffset: 620; animation: dash-draw 1.7s var(--ease-out) .45s forwards; }
+  .dash-area { opacity: 0; animation: dash-fade 1.1s ease 1.1s forwards; }
+  @keyframes dash-draw { to { stroke-dashoffset: 0; } }
+  @keyframes dash-fade { to { opacity: 1; } }
+  .dash-bar i { transform-origin: left; animation: dash-grow 1.1s var(--ease-out) .6s both; }
+  @keyframes dash-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* z nos elementos que precisam existir acima do plano do painel */
+  .dash-main, .dash-kpis { transform-style: preserve-3d; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dash-line { stroke-dashoffset: 0; animation: none; }
+    .dash-area { opacity: 1; animation: none; }
+    .dash-bar i { animation: none; transform: none; }
+    .dash-kpi.hero { transform: none; }
+  }
+
+  @media (max-width: 1023px) {
+    .dash { grid-template-columns: 1fr; font-size: 12px; }
+    .dash-side { display: none; }
+    .dash-main { padding: 1.1em 1.1em 1.2em; gap: .75em; }
+    .dash-top > b { font-size: 1em; }
+    .dash-user { display: none; }
+    .dash-kpis { grid-template-columns: 1fr 1fr; }
+    .dash-kpi:nth-child(1), .dash-kpi:nth-child(4) { display: none; }
+    .dash-kpi.hero b { font-size: 1.3em; }
+    .dash-row { grid-template-columns: 1fr; }
+    .dash-goal { display: none; }
+    .dash-kpi.hero { transform: none; }
+  }
+</style>

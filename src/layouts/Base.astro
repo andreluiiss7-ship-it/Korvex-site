@@ -99,14 +99,14 @@ const ogImage = `${SITE_URL}/assets/og-image.jpg`;
             }
           });
         },
-        { threshold: 0.12 }
+        { threshold: 0.05, rootMargin: '0px 0px -8% 0px' }
       );
       const mount = () => {
         // auto-stagger siblings inside the same parent (.reveal-stagger)
         document.querySelectorAll<HTMLElement>('.reveal-stagger').forEach((parent) => {
           Array.from(parent.children).forEach((child, i) => {
             (child as HTMLElement).classList.add('reveal');
-            (child as HTMLElement).style.transitionDelay = `${i * 70}ms`;
+            (child as HTMLElement).style.transitionDelay = `${i * 55}ms`;
           });
         });
         document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
@@ -115,14 +115,22 @@ const ogImage = `${SITE_URL}/assets/og-image.jpg`;
       else document.addEventListener('DOMContentLoaded', mount);
 
       // ---- Scroll progress bar ----
+      // Com animation-timeline: scroll() o CSS cuida sozinho (sem listener, sem jank).
       const bar = document.getElementById('scroll-progress');
-      const onScrollProgress = () => {
-        const h = document.documentElement;
-        const scrolled = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight);
-        if (bar) bar.style.transform = `scaleX(${scrolled})`;
-      };
-      window.addEventListener('scroll', onScrollProgress, { passive: true });
-      onScrollProgress();
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // sob reduced-motion o kill-switch global apaga a animação CSS, então o JS assume
+      const cssTimeline = CSS.supports('animation-timeline: scroll()') && !reducedMotion;
+      if (bar && !cssTimeline) {
+        let barRaf = 0;
+        const onScrollProgress = () => {
+          barRaf = 0;
+          const h = document.documentElement;
+          const scrolled = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight);
+          bar.style.transform = `scaleX(${scrolled})`;
+        };
+        window.addEventListener('scroll', () => { if (!barRaf) barRaf = requestAnimationFrame(onScrollProgress); }, { passive: true });
+        onScrollProgress();
+      }
 
       // ---- Parallax ([data-parallax="0.2"] = moves at 20% of scroll) — desktop only ----
       const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
@@ -147,13 +155,18 @@ const ogImage = `${SITE_URL}/assets/og-image.jpg`;
       }
 
 
-      // ---- Safety fallback: ensure every reveal element becomes visible after 2.5s
-      //      so we never end up with permanently-hidden content if IO misses anything
-      window.setTimeout(() => {
+      // ---- Safety fallback: nada pode ficar invisível para sempre.
+      //      Sem IO, revela tudo. Com IO, revela só o que já está na tela ou acima dela,
+      //      para não queimar a animação de entrada das seções de baixo.
+      const revealSafety = () => {
+        const noIO = !('IntersectionObserver' in window);
         document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
-          if (!el.classList.contains('in')) el.classList.add('in');
+          if (el.classList.contains('in')) return;
+          if (noIO || el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
         });
-      }, 2500);
+      };
+      window.setTimeout(revealSafety, 2500);
+      window.addEventListener('load', revealSafety);
 
       // Count-up for [data-count] AND [data-counter]
       const formatCount = (target: number, dec: number) => {

@@ -49,7 +49,8 @@
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 30px 60px -30px rgba(0, 0, 0, 0.6);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  /* ease-out-expo: mais seca que --ease-out, para assentar painel e reação de toque */
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
   --radius-xl: 28px;
 
   --font-display: 'Inter Tight', system-ui, sans-serif;
@@ -164,7 +165,7 @@ body {
   background: var(--bg-1);
   border: 1px solid var(--line-1);
   box-shadow: var(--shadow-card);
-  transition: transform 0.5s var(--ease-spring), border-color 0.3s;
+  transition: transform 0.5s var(--ease-snap), border-color 0.3s;
 }
 .card:hover { transform: translateY(-2px); border-color: var(--line-2); }
 
@@ -185,7 +186,7 @@ body {
 /* ---------- Botões ---------- */
 .btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold;
-  transition: transform 0.45s var(--ease-spring), background-color 0.3s, border-color 0.3s, color 0.3s;
+  transition: transform 0.45s var(--ease-snap), background-color 0.3s, border-color 0.3s, color 0.3s;
   will-change: transform;
 }
 .btn:hover { transform: translateY(-1px); }
@@ -267,15 +268,15 @@ body {
 /* ---------- Motion ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
 .reveal.in { opacity: 1; transform: none; }
 
 
 .tilt {
   transform: perspective(1200px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
-  transition: transform 0.6s var(--ease-spring);
+  transition: transform 0.6s var(--ease-snap);
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -303,7 +304,7 @@ body {
   flex-direction: column;
   transform: perspective(1000px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
   transform-style: preserve-3d;
-  transition: transform 0.6s var(--ease-spring), border-color 0.3s, box-shadow 0.6s;
+  transition: transform 0.6s var(--ease-snap), border-color 0.3s, box-shadow 0.6s;
 }
 .tier:hover { border-color: var(--line-3); box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8); }
 .tier-img {
@@ -388,7 +389,7 @@ body {
   border-radius: 16px;
   background: var(--bg-1);
   border: 1px solid var(--line-1);
-  transition: transform 0.5s var(--ease-spring), border-color 0.3s;
+  transition: transform 0.5s var(--ease-snap), border-color 0.3s;
 }
 .payout:hover { transform: translateY(-2px); border-color: var(--line-2); }
 .payout-i {
@@ -423,18 +424,37 @@ body {
 .reveal.in .btn-gold { animation: gold-pulse 1.4s var(--ease-out) 1; }
 @keyframes gold-pulse { 0% { box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 0 0 0 rgba(201,163,94,0.55); } 100% { box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 0 0 22px rgba(201,163,94,0); } }
 
-/* ---------- Hero: painel entra em 3D e endireita com o scroll ---------- */
+/* ---------- Painéis que entram em 3D e endireitam com o scroll ---------- */
 .hero-stage { perspective: 1400px; }
 .hero-scroll { transform-style: preserve-3d; }
+.hero-panel { transform-style: preserve-3d; isolation: isolate; }
+
+/* palco reutilizável: o filho direto é a camada que inclina */
+.stage3d { perspective: 1500px; }
+.stage3d > .lift { transform-style: preserve-3d; }
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
-    .hero-scroll { animation: panel-tilt linear both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
+    .hero-scroll { animation: panel-tilt linear both; animation-timeline: view(); animation-range: entry 0% cover 52%; }
+    .stage3d > .lift { animation: panel-rise linear both; animation-timeline: view(); animation-range: entry 6% cover 40%; }
   }
 }
 @keyframes panel-tilt {
-  from { transform: rotateX(16deg) translateY(36px) scale(0.965); }
+  from { transform: rotateX(11deg) translateY(28px) scale(0.975); }
   to   { transform: rotateX(0deg) translateY(0) scale(1); }
 }
+@keyframes panel-rise {
+  from { transform: rotateX(8deg) translateY(20px) scale(0.985); }
+  to   { transform: rotateX(0deg) translateY(0) scale(1); }
+}
+
+/* barra de progresso do topo: timeline de scroll em CSS, sem listener */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    #scroll-progress { animation: progress-x linear both; animation-timeline: scroll(root block); }
+  }
+}
+@keyframes progress-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* ---------- brilho de produto (estilo mockup iluminado) ---------- */
 .glow-blue { box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 120px -40px rgba(59,130,246,0.55), 0 30px 80px -40px rgba(0,0,0,0.8); }
@@ -491,6 +511,10 @@ body {
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 24px 48px -28px rgba(11, 18, 32, 0.28);
   background: var(--bg-0); color: var(--t-2);
 }
+/* emenda entre superfícies: sombra interna no topo, zero DOM extra */
+[data-surface="light"] { box-shadow: inset 0 64px 56px -60px rgba(5, 11, 20, 0.45); }
+[data-surface="light"] + section { box-shadow: inset 0 64px 56px -60px rgba(244, 246, 251, 0.18); }
+
 [data-surface="light"] .h2, [data-surface="light"] .lead strong, [data-surface="light"] .anchor-num { color: var(--t-1); }
 [data-surface="light"] .h2 .muted { color: rgba(11, 18, 32, 0.5); }
 [data-surface="light"] .chapter, [data-surface="light"] .anchor-l { color: var(--t-3); }
