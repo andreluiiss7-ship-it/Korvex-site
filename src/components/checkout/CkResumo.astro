@@ -1,0 +1,34 @@
+---
+// Card "Resumo do pedido" com total em verde e bloco de ofertas limitadas.
+import { icon } from '../../lib/icons';
+interface Props { ofertas?: boolean; total?: string; dark?: boolean }
+const { ofertas = false, total = 'R$ 1.997,00', dark = false } = Astro.props;
+---
+<section class={`ck-card${dark ? ' ck-card--dark' : ''}`}>
+  <header class="ck-head">
+    <span class="ck-hi" set:html={icon('coin')} />
+    <b>Resumo do pedido</b>
+    <span class="ck-total">{total}</span>
+  </header>
+
+  <div class="ck-item">
+    <img src="/assets/members/cover-02-oferta.webp" alt="" width="400" height="600" loading="lazy" decoding="async" />
+    <span><b>Método Escala · Turma 7</b><span>Acesso imediato · 5 módulos</span></span>
+    <span class="ck-item-p">R$ 1.997,00</span>
+  </div>
+
+  {ofertas && (
+    <div class="ck-bumps">
+      <header><b>Ofertas limitadas</b><span>Adicionar todas</span></header>
+      <div class="ck-bump">
+        <span class="ck-bump-tag"><s>R$ 497,00</s> R$ 297,00</span>
+        <div class="ck-bump-h">
+          <img src="/assets/members/cover-03-trafego.webp" alt="" width="400" height="600" loading="lazy" decoding="async" />
+          <b>Mentoria em grupo · 4 encontros</b>
+        </div>
+        <p>Você monta o funil sozinho. Aqui a gente revisa junto, ao vivo, antes de você subir tráfego.</p>
+        <span class="ck-bump-add"><i></i>Adicionar oferta</span>
+      </div>
+    </div>
+  )}
+</section>

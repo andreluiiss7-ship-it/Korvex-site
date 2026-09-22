@@ -1,0 +1,40 @@
+---
+// Card "Método de pagamento": tiles, passos do Pix e aviso de expiração.
+import { icon } from '../../lib/icons';
+interface Props { passos?: boolean; aviso?: boolean; metodo?: 'pix' | 'card' }
+const { passos = false, aviso = false, metodo = 'pix' } = Astro.props;
+const steps = [
+  { i: 'grid', t: 'Copie os dados de pagamento', d: 'Ao clicar no botão abaixo, você poderá escanear o QR Code ou copiar a chave Pix.' },
+  { i: 'bank', t: 'Realize o pagamento', d: 'Abra o aplicativo do seu banco e pague com as informações copiadas.' },
+  { i: 'check', t: 'Pagamento confirmado', d: 'Assim que pagar, seu pedido é liberado em instantes.' },
+];
+---
+<section class="ck-card">
+  <header class="ck-head"><span class="ck-hi" set:html={icon('card')} /><b>Método de pagamento</b></header>
+  <div class="ck-methods">
+    <span class={`ck-method${metodo === 'pix' ? ' on' : ''}`}><i set:html={icon('pix')} />Pix</span>
+    <span class={`ck-method${metodo === 'card' ? ' on' : ''}`}><i set:html={icon('card')} />Cartão</span>
+    <span class="ck-method"><i set:html={icon('barcode')} />Boleto</span>
+  </div>
+  {metodo === 'card' && (
+    <div class="ck-cardfields">
+      <label class="ck-field"><span>Número do cartão<i>*</i></span><div class="ck-input">0000 0000 0000 0000<span class="ck-brands"><i>VISA</i><i>MC</i><i>ELO</i></span></div></label>
+      <div class="ck-field-row">
+        <label class="ck-field"><span>Validade<i>*</i></span><div class="ck-input">MM/AA</div></label>
+        <label class="ck-field"><span>CVV<i>*</i></span><div class="ck-input">000</div></label>
+      </div>
+      <label class="ck-field"><span>Parcelas<i>*</i></span><div class="ck-input ck-select">12x de R$ 197,40<u></u></div></label>
+    </div>
+  )}
+  {passos && (
+    <div class="ck-steps">
+      {steps.map((s) => (
+        <div class="ck-step">
+          <span class="ck-si" set:html={icon(s.i === 'grid' ? 'grid' : s.i === 'bank' ? 'bank' : 'check')} />
+          <div><b>{s.t}</b><p>{s.d}</p></div>
+        </div>
+      ))}
+    </div>
+  )}
+  {aviso && <p class="ck-warn">Lembre-se de pagar em até 15 minutos. Depois disso o pedido é cancelado automaticamente.</p>}
+</section>

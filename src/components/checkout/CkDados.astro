@@ -1,0 +1,30 @@
+---
+// Card "Dados pessoais" do checkout real: label com asterisco, placeholder e seletor de país.
+import { icon } from '../../lib/icons';
+interface Props { title?: string; slim?: boolean }
+const { title = 'Dados pessoais', slim = false } = Astro.props;
+const campos = [
+  ['E-mail', 'Digite seu e-mail'],
+  ['Nome completo', 'Digite seu nome completo'],
+  ['CPF/CNPJ', 'Digite seu documento'],
+];
+---
+<section class="ck-card">
+  <header class="ck-head">
+    <span class="ck-hi" set:html={icon('users')} />
+    <b>{title}</b>
+    <span class="ck-flag"><i class="ck-br"></i><u set:html={icon('chevron')} /></span>
+  </header>
+  {campos.slice(0, slim ? 2 : 3).map(([l, ph]) => (
+    <label class="ck-field">
+      <span>{l}<i>*</i></span>
+      <div class="ck-input">{ph}</div>
+    </label>
+  ))}
+  {!slim && (
+    <label class="ck-field">
+      <span>Telefone<i>*</i></span>
+      <div class="ck-input"><i class="ck-br"></i>+55</div>
+    </label>
+  )}
+</section>

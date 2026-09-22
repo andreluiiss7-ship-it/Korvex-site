@@ -50,6 +50,8 @@ export const icons: Record<string, string> = {
   barcode: P('<path d="M4 5v14M7.5 5v14M11 5v10M14.5 5v14M18 5v10M20.5 5v14"/>'),
   cashout: P('<rect x="2.5" y="7" width="19" height="11" rx="2.5"/><circle cx="12" cy="12.5" r="2.4"/><path d="M6 10.5v4M18 10.5v4"/>'),
   undo: P('<path d="M4 9h9a5 5 0 1 1 0 10H8"/><path d="m7.5 5.5-3.5 3.5 3.5 3.5"/>'),
+  grid: P('<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM19.5 14v3M14 19.5h6"/>'),
+  bank: P('<path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20.5h18"/>'),
   headset: P('<path d="M4 13a8 8 0 0 1 16 0"/><rect x="2.5" y="13" width="4" height="6" rx="1.5"/><rect x="17.5" y="13" width="4" height="6" rx="1.5"/><path d="M20 19a4 4 0 0 1-4 3h-2"/>'),
 };
 

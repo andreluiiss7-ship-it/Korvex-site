@@ -1,281 +1,257 @@
 ---
+// Recriação do checkout real da Korvex (checkout.korvex.com.br): página clara,
+// faixa escura do produtor no topo, cards brancos, total em verde e ofertas limitadas.
+// Os 7 temas são variações de layout sobre o mesmo sistema visual.
 import { icon } from '../lib/icons';
+import CkBanner from './checkout/CkBanner.astro';
+import CkDados from './checkout/CkDados.astro';
+import CkPagamento from './checkout/CkPagamento.astro';
+import CkResumo from './checkout/CkResumo.astro';
 ---
 
 <div data-tilt="3" class="tilt browser kframe blue in relative glow-blue">
-          <div class="browser-bar">
-            <span class="dot bg-[#ff5f57]/80"></span>
-            <span class="dot bg-[#febc2e]/80"></span>
-            <span class="dot bg-[#28c840]/80"></span>
-            <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">pay.metodoescala.com</span>
-            <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              <span data-current-theme>Tema Padrão</span>
-            </span>
-          </div>
+  <div class="browser-bar">
+    <span class="dot bg-[#ff5f57]/80"></span>
+    <span class="dot bg-[#febc2e]/80"></span>
+    <span class="dot bg-[#28c840]/80"></span>
+    <span class="ml-3 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">checkout.metodoescala.com</span>
+    <span class="ml-auto hidden items-center gap-1.5 text-[10px] text-emerald-400 sm:flex">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+      <span data-current-theme>Tema Padrão</span>
+    </span>
+  </div>
 
   <div class="ck-stage">
-          <!-- VARIANT: padrão (2 colunas) -->
-          <div data-view="padrao" class="grid gap-0 sm:grid-cols-[1.2fr_1fr]">
-            <div class="border-b border-suede-500/10 p-6 sm:border-b-0 sm:border-r">
-              <div class="flex items-center gap-2">
-                <div class="ck-logo h-7 w-7 rounded-lg">ME</div>
-                <span class="text-sm font-semibold text-white">Método Escala</span>
-              </div>
-              <p class="mt-5 text-[11px] uppercase tracking-wider text-chrome-300/60">Pagamento</p>
-              <div class="mt-3 flex gap-2">
-                <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/15 px-3 py-2 text-center text-xs font-semibold text-white">Pix</span>
-                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Cartão</span>
-                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Boleto</span>
-              </div>
-              <div class="mt-4 space-y-2.5">
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">Nome completo</div>
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">E-mail</div>
-              </div>
-              <div class="mt-4 rounded-lg border border-dashed border-titan-500/40 bg-titan-600/[0.06] p-3">
-                <div class="flex items-start gap-2">
-                  <span class="mt-0.5 flex h-4 w-4 items-center justify-center rounded bg-titan-600 text-white" set:html={icon('check')}></span>
-                  <div>
-                    <p class="text-[12px] font-semibold text-white">Sim, quero o bônus avançado</p>
-                    <p class="text-[11px] text-chrome-300/60">+ R$97, leve junto com 1 clique</p>
-                  </div>
-                </div>
-              </div>
-              <span aria-hidden="true" class="inline-flex items-center justify-center mt-4 w-full rounded-lg bg-[--blue] py-2.5 text-sm font-semibold text-white">Pagar agora</span>
-            </div>
-            <div class="bg-white/[0.015] p-6">
-              <p class="text-[11px] uppercase tracking-wider text-chrome-300/60">Sua compra</p>
-              <div class="mt-3 flex items-center gap-3">
-                <img src="/assets/members/cover-02-oferta.webp" alt="" width="400" height="600" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-lg object-cover" />
-                <div>
-                  <p class="text-sm font-semibold text-white">Método Escala · Turma 7</p>
-                  <p class="text-[11px] text-chrome-300/60">Acesso imediato</p>
-                </div>
-              </div>
-              <div class="mt-5 space-y-2 text-[12px] text-chrome-300/70">
-                <div class="flex justify-between"><span>Produto</span><span>R$ 1.997</span></div>
-                <div class="flex justify-between"><span>Bônus avançado</span><span>R$ 97</span></div>
-                <div class="my-2 h-px bg-suede-500/15"></div>
-                <div class="flex justify-between text-sm font-semibold text-white"><span>Total</span><span class="text-titan-400">R$ 2.094</span></div>
-              </div>
-              <div class="mt-5 flex items-center gap-2 rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 py-2 text-[11px] text-chrome-300/65">
-                <span class="h-3.5 w-3.5 text-titan-400" set:html={icon('shield')}></span>
-                Ambiente seguro e criptografado
-              </div>
-            </div>
-          </div>
+    <!-- 1. padrão: duas colunas -->
+    <div data-view="padrao" class="ck">
+      <CkBanner />
+      <div class="ck-cols">
+        <div class="ck-col"><CkDados /><CkPagamento passos aviso /></div>
+        <div class="ck-col">
+          <CkResumo ofertas />
+          <span aria-hidden="true" class="ck-pay">Pagar agora · R$ 1.997,00</span>
+          <p class="ck-safe"><i set:html={icon('lock')} />Ambiente seguro e criptografado</p>
+        </div>
+      </div>
+    </div>
 
-          <!-- VARIANT: formulário longo -->
-          <div data-view="longo" class="hidden p-6">
-            <div class="mx-auto max-w-md">
-              <div class="flex items-center gap-2">
-                <div class="ck-logo h-7 w-7 rounded-lg">ME</div>
-                <span class="text-sm font-semibold text-white">Método Escala</span>
-              </div>
-              <div class="mt-4 rounded-xl border border-suede-500/15 bg-white/[0.02] p-4">
-                <p class="text-sm font-semibold text-white">Método Escala · Turma 7</p>
-                <p class="mt-1 text-[12px] text-chrome-300/65">Acesso vitalício · Bônus inclusos</p>
-                <p class="mt-3 font-display text-2xl font-bold text-titan-400">R$ 1.997</p>
-              </div>
-              <p class="mt-5 text-[11px] uppercase tracking-wider text-chrome-300/60">Seus dados</p>
-              <div class="mt-2 space-y-2">
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">CPF</div>
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">WhatsApp</div>
-                <div class="relative flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">
-                    Número do cartão
-                    <span class="ck-brands"><i>VISA</i><i>MC</i><i>ELO</i></span>
-                  </div>
-              </div>
-              <p class="mt-5 text-[11px] uppercase tracking-wider text-chrome-300/60">Pagamento</p>
-              <div class="mt-2 flex gap-2">
-                <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/15 px-3 py-2 text-center text-xs font-semibold text-white">Pix</span>
-                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Cartão</span>
-              </div>
-              <div class="mt-2 space-y-2">
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">Validade · CVV</div>
-              </div>
-              <span aria-hidden="true" class="inline-flex items-center justify-center mt-5 w-full rounded-lg bg-[--blue] py-3 text-sm font-bold text-white">Finalizar compra · R$ 1.997</span>
-            </div>
-          </div>
+    <!-- 2. longo: uma coluna -->
+    <div data-view="longo" class="ck hidden">
+      <CkBanner />
+      <div class="ck-one">
+        <CkDados />
+        <CkPagamento metodo="card" />
+        <CkResumo />
+        <span aria-hidden="true" class="ck-pay">Finalizar compra · R$ 1.997,00</span>
+      </div>
+    </div>
 
-          <!-- VARIANT: box (card central) -->
-          <div data-view="box" class="hidden bg-gradient-to-b from-white/[0.03] to-ink/40 p-8">
-            <div class="mx-auto max-w-sm rounded-2xl border border-suede-500/20 bg-ink/95 p-6 shadow-depth backdrop-blur">
-              <div class="text-center">
-                <div class="ck-logo mx-auto h-10 w-10 rounded-xl text-[13px]">ME</div>
-                <p class="mt-3 text-[11px] uppercase tracking-wider text-chrome-300/60">Finalizar compra</p>
-                <p class="font-display text-xl font-bold text-white">Método Escala · Turma 7</p>
-                <p class="mt-1 font-display text-3xl font-bold text-titan-400">R$ 1.997</p>
-              </div>
-              <div class="mt-5 space-y-2">
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">Nome no cartão</div>
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">CEP</div>
-              </div>
-              <div class="mt-3 flex gap-2">
-                <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/15 px-3 py-2 text-center text-xs font-semibold text-white">Pix</span>
-                <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Cartão</span>
-              </div>
-              <span aria-hidden="true" class="inline-flex items-center justify-center mt-4 w-full rounded-lg bg-[--blue] py-2.5 text-sm font-bold text-white">Pagar com Pix</span>
-              <p class="mt-2 text-center text-[10px] text-chrome-300/60"><span class="inline-block h-3 w-3 align-[-2px]" set:html={icon('shield')}></span> Compra 100% segura</p>
-            </div>
-          </div>
+    <!-- 3. box: card único centrado -->
+    <div data-view="box" class="ck hidden">
+      <CkBanner compact />
+      <div class="ck-box">
+        <CkDados slim />
+        <CkPagamento />
+        <span aria-hidden="true" class="ck-pay">Pagar com Pix · R$ 1.997,00</span>
+        <p class="ck-safe"><i set:html={icon('lock')} />Compra 100% segura</p>
+      </div>
+    </div>
 
-          <!-- VARIANT: moderno (editorial premium) -->
-          <div data-view="moderno" class="hidden grid gap-0 sm:grid-cols-[1.3fr_1fr]">
-            <div class="relative overflow-hidden border-b border-suede-500/10 p-6 sm:border-b-0 sm:border-r">
-              <div class="pointer-events-none absolute -top-10 -left-10 h-44 w-44 rounded-full bg-titan-600/20 blur-3xl"></div>
-              <div class="relative">
-                <div class="flex items-center gap-2"><div class="ck-logo h-7 w-7 rounded-lg">ME</div><span class="text-sm font-semibold text-white">Método Escala</span></div>
-                <span class="mt-5 inline-flex items-center gap-1.5 rounded-full border border-titan-500/40 bg-titan-600/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-titan-400"><span class="inline-block h-3 w-3 align-[-2px]" set:html={icon('bolt')}></span> Oferta por tempo limitado</span>
-                <p class="mt-3 font-display text-2xl font-bold leading-tight text-white">Método Escala · Turma 7</p>
-                <p class="mt-1 text-[12px] text-chrome-300/65">+820 alunos já garantiram</p>
-                <div class="mt-4 flex items-center gap-2">
-                  <div class="flex -space-x-1.5">
-                    <div class="h-6 w-6 rounded-full border-2 border-ink bg-[--blue]"></div>
-                    <div class="h-6 w-6 rounded-full border-2 border-ink bg-gradient-to-br from-suede-300 to-suede-500"></div>
-                    <div class="h-6 w-6 rounded-full border-2 border-ink bg-gradient-to-br from-gold-400 to-gold-600"></div>
-                  </div>
-                  <span class="text-[11px] text-chrome-300/65"><span class="ck-stars text-gold-300"><i></i><i></i><i></i><i></i><i></i></span> <strong class="text-white">4.9</strong> (820 avaliações)</span>
-                </div>
-                <div class="mt-5 space-y-2">
-                  <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">Nome completo</div>
-                  <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">E-mail</div>
-                </div>
-                <span aria-hidden="true" class="inline-flex items-center justify-center mt-4 w-full rounded-xl bg-[--blue] py-3 text-sm font-bold text-white">Quero garantir minha vaga <span class="inline-block h-3.5 w-3.5 align-[-2px]" set:html={icon('arrow')}></span></span>
-              </div>
-            </div>
-            <div class="bg-white/[0.015] p-6">
-              <p class="text-[11px] uppercase tracking-wider text-chrome-300/60">Total</p>
-              <p class="mt-2 font-display text-3xl font-bold text-white">R$ 1.997</p>
-              <p class="text-[11px] text-titan-400">ou 12x R$ 197,40</p>
-              <div class="mt-4 space-y-2 text-[11px] text-chrome-300/70">
-                <p class="flex items-center gap-2"><span class="h-3 w-3 text-titan-400" set:html={icon('check')}></span>Acesso vitalício</p>
-                <p class="flex items-center gap-2"><span class="h-3 w-3 text-titan-400" set:html={icon('check')}></span>3 bônus exclusivos</p>
-                <p class="flex items-center gap-2"><span class="h-3 w-3 text-titan-400" set:html={icon('check')}></span>Garantia de 7 dias</p>
-              </div>
-            </div>
-          </div>
+    <!-- 4. moderno: resumo escuro fixo -->
+    <div data-view="moderno" class="ck hidden">
+      <CkBanner compact />
+      <div class="ck-cols ck-cols--wide">
+        <div class="ck-col"><CkDados /><CkPagamento passos /></div>
+        <div class="ck-col">
+          <CkResumo dark ofertas />
+          <span aria-hidden="true" class="ck-pay">Quero garantir minha vaga</span>
+        </div>
+      </div>
+    </div>
 
-          <!-- VARIANT: clássico (table style) -->
-          <div data-view="classico" class="hidden p-6">
-            <div class="mx-auto max-w-lg">
-              <div class="flex items-center justify-center gap-2">
-                <div class="ck-logo h-8 w-8 rounded-lg text-[12px]">ME</div>
-                <span class="font-display text-base font-bold text-white">Método Escala</span>
-              </div>
-              <h3 class="mt-4 text-center font-display text-lg font-bold text-white">Confirmar pedido</h3>
-              <div class="mt-4 rounded-lg border border-suede-500/15 bg-white/[0.02]">
-                <div class="flex items-center justify-between border-b border-suede-500/10 p-3 text-[12px]">
-                  <span class="text-chrome-300/70">Produto</span><span class="font-semibold text-white">Método Escala · Turma 7</span>
-                </div>
-                <div class="flex items-center justify-between border-b border-suede-500/10 p-3 text-[12px]">
-                  <span class="text-chrome-300/70">Subtotal</span><span class="text-white">R$ 1.997,00</span>
-                </div>
-                <div class="flex items-center justify-between p-3 text-sm">
-                  <span class="font-semibold text-white">Total</span><span class="font-bold text-titan-400">R$ 1.997,00</span>
-                </div>
-              </div>
-              <div class="mt-3 grid grid-cols-3 gap-2">
-                <span class="rounded border border-titan-500/60 bg-titan-600/15 py-2 text-center text-[11px] font-semibold text-white">Pix</span>
-                <span class="rounded border border-suede-500/20 py-2 text-center text-[11px] text-chrome-300/70">Cartão</span>
-                <span class="rounded border border-suede-500/20 py-2 text-center text-[11px] text-chrome-300/70">Boleto</span>
-              </div>
-              <div class="mt-3 space-y-2">
-                <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">CPF</div>
-              </div>
-              <span aria-hidden="true" class="inline-flex items-center justify-center mt-3 w-full rounded bg-[--blue] py-2.5 text-sm font-semibold text-white">Confirmar e pagar</span>
-            </div>
-          </div>
+    <!-- 5. clássico: resumo primeiro -->
+    <div data-view="classico" class="ck hidden">
+      <CkBanner compact />
+      <div class="ck-one ck-one--wide">
+        <CkResumo />
+        <CkDados />
+        <span aria-hidden="true" class="ck-pay">Confirmar e pagar</span>
+      </div>
+    </div>
 
-          <!-- VARIANT: fluxo (blocks expanding) -->
-          <div data-view="fluxo" class="hidden p-6">
-            <div class="mx-auto max-w-lg space-y-2.5">
-              <div class="flex items-center gap-2"><div class="ck-logo h-7 w-7 rounded-lg">ME</div><span class="text-sm font-semibold text-white">Método Escala</span></div>
-              <div class="rounded-xl border border-suede-500/15 bg-white/[0.02] p-3">
-                <div class="flex items-center justify-between"><span class="text-[12px] font-semibold text-white"><span class="inline-block h-3 w-3 text-emerald-400 align-[-2px]" set:html={icon('check')}></span> Identificação</span><span class="text-[10px] text-emerald-400">concluído</span></div>
-              </div>
-              <div class="rounded-xl border border-titan-500/40 bg-titan-600/[0.08] p-4">
-                <div class="mb-3 flex items-center justify-between"><span class="text-[12px] font-semibold text-titan-400">Forma de pagamento</span><span class="text-[10px] text-titan-400/70">em aberto</span></div>
-                <div class="flex gap-2">
-                  <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/20 px-3 py-2 text-center text-xs font-semibold text-white">Pix</span>
-                  <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Cartão</span>
-                </div>
-                <div class="mt-3 space-y-2">
-                  <div class="flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">WhatsApp</div>
-                </div>
-                <span aria-hidden="true" class="inline-flex items-center justify-center mt-3 w-full rounded-lg bg-[--blue] py-2.5 text-sm font-semibold text-white">Continuar para pagamento</span>
-              </div>
-              <div class="rounded-xl border border-suede-500/15 bg-white/[0.02] p-3 opacity-60">
-                <div class="flex items-center justify-between"><span class="text-[12px] text-chrome-300/60">Confirmação</span><span class="text-[10px] text-chrome-300/40">aguardando</span></div>
-              </div>
-            </div>
-          </div>
+    <!-- 6. fluxo: blocos em acordeão -->
+    <div data-view="fluxo" class="ck hidden">
+      <CkBanner compact />
+      <div class="ck-one">
+        <CkDados title="1. Seus dados" slim />
+        <div class="ck-card ck-fold"><span class="ck-hi" set:html={icon('card')} /><b>2. Forma de pagamento</b><u set:html={icon('chevron')} /></div>
+        <div class="ck-card ck-fold"><span class="ck-hi" set:html={icon('check')} /><b>3. Confirmação</b><u set:html={icon('chevron')} /></div>
+        <CkResumo ofertas />
+        <span aria-hidden="true" class="ck-pay">Continuar para pagamento</span>
+      </div>
+    </div>
 
-          <!-- VARIANT: fluxo etapas (stepper traditional) -->
-          <div data-view="etapas" class="hidden p-6">
-            <div class="flex items-center gap-2">
-              <div class="flex items-center gap-2 text-[11px] font-semibold">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-titan-600/20 text-titan-400 line-through decoration-titan-400/50">1</span>
-                <span class="text-chrome-300/60">Identificação</span>
-              </div>
-              <span class="h-px w-6 bg-suede-500/25"></span>
-              <div class="flex items-center gap-2 text-[11px] font-semibold">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-titan-500 text-white">2</span>
-                <span class="text-white">Pagamento</span>
-              </div>
-              <span class="h-px w-6 bg-suede-500/15"></span>
-              <div class="flex items-center gap-2 text-[11px] font-semibold opacity-50">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full border border-suede-500/30 text-chrome-300/60">3</span>
-                <span class="text-chrome-300/60">Pronto</span>
-              </div>
-            </div>
-            <div class="mt-6 grid gap-5 sm:grid-cols-[1.3fr_1fr]">
-              <div>
-                <p class="text-[11px] uppercase tracking-wider text-chrome-300/60">Forma de pagamento</p>
-                <div class="mt-3 flex gap-2">
-                  <span class="flex-1 rounded-lg border border-suede-500/20 px-3 py-2 text-center text-xs text-chrome-300/70">Pix</span>
-                  <span class="flex-1 rounded-lg border border-titan-500/60 bg-titan-600/15 px-3 py-2 text-center text-xs font-semibold text-white">Cartão</span>
-                </div>
-                <div class="mt-4 space-y-2.5">
-                  <div class="relative flex h-9 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">
-                    Número do cartão
-                    <span class="ck-brands"><i>VISA</i><i>MC</i><i>ELO</i></span>
-                  </div>
-                  <div class="flex gap-2.5">
-                    <div class="flex h-9 flex-1 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">MM/AA</div>
-                    <div class="flex h-9 w-20 items-center rounded-lg border border-suede-500/15 bg-white/[0.02] px-3 text-[11.5px] text-chrome-300/45">CVV</div>
-                  </div>
-                </div>
-                <div class="mt-4 flex items-center gap-2">
-                  <span aria-hidden="true" class="inline-flex items-center justify-center flex-1 rounded-lg border border-suede-500/20 py-2.5 text-xs font-semibold text-chrome-300/70">Voltar</span>
-                  <span aria-hidden="true" class="inline-flex items-center justify-center flex-[2] rounded-lg bg-[--blue] py-2.5 text-sm font-semibold text-white">Continuar</span>
-                </div>
-              </div>
-              <div class="rounded-xl border border-suede-500/12 bg-white/[0.02] p-4">
-                <p class="text-[11px] uppercase tracking-wider text-chrome-300/60">Resumo</p>
-                <p class="mt-2 text-sm font-semibold text-white">Método Escala · Turma 7</p>
-                <div class="mt-3 flex justify-between text-sm font-semibold text-white"><span>Total</span><span class="text-titan-400">R$ 1.997</span></div>
-              </div>
-            </div>
-          </div>
+    <!-- 7. etapas: stepper -->
+    <div data-view="etapas" class="ck hidden">
+      <CkBanner compact />
+      <div class="ck-one">
+        <div class="ck-steps-bar">
+          <span class="on"><i>1</i>Identificação</span>
+          <span><i>2</i>Pagamento</span>
+          <span><i>3</i>Pronto</span>
+        </div>
+        <CkDados />
+        <CkResumo />
+        <span aria-hidden="true" class="ck-pay">Continuar</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<style>
-  .ck-stage { position: relative; transform-style: preserve-3d; }
+<style is:global>
+  /* Sistema visual do checkout real: página clara, cards brancos, total verde.
+     Tudo escopado em .ck-stage para não vazar na landing. */
+  .ck-stage {
+    position: relative; display: flex;
+    container-type: inline-size; background: #F4F4F5;
+    --pg: #F4F4F5; --cd: #FFFFFF; --bd: #E4E4E7; --bd2: #D4D4D8;
+    --t1: #18181B; --t2: #52525B; --t3: #A1A1AA;
+    --ic: #F4F4F5; --icb: #EEF2FF; --icb2: #4F46E5;
+    --ok: #16A34A; --req: #E11D48;
+    --warnbg: #FEE2E2; --warn: #DC2626;
+    --tag: #1E3A8A; --bump: #D97706; --addbg: #F0FDF4; --addln: #86EFAC;
+  }
   @media (min-width: 1024px) { .ck-stage { min-height: 460px; } }
 
-  /* marca do lojista: ladrilho claro com monograma, como num checkout de verdade */
-  .ck-logo { display: grid; place-items: center; background: #F4F6FB; color: #0B1220; font-family: var(--font-display); font-size: 11px; font-weight: 800; letter-spacing: .02em; }
+  .ck-stage .ck {
+    background: var(--pg); color: var(--t2);
+    font-family: var(--font-display);
+    font-size: clamp(8px, 1.32cqw, 12.5px);
+    display: flex; flex-direction: column; flex: 1; min-width: 0;
+  }
+  .ck-stage .ck.hidden { display: none; }
 
-  .ck-stars { display: inline-flex; gap: 1px; vertical-align: -1px; }
-  .ck-stars i { width: 9px; height: 9px; background: currentColor; display: block;
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+  /* faixa do produtor */
+  .ck-stage .ck-banner { position: relative; display: flex; align-items: center; gap: 1em; padding: 1.5em 1.6em; background: #0B0B0E; overflow: hidden; }
+  .ck-stage .ck-banner-t { position: relative; z-index: 1; flex: 1; min-width: 0; }
+  .ck-stage .ck-eyebrow { font-family: var(--font-mono); font-size: .62em; letter-spacing: .2em; text-transform: uppercase; color: #E2C386; }
+  .ck-stage .ck-banner h4 { margin-top: .35em; font-size: 1.55em; font-weight: 800; letter-spacing: -.025em; line-height: 1.08; color: #fff; }
+  .ck-stage .ck-banner h4 em { font-style: normal; color: #E2C386; }
+  .ck-stage .ck-banner-s { margin-top: .45em; font-size: .78em; color: rgba(255,255,255,.62); }
+  .ck-stage .ck-banner-b { display: flex; align-items: center; gap: 1.2em; margin-top: 1em; }
+  .ck-stage .ck-price { font-size: 1.5em; font-weight: 800; letter-spacing: -.03em; color: #fff; white-space: nowrap; }
+  .ck-stage .ck-price span { font-size: .6em; font-weight: 700; }
+  .ck-stage .ck-banner-b ul { padding-left: 1.2em; border-left: 1px solid rgba(255,255,255,.16); }
+  .ck-stage .ck-banner-b li { display: flex; align-items: center; gap: .5em; font-size: .72em; color: rgba(255,255,255,.72); }
+  .ck-stage .ck-banner-b li + li { margin-top: .3em; }
+  .ck-stage .ck-banner-b li i { display: block; width: .95em; height: .95em; color: #E2C386; }
+  .ck-stage .ck-banner > img { position: relative; z-index: 1; width: 8.5em; height: 5.6em; object-fit: cover; border-radius: .5em; flex: none; }
+  .ck-stage .ck-banner.compact { padding: 1.1em 1.6em; }
+  .ck-stage .ck-banner.compact h4 { font-size: 1.15em; }
+  .ck-stage .ck-banner.compact > img { width: 6em; height: 4em; }
 
-  .ck-brands { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; gap: 4px; }
-  .ck-brands i { display: grid; place-items: center; height: 15px; padding: 0 4px; border-radius: 3px; background: rgba(255,255,255,.1);
-    font-family: var(--font-mono); font-style: normal; font-size: 7.5px; font-weight: 600; letter-spacing: .04em; color: rgba(244,246,251,.75); }
+  /* layouts dos temas */
+  .ck-stage .ck-cols { display: grid; grid-template-columns: 1.15fr .85fr; gap: 1em; padding: 1.2em 1.6em 1.6em; }
+  .ck-stage .ck-cols--wide { grid-template-columns: 1fr .82fr; }
+  .ck-stage .ck-col { display: flex; flex-direction: column; gap: 1em; min-width: 0; }
+  .ck-stage .ck-one { display: flex; flex-direction: column; gap: 1em; width: 100%; max-width: 30em; margin: 0 auto; padding: 1.2em 1.6em 1.6em; }
+  .ck-stage .ck-one--wide { max-width: 38em; }
+  .ck-stage .ck-box { display: flex; flex-direction: column; gap: .9em; width: 100%; max-width: 24em; margin: 0 auto; padding: 1.2em 1.6em 1.6em; }
 
-  /* profundidade real no tilt: o CTA e o selo saem do plano do painel */
-  .ck-stage [data-view] > div { transform-style: preserve-3d; }
+  /* cards */
+  .ck-stage .ck-card { padding: 1em 1.1em; border-radius: .75em; border: 1px solid var(--bd); background: var(--cd); min-width: 0; }
+  .ck-stage .ck-card--dark { background: #0B0B0E; border-color: rgba(255,255,255,.1); }
+  .ck-stage .ck-card--dark .ck-head b, .ck-stage .ck-card--dark .ck-item b { color: #fff; }
+  .ck-stage .ck-card--dark .ck-hi { background: rgba(255,255,255,.08); color: rgba(255,255,255,.75); }
+  .ck-stage .ck-card--dark .ck-item { border-color: rgba(255,255,255,.1); }
+  .ck-stage .ck-card--dark .ck-item span span, .ck-stage .ck-card--dark .ck-item-p { color: rgba(255,255,255,.6); }
+  .ck-stage .ck-card--dark .ck-bumps > header b { color: #fff; }
+  .ck-stage .ck-card--dark .ck-bumps > header span { color: rgba(255,255,255,.6); }
+
+  .ck-stage .ck-head { display: flex; align-items: center; gap: .65em; }
+  .ck-stage .ck-head b { font-size: .95em; font-weight: 700; color: var(--t1); }
+  .ck-stage .ck-hi { display: block; width: 2em; height: 2em; padding: .45em; border-radius: .45em; background: var(--ic); color: var(--t2); flex: none; }
+  .ck-stage .ck-total { margin-left: auto; font-size: 1em; font-weight: 800; color: var(--ok); white-space: nowrap; }
+  .ck-stage .ck-flag { margin-left: auto; display: inline-flex; align-items: center; gap: .35em; padding: .35em .5em; border-radius: .4em; border: 1px solid var(--bd); }
+  .ck-stage .ck-flag u { display: block; width: .8em; height: .8em; color: var(--t3); transform: rotate(90deg); }
+  .ck-stage .ck-br { display: block; width: 1.4em; height: 1em; border-radius: .15em; flex: none;
+    background: linear-gradient(#0EA34A, #0EA34A); position: relative; }
+  .ck-stage .ck-br::after { content: ''; position: absolute; inset: 22% 18%; background: #F5D033; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+
+  /* campos */
+  .ck-stage .ck-field { display: block; margin-top: .8em; }
+  .ck-stage .ck-field > span { display: block; margin-bottom: .3em; font-size: .78em; font-weight: 500; color: var(--t1); }
+  .ck-stage .ck-field i { color: var(--req); font-style: normal; }
+  .ck-stage .ck-input { display: flex; align-items: center; gap: .5em; height: 2.6em; padding: 0 .8em; border-radius: .45em; border: 1px solid var(--bd2); background: var(--cd); font-size: .8em; color: var(--t3); }
+
+  /* método de pagamento */
+  .ck-stage .ck-methods { display: flex; gap: .55em; margin-top: .85em; }
+  .ck-stage .ck-method { display: inline-flex; align-items: center; gap: .4em; padding: .55em .85em; border-radius: .45em; border: 1px solid var(--bd2); background: var(--cd); font-size: .76em; font-weight: 500; color: var(--t2); }
+  .ck-stage .ck-method i { display: block; width: 1.1em; height: 1.1em; }
+  .ck-stage .ck-method.on { border-color: var(--t1); background: #E4E4E7; color: var(--t1); font-weight: 700; }
+  .ck-stage .ck-steps { margin-top: .9em; display: grid; gap: .7em; }
+  .ck-stage .ck-step { display: grid; grid-template-columns: auto 1fr; gap: .7em; align-items: start; }
+  .ck-stage .ck-si { display: block; width: 2em; height: 2em; padding: .45em; border-radius: .45em; background: var(--icb); color: var(--icb2); }
+  .ck-stage .ck-step b { display: block; font-size: .82em; font-weight: 700; color: var(--t1); }
+  .ck-stage .ck-step p { margin-top: .1em; font-size: .72em; line-height: 1.35; color: var(--t2); }
+  .ck-stage .ck-warn { margin-top: .9em; padding: .7em .8em; border-radius: .45em; background: var(--warnbg); font-size: .72em; line-height: 1.35; color: var(--warn); }
+
+  .ck-stage .ck-cardfields { margin-top: .2em; }
+  .ck-stage .ck-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .7em; }
+  .ck-stage .ck-brands { margin-left: auto; display: flex; gap: .25em; }
+  .ck-stage .ck-brands i { display: grid; place-items: center; height: 1.4em; padding: 0 .35em; border-radius: .2em; background: #E4E4E7; font-family: var(--font-mono); font-style: normal; font-size: .62em; font-weight: 700; letter-spacing: .04em; color: #52525B; }
+  .ck-stage .ck-select u { margin-left: auto; width: 0; height: 0; border-left: .32em solid transparent; border-right: .32em solid transparent; border-top: .38em solid var(--t3); }
+
+  /* resumo */
+  .ck-stage .ck-item { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .7em; margin-top: .85em; padding-top: .85em; border-top: 1px solid var(--bd); }
+  .ck-stage .ck-item img { width: 2.6em; height: 2.6em; border-radius: .4em; object-fit: cover; }
+  .ck-stage .ck-item b { display: block; font-size: .8em; font-weight: 600; color: var(--t1); }
+  .ck-stage .ck-item span span { display: block; margin-top: .1em; font-size: .7em; color: var(--t3); }
+  .ck-stage .ck-item-p { font-size: .8em; font-weight: 700; color: var(--t1); white-space: nowrap; }
+
+  /* ofertas limitadas */
+  .ck-stage .ck-bumps { margin-top: .9em; padding: .8em; border: 1.5px dashed var(--bump); border-radius: .6em; }
+  .ck-stage .ck-bumps > header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6em; }
+  .ck-stage .ck-bumps > header b { font-size: .84em; font-weight: 700; color: var(--t1); }
+  .ck-stage .ck-bumps > header span { font-size: .74em; color: var(--t2); }
+  .ck-stage .ck-bump { position: relative; border: 1px solid var(--bd); border-radius: .5em; background: var(--cd); overflow: hidden; }
+  .ck-stage .ck-bump-tag { position: absolute; right: .6em; top: .6em; padding: .25em .6em; border-radius: .35em; background: var(--tag); font-size: .68em; font-weight: 700; color: #fff; }
+  .ck-stage .ck-bump-tag s { opacity: .55; font-weight: 500; }
+  .ck-stage .ck-bump-h { display: flex; align-items: center; gap: .6em; padding: .7em .8em; }
+  .ck-stage .ck-bump-h img { width: 1.9em; height: 1.9em; border-radius: .3em; object-fit: cover; }
+  .ck-stage .ck-bump-h b { font-size: .8em; font-weight: 700; color: var(--t1); }
+  .ck-stage .ck-bump > p { padding: 0 .8em .7em; font-size: .72em; line-height: 1.4; color: var(--t2); }
+  .ck-stage .ck-bump-add { display: flex; align-items: center; gap: .5em; padding: .6em .8em; background: var(--addbg); border-top: 1px solid var(--addln); font-size: .78em; font-weight: 600; color: #15803D; }
+  .ck-stage .ck-bump-add i { display: block; width: 1em; height: 1em; border-radius: 50%; border: 1.5px solid #22C55E; }
+
+  /* ações */
+  .ck-stage .ck-pay { display: block; padding: .85em 1em; border-radius: .5em; background: var(--ok); color: #fff; font-size: .88em; font-weight: 700; text-align: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.25); transform: translateZ(20px); }
+  .ck-stage .ck-safe { display: flex; align-items: center; justify-content: center; gap: .45em; font-size: .72em; color: var(--t3); }
+  .ck-stage .ck-safe i { display: block; width: 1em; height: 1em; }
+  .ck-stage .ck-fold { display: flex; align-items: center; gap: .65em; }
+  .ck-stage .ck-fold b { flex: 1; font-size: .95em; font-weight: 700; color: var(--t1); }
+  .ck-stage .ck-fold u { display: block; width: .9em; height: .9em; color: var(--t3); transform: rotate(90deg); }
+  .ck-stage .ck-steps-bar { display: flex; align-items: center; gap: .5em; }
+  .ck-stage .ck-steps-bar span { display: inline-flex; align-items: center; gap: .45em; font-size: .76em; color: var(--t3); }
+  .ck-stage .ck-steps-bar i { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: 50%; background: #E4E4E7; font-style: normal; font-size: .85em; font-weight: 700; color: var(--t2); }
+  .ck-stage .ck-steps-bar .on { color: var(--t1); font-weight: 700; }
+  .ck-stage .ck-steps-bar .on i { background: var(--t1); color: #fff; }
+  .ck-stage .ck-steps-bar span + span::before { content: ''; width: 1.2em; height: 1px; background: var(--bd2); margin-right: .5em; }
+
+  .ck-stage .ck-cols, .ck-stage .ck-one, .ck-stage .ck-box { transform-style: preserve-3d; }
+
+  @media (prefers-reduced-motion: reduce) { .ck-stage .ck-pay { transform: none; } }
+
+  @media (max-width: 1023px) {
+    .ck-stage .ck { font-size: 11px; }
+    .ck-stage .ck-cols, .ck-stage .ck-cols--wide { grid-template-columns: 1fr; padding: 1em; }
+    .ck-stage .ck-one, .ck-stage .ck-box { padding: 1em; }
+    .ck-stage .ck-banner { padding: 1.1em; }
+    .ck-stage .ck-banner h4 { font-size: 1.25em; }
+    .ck-stage .ck-banner-s { display: none; }
+    .ck-stage .ck-banner > img { width: 5.4em; height: 3.8em; }
+    .ck-stage .ck-pay { transform: none; }
+    /* mockup no celular mostra a estrutura, não o texto corrido */
+    .ck-stage .ck-step p, .ck-stage .ck-bump > p, .ck-stage .ck-warn { display: none; }
+  }
 </style>

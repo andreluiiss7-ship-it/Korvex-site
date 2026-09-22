@@ -1,0 +1,21 @@
+---
+// Faixa escura do topo do checkout: arte do produtor, preço e garantias.
+import { icon } from '../../lib/icons';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<div class={`ck-banner${compact ? ' compact' : ''}`}>
+  <div class="ck-banner-t">
+    <p class="ck-eyebrow">Método Escala · Turma 7</p>
+    <h4>Do primeiro funil ao <em>primeiro milhão</em></h4>
+    {!compact && <p class="ck-banner-s">Finalize sua compra e receba acesso imediato ao material completo.</p>}
+    <div class="ck-banner-b">
+      <p class="ck-price">R$ 1.997<span>,00</span></p>
+      <ul>
+        <li><i set:html={icon('check')} />Pagamento único · acesso vitalício</li>
+        <li><i set:html={icon('check')} />Garantia incondicional de 7 dias</li>
+      </ul>
+    </div>
+  </div>
+  <img src="/assets/members/cover-02-oferta.webp" alt="" width="400" height="600" loading="lazy" decoding="async" />
+</div>
