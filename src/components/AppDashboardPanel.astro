@@ -49,7 +49,7 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
 
   <div class="dash" role="img" aria-label="Painel da Korvex: saldo disponível para saque, saldo pendente zerado, vendas por método e histórico de faturamento">
     <aside class="dash-side">
-      <p class="dash-logo"><b>K</b>KORVEX</p>
+      <p class="dash-logo"><img src="/assets/logo-white.png" alt="Korvex" width="1352" height="352" loading="lazy" decoding="async" /></p>
       <nav class="dash-nav">
         {nav.map((n) => (
           <span class={`dash-item${n.on ? ' on' : ''}`}>
@@ -136,8 +136,8 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
 
   /* sidebar */
   .dash-side { display: flex; flex-direction: column; gap: .9em; padding: 1.15em .9em 1.1em; background: var(--d-side); border-right: 1px solid var(--ln); }
-  .dash-logo { display: flex; align-items: center; gap: .5em; font-size: .95em; font-weight: 800; letter-spacing: .12em; color: var(--mt); padding: 0 .35em; }
-  .dash-logo b { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: .4em; background: var(--ac); color: #fff; font-size: .85em; }
+  .dash-logo { padding: .1em .35em .2em; }
+  .dash-logo img { display: block; width: 7.8em; height: auto; }
   .dash-nav { display: flex; flex-direction: column; gap: .12em; }
   .dash-item { display: grid; grid-template-columns: 1.35em 1fr auto; align-items: center; gap: .6em; padding: .55em .6em; border-radius: .5em; font-size: .82em; font-weight: 500; color: var(--mt2); }
   .dash-item.on { background: rgba(255,255,255,.07); color: var(--mt); font-weight: 600; }
