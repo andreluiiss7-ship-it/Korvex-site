@@ -5,10 +5,10 @@
 import { icon } from '../lib/icons';
 
 const aulas = [
-  { n: '01', t: 'O que é escala e por que a maioria trava antes do primeiro milhão' },
-  { n: '02', t: 'Oferta: o combo que levanta o ticket sem subir o custo' },
-  { n: '03', t: 'Order bump e upsell em 1 clique dentro do checkout' },
-  { n: '04', t: 'Tráfego: escalar sem quebrar o caixa no meio do mês' },
+  { n: '01', t: 'O que é escala e por que a maioria trava antes do primeiro milhão', img: '/assets/members/cover-01-fundamentos.webp' },
+  { n: '02', t: 'Oferta: o combo que levanta o ticket sem subir o custo',            img: '/assets/members/cover-02-oferta.webp' },
+  { n: '03', t: 'Order bump e upsell em 1 clique dentro do checkout',                img: '/assets/members/cover-04-conversao.webp' },
+  { n: '04', t: 'Tráfego: escalar sem quebrar o caixa no meio do mês',               img: '/assets/members/cover-03-trafego.webp' },
 ];
 
 const materiais = [
@@ -55,8 +55,11 @@ const materiais = [
         <div class="ma-aulas">
           {aulas.map((a) => (
             <div class="ma-aula">
-              <p class="ma-aula-l">Aula</p>
-              <p class="ma-aula-n">{a.n}</p>
+              <div class="ma-aula-cap">
+                <img src={a.img} alt="" width="400" height="600" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+                <span class="ma-aula-play" set:html={icon('play')} />
+                <span class="ma-aula-badge"><i>Aula</i>{a.n}</span>
+              </div>
               <p class="ma-aula-t">{a.t}</p>
               <span class="ma-aula-c" set:html={icon('chevron')} />
             </div>
@@ -145,10 +148,26 @@ const materiais = [
 
   /* aulas numeradas, como no tema real */
   .ma-aulas { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7em; }
-  .ma-aula { position: relative; display: flex; flex-direction: column; padding: .75em .8em 1.5em; border-radius: .6em; border: 1px solid var(--ln); background: var(--mc); }
-  .ma-aula-l { font-family: var(--font-mono); font-size: .6em; letter-spacing: .22em; text-transform: uppercase; text-align: center; color: var(--mt3); }
-  .ma-aula-n { margin-top: .1em; padding-bottom: .5em; border-bottom: 1px solid var(--ln); font-size: 2.1em; font-weight: 800; letter-spacing: -.04em; line-height: 1; text-align: center; color: var(--mt); }
-  .ma-aula-t { margin-top: .6em; font-size: .68em; line-height: 1.35; color: var(--mt2);
+  .ma-aula { position: relative; display: flex; flex-direction: column; padding-bottom: 1.5em; border-radius: .6em; border: 1px solid var(--ln); background: var(--mc); overflow: hidden; }
+
+  /* capa da aula: thumb 16:9 com o número por cima, como no player real */
+  .ma-aula-cap { position: relative; aspect-ratio: 16 / 9; background: #14192E; overflow: hidden;
+    border-bottom: 1px solid var(--ln); }
+  /* as capas são cenas escuras: em thumb pequena elas somem no fundo do card */
+  .ma-aula-cap img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%;
+    filter: brightness(1.55) contrast(1.02) saturate(1.25); }
+  .ma-aula-cap::after { content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(3,7,25,.78) 0%, rgba(3,7,25,.12) 45%, transparent 75%); }
+  .ma-aula-play { position: absolute; left: 50%; top: 50%; z-index: 1; display: grid; place-items: center;
+    width: 2em; height: 2em; padding: .5em; transform: translate(-50%, -50%);
+    border-radius: 999px; background: rgba(3,7,25,.55); border: 1px solid rgba(255,255,255,.22);
+    color: var(--mt); backdrop-filter: blur(3px); }
+  .ma-aula-badge { position: absolute; left: .5em; bottom: .3em; z-index: 1;
+    font-size: 1.55em; font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--mt);
+    text-shadow: 0 .04em .12em rgba(0,0,0,.6); }
+  .ma-aula-badge i { display: block; font-family: var(--font-mono); font-size: .36em; font-style: normal;
+    font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--ac2); }
+  .ma-aula-t { margin: .6em .8em 0; font-size: .68em; line-height: 1.35; color: var(--mt2);
     display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
   .ma-aula-c { position: absolute; right: .6em; bottom: .55em; width: .85em; height: .85em; color: var(--mt3); }
 
