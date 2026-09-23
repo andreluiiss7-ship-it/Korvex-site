@@ -31,6 +31,7 @@ import { icon } from '../lib/icons';
         bar.style.opacity = show ? '1' : '0';
       }
     };
-    addEventListener('scroll', onScroll, { passive: true });
+    let raf = 0;
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; onScroll(); }); }, { passive: true });
   })();
 </script>

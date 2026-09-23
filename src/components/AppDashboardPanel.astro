@@ -34,7 +34,8 @@ const methods = [
 const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168 38 C 196 42 196 26 224 28 C 252 30 252 16 280 14 C 300 12 308 10 320 8';
 ---
 
-<div class={`browser kframe blue in relative glow-blue tilt ${cls}`} data-tilt="2" style="container-type: inline-size;">
+<div class={`tilt relative ${cls}`} data-tilt="2">
+  <div class="browser kframe blue in relative glow-blue" style="container-type: inline-size;">
   <div class="browser-bar">
     <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
     <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">app.korvex.com.br/dashboard</span>
@@ -115,6 +116,7 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
       <section class="dash-card dash-chart">
         <p class="dash-h">Histórico de faturamento</p>
         <p class="dash-sub">Acompanhe o histórico de transações do seu negócio</p>
+        <i class="dash-live" aria-hidden="true"></i>
         <svg viewBox="0 0 320 88" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id="dashg" x1="0" y1="0" x2="0" y2="1">
@@ -128,9 +130,54 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
       </section>
     </div>
   </div>
+  </div>
+
+  <span class="float3d dash-float material" style="--z:70px" aria-hidden="true">
+    <i set:html={icon('check')} />
+    <b>Saque aprovado</b>
+    <em>R$ 12.480,00 · Pix · agora</em>
+  </span>
 </div>
 
+<script>
+  // O painel não fica congelado depois da primeira animação: a cada 7 s cai um Pix,
+  // que é exatamente o que um gateway com liquidação no mesmo dia faz.
+  (() => {
+    const root = document.querySelector<HTMLElement>('.dash');
+    if (!root || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const val = root.querySelector<HTMLElement>('[data-counter]');
+    const bar = root.querySelector<HTMLElement>('.dash-bar i');
+    const pctEl = root.querySelector<HTMLElement>('.dash-pct');
+    if (!val) return;
+    const card = val.closest('.dash-kpi') as HTMLElement | null;
+    let total = 113478.27;
+    let pct = 78;
+    let live = false;
+    const fmt = (n: number) => 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    new IntersectionObserver((es) => { live = es[0].isIntersecting; }, { threshold: 0.2 }).observe(root);
+    setInterval(() => {
+      if (!live || document.hidden) return;
+      total += 280 + Math.random() * 3900;
+      val.textContent = fmt(total);
+      if (card) { card.classList.add('hit'); setTimeout(() => card.classList.remove('hit'), 900); }
+      pct = Math.min(96, pct + 0.3);
+      if (bar) bar.style.setProperty('--p', pct.toFixed(1) + '%');
+      if (pctEl) pctEl.textContent = Math.round(pct) + '%';
+    }, 7000);
+  })();
+</script>
+
 <style>
+  .dash-float {
+    left: -14px; bottom: -18px;
+    display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center;
+    padding: 10px 14px; border-radius: 14px;
+  }
+  .dash-float i { grid-row: 1 / 3; display: block; width: 26px; height: 26px; padding: 6px; border-radius: 8px; background: rgba(52,211,153,.16); color: #34D399; }
+  .dash-float b { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .dash-float em { font-family: var(--font-mono); font-style: normal; font-size: 10px; letter-spacing: .04em; color: var(--t-2); }
+  @media (max-width: 1023px) { .dash-float { left: auto; right: 8px; bottom: -14px; } }
+
   .dash {
     --d-bg: #070D17; --d-card: #0F1726; --d-side: #0A1220; --ln: rgba(255,255,255,.07);
     --mt: #F4F6FB; --mt2: #A8B0C2; --mt3: #6A7388; --ac: #3B82F6; --ac2: #6FA0FF; --ok: #34D399;
@@ -185,6 +232,13 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
   .dash-pct { display: block; margin-top: .4em; font-family: var(--font-mono); font-size: .68em; color: var(--mt2); }
   .dash-goal-b img { width: 5.4em; height: auto; border-radius: .35em; box-shadow: 0 .7em 1.4em -.6em rgba(0,0,0,.95); }
 
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .dash-goal-b img {
+      transform: scale(1.07) translate(calc((var(--mx, 50%) - 50%) * -0.07), calc((var(--my, 50%) - 50%) * -0.07));
+      transition: transform .5s var(--ease-out);
+    }
+  }
+
   .dash-m { display: grid; grid-template-columns: 1.6em 1fr auto; align-items: center; gap: .65em; padding: .62em 0; font-size: .82em; }
   .dash-m + .dash-m { border-top: 1px solid var(--ln); }
   .dash-m .dash-ic { width: 1.6em; height: 1.6em; color: var(--mt2); }
@@ -193,6 +247,17 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
   .dash-m b::before { content: ''; position: absolute; inset: .34em; border-radius: 999px; background: var(--d-card); }
   .dash-m b i { position: relative; font-style: normal; }
   .dash-m span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* flash quando o Pix cai */
+  .dash-kpi { transition: border-color .45s var(--ease-out), box-shadow .45s var(--ease-out); }
+  .dash-kpi.hit { border-color: rgba(52,211,153,.55); box-shadow: 0 0 0 1px rgba(52,211,153,.35), 0 0 32px -6px rgba(52,211,153,.45); }
+  .dash-kpi.hit b { color: #6EE7B7; }
+  .dash-kpi b { transition: color .45s var(--ease-out); }
+
+  /* ponto ao vivo na ponta da linha de faturamento */
+  .dash-chart { position: relative; }
+  .dash-live { position: absolute; right: 1.1em; top: 3.4em; width: .5em; height: .5em; border-radius: 999px; background: var(--ac2); box-shadow: 0 0 0 0 rgba(111,160,255,.55); animation: dash-ping 2.6s ease-out infinite; }
+  @keyframes dash-ping { 0% { box-shadow: 0 0 0 0 rgba(111,160,255,.5); } 70%, 100% { box-shadow: 0 0 0 .85em rgba(111,160,255,0); } }
 
   .dash-chart svg { display: block; width: 100%; height: 5.6em; margin-top: .5em; }
   .dash-line { fill: none; stroke: var(--ac2); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round;
@@ -208,6 +273,7 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
 
   @media (prefers-reduced-motion: reduce) {
     .dash-line { stroke-dashoffset: 0; animation: none; }
+    .dash-live { animation: none; }
     .dash-area { opacity: 1; animation: none; }
     .dash-bar i { animation: none; transform: none; }
     .dash-kpi.hero { transform: none; }

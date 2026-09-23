@@ -70,24 +70,35 @@ html {
   text-rendering: optimizeLegibility;
 }
 html, body { max-width: 100%; overflow-x: clip; }
+/* textura de material: ruído fino sobre o navy, zero nós no DOM.
+   As seções claras têm fundo opaco próprio e cobrem o grão sozinhas. */
+body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+#faq { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E"); }
+
+/* vinheta suave nas seções escuras, via sombra interna (sem pseudo, sem empilhamento) */
+section:not([data-surface="light"]) { box-shadow: inset 0 0 165px 0 rgba(3, 7, 18, 0.26); }
 section { overflow-x: clip; }
 section[id]:not(#topo):not(#produto) {
   content-visibility: auto;
   contain-intrinsic-size: auto var(--cis, 640px);
 }
-#problema   { --cis: 1240px; }
-#fundador   { --cis: 600px; }
-#premiacoes { --cis: 1380px; }
-#pagamentos { --cis: 800px; }
-#faq        { --cis: 620px; }
-#contato    { --cis: 500px; }
+/* valores medidos no build de produção; errado aqui vira salto de scroll */
+#problema   { --cis: 1490px; }
+#fundador   { --cis: 730px; }
+#premiacoes { --cis: 1510px; }
+#pagamentos { --cis: 930px; }
+#faq        { --cis: 750px; }
+#contato    { --cis: 630px; }
 @media (max-width: 1023px) {
-  #problema   { --cis: 1100px; }
-  #fundador   { --cis: 760px; }
-  #premiacoes { --cis: 1100px; }
-  #pagamentos { --cis: 820px; }
-  #faq        { --cis: 560px; }
-  #contato    { --cis: 520px; }
+  #problema   { --cis: 835px; }
+  #fundador   { --cis: 990px; }
+  #premiacoes { --cis: 1295px; }
+  #pagamentos { --cis: 1200px; }
+  #faq        { --cis: 830px; }
+  #contato    { --cis: 650px; }
 }
 img { max-width: 100%; height: auto; }
 *, *::before, *::after { min-width: 0; }
@@ -275,20 +286,48 @@ body {
 
 
 .tilt {
+  position: relative;
   transform: perspective(1200px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
   transition: transform 0.6s var(--ease-snap);
   transform-style: preserve-3d;
   will-change: transform;
 }
+/* NUNCA colocar overflow, isolation, filter, clip-path, mask, opacity<1 ou
+   mix-blend-mode no elemento .tilt: qualquer um deles força transform-style:flat
+   e mata silenciosamente o translateZ de todos os filhos. O recorte fica no .browser. */
+
+/* reflexo especular que segue o cursor sobre o vidro do painel */
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 0.75rem;
+  pointer-events: none;
+  opacity: 0.55;
+  transform: translateZ(1px);
+  transition: opacity 0.45s var(--ease-out);
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.10), transparent 46%),
+    linear-gradient(calc(118deg + var(--rx, 0deg) * 3), transparent 38%, rgba(255, 255, 255, 0.055) 50%, transparent 62%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tilt:hover::after { opacity: 1; }
+}
+
+/* camada que flutua na frente do painel, fora do recorte */
+.float3d { position: absolute; z-index: 3; pointer-events: none; transform: translateZ(var(--z, 40px)); }
 
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   * { animation: none !important; transition-duration: 0.01ms !important; }
-  .tilt, .tier { transform: none !important; }
+  .tilt, .tier, .float3d { transform: none !important; }
+  .tilt::after { opacity: 0 !important; }
 }
 @media (max-width: 1023px) {
   .tilt { transform: none; }
+  .float3d { transform: none; }
 }
 
 /* ---------- Assinatura editorial ---------- */
@@ -427,7 +466,7 @@ body {
 /* ---------- Painéis que entram em 3D e endireitam com o scroll ---------- */
 .hero-stage { perspective: 1400px; }
 .hero-scroll { transform-style: preserve-3d; }
-.hero-panel { transform-style: preserve-3d; isolation: isolate; }
+.hero-panel { transform-style: preserve-3d; }
 
 /* palco reutilizável: o filho direto é a camada que inclina */
 .stage3d { perspective: 1500px; }
@@ -457,8 +496,20 @@ body {
 @keyframes progress-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* ---------- brilho de produto (estilo mockup iluminado) ---------- */
-.glow-blue { box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 120px -40px rgba(59,130,246,0.55), 0 30px 80px -40px rgba(0,0,0,0.8); }
-.glow-gold { box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 120px -40px rgba(201,163,94,0.45), 0 30px 80px -40px rgba(0,0,0,0.8); }
+/* a sombra se desloca contra a rotação e a quina de cima acende: é o que faz
+   o painel parecer levantado da página em vez de desenhado nela */
+.glow-blue {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(0.06 + var(--sy, 0) * -0.10)),
+    calc(var(--sx, 0) * -20px) calc(40px + var(--sy, 0) * 16px) 120px -40px rgba(59, 130, 246, 0.55),
+    calc(var(--sx, 0) * -13px) calc(30px + var(--sy, 0) * 11px) 80px -40px rgba(0, 0, 0, 0.8);
+}
+.glow-gold {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / calc(0.06 + var(--sy, 0) * -0.10)),
+    calc(var(--sx, 0) * -20px) calc(40px + var(--sy, 0) * 16px) 120px -40px rgba(201, 163, 94, 0.45),
+    calc(var(--sx, 0) * -13px) calc(30px + var(--sy, 0) * 11px) 80px -40px rgba(0, 0, 0, 0.8);
+}
 
 /* ---------- v6: assinaturas visuais ---------- */
 #faq { background: linear-gradient(180deg, var(--bg-1), var(--bg-0)); }
@@ -513,7 +564,9 @@ body {
 }
 /* emenda entre superfícies: sombra interna no topo, zero DOM extra */
 [data-surface="light"] { box-shadow: inset 0 64px 56px -60px rgba(5, 11, 20, 0.45); }
-[data-surface="light"] + section { box-shadow: inset 0 64px 56px -60px rgba(244, 246, 251, 0.18); }
+[data-surface="light"] + section {
+  box-shadow: inset 0 64px 56px -60px rgba(244, 246, 251, 0.18), inset 0 0 165px 0 rgba(3, 7, 18, 0.26);
+}
 
 [data-surface="light"] .h2, [data-surface="light"] .lead strong, [data-surface="light"] .anchor-num { color: var(--t-1); }
 [data-surface="light"] .h2 .muted { color: rgba(11, 18, 32, 0.5); }

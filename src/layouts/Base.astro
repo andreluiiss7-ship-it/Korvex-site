@@ -134,8 +134,9 @@ const ogImage = `${SITE_URL}/assets/og-image.jpg`;
 
       // ---- Parallax ([data-parallax="0.2"] = moves at 20% of scroll) — desktop only ----
       const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
-      const wideEnough = window.innerWidth >= 1024;
-      if (parallaxEls.length && !reduced && wideEnough) {
+      // matchMedia em vez de innerWidth: redimensionar a janela passa a ligar/desligar
+      const wideEnough = matchMedia('(min-width: 1024px)');
+      if (parallaxEls.length && !reduced && wideEnough.matches) {
         let ticking = false;
         const onScrollParallax = () => {
           if (ticking) return;
@@ -225,6 +226,9 @@ const ogImage = `${SITE_URL}/assets/og-image.jpg`;
               el.style.setProperty('--ry', `${-py * max}deg`);
               el.style.setProperty('--mx', `${(px + 0.5) * 100}%`);
               el.style.setProperty('--my', `${(py + 0.5) * 100}%`);
+              // sem unidade: alimenta o offset da sombra e o brilho da quina em calc()
+              el.style.setProperty('--sx', `${px * 2}`);
+              el.style.setProperty('--sy', `${py * 2}`);
             });
           });
           parent.addEventListener('pointerleave', () => {
@@ -232,6 +236,8 @@ const ogImage = `${SITE_URL}/assets/og-image.jpg`;
             el.style.setProperty('--ry', '0deg');
             el.style.setProperty('--mx', '50%');
             el.style.setProperty('--my', '50%');
+            el.style.setProperty('--sx', '0');
+            el.style.setProperty('--sy', '0');
           });
         });
       }

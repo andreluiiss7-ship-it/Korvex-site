@@ -16,7 +16,9 @@
   const root = document.getElementById('kcard') as HTMLElement;
   const nav = navigator as any;
   const ok =
-    matchMedia('(min-width:1024px) and (pointer:fine)').matches &&
+    // 1280px casa com o wrapper xl:block do Hero: abaixo disso o cartão fica
+    // display:none e o chunk de 142 KB seria baixado à toa
+    matchMedia('(min-width:1280px) and (pointer:fine)').matches &&
     !matchMedia('(prefers-reduced-motion: reduce)').matches &&
     (nav.hardwareConcurrency ?? 4) >= 4 &&
     (nav.deviceMemory ?? 8) >= 4 &&
@@ -27,8 +29,18 @@
       import('../scripts/card3d')
         .then((m) => m.mount(root))
         .catch(() => { root.dataset.state = 'static'; });
-    if ('requestIdleCallback' in window) (window as any).requestIdleCallback(start, { timeout: 2500 });
-    else setTimeout(start, 1200);
+    // só depois que o visitante rolar ou a aba ficar ociosa por um tempo,
+    // para o three.js não competir com a leitura da dobra
+    let started = false;
+    const kick = () => {
+      if (started) return;
+      started = true;
+      removeEventListener('scroll', kick);
+      if ('requestIdleCallback' in window) (window as any).requestIdleCallback(start, { timeout: 2000 });
+      else setTimeout(start, 200);
+    };
+    addEventListener('scroll', kick, { passive: true, once: true });
+    setTimeout(kick, 3500);
   }
 </script>
 

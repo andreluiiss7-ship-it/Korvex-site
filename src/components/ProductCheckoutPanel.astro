@@ -9,7 +9,8 @@ import CkPagamento from './checkout/CkPagamento.astro';
 import CkResumo from './checkout/CkResumo.astro';
 ---
 
-<div data-tilt="3" class="tilt browser kframe blue in relative glow-blue">
+<div data-tilt="3" class="tilt relative">
+  <div class="browser kframe blue in relative glow-blue">
   <div class="browser-bar">
     <span class="dot bg-[#ff5f57]/80"></span>
     <span class="dot bg-[#febc2e]/80"></span>
@@ -111,6 +112,13 @@ import CkResumo from './checkout/CkResumo.astro';
       </div>
     </div>
   </div>
+  </div>
+
+  <span class="float3d ck-float material" style="--z:60px" aria-hidden="true">
+    <i set:html={icon('pix')} />
+    <b>Pix confirmado</b>
+    <em>em 4 segundos</em>
+  </span>
 </div>
 
 <style is:global>
@@ -127,6 +135,25 @@ import CkResumo from './checkout/CkResumo.astro';
     --tag: #1E3A8A; --bump: #D97706; --addbg: #F0FDF4; --addln: #86EFAC;
   }
   @media (min-width: 1024px) { .ck-stage { min-height: 460px; } }
+
+  .ck-float {
+    right: -16px; top: -18px;
+    display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center;
+    padding: 10px 14px; border-radius: 14px;
+  }
+  .ck-float i { grid-row: 1 / 3; display: block; width: 26px; height: 26px; padding: 6px; border-radius: 8px; background: rgba(52,211,153,.16); color: #34D399; }
+  .ck-float b { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .ck-float em { font-family: var(--font-mono); font-style: normal; font-size: 10px; letter-spacing: .04em; color: var(--t-2); }
+  @media (max-width: 1023px) { .ck-float { right: 8px; top: -14px; } }
+  /* o selo some e volta: uma venda nova entrando */
+  @media (prefers-reduced-motion: no-preference) {
+    .ck-float { animation: ck-drop 9s var(--ease-out) infinite; }
+  }
+  @keyframes ck-drop {
+    0%, 4%   { opacity: 0; transform: translateZ(var(--z, 60px)) translateY(-10px) scale(.96); }
+    10%, 72% { opacity: 1; transform: translateZ(var(--z, 60px)) translateY(0) scale(1); }
+    82%, 100%{ opacity: 0; transform: translateZ(var(--z, 60px)) translateY(-6px) scale(.98); }
+  }
 
   .ck-stage .ck {
     background: var(--pg); color: var(--t2);
@@ -156,6 +183,13 @@ import CkResumo from './checkout/CkResumo.astro';
   .ck-stage .ck-banner.compact { padding: 1.1em 1.6em; }
   .ck-stage .ck-banner.compact h4 { font-size: 1.15em; }
   .ck-stage .ck-banner.compact .ck-cover { width: 7.6em; }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .ck-stage .ck-cover img, .ck-stage .ck-item img {
+      transform: scale(1.07) translate(calc((var(--mx, 50%) - 50%) * -0.06), calc((var(--my, 50%) - 50%) * -0.06));
+      transition: transform .5s var(--ease-out);
+    }
+  }
 
   /* layouts dos temas */
   .ck-stage .ck-cols { display: grid; grid-template-columns: 1.15fr .85fr; gap: 1em; padding: 1.2em 1.6em 1.6em; }

@@ -17,8 +17,9 @@ const materiais = [
 ];
 ---
 
-<div class="relative">
-  <div data-tilt="3" class="tilt browser kframe blue in overflow-hidden glow-blue" style="container-type: inline-size;">
+<div class="relative" data-tilt-zone>
+  <div data-tilt="3" class="tilt relative">
+    <div class="browser kframe blue in overflow-hidden glow-blue" style="container-type: inline-size;">
     <div class="browser-bar">
       <span class="dot bg-[#ff5f57]/80"></span>
       <span class="dot bg-[#febc2e]/80"></span>
@@ -73,23 +74,24 @@ const materiais = [
         </div>
       </main>
     </div>
-  </div>
+    </div>
 
-  <div class="material absolute right-2 top-2 z-20 rounded-2xl px-3.5 py-2.5 lg:right-[-14px] lg:top-[-14px] lg:animate-floaty">
-    <div class="flex items-center gap-2.5">
-      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/15 text-titan-400" set:html={icon('users')}></span>
-      <div>
-        <p class="font-display text-sm font-bold leading-none text-white" style="font-feature-settings:'tnum';">1.247</p>
-        <p class="mt-0.5 text-[10px] text-chrome-300/70">alunos online agora</p>
+    <div class="float3d material absolute right-2 top-2 rounded-2xl px-3.5 py-2.5 lg:right-[-14px] lg:top-[-14px]" style="--z:40px">
+      <div class="flex items-center gap-2.5">
+        <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-titan-600/15 text-titan-400" set:html={icon('users')}></span>
+        <div>
+          <p class="font-display text-sm font-bold leading-none text-white" style="font-feature-settings:'tnum';">1.247</p>
+          <p class="mt-0.5 text-[10px] text-chrome-300/70">alunos online agora</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="material absolute -bottom-3 left-2 z-20 rounded-2xl px-3.5 py-2.5 lg:bottom-[-10px] lg:left-[-14px] lg:animate-floaty" style="animation-delay:1.2s">
-    <div class="flex items-center gap-2.5">
-      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
-      <div>
-        <p class="font-display text-sm font-bold leading-none text-white">+R$ 497</p>
-        <p class="mt-0.5 text-[10px] text-gold-300">Upsell vendido na área</p>
+    <div class="float3d material absolute -bottom-3 left-2 rounded-2xl px-3.5 py-2.5 lg:bottom-[-10px] lg:left-[-14px]" style="--z:68px">
+      <div class="flex items-center gap-2.5">
+        <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-600/15 text-gold-300" set:html={icon('spark')}></span>
+        <div>
+          <p class="font-display text-sm font-bold leading-none text-white">+R$ 497</p>
+          <p class="mt-0.5 text-[10px] text-gold-300">Upsell vendido na área</p>
+        </div>
       </div>
     </div>
   </div>
@@ -132,6 +134,13 @@ const materiais = [
   .ma-cta { align-self: flex-start; display: inline-flex; align-items: center; gap: .45em; margin-top: .85em; padding: .5em 1.1em; border-radius: .45em; background: var(--ac); color: #1A1405; font-size: .8em; font-weight: 700; }
   .ma-cta-i { width: 1.1em; height: 1.1em; }
 
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .ma-hero img {
+      transform: scale(1.07) translate(calc((var(--mx, 50%) - 50%) * -0.05), calc((var(--my, 50%) - 50%) * -0.05));
+      transition: transform .5s var(--ease-out);
+    }
+  }
+
   .ma-modh { flex: none; font-size: .95em; font-weight: 700; color: var(--mt); }
 
   /* aulas numeradas, como no tema real */
@@ -151,6 +160,15 @@ const materiais = [
   .ma-file-n > span { display: flex; align-items: center; gap: .5em; margin-top: .15em; font-family: var(--font-mono); font-size: .64em; color: var(--mt3); }
   .ma-file-n i { padding: .15em .45em; border-radius: .25em; background: rgba(255,255,255,.07); font-style: normal; letter-spacing: .08em; color: var(--mt2); }
   .ma-dl { width: 1.2em; height: 1.2em; color: var(--mt2); }
+
+  /* a aula em andamento pulsa de leve: a área está sendo usada agora */
+  @media (prefers-reduced-motion: no-preference) {
+    .ma-aula:nth-child(2) { animation: ma-now 4.5s ease-in-out infinite; }
+  }
+  @keyframes ma-now {
+    0%, 100% { border-color: var(--ln); }
+    50%      { border-color: rgba(211,175,55,.45); }
+  }
 
   @media (max-width: 1023px) {
     .ma { grid-template-columns: 1fr; min-height: 0; font-size: 11px; }

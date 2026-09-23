@@ -87,6 +87,7 @@ const links = [
       nav.classList.remove('!bg-ink/85', 'shadow-depth');
     }
   };
-  window.addEventListener('scroll', onScroll, { passive: true });
+  let navRaf = 0;
+  window.addEventListener('scroll', () => { if (!navRaf) navRaf = requestAnimationFrame(() => { navRaf = 0; onScroll(); }); }, { passive: true });
   onScroll();
 </script>

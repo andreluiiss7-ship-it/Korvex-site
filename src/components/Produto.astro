@@ -92,7 +92,7 @@ const chapters = [
               ))}
             </div>
           )}
-          <div class={`pv-panel${i === 0 ? ' on-m' : ''}`} data-panel={i} data-active={i === 0 ? 'true' : 'false'} style={`--row:${i + 1}`}>
+          <div class={`pv-panel${i === 0 ? ' on-m' : ''}`} data-panel={i} data-active={i === 0 ? 'true' : 'false'} data-tilt-zone style={`--row:${i + 1}`}>
             {i === 0 && <ProductCheckoutPanel />}
             {i === 1 && <ProductFunnelPanel />}
             {i === 2 && <ProductMembersPanel />}
@@ -262,7 +262,7 @@ const chapters = [
     }
   }
   /* loops infinitos dos mockups só rodam no painel em foco */
-  .pv-panel:not([data-active="true"]):not(.on-m) :global(.animate-floaty) { animation-play-state: paused; }
+  .pv-panel:not([data-active="true"]):not(.on-m) :global(*) { animation-play-state: paused !important; }
 
   @media (prefers-reduced-motion: reduce) {
     .pv-panel, .ck-tab, .pv-mark { transition: none !important; }
