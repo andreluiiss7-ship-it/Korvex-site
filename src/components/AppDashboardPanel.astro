@@ -62,6 +62,11 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
     </aside>
 
     <div class="dash-main">
+      <div class="dash-mtop">
+        <span class="dash-burger" set:html={icon('menu')} />
+        <img src="/assets/logo-white.png" alt="Korvex" width="1352" height="352" loading="lazy" decoding="async" />
+        <span class="dash-mav">ME</span>
+      </div>
       <div class="dash-top">
         <b>Dashboard</b>
         <span class="dash-range"><i class="dash-ic" set:html={icon('calendar')} />Últimos 30 dias</span>
@@ -148,6 +153,7 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
 
   /* main */
   .dash-main { display: flex; flex-direction: column; gap: .85em; padding: 1.15em 1.3em 1.3em; min-width: 0; }
+  .dash-mtop { display: none; }
   .dash-top { display: flex; align-items: center; gap: .6em; }
   .dash-top > b { font-size: 1.05em; font-weight: 700; color: var(--mt); margin-right: auto; }
   .dash-range, .dash-user { display: inline-flex; align-items: center; gap: .45em; padding: .45em .75em; border-radius: .5em; border: 1px solid var(--ln); background: rgba(255,255,255,.03); font-size: .75em; font-weight: 500; white-space: nowrap; }
@@ -210,14 +216,20 @@ const LINE = 'M0 76 C 28 74 32 60 56 62 C 80 64 84 46 112 48 C 140 50 140 34 168
   @media (max-width: 1023px) {
     .dash { grid-template-columns: 1fr; font-size: 12px; }
     .dash-side { display: none; }
-    .dash-main { padding: 1.1em 1.1em 1.2em; gap: .75em; }
-    .dash-top > b { font-size: 1em; }
+    .dash-main { padding: 0 0 1em; gap: .7em; }
+    .dash-mtop { display: flex; align-items: center; gap: .8em; padding: .85em 1em; border-bottom: 1px solid var(--ln); background: var(--d-side); }
+    .dash-burger { display: block; width: 1.5em; height: 1.5em; color: var(--mt2); }
+    .dash-mtop img { width: 6.4em; height: auto; }
+    .dash-mav { display: grid; place-items: center; width: 2em; height: 2em; margin-left: auto; border-radius: 999px; background: var(--ac); color: #fff; font-size: .75em; font-weight: 700; }
+    .dash-top { padding: 0 1em; }
+    .dash-top > b { font-size: 1.05em; }
     .dash-user { display: none; }
-    .dash-kpis { grid-template-columns: 1fr 1fr; }
-    .dash-kpi:nth-child(1), .dash-kpi:nth-child(4) { display: none; }
-    .dash-kpi.hero b { font-size: 1.3em; }
-    .dash-row { grid-template-columns: 1fr; }
-    .dash-goal { display: none; }
+    .dash-kpis { grid-template-columns: 1fr 1fr; margin: 0 1em; }
+    .dash-kpi b { font-size: .98em; }
+    .dash-kpi.hero b { font-size: 1.15em; }
     .dash-kpi.hero { transform: none; }
+    .dash-row { grid-template-columns: 1fr; margin: 0 1em; }
+    .dash-goal-b b { font-size: 1.35em; }
+    .dash-chart { margin: 0 1em; }
   }
 </style>

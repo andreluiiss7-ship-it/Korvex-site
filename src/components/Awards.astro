@@ -35,7 +35,7 @@ const tiers = [
 
 
     <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
-    <div class="reveal-stagger tiers mx-auto mt-[--gap-lg] max-w-4xl">
+    <div class="reveal-stagger tiers mx-auto mt-[--gap-lg] max-w-5xl">
       {tiers.map((t, i) => (
         <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
@@ -51,7 +51,7 @@ const tiers = [
     </div>
 
     <!-- MILIONARIO STAGE — cinematic -->
-    <div class="stage3d mt-[--gap-md]"><div class="lift"><div class="reveal mil-stage kframe gold glow-gold tilt" data-tilt="4">
+    <div class="stage3d mx-auto mt-[--gap-md] max-w-5xl"><div class="lift"><div class="reveal mil-stage kframe gold glow-gold tilt" data-tilt="4">
       <div class="mil-img">
         <img src="/assets/placa-1mm-960.webp" srcset="/assets/placa-1mm-480.webp 480w, /assets/placa-1mm-960.webp 960w" sizes="(max-width: 1024px) 100vw, 40vw" alt="Placa de R$ 1 milhão em vendas" width="800" height="1000" loading="lazy" decoding="async" />        <!-- top spotlight -->
         <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2" style="background: radial-gradient(circle at 50% 0%, rgba(245,217,139,0.32), transparent 65%);"></div>
@@ -83,6 +83,6 @@ const tiers = [
   .tiers { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 4px 20px 12px; margin-inline: -20px; }
   .tiers::-webkit-scrollbar { display: none; }
   .tiers > * { flex: 0 0 68%; scroll-snap-align: center; }
-  @media (min-width: 640px) { .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; overflow: visible; padding: 0; margin-inline: 0; } .tiers > * { flex: none; } }
+  @media (min-width: 640px) { .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; overflow: visible; padding: 0; margin-inline: auto; } .tiers > * { flex: none; } }
   @media (min-width: 1024px) { .tiers { gap: 16px; } }
 </style>
