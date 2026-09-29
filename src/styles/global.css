@@ -136,7 +136,7 @@ body {
   font-family: var(--font-display);
   font-weight: 700;
   color: #fff;
-  font-size: clamp(2.1rem, 4.2vw, 3.25rem);
+  font-size: clamp(1.75rem, 4.2vw, 3.25rem);
   letter-spacing: -0.035em;
   line-height: 1.02;
   text-wrap: balance;
@@ -416,6 +416,17 @@ body {
 @media (max-width: 1024px) {
   .mil-stage { grid-template-columns: 1fr; }
   .mil-img { aspect-ratio: 16/10; min-height: 0; height: auto; }
+}
+/* No celular a seção de reconhecimento não pode pesar mais que o extrato,
+   que é o argumento de venda. Cortes de proporção, nada de conteúdo. */
+@media (max-width: 1023px) {
+  .mil-img { aspect-ratio: 16/7; }
+  .mil-stage > .relative { padding: 20px; }
+  .mil-stage .font-editorial { font-size: 2.4rem; }
+  .mil-stage .irow { font-size: 13px; }
+  .mil-stage .irow-i { width: 30px; height: 30px; border-radius: 8px; }
+  .mil-stage ul { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tier-compact .tier-img { aspect-ratio: 1 / 1; }
 }
 
 /* ---------- Taxas / payouts ---------- */
