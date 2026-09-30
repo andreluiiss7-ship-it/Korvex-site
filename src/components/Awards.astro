@@ -5,9 +5,9 @@ import IconRow from './IconRow.astro';
 import Mosaic from './Mosaic.astro';
 
 const tiers = [
-  { variant: 'steel', amount: 'R$ 10 mil',   name: 'Pulseira', lvl: 'Nível 01', img: '/assets/pulseira-10k', bracelet: true  },
-  { variant: 'blue',  amount: 'R$ 100 mil',  name: 'Placa',      lvl: 'Nível 02', img: '/assets/placa-100k',    bracelet: false },
-  { variant: 'silver', amount: 'R$ 500 mil', name: 'Placa',      lvl: 'Nível 03', img: '/assets/placa-500k',    bracelet: false },
+  { variant: 'steel', amount: 'R$ 10 mil',   name: 'Pulseira', lvl: 'Nível 01', img: '/assets/pulseira-10k', bracelet: true,  w: 960, h: 1200 },
+  { variant: 'blue',  amount: 'R$ 100 mil',  name: 'Placa',      lvl: 'Nível 02', img: '/assets/placa-100k',    bracelet: false, w: 960, h: 1414 },
+  { variant: 'silver', amount: 'R$ 500 mil', name: 'Placa',      lvl: 'Nível 03', img: '/assets/placa-500k',    bracelet: false, w: 960, h: 1354 },
 ];
 ---
 
@@ -39,7 +39,7 @@ const tiers = [
       {tiers.map((t, i) => (
         <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
           <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
-            <img src={`${t.img}-960.webp`} srcset={`${t.img}-480.webp 480w, ${t.img}-960.webp 960w`} sizes="(max-width: 640px) 68vw, (max-width: 1024px) 30vw, 300px" alt={`${t.name} de ${t.amount} em vendas`} width="800" height="1000" loading="lazy" decoding="async" />
+            <img src={`${t.img}-960.webp`} srcset={`${t.img}-480.webp 480w, ${t.img}-960.webp 960w`} sizes="(max-width: 640px) 68vw, (max-width: 1024px) 30vw, 300px" alt={`${t.name} de ${t.amount} em vendas`} width={t.w} height={t.h} loading="lazy" decoding="async" />
           </div>
           <div class="tier-body">
             <div class="tier-lvl">{t.lvl}</div>
@@ -53,7 +53,7 @@ const tiers = [
     <!-- MILIONARIO STAGE — cinematic -->
     <div class="stage3d mx-auto mt-[--gap-md] max-w-5xl" data-tilt-zone><div class="lift"><div class="reveal mil-stage kframe gold glow-gold tilt" data-tilt="4">
       <div class="mil-img">
-        <img src="/assets/placa-1mm-960.webp" srcset="/assets/placa-1mm-480.webp 480w, /assets/placa-1mm-960.webp 960w" sizes="(max-width: 1024px) 100vw, 40vw" alt="Placa de R$ 1 milhão em vendas" width="800" height="1000" loading="lazy" decoding="async" />        <!-- top spotlight -->
+        <img src="/assets/placa-1mm-960.webp" srcset="/assets/placa-1mm-480.webp 480w, /assets/placa-1mm-960.webp 960w" sizes="(max-width: 1024px) 100vw, 40vw" alt="Placa de R$ 1 milhão em vendas" width="960" height="1302" loading="lazy" decoding="async" />        <!-- top spotlight -->
         <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2" style="background: radial-gradient(circle at 50% 0%, rgba(245,217,139,0.32), transparent 65%);"></div>
       </div>
 

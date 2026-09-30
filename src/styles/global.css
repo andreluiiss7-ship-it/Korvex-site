@@ -420,13 +420,18 @@ body {
 /* No celular a seção de reconhecimento não pode pesar mais que o extrato,
    que é o argumento de venda. Cortes de proporção, nada de conteúdo. */
 @media (max-width: 1023px) {
-  .mil-img { aspect-ratio: 16/7; }
   .mil-stage > .relative { padding: 20px; }
   .mil-stage .font-editorial { font-size: 2.4rem; }
   .mil-stage .irow { font-size: 13px; }
   .mil-stage .irow-i { width: 30px; height: 30px; border-radius: 8px; }
   .mil-stage ul { grid-template-columns: 1fr 1fr; gap: 8px; }
+  /* as artes das placas têm proporções diferentes entre si (0,679 a 0,800) e o
+     recorte comia o rodapé; contain mostra o pôster inteiro e mantém a altura */
   .tier-compact .tier-img { aspect-ratio: 1 / 1; }
+  .tier-compact .tier-img:not(.bracelet) img { object-fit: contain; padding: 6px; }
+  /* a placa do milhão perdia 34% do topo (logo e selo) no recorte panorâmico */
+  .mil-img { aspect-ratio: 4 / 3; }
+  .mil-img img { object-fit: contain; padding: 10px 0; }
 }
 
 /* ---------- Taxas / payouts ---------- */
