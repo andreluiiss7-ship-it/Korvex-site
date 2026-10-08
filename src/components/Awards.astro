@@ -3,23 +3,30 @@ import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
 import Mosaic from './Mosaic.astro';
 
-// Escada de peças: a altura relativa conta a progressão sem precisar de legenda.
+// Escada de peças. --k = quanto cada uma reage ao cursor, --z = profundidade.
+// Intensidades diferentes no mesmo espaço 3D criam parallax entre as placas.
 const placas = [
-  { img: '/assets/placa-100k', s: 0.62, w: 960, h: 1370, alt: 'Placa de R$ 100 mil em vendas' },
-  { img: '/assets/placa-500k', s: 0.78, w: 960, h: 1316, alt: 'Placa de R$ 500 mil em vendas' },
-  { img: '/assets/placa-1mm',  s: 1,    w: 960, h: 1270, alt: 'Placa de R$ 1 milhão em vendas' },
+  { img: '/assets/placa-100k', s: 0.62, k: 0.55, z: 0,  w: 960, h: 1370, alt: 'Placa de R$ 100 mil em vendas' },
+  { img: '/assets/placa-500k', s: 0.78, k: 0.85, z: 22, w: 960, h: 1316, alt: 'Placa de R$ 500 mil em vendas' },
+  { img: '/assets/placa-1mm',  s: 1,    k: 1.2,  z: 52, w: 960, h: 1270, alt: 'Placa de R$ 1 milhão em vendas' },
 ];
 
-// Régua de marcos: dado alinhado, não card. A cor é função (nível), não enfeite.
 const marcos = [
   { valor: '10 mil',   peca: 'Pulseira',    cor: 'rgba(168,176,194,.55)' },
   { valor: '100 mil',  peca: 'Placa azul',  cor: '#3B82F6' },
   { valor: '500 mil',  peca: 'Placa prata', cor: '#B8C0CC' },
   { valor: '1 milhão', peca: 'Placa ouro',  cor: '#C9A35E', ouro: true },
 ];
+
+// Os dois degraus que ainda não foram abertos. O número está gravado na peça,
+// mas só aparece quando a luz do cursor bate nele.
+const lacradas = [
+  { valor: 'R$ 5 milhões',  gravado: 'R$ 5.000.000',  k: 0.95, z: 14, sz: 0.84 },
+  { valor: 'R$ 10 milhões', gravado: 'R$ 10.000.000', k: 1.25, z: 44, sz: 1 },
+];
 ---
 
-<section id="premiacoes" class="sec relative overflow-hidden">
+<section id="premiacoes" class="sec relative overflow-hidden" data-tilt="7" data-tilt-zone>
   <div class="pointer-events-none absolute inset-0 -z-10">
     <div class="absolute inset-0" style="background: radial-gradient(900px 480px at 50% 18%, rgba(201,163,94,0.10), transparent 62%), linear-gradient(180deg, var(--bg-0), #070B12 55%, var(--bg-0));"></div>
     <Mosaic lit={22} seed={5} accent="gold" />
@@ -37,16 +44,19 @@ const marcos = [
       </p>
     </div>
 
-    <!-- as peças como objetos numa parede, em escada; sem card em volta -->
+    <!-- as peças no mesmo espaço 3D: inclinam juntas, em profundidades diferentes -->
     <div class="pw reveal">
       {placas.map((p) => (
-        <img class="pw-p" style={`--s:${p.s}`} src={`${p.img}-960.webp`}
-          srcset={`${p.img}-480.webp 480w, ${p.img}-960.webp 960w`} sizes="(max-width: 1024px) 34vw, 330px"
-          alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" />
+        <span class="pw-lift">
+          <span class="pw-slot" style={`--s:${p.s};--k:${p.k};--z:${p.z}px`}>
+            <img class="pw-p" src={`${p.img}-960.webp`}
+              srcset={`${p.img}-480.webp 480w, ${p.img}-960.webp 960w`} sizes="(max-width: 1024px) 34vw, 330px"
+              alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" />
+          </span>
+        </span>
       ))}
     </div>
 
-    <!-- régua de marcos: divisórias e números tabulares, não caixas -->
     <dl class="pw-rule reveal-stagger">
       {marcos.map((m) => (
         <div class={`pw-m${m.ouro ? ' ouro' : ''}`} style={`--c:${m.cor}`}>
@@ -55,6 +65,28 @@ const marcos = [
         </div>
       ))}
     </dl>
+
+    <!-- os dois degraus que ninguém abriu ainda -->
+    <div class="pw-next reveal">
+      <div class="pw-next-art">
+        {lacradas.map((l) => (
+          <span class="pw-lock" style={`--k:${l.k};--z:${l.z}px;--sz:${l.sz}`}>
+            <i class="pw-lock-seal" aria-hidden="true"></i>
+            <b class="pw-lock-etch" aria-hidden="true">{l.gravado}</b>
+            <u class="pw-lock-cap">{l.valor}</u>
+          </span>
+        ))}
+      </div>
+      <div class="pw-next-copy">
+        <p class="pw-next-k">Os próximos degraus</p>
+        <h3>Depois do milhão, a parede não acaba.</h3>
+        <p class="pw-next-p">
+          Existem mais dois: <strong>R$ 5 milhões</strong> e <strong>R$ 10 milhões</strong>.
+          O que acompanha cada um não está nesta página — e não vai estar.
+        </p>
+        <p class="pw-next-s">Quem chegar lá descobre primeiro.</p>
+      </div>
+    </div>
 
     <div class="reveal mt-[--gap-md] flex justify-center">
       <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="awards-register" class="btn btn-gold inline-flex">
@@ -66,16 +98,48 @@ const marcos = [
 </section>
 
 <style>
-  /* parede: as peças apoiam na mesma linha e crescem com o marco */
+  /* um único espaço 3D para todas as peças: é o que cria parallax entre elas */
   .pw {
     --pw-h: clamp(176px, 33vw, 430px);
     display: flex; align-items: flex-end; justify-content: center;
     gap: clamp(10px, 2.4vw, 34px);
     max-width: 1024px; margin: var(--gap-lg) auto 0;
+    perspective: 1500px; perspective-origin: 50% 42%;
+  }
+  .pw-lift { display: block; transform-style: preserve-3d; }
+  .pw-slot {
+    position: relative; display: block; transform-style: preserve-3d;
+    transform: translateZ(var(--z, 0px))
+               rotateX(calc(var(--ry, 0deg) * var(--k, 1)))
+               rotateY(calc(var(--rx, 0deg) * var(--k, 1)));
+    transition: transform 0.55s var(--ease-snap);
   }
   .pw-p {
     display: block; width: auto; height: calc(var(--s) * var(--pw-h));
-    filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(calc(var(--sx, 0) * -14px) calc(26px + var(--sy, 0) * 10px) 30px rgba(0, 0, 0, 0.62));
+  }
+  /* reflexo que varre a peça com o cursor */
+  .pw-slot::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    opacity: 0; transition: opacity 0.45s var(--ease-out);
+    background:
+      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.16), transparent 42%),
+      linear-gradient(calc(112deg + var(--rx, 0deg) * 4), transparent 38%, rgba(255, 255, 255, 0.07) 50%, transparent 62%);
+  }
+  @media (hover: hover) and (pointer: fine) { .pw:hover .pw-slot::after { opacity: 1; } }
+
+  /* entrada: cada peça sobe e endireita com o scroll, em tempos levemente diferentes */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+      .pw-lift { animation: pw-raise linear both; animation-timeline: view(); }
+      .pw-lift:nth-child(1) { animation-range: entry 8% cover 42%; }
+      .pw-lift:nth-child(2) { animation-range: entry 12% cover 48%; }
+      .pw-lift:nth-child(3) { animation-range: entry 16% cover 54%; }
+    }
+  }
+  @keyframes pw-raise {
+    from { transform: translateY(48px) rotateX(15deg) scale(0.93); }
+    to   { transform: translateY(0) rotateX(0deg) scale(1); }
   }
 
   /* régua */
@@ -95,6 +159,74 @@ const marcos = [
   .pw-m.ouro dt { color: var(--gold-2); }
   .pw-m dd { margin-top: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--t-3); }
 
+  /* próximos degraus */
+  .pw-next {
+    display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(24px, 5vw, 64px);
+    max-width: 1024px; margin: var(--gap-lg) auto 0; padding-top: var(--gap-md);
+    border-top: 1px solid var(--line-1);
+    perspective: 1400px; perspective-origin: 30% 50%;
+  }
+  .pw-next-art { display: flex; align-items: flex-end; gap: clamp(14px, 2.2vw, 26px); padding-bottom: 30px; }
+  .pw-lock {
+    --lh: calc(var(--sz, 1) * clamp(150px, 21vw, 272px));
+    position: relative; display: block; width: calc(var(--lh) * 0.72); height: var(--lh);
+    border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 3px;
+    background: linear-gradient(168deg, #16181C 0%, #0B0C0F 58%, #121418 100%);
+    box-shadow: inset 0 0 0 5px #0C0D10, inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                calc(var(--sx, 0) * -12px) calc(20px + var(--sy, 0) * 8px) 26px -12px rgba(0, 0, 0, 0.8);
+    transform: translateZ(var(--z, 0px))
+               rotateX(calc(var(--ry, 0deg) * var(--k, 1)))
+               rotateY(calc(var(--rx, 0deg) * var(--k, 1)));
+    transition: transform 0.55s var(--ease-snap);
+  }
+  .pw-lock-seal {
+    position: absolute; left: 50%; top: 15%; width: 15%; aspect-ratio: 1; transform: translateX(-50%);
+    border-radius: 999px; background: radial-gradient(circle at 36% 30%, #4A4D55, #212429 70%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 2px 5px rgba(0, 0, 0, 0.6);
+  }
+  /* o número está gravado na peça: só aparece quando a luz do cursor bate nele */
+  .pw-lock-etch {
+    position: absolute; left: 8%; right: 8%; top: 44%;
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(9px, 1.35vw, 15px);
+    letter-spacing: -0.02em; text-align: center; white-space: nowrap;
+    color: transparent; -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.045);
+    transition: -webkit-text-stroke-color 0.55s var(--ease-out), text-shadow 0.55s var(--ease-out);
+  }
+  /* reflexo que varre a peça lacrada, insinuando que há algo gravado ali */
+  .pw-lock::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 3px;
+    opacity: 0; transition: opacity 0.5s var(--ease-out);
+    background:
+      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.10), transparent 48%),
+      linear-gradient(calc(112deg + var(--rx, 0deg) * 4), transparent 40%, rgba(226, 195, 134, 0.06) 50%, transparent 60%);
+  }
+  .pw-lock-cap {
+    position: absolute; left: 0; right: 0; bottom: -28px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    text-align: center; text-decoration: none; color: var(--t-3);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pw-lock:hover::after { opacity: 1; }
+    .pw-lock:hover .pw-lock-etch { -webkit-text-stroke-color: rgba(226, 195, 134, 0.6); text-shadow: 0 0 16px rgba(201, 163, 94, 0.3); }
+  }
+
+  .pw-next-copy { min-width: 0; }
+  .pw-next-k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-2); }
+  .pw-next h3 {
+    margin-top: 10px; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.4rem, 2.6vw, 2.1rem); letter-spacing: -0.03em; line-height: 1.08; color: #fff;
+  }
+  .pw-next-p { margin-top: 12px; font-size: clamp(14px, 1.1vw, 15.5px); line-height: 1.55; color: var(--t-2); }
+  .pw-next-p strong { color: #fff; font-weight: 600; }
+  .pw-next-s { margin-top: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--gold-2); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pw-slot, .pw-lock { transform: none !important; }
+    .pw-lift { animation: none !important; transform: none !important; }
+  }
+  @media (max-width: 1023px) {
+    .pw-slot, .pw-lock { transform: none; }
+  }
   @media (max-width: 767px) {
     .pw { margin-top: var(--gap-md); }
     .pw-rule { grid-template-columns: 1fr 1fr; margin-top: var(--gap-md); }
@@ -104,7 +236,9 @@ const marcos = [
     .pw-m:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--line-1); }
     .pw-m + .pw-m::before { left: 0; }
     .pw-m:nth-child(even)::before { left: 16px; }
-    .pw-m:nth-child(n+3)::before { top: -1px; }
     .pw-m dd { font-size: 10px; }
+    .pw-next { grid-template-columns: 1fr; gap: 34px; }
+    .pw-next-art { justify-content: center; }
+    .pw-next-copy { text-align: center; }
   }
 </style>
