@@ -1,88 +1,110 @@
 ---
 import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
-import IconRow from './IconRow.astro';
 import Mosaic from './Mosaic.astro';
 
-const tiers = [
-  { variant: 'steel', amount: 'R$ 10 mil',   name: 'Pulseira', lvl: 'Nível 01', img: '/assets/pulseira-10k', bracelet: true,  w: 960, h: 1200 },
-  { variant: 'blue',  amount: 'R$ 100 mil',  name: 'Placa',      lvl: 'Nível 02', img: '/assets/placa-100k',    bracelet: false, w: 960, h: 1370 },
-  { variant: 'silver', amount: 'R$ 500 mil', name: 'Placa',      lvl: 'Nível 03', img: '/assets/placa-500k',    bracelet: false, w: 960, h: 1316 },
+// Escada de peças: a altura relativa conta a progressão sem precisar de legenda.
+const placas = [
+  { img: '/assets/placa-100k', s: 0.62, w: 960, h: 1370, alt: 'Placa de R$ 100 mil em vendas' },
+  { img: '/assets/placa-500k', s: 0.78, w: 960, h: 1316, alt: 'Placa de R$ 500 mil em vendas' },
+  { img: '/assets/placa-1mm',  s: 1,    w: 960, h: 1270, alt: 'Placa de R$ 1 milhão em vendas' },
+];
+
+// Régua de marcos: dado alinhado, não card. A cor é função (nível), não enfeite.
+const marcos = [
+  { valor: '10 mil',   peca: 'Pulseira',    cor: 'rgba(168,176,194,.55)' },
+  { valor: '100 mil',  peca: 'Placa azul',  cor: '#3B82F6' },
+  { valor: '500 mil',  peca: 'Placa prata', cor: '#B8C0CC' },
+  { valor: '1 milhão', peca: 'Placa ouro',  cor: '#C9A35E', ouro: true },
 ];
 ---
 
 <section id="premiacoes" class="sec relative overflow-hidden">
-  <!-- ambient gold + soft top spotlight -->
   <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute inset-0" style="background: radial-gradient(800px 500px at 50% 0%, rgba(201,163,94,0.12), transparent 60%), linear-gradient(180deg, var(--bg-0), #070B12 50%, var(--bg-0));"></div>
-    <Mosaic lit={30} seed={5} accent="gold" />
+    <div class="absolute inset-0" style="background: radial-gradient(900px 480px at 50% 18%, rgba(201,163,94,0.10), transparent 62%), linear-gradient(180deg, var(--bg-0), #070B12 55%, var(--bg-0));"></div>
+    <Mosaic lit={22} seed={5} accent="gold" />
   </div>
 
   <div class="section">
-    <!-- HEADER -->
     <div class="reveal mx-auto max-w-3xl text-center">
       <span class="kicker gold !hidden justify-center lg:!inline-flex">Reconhecimento</span>
       <h2 class="h2 mt-4">
         Faturamento alto
-        <span class="block font-editorial italic font-normal" style="font-size:1.18em">
-          <span class="text-gold-gradient">vira metal na parede.</span>
-        </span>
+        <span class="block font-editorial italic font-normal" style="font-size:1.18em">vira metal na parede.</span>
       </h2>
-      <p class="lead mx-auto mt-4 hidden lg:block">
+      <p class="lead mx-auto mt-4">
         No milhão, <strong class="text-white">prêmio em dinheiro e imersão presencial</strong> com o time.
       </p>
     </div>
 
-
-    <!-- TIER GRID — 3 cards compactos no mobile, 1MM é o finale abaixo -->
-    <div class="reveal-stagger tiers mx-auto mt-[--gap-lg] max-w-5xl">
-      {tiers.map((t, i) => (
-        <div class={`tier tier-compact ${t.variant}`} data-tilt="10" data-tilt-zone>
-          <div class={`tier-img${t.bracelet ? ' bracelet' : ''}`}>
-            <img src={`${t.img}-960.webp`} srcset={`${t.img}-480.webp 480w, ${t.img}-960.webp 960w`} sizes="(max-width: 640px) 68vw, (max-width: 1024px) 30vw, 300px" alt={`${t.name} de ${t.amount} em vendas`} width={t.w} height={t.h} loading="lazy" decoding="async" />
-          </div>
-          <div class="tier-body">
-            <div class="tier-lvl">{t.lvl}</div>
-            <div class="tier-amount">{t.amount}</div>
-            <div class="tier-name">{t.name}</div>
-          </div>
-        </div>
+    <!-- as peças como objetos numa parede, em escada; sem card em volta -->
+    <div class="pw reveal">
+      {placas.map((p) => (
+        <img class="pw-p" style={`--s:${p.s}`} src={`${p.img}-960.webp`}
+          srcset={`${p.img}-480.webp 480w, ${p.img}-960.webp 960w`} sizes="(max-width: 1024px) 34vw, 330px"
+          alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" />
       ))}
     </div>
 
-    <!-- MILIONARIO STAGE — cinematic -->
-    <div class="stage3d mx-auto mt-[--gap-md] max-w-5xl" data-tilt-zone><div class="lift"><div class="reveal mil-stage kframe gold glow-gold tilt" data-tilt="4">
-      <div class="mil-img">
-        <img src="/assets/placa-1mm-960.webp" srcset="/assets/placa-1mm-480.webp 480w, /assets/placa-1mm-960.webp 960w" sizes="(max-width: 1024px) 100vw, 40vw" alt="Placa de R$ 1 milhão em vendas" width="960" height="1270" loading="lazy" decoding="async" />        <!-- top spotlight -->
-        <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2" style="background: radial-gradient(circle at 50% 0%, rgba(245,217,139,0.32), transparent 65%);"></div>
-      </div>
+    <!-- régua de marcos: divisórias e números tabulares, não caixas -->
+    <dl class="pw-rule reveal-stagger">
+      {marcos.map((m) => (
+        <div class={`pw-m${m.ouro ? ' ouro' : ''}`} style={`--c:${m.cor}`}>
+          <dt>{m.valor}</dt>
+          <dd>{m.peca}</dd>
+        </div>
+      ))}
+    </dl>
 
-      <div class="relative p-7 sm:p-10">
-        <span class="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-[10.5px] font-bold uppercase font-mono" style="letter-spacing:0.22em;color:var(--gold-2);background:var(--gold-tint);border:1px solid rgba(201,163,94,0.25);">
-          <span class="inline-block h-1.5 w-1.5 rounded-full bg-[--gold-1]"></span>
-          O marco do milhão
-        </span>
-
-        <h3 class="mt-4 leading-[0.95]">
-          <span class="font-editorial italic block text-5xl sm:text-7xl text-gold-gradient" data-counter data-target="1000000" data-prefix="R$ ">R$ 1.000.000</span>
-          <span class="mt-2 block h-display text-2xl sm:text-3xl text-white">em vendas.</span>
-        </h3>
-
-        <IconRow class="mt-5" variant="gold" items={[{ icon: 'coin', label: 'Prêmio em dinheiro' }, { icon: 'users', label: 'Imersão presencial' }]} />
-
-        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="awards-register" class="btn btn-gold mt-6 inline-flex">
-          Quero a placa do milhão
-          <span class="h-4 w-4" set:html={icon('arrow')}></span>
-        </a>
-      </div>
-    </div></div></div>
+    <div class="reveal mt-[--gap-md] flex justify-center">
+      <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="awards-register" class="btn btn-gold inline-flex">
+        Quero a placa do milhão
+        <span class="h-4 w-4" set:html={icon('arrow')}></span>
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
-  .tiers { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 4px 20px 12px; margin-inline: -20px; }
-  .tiers::-webkit-scrollbar { display: none; }
-  .tiers > * { flex: 0 0 68%; scroll-snap-align: center; }
-  @media (min-width: 640px) { .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; overflow: visible; padding: 0; margin-inline: auto; } .tiers > * { flex: none; } }
-  @media (min-width: 1024px) { .tiers { gap: 16px; } }
+  /* parede: as peças apoiam na mesma linha e crescem com o marco */
+  .pw {
+    --pw-h: clamp(176px, 33vw, 430px);
+    display: flex; align-items: flex-end; justify-content: center;
+    gap: clamp(10px, 2.4vw, 34px);
+    max-width: 1024px; margin: var(--gap-lg) auto 0;
+  }
+  .pw-p {
+    display: block; width: auto; height: calc(var(--s) * var(--pw-h));
+    filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.6));
+  }
+
+  /* régua */
+  .pw-rule {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    max-width: 1024px; margin: var(--gap-lg) auto 0;
+    border-top: 1px solid var(--line-1);
+  }
+  .pw-m { position: relative; padding: 18px 20px 16px 0; }
+  .pw-m + .pw-m { padding-left: 24px; border-left: 1px solid var(--line-1); }
+  .pw-m::before { content: ''; position: absolute; top: -1px; left: 0; width: 34px; height: 2px; background: var(--c); }
+  .pw-m + .pw-m::before { left: 24px; }
+  .pw-m dt {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(1.25rem, 2.1vw, 1.65rem);
+    letter-spacing: -0.03em; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .pw-m.ouro dt { color: var(--gold-2); }
+  .pw-m dd { margin-top: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--t-3); }
+
+  @media (max-width: 767px) {
+    .pw { margin-top: var(--gap-md); }
+    .pw-rule { grid-template-columns: 1fr 1fr; margin-top: var(--gap-md); }
+    .pw-m { padding: 14px 12px 12px 0; }
+    .pw-m + .pw-m { padding-left: 0; border-left: 0; }
+    .pw-m:nth-child(n+3) { border-top: 1px solid var(--line-1); }
+    .pw-m:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--line-1); }
+    .pw-m + .pw-m::before { left: 0; }
+    .pw-m:nth-child(even)::before { left: 16px; }
+    .pw-m:nth-child(n+3)::before { top: -1px; }
+    .pw-m dd { font-size: 10px; }
+  }
 </style>
