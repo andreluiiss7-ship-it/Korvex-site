@@ -20,9 +20,11 @@ const marcos = [
 
 // Os dois degraus que ainda não foram abertos. O número está gravado na peça,
 // mas só aparece quando a luz do cursor bate nele.
-const lacradas = [
-  { valor: 'R$ 5 milhões',  gravado: 'R$ 5.000.000',  k: 0.95, z: 14, sz: 0.84 },
-  { valor: 'R$ 10 milhões', gravado: 'R$ 10.000.000', k: 1.25, z: 44, sz: 1 },
+// Degraus que ninguém abriu: ficam atrás das placas, no escuro da mesma parede.
+// Z negativo + altura maior = peças grandes ao fundo, parcialmente encobertas.
+const fundo = [
+  { gravado: 'R$ 5.000.000',  h: 0.92, z: -170, k: 0.45, x: '36%', b: '9%' },
+  { gravado: 'R$ 10.000.000', h: 1.0,  z: -290, k: 0.28, x: '74%', b: '19%' },
 ];
 ---
 
@@ -46,6 +48,12 @@ const lacradas = [
 
     <!-- as peças no mesmo espaço 3D: inclinam juntas, em profundidades diferentes -->
     <div class="pw reveal">
+      {fundo.map((g) => (
+        <span class="pw-ghost" style={`--gh:${g.h};--gz:${g.z}px;--gk:${g.k};--gx:${g.x};--gb:${g.b}`} aria-hidden="true">
+          <i class="pw-ghost-seal"></i>
+          <b class="pw-ghost-etch">{g.gravado}</b>
+        </span>
+      ))}
       {placas.map((p) => (
         <span class="pw-lift">
           <span class="pw-slot" style={`--s:${p.s};--k:${p.k};--z:${p.z}px`}>
@@ -68,15 +76,6 @@ const lacradas = [
 
     <!-- os dois degraus que ninguém abriu ainda -->
     <div class="pw-next reveal">
-      <div class="pw-next-art">
-        {lacradas.map((l) => (
-          <span class="pw-lock" style={`--k:${l.k};--z:${l.z}px;--sz:${l.sz}`}>
-            <i class="pw-lock-seal" aria-hidden="true"></i>
-            <b class="pw-lock-etch" aria-hidden="true">{l.gravado}</b>
-            <u class="pw-lock-cap">{l.valor}</u>
-          </span>
-        ))}
-      </div>
       <div class="pw-next-copy">
         <p class="pw-next-k">Os próximos degraus</p>
         <h3>Depois do milhão, a parede não acaba.</h3>
@@ -103,8 +102,14 @@ const lacradas = [
     --pw-h: clamp(176px, 33vw, 430px);
     display: flex; align-items: flex-end; justify-content: center;
     gap: clamp(10px, 2.4vw, 34px);
-    max-width: 1024px; margin: var(--gap-lg) auto 0;
-    perspective: 1500px; perspective-origin: 50% 42%;
+    position: relative; max-width: 1024px; margin: var(--gap-md) auto 0;
+    padding-top: clamp(44px, 7vw, 120px);
+    perspective: 1500px; perspective-origin: 50% 42%; transform-style: preserve-3d;
+  }
+  /* linha de luz no chão da galeria */
+  .pw::after {
+    content: ''; position: absolute; left: 4%; right: 4%; bottom: -1px; height: 1px; pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(201, 163, 94, 0.32) 28%, rgba(226, 195, 134, 0.5) 50%, rgba(201, 163, 94, 0.32) 72%, transparent);
   }
   .pw-lift { display: block; transform-style: preserve-3d; }
   .pw-slot {
@@ -161,56 +166,42 @@ const lacradas = [
 
   /* próximos degraus */
   .pw-next {
-    display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(24px, 5vw, 64px);
-    max-width: 1024px; margin: var(--gap-lg) auto 0; padding-top: var(--gap-md);
-    border-top: 1px solid var(--line-1);
-    perspective: 1400px; perspective-origin: 30% 50%;
+    max-width: 1024px; margin: var(--gap-md) auto 0; padding-top: var(--gap-md);
+    border-top: 1px solid var(--line-1); text-align: center;
   }
-  .pw-next-art { display: flex; align-items: flex-end; gap: clamp(14px, 2.2vw, 26px); padding-bottom: 30px; }
-  .pw-lock {
-    --lh: calc(var(--sz, 1) * clamp(150px, 21vw, 272px));
-    position: relative; display: block; width: calc(var(--lh) * 0.72); height: var(--lh);
-    border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 3px;
-    background: linear-gradient(168deg, #16181C 0%, #0B0C0F 58%, #121418 100%);
-    box-shadow: inset 0 0 0 5px #0C0D10, inset 0 1px 0 rgba(255, 255, 255, 0.06),
-                calc(var(--sx, 0) * -12px) calc(20px + var(--sy, 0) * 8px) 26px -12px rgba(0, 0, 0, 0.8);
-    transform: translateZ(var(--z, 0px))
-               rotateX(calc(var(--ry, 0deg) * var(--k, 1)))
-               rotateY(calc(var(--rx, 0deg) * var(--k, 1)));
-    transition: transform 0.55s var(--ease-snap);
-  }
-  .pw-lock-seal {
-    position: absolute; left: 50%; top: 15%; width: 15%; aspect-ratio: 1; transform: translateX(-50%);
-    border-radius: 999px; background: radial-gradient(circle at 36% 30%, #4A4D55, #212429 70%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 2px 5px rgba(0, 0, 0, 0.6);
-  }
-  /* o número está gravado na peça: só aparece quando a luz do cursor bate nele */
-  .pw-lock-etch {
-    position: absolute; left: 8%; right: 8%; top: 44%;
-    font-family: var(--font-display); font-weight: 800; font-size: clamp(9px, 1.35vw, 15px);
-    letter-spacing: -0.02em; text-align: center; white-space: nowrap;
-    color: transparent; -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.045);
-    transition: -webkit-text-stroke-color 0.55s var(--ease-out), text-shadow 0.55s var(--ease-out);
-  }
-  /* reflexo que varre a peça lacrada, insinuando que há algo gravado ali */
-  .pw-lock::after {
-    content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 3px;
-    opacity: 0; transition: opacity 0.5s var(--ease-out);
+  /* peças de fundo: grandes, atrás das placas, só insinuadas pela luz */
+  .pw-ghost {
+    position: absolute; left: var(--gx); bottom: var(--gb, 0);
+    width: calc(var(--gh) * var(--pw-h) * 0.72); height: calc(var(--gh) * var(--pw-h));
+    border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 3px;
     background:
-      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.10), transparent 48%),
-      linear-gradient(calc(112deg + var(--rx, 0deg) * 4), transparent 40%, rgba(226, 195, 134, 0.06) 50%, transparent 60%);
+      radial-gradient(ellipse 62% 42% at 50% 46%, rgba(201, 163, 94, 0.055), transparent 72%),
+      linear-gradient(170deg, #0A0C11 0%, #06070A 60%, #090B0F 100%);
+    box-shadow: inset 0 0 0 4px rgba(6, 7, 10, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    transform: translateZ(var(--gz))
+               rotateX(calc(var(--ry, 0deg) * var(--gk)))
+               rotateY(calc(var(--rx, 0deg) * var(--gk)));
+    transition: transform 0.7s var(--ease-snap), border-color 0.5s var(--ease-out);
   }
-  .pw-lock-cap {
-    position: absolute; left: 0; right: 0; bottom: -28px;
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-    text-align: center; text-decoration: none; color: var(--t-3);
+  .pw-ghost-seal {
+    position: absolute; left: 50%; top: 7%; width: 11%; aspect-ratio: 1; transform: translateX(-50%);
+    border-radius: 999px; background: radial-gradient(circle at 36% 30%, rgba(201, 163, 94, 0.3), rgba(20, 17, 11, 0.9) 72%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  /* o valor está gravado; só a luz do cursor revela */
+  .pw-ghost-etch {
+    position: absolute; left: 6%; right: 6%; top: 21%;
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(11px, 1.7vw, 24px);
+    letter-spacing: -0.025em; text-align: center; white-space: nowrap;
+    color: transparent; -webkit-text-stroke: 0.7px rgba(255, 255, 255, 0.05);
+    transition: -webkit-text-stroke-color 0.6s var(--ease-out), text-shadow 0.6s var(--ease-out);
   }
   @media (hover: hover) and (pointer: fine) {
-    .pw-lock:hover::after { opacity: 1; }
-    .pw-lock:hover .pw-lock-etch { -webkit-text-stroke-color: rgba(226, 195, 134, 0.6); text-shadow: 0 0 16px rgba(201, 163, 94, 0.3); }
+    .pw:hover .pw-ghost { border-color: rgba(201, 163, 94, 0.16); }
+    .pw:hover .pw-ghost-etch { -webkit-text-stroke-color: rgba(226, 195, 134, 0.55); text-shadow: 0 0 22px rgba(201, 163, 94, 0.26); }
   }
 
-  .pw-next-copy { min-width: 0; }
+  .pw-next-copy { max-width: 640px; margin: 0 auto; }
   .pw-next-k { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-2); }
   .pw-next h3 {
     margin-top: 10px; font-family: var(--font-display); font-weight: 700;
@@ -221,11 +212,12 @@ const lacradas = [
   .pw-next-s { margin-top: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--gold-2); }
 
   @media (prefers-reduced-motion: reduce) {
-    .pw-slot, .pw-lock { transform: none !important; }
+    .pw-slot, .pw-ghost { transform: none !important; }
     .pw-lift { animation: none !important; transform: none !important; }
   }
   @media (max-width: 1023px) {
-    .pw-slot, .pw-lock { transform: none; }
+    .pw-slot { transform: none; }
+    .pw-ghost { transform: translateZ(var(--gz)); }
   }
   @media (max-width: 767px) {
     .pw { margin-top: var(--gap-md); }
@@ -237,8 +229,6 @@ const lacradas = [
     .pw-m + .pw-m::before { left: 0; }
     .pw-m:nth-child(even)::before { left: 16px; }
     .pw-m dd { font-size: 10px; }
-    .pw-next { grid-template-columns: 1fr; gap: 34px; }
-    .pw-next-art { justify-content: center; }
-    .pw-next-copy { text-align: center; }
+    .pw-next-p { font-size: 14px; }
   }
 </style>
