@@ -63,6 +63,7 @@ const answer = (l: Lead, qid: QuizQuestion['id']) => {
   return vals.join(', ') + (other ? ` (${other})` : '');
 };
 const answered = (l: Lead) => QUIZ.filter((q) => l.answers?.[q.id]).length;
+const isDone = (l: Lead) => l.quizDone || answered(l) === QUIZ.length;
 const origin = (l: Lead) => Object.entries(l.attr || {}).map(([k, v]) => `${k}=${v}`).join(' ');
 
 function csv(leads: Lead[]) {
@@ -74,7 +75,7 @@ function csv(leads: Lead[]) {
     return `"${t.replace(/"/g, '""')}"`;
   };
   const lines = leads.map((l) =>
-    [fmtDate(l.createdAt), l.name, l.email, formatPhone(l.phone), ...QUIZ.map((q) => answer(l, q.id)), l.quizDone ? 'sim' : `parcial ${answered(l)}/5`, l.test ? 'sim' : '', l.consent?.at ? fmtDate(l.consent.at) : '', origin(l), l.id]
+    [fmtDate(l.createdAt), l.name, l.email, formatPhone(l.phone), ...QUIZ.map((q) => answer(l, q.id)), isDone(l) ? 'sim' : `parcial ${answered(l)}/5`, l.test ? 'sim' : '', l.consent?.at ? fmtDate(l.consent.at) : '', origin(l), l.id]
       .map(cell)
       .join(';'),
   );
@@ -87,7 +88,7 @@ function page(leads: Lead[], showTests: boolean) {
   const real = leads.filter((l) => !l.test);
   const today = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo' }).format(new Date());
   const todayCount = real.filter((l) => new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo' }).format(new Date(l.createdAt)) === today).length;
-  const done = real.filter((l) => l.quizDone).length;
+  const done = real.filter(isDone).length;
   const tests = leads.length - real.length;
 
   const wa = (l: Lead) => {
@@ -103,7 +104,7 @@ function page(leads: Lead[], showTests: boolean) {
   <td><strong>${escapeHtml(l.name)}</strong>${l.test ? ' <span class="tag">teste</span>' : ''}<br><span class="m">${escapeHtml(l.email)}</span></td>
   <td class="n"><a href="${wa(l)}" target="_blank" rel="noopener">${escapeHtml(formatPhone(l.phone))}</a></td>
   ${QUIZ.map((q) => `<td>${escapeHtml(answer(l, q.id)) || '<span class="m">·</span>'}</td>`).join('')}
-  <td class="n">${l.quizDone ? 'completo' : `<span class="m">${answered(l)}/5</span>`}</td>
+  <td class="n">${isDone(l) ? 'completo' : `<span class="m">${answered(l)}/5</span>`}</td>
   <td class="m s">${escapeHtml(origin(l))}</td>
   <td><form method="post" onsubmit="return confirm('Apagar ${escapeHtml(l.name.replace(/[^\p{L}\p{N} .\[\]-]/gu, ''))}? Não dá para desfazer.')"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="${l.id}"><button>Apagar</button></form></td>
 </tr>`,

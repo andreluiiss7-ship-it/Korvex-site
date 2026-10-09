@@ -191,7 +191,8 @@ export async function POST(req: Request) {
       const now = new Date().toISOString();
       lead.updatedAt = now;
       const complete = (Object.keys(QUIZ_BY_ID) as QuizQuestion['id'][]).every((qid) => lead.answers[qid]);
-      const justFinished = body.done === true && complete && !lead.quizDone;
+      // Completo = as 5 respostas existem (não depende do último envio chegar).
+      const justFinished = complete && !lead.quizDone;
       if (justFinished) {
         lead.quizDone = true;
         lead.quizDoneAt = now;
