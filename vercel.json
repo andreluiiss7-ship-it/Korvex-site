@@ -1,5 +1,12 @@
 {
   "redirects": [
     { "source": "/:path*", "has": [{ "type": "host", "value": "korvexgateway.com" }], "destination": "https://www.korvexgateway.com/:path*", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/v2/leads", "destination": "/api/v2-leads" }
+  ],
+  "headers": [
+    { "source": "/api/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/v2/leads", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
   ]
 }

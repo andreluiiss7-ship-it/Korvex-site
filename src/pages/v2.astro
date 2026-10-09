@@ -1,0 +1,376 @@
+---
+import Capture from '../layouts/Capture.astro';
+import { CONSENT_TEXT, QUIZ } from '../../api/_lib/v2-quiz';
+
+const title = 'Korvex 2.0 · Lista de acesso antecipado';
+const description =
+  'A Korvex agora é gateway próprio: painel novo, Pix disponível no mesmo dia, defesa de MED automática e antifraude. Entre na lista e garanta acesso antes da abertura e taxas exclusivas.';
+
+const groups = [
+  {
+    name: 'Dinheiro',
+    items: [
+      ['Painel com o dinheiro no topo', 'Faturamento de hoje e do mês, vendas pagas e saldo disponível aparecem primeiro. Organizado e rápido.'],
+      ['Pix com saque rápido', 'Venda no Pix fica disponível no mesmo dia. O saque sai do painel, com verificação em duas etapas.'],
+    ],
+  },
+  {
+    name: 'Proteção',
+    items: [
+      ['Defesa de MED automática', 'Chegou um MED, o sistema monta sozinho o comprovante de entrega com dados reais: acesso, aulas assistidas, aceite dos termos.'],
+      ['Antifraude com bloqueio automático', 'Bloqueio por CPF, e-mail, IP e aparelho, com pontuação de risco. Quem deu MED ou chargeback num checkout Korvex fica barrado em todos.'],
+      ['Área de membros protegida', 'Marca d’água com os dados de cada aluno, limite de aparelhos e vídeo com link que expira. Se vazar, você sabe de quem foi.'],
+    ],
+  },
+  {
+    name: 'Venda',
+    items: [
+      ['Checkout com quiz', 'Um quiz antes da oferta leva o comprador ao checkout já preenchido.'],
+      ['Recuperação de vendas', 'Pix gerado e não pago e carrinho abandonado recebem lembretes por e-mail na hora certa.'],
+    ],
+  },
+  {
+    name: 'Integração',
+    items: [
+      ['Webhooks e API completos', 'API com chaves de produção e de teste, simulador e webhooks assinados. Quem já integra com a Korvex troca só a URL e as chaves.'],
+      ['Integrações', 'UTMify, Pixel da Meta com API de Conversões, TikTok, Google Ads, GA4, RD Station, ActiveCampaign, Zapier, Make e outras.'],
+    ],
+  },
+  {
+    name: 'Equipe',
+    items: [
+      ['Permissões por função', 'Financeiro, desenvolvedor e suporte, cada um vendo só a sua parte. Ou cargos sob medida.'],
+      ['Suporte próximo', 'Fale com a gente de dentro do painel. O chamado já chega com o contexto da sua conta.'],
+    ],
+  },
+];
+
+const heroFeatures = [
+  'Painel novo, com o dinheiro no topo',
+  'Pix disponível para saque no mesmo dia',
+  'Defesa de MED automática',
+  'Antifraude com bloqueio automático',
+  'Área de membros protegida',
+];
+
+const perks = [
+  ['Acesso antes da abertura', 'Você usa a Korvex 2.0 antes de ela abrir para o mercado.'],
+  ['Taxas exclusivas da lista', 'Uma condição que só quem se cadastrou recebe. A proposta chega pelo WhatsApp.'],
+  ['Conversa direta', 'A gente entende a sua operação antes de você migrar qualquer coisa.'],
+];
+
+const steps = [
+  ['Deixe seu contato', 'Nome, e-mail e WhatsApp. Menos de um minuto.'],
+  ['Conte sobre a operação', 'Cinco perguntas de um toque.'],
+  ['Receba a nossa chamada', 'A gente te chama no WhatsApp com a condição da lista.'],
+];
+
+const faqs = [
+  ['Entrar na lista custa alguma coisa?', 'Não. A lista é gratuita e não obriga você a migrar.'],
+  ['Quais são as taxas da lista?', 'São exclusivas para quem se cadastrou. Você recebe a proposta pelo WhatsApp, pensada para a sua operação.'],
+  ['Já vendo na Korvex. Preciso entrar?', 'Entre, sim: é assim que você garante a condição da lista e a gente te chama para a migração. Se você integra pela API, a 2.0 usa o mesmo contrato, então muda só a URL e as chaves.'],
+  ['Quando a 2.0 abre?', 'A primeira leva entra antes da abertura geral. Quem está na lista fica sabendo primeiro, pelo WhatsApp.'],
+  ['O que vocês fazem com os meus dados?', 'Usamos só para falar com você sobre a Korvex 2.0. Você pode pedir a exclusão quando quiser.'],
+];
+---
+
+<Capture title={title} description={description}>
+  <a class="skip" href="#lista">Ir para o formulário</a>
+
+  <header class="top">
+    <div class="wrap top__in">
+      <a href="/" class="brand" aria-label="Korvex, voltar ao site">
+        <img src="/v2/korvex-lockup-white.png" alt="Korvex" width="908" height="213" />
+        <span class="brand__v">2.0</span>
+      </a>
+      <a href="#lista" class="top__cta" data-goto-form>Entrar na lista</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO + FORM ============ -->
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <h1 id="h1"><span class="h1__a">Korvex 2.0.</span> Gateway próprio, do checkout ao saque.</h1>
+          <p class="hero__sub">
+            Entre na lista de acesso antecipado: você usa antes da abertura e garante <strong>taxas exclusivas</strong>, só para quem se cadastrou.
+          </p>
+          <ul class="hero__perks" role="list">
+            {heroFeatures.map((t) => (
+              <li>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" /></svg>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="funnel-slot">
+          <div class="kframe" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div id="lista" class="funnel" data-view="form" tabindex="-1">
+            <!-- Barra do modo tela cheia (celular, durante o quiz) -->
+            <div class="funnel__bar">
+              <img src="/v2/korvex-mark-white.png" alt="" width="218" height="213" />
+              <div class="funnel__progress" aria-hidden="true"><span></span></div>
+              <button type="button" class="icon-btn" data-close aria-label="Fechar e voltar à página">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" /></svg>
+              </button>
+            </div>
+
+            <!-- Passo 1: contato -->
+            <form class="view view--form" id="lead-form" novalidate>
+              <div class="view__head">
+                <h2 class="funnel__title">Sua vaga na primeira leva</h2>
+                <p class="funnel__note">Leva menos de um minuto.</p>
+              </div>
+
+              <div class="field">
+                <label for="f-name">Nome</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="80" placeholder="Como você quer ser chamado" aria-describedby="e-name" required />
+                <p class="field__err" id="e-name" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="f-email">E-mail</label>
+                <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="voce@email.com" aria-describedby="e-email" required />
+                <p class="field__err" id="e-email" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="f-phone">WhatsApp</label>
+                <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="16" placeholder="(11) 91234-5678" aria-describedby="e-phone" required />
+                <p class="field__err" id="e-phone" aria-live="polite"></p>
+              </div>
+
+              <!-- honeypot: invisível para gente, irresistível para robô -->
+              <div class="hp" aria-hidden="true">
+                <label for="f-website">Site</label>
+                <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="consent">
+                <input id="f-consent" name="consent" type="checkbox" aria-describedby="e-consent" required />
+                <label for="f-consent">
+                  {CONSENT_TEXT.replace(' Li a Política de Privacidade.', '')} Li a <a href="/privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.
+                </label>
+              </div>
+              <p class="field__err field__err--consent" id="e-consent" aria-live="polite"></p>
+
+              <p class="form-alert" role="alert" hidden></p>
+
+              <button class="btn btn--primary btn--block" type="submit">
+                <span class="btn__label">Garantir minha vaga</span>
+                <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
+                <span class="spinner" aria-hidden="true"></span>
+              </button>
+              <p class="funnel__fine">Primeira leva com vagas limitadas. Sem custo e sem compromisso.</p>
+            </form>
+
+            <!-- Passo 2: quiz (preenchido pelo script) -->
+            <div class="view view--quiz" aria-live="polite"></div>
+
+            <!-- Retomar quiz -->
+            <div class="view view--resume">
+              <h2 class="funnel__title" tabindex="-1">Você já está na lista<span data-first></span>.</h2>
+              <p class="funnel__note">Faltam <span data-left>algumas</span> perguntas para a gente preparar a sua condição.</p>
+              <button type="button" class="btn btn--primary btn--block" data-resume>
+                Continuar
+                <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
+              </button>
+            </div>
+
+            <!-- Passo 3: obrigado -->
+            <div class="view view--done">
+              <div class="done__mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+              </div>
+              <h2 class="funnel__title" tabindex="-1">Pronto<span data-first></span>. Você está na lista.</h2>
+              <p class="done__next">
+                <strong>Próximo passo:</strong> vamos te chamar no WhatsApp <span class="nowrap" data-phone></span> para apresentar a Korvex 2.0 e a sua condição de taxa.
+              </p>
+              <p class="funnel__note">Para a mensagem não cair como desconhecida, salve nosso número: <span class="nowrap">(12) 99739-1545</span>.</p>
+              <a class="btn btn--primary btn--block done__wa" data-wa href="https://wa.me/5512997391545" target="_blank" rel="noopener">Adiantar a conversa no WhatsApp</a>
+              <div class="done__links">
+                <button type="button" class="link-btn" data-edit>Corrigir meu WhatsApp</button>
+                <button type="button" class="link-btn done__close" data-close>Voltar à página</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ O QUE MUDA ============ -->
+    <section class="sec sec--paper" aria-labelledby="h-muda">
+      <div class="wrap muda">
+        <div class="muda__intro">
+          <h2 id="h-muda" class="h2">O que chega com a Korvex 2.0</h2>
+          <p class="lead">Um sistema só, construído pela Korvex. Do checkout ao saque, tudo passa por ele.</p>
+
+          <figure class="panel" aria-label="Painel da Korvex 2.0, tela ilustrativa">
+            <div class="panel__chrome" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <em>app.korvex.com.br</em>
+            </div>
+            <div class="panel__body" aria-hidden="true">
+              <div class="panel__hello">
+                <strong>Olá, Marina</strong>
+                <span class="panel__hide">
+                  <svg viewBox="0 0 20 20"><path d="M2.5 10s2.8-5 7.5-5 7.5 5 7.5 5-2.8 5-7.5 5-7.5-5-7.5-5z" /><circle cx="10" cy="10" r="2.2" /></svg>
+                  Ocultar valores
+                </span>
+              </div>
+              <div class="panel__kpis">
+                <div>
+                  <span class="k">Hoje</span>
+                  <b>R$ 3.482,90</b>
+                  <span class="s">41 vendas pagas <i class="up">+12% vs ontem</i></span>
+                </div>
+                <div>
+                  <span class="k">Este mês</span>
+                  <b>R$ 61.904,30</b>
+                  <span class="s">702 vendas pagas <i class="up">+8%</i></span>
+                </div>
+              </div>
+              <div class="panel__chart">
+                <div class="panel__charthead">
+                  <span>Faturamento por dia</span>
+                  <span class="tabs"><i>7 dias</i><i class="on">Este mês</i><i>30 dias</i></span>
+                </div>
+                <svg viewBox="0 0 300 84" preserveAspectRatio="none" class="bars">
+                  {[38, 44, 31, 52, 47, 58, 41, 63, 55, 49, 66, 59, 71, 52, 64, 74, 61, 69, 78, 66, 72].map((h, i) => (
+                    <rect x={i * 14.3 + 1} y={84 - h} width="9" height={h} rx="1.5" class={i === 20 ? 'now' : ''} />
+                  ))}
+                </svg>
+              </div>
+              <div class="panel__wallet">
+                <div class="w w--main">
+                  <span class="k">Disponível</span>
+                  <b>R$ 18.240,55</b>
+                  <span class="panel__btn">Solicitar saque</span>
+                </div>
+                <div class="w">
+                  <span class="k">A liberar</span>
+                  <b>R$ 4.115,00</b>
+                </div>
+                <div class="w">
+                  <span class="k">Retido</span>
+                  <b>R$ 0,00</b>
+                </div>
+              </div>
+            </div>
+            <figcaption>Tela ilustrativa. Valores fictícios.</figcaption>
+          </figure>
+        </div>
+
+        <div class="ledger">
+          {groups.map((g) => (
+            <div class="ledger__group">
+              <h3 class="ledger__name">{g.name}</h3>
+              <dl>
+                {g.items.map(([t, d]) => (
+                  <div class="ledger__row">
+                    <dt>{t}</dt>
+                    <dd>{d}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POR QUE AGORA ============ -->
+    <section class="sec sec--ink" aria-labelledby="h-agora">
+      <div class="wrap agora">
+        <div>
+          <h2 id="h-agora" class="h2">Quem entra na lista agora sai na frente</h2>
+          <dl class="perks">
+            {perks.map(([t, d]) => (
+              <div class="perks__row">
+                <dt>{t}</dt>
+                <dd>{d}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="agora__limit">A primeira leva tem vagas limitadas.</p>
+          <a href="#lista" class="btn btn--light" data-goto-form>
+            Entrar na lista
+            <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
+          </a>
+        </div>
+
+        <div class="how">
+          <h3 class="how__title">Como funciona</h3>
+          <ol class="how__list">
+            {steps.map(([t, d], i) => (
+              <li>
+                <span class="how__n" aria-hidden="true">{i + 1}</span>
+                <div>
+                  <strong>{t}</strong>
+                  <span>{d}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="sec sec--paper" aria-labelledby="h-faq">
+      <div class="wrap faq">
+        <h2 id="h-faq" class="h2">Perguntas rápidas</h2>
+        <div class="faq__list">
+          {faqs.map(([q, a]) => (
+            <details>
+              <summary>
+                {q}
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </summary>
+              <p>
+                {a}
+                {q.startsWith('O que vocês fazem') && (
+                  <Fragment>
+                    {' '}Detalhes na <a href="/privacidade">Política de Privacidade</a>.
+                  </Fragment>
+                )}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA FINAL ============ -->
+    <section class="sec sec--ink final" aria-labelledby="h-final">
+      <div class="wrap final__in">
+        <h2 id="h-final" class="h2">A primeira leva é limitada.</h2>
+        <p class="lead">Garanta sua vaga e as taxas exclusivas da lista.</p>
+        <a href="#lista" class="btn btn--light" data-goto-form>
+          Entrar na lista
+          <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <img src="/v2/korvex-lockup-white.png" alt="Korvex" width="908" height="213" />
+      <nav aria-label="Rodapé">
+        <a href="/">korvexgateway.com</a>
+        <a href="/privacidade">Política de Privacidade</a>
+        <a href="/termos">Termos de Uso</a>
+      </nav>
+      <p>© 2026 Korvex</p>
+    </div>
+  </footer>
+
+  <div class="sticky" data-sticky hidden>
+    <a href="#lista" class="btn btn--light btn--block" data-goto-form>Entrar na lista</a>
+  </div>
+
+  <script type="application/json" id="quiz-data" set:html={JSON.stringify(QUIZ)} />
+  <script src="../scripts/v2-funnel.ts"></script>
+</Capture>
