@@ -4,72 +4,26 @@ import { CONSENT_TEXT, QUIZ } from '../../api/_lib/v2-quiz';
 
 const title = 'Korvex 2.0 · Lista de acesso antecipado';
 const description =
-  'A Korvex agora é gateway próprio: painel novo, Pix disponível no mesmo dia, defesa de MED automática e antifraude. Entre na lista e garanta acesso antes da abertura e taxas exclusivas.';
+  'Venda sem medo de MED, com Pix no saldo no mesmo dia e fraudador barrado na rede inteira. A Korvex 2.0 abre primeiro para uma lista fechada, com taxa que não vai estar em tabela.';
 
-const groups = [
-  {
-    name: 'Dinheiro',
-    items: [
-      ['Painel com o dinheiro no topo', 'Faturamento de hoje e do mês, vendas pagas e saldo disponível aparecem primeiro. Organizado e rápido.'],
-      ['Pix com saque rápido', 'Venda no Pix fica disponível no mesmo dia. O saque sai do painel, com verificação em duas etapas.'],
-    ],
-  },
-  {
-    name: 'Proteção',
-    items: [
-      ['Defesa de MED automática', 'Chegou um MED, o sistema monta sozinho o comprovante de entrega com dados reais: acesso, aulas assistidas, aceite dos termos.'],
-      ['Antifraude com bloqueio automático', 'Bloqueio por CPF, e-mail, IP e aparelho, com pontuação de risco. Quem deu MED ou chargeback num checkout Korvex fica barrado em todos.'],
-      ['Área de membros protegida', 'Marca d’água com os dados de cada aluno, limite de aparelhos e vídeo com link que expira. Se vazar, você sabe de quem foi.'],
-    ],
-  },
-  {
-    name: 'Venda',
-    items: [
-      ['Checkout com quiz', 'Um quiz antes da oferta leva o comprador ao checkout já preenchido.'],
-      ['Recuperação de vendas', 'Pix gerado e não pago e carrinho abandonado recebem lembretes por e-mail na hora certa.'],
-    ],
-  },
-  {
-    name: 'Integração',
-    items: [
-      ['Webhooks e API completos', 'API com chaves de produção e de teste, simulador e webhooks assinados. Quem já integra com a Korvex troca só a URL e as chaves.'],
-      ['Integrações', 'UTMify, Pixel da Meta com API de Conversões, TikTok, Google Ads, GA4, RD Station, ActiveCampaign, Zapier, Make e outras.'],
-    ],
-  },
-  {
-    name: 'Equipe',
-    items: [
-      ['Permissões por função', 'Financeiro, desenvolvedor e suporte, cada um vendo só a sua parte. Ou cargos sob medida.'],
-      ['Suporte próximo', 'Fale com a gente de dentro do painel. O chamado já chega com o contexto da sua conta.'],
-    ],
-  },
+// Extrato ilustrativo do hero (valores fictícios).
+const tape = [
+  { t: '14:02', e: 'Pix aprovado', d: 'Mentoria Escala, disponível hoje', v: '+ R$ 497,00', k: 'in' },
+  { t: '14:05', e: 'MED aberto', d: 'Defesa montada: 38 acessos, 92% das aulas', v: 'Defendido', k: 'shield' },
+  { t: '14:09', e: 'Compra recusada', d: 'CPF com chargeback em outro checkout Korvex', v: 'Bloqueado', k: 'stop' },
+  { t: '14:11', e: 'Saque solicitado', d: 'Pix para a sua conta', v: 'R$ 12.480,00', k: '' },
 ];
 
-const heroFeatures = [
-  'Painel novo, com o dinheiro no topo',
-  'Pix disponível para saque no mesmo dia',
-  'Defesa de MED automática',
-  'Antifraude com bloqueio automático',
-  'Área de membros protegida',
-];
-
-const perks = [
-  ['Acesso antes da abertura', 'Você usa a Korvex 2.0 antes de ela abrir para o mercado.'],
-  ['Taxas exclusivas da lista', 'Uma condição que só quem se cadastrou recebe. A proposta chega pelo WhatsApp.'],
-  ['Conversa direta', 'A gente entende a sua operação antes de você migrar qualquer coisa.'],
-];
-
-const steps = [
-  ['Deixe seu contato', 'Nome, e-mail e WhatsApp. Menos de um minuto.'],
-  ['Conte sobre a operação', 'Cinco perguntas de um toque.'],
-  ['Receba a nossa chamada', 'A gente te chama no WhatsApp com a condição da lista.'],
+const cuts = [
+  ['O dinheiro abre o painel.', 'Faturamento de hoje, vendas pagas e quanto já dá para sacar, na primeira tela. Vendeu de manhã, pede o saque à tarde.'],
+  ['MED defendido sem você mexer um dedo.', 'Chegou um MED, o sistema monta a defesa com o que o comprador fez de verdade: acessos, aulas assistidas e aceite dos termos.'],
+  ['Fraudador barrado na rede inteira.', 'Deu MED ou chargeback num checkout Korvex, fica bloqueado em todos. Por CPF, e-mail, IP e aparelho.'],
+  ['Conteúdo vazado tem nome e CPF.', 'Cada aluno assiste com os próprios dados gravados no vídeo, com limite de aparelhos e link que expira.'],
 ];
 
 const faqs = [
-  ['Entrar na lista custa alguma coisa?', 'Não. A lista é gratuita e não obriga você a migrar.'],
-  ['Quais são as taxas da lista?', 'São exclusivas para quem se cadastrou. Você recebe a proposta pelo WhatsApp, pensada para a sua operação.'],
-  ['Já vendo na Korvex. Preciso entrar?', 'Entre, sim: é assim que você garante a condição da lista e a gente te chama para a migração. Se você integra pela API, a 2.0 usa o mesmo contrato, então muda só a URL e as chaves.'],
-  ['Quando a 2.0 abre?', 'A primeira leva entra antes da abertura geral. Quem está na lista fica sabendo primeiro, pelo WhatsApp.'],
+  ['Custa alguma coisa entrar?', 'Não. A lista é gratuita e não obriga você a migrar nada.'],
+  ['Já vendo na Korvex. Preciso entrar?', 'Precisa. É pela lista que você garante a condição de taxa e a prioridade na migração. Se você integra pela API, muda só a URL e as chaves.'],
   ['O que vocês fazem com os meus dados?', 'Usamos só para falar com você sobre a Korvex 2.0. Você pode pedir a exclusão quando quiser.'],
 ];
 ---
@@ -92,18 +46,10 @@ const faqs = [
     <section class="hero" aria-labelledby="h1">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <h1 id="h1"><span class="h1__a">Korvex 2.0.</span> Gateway próprio, do checkout ao saque.</h1>
+          <h1 id="h1">Venda sem medo de MED.<span class="l2">Pix no saldo no mesmo dia.</span></h1>
           <p class="hero__sub">
-            Entre na lista de acesso antecipado: você usa antes da abertura e garante <strong>taxas exclusivas</strong>, só para quem se cadastrou.
+            A Korvex 2.0 abre primeiro para uma lista fechada, com uma <strong>taxa que não vai estar em tabela nenhuma</strong>.
           </p>
-          <ul class="hero__perks" role="list">
-            {heroFeatures.map((t) => (
-              <li>
-                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" /></svg>
-                {t}
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div class="funnel-slot">
@@ -196,132 +142,49 @@ const faqs = [
             </div>
           </div>
         </div>
+
+        <figure class="tape" aria-label="Extrato ilustrativo da Korvex 2.0">
+            <div role="list">
+              {tape.map((r) => (
+                <div class="tape__row" role="listitem">
+                  <span class="tape__t">{r.t}</span>
+                  <span class="tape__e">{r.e}<small>{r.d}</small></span>
+                  <span class={`tape__v${r.k ? ` tape__v--${r.k}` : ''}`}>{r.v}</span>
+                </div>
+              ))}
+            </div>
+            <figcaption class="tape__cap">Extrato ilustrativo. Valores fictícios.</figcaption>
+          </figure>
       </div>
     </section>
 
-    <!-- ============ O QUE MUDA ============ -->
-    <section class="sec sec--paper" aria-labelledby="h-muda">
-      <div class="wrap muda">
-        <div class="muda__intro">
-          <h2 id="h-muda" class="h2">O que chega com a Korvex 2.0</h2>
-          <p class="lead">Um sistema só, construído pela Korvex. Do checkout ao saque, tudo passa por ele.</p>
-
-          <figure class="panel" aria-label="Painel da Korvex 2.0, tela ilustrativa">
-            <div class="panel__chrome" aria-hidden="true">
-              <span></span><span></span><span></span>
-              <em>app.korvex.com.br</em>
-            </div>
-            <div class="panel__body" aria-hidden="true">
-              <div class="panel__hello">
-                <strong>Olá, Marina</strong>
-                <span class="panel__hide">
-                  <svg viewBox="0 0 20 20"><path d="M2.5 10s2.8-5 7.5-5 7.5 5 7.5 5-2.8 5-7.5 5-7.5-5-7.5-5z" /><circle cx="10" cy="10" r="2.2" /></svg>
-                  Ocultar valores
-                </span>
-              </div>
-              <div class="panel__kpis">
-                <div>
-                  <span class="k">Hoje</span>
-                  <b>R$ 3.482,90</b>
-                  <span class="s">41 vendas pagas <i class="up">+12% vs ontem</i></span>
-                </div>
-                <div>
-                  <span class="k">Este mês</span>
-                  <b>R$ 61.904,30</b>
-                  <span class="s">702 vendas pagas <i class="up">+8%</i></span>
-                </div>
-              </div>
-              <div class="panel__chart">
-                <div class="panel__charthead">
-                  <span>Faturamento por dia</span>
-                  <span class="tabs"><i>7 dias</i><i class="on">Este mês</i><i>30 dias</i></span>
-                </div>
-                <svg viewBox="0 0 300 84" preserveAspectRatio="none" class="bars">
-                  {[38, 44, 31, 52, 47, 58, 41, 63, 55, 49, 66, 59, 71, 52, 64, 74, 61, 69, 78, 66, 72].map((h, i) => (
-                    <rect x={i * 14.3 + 1} y={84 - h} width="9" height={h} rx="1.5" class={i === 20 ? 'now' : ''} />
-                  ))}
-                </svg>
-              </div>
-              <div class="panel__wallet">
-                <div class="w w--main">
-                  <span class="k">Disponível</span>
-                  <b>R$ 18.240,55</b>
-                  <span class="panel__btn">Solicitar saque</span>
-                </div>
-                <div class="w">
-                  <span class="k">A liberar</span>
-                  <b>R$ 4.115,00</b>
-                </div>
-                <div class="w">
-                  <span class="k">Retido</span>
-                  <b>R$ 0,00</b>
-                </div>
-              </div>
-            </div>
-            <figcaption>Tela ilustrativa. Valores fictícios.</figcaption>
-          </figure>
-        </div>
-
-        <div class="ledger">
-          {groups.map((g) => (
-            <div class="ledger__group">
-              <h3 class="ledger__name">{g.name}</h3>
-              <dl>
-                {g.items.map(([t, d]) => (
-                  <div class="ledger__row">
-                    <dt>{t}</dt>
-                    <dd>{d}</dd>
-                  </div>
-                ))}
-              </dl>
+    <!-- ============ CORTES ============ -->
+    <section class="sec sec--deep" aria-label="O que muda no seu caixa">
+      <div class="wrap">
+        <div class="cuts">
+          {cuts.map(([h, p]) => (
+            <div class="cut">
+              <h2>{h}</h2>
+              <p>{p}</p>
             </div>
           ))}
         </div>
+        <p class="more"><b>E ainda:</b> checkout com quiz, lembrete de Pix não pago por e-mail, API e webhooks assinados, UTMify e Pixel da Meta com API de Conversões, equipe com permissão por função.</p>
       </div>
     </section>
 
-    <!-- ============ POR QUE AGORA ============ -->
-    <section class="sec sec--ink" aria-labelledby="h-agora">
-      <div class="wrap agora">
+    <!-- ============ FECHAMENTO ============ -->
+    <section class="sec sec--ink final" aria-labelledby="h-final">
+      <div class="wrap final__in">
         <div>
-          <h2 id="h-agora" class="h2">Quem entra na lista agora sai na frente</h2>
-          <dl class="perks">
-            {perks.map(([t, d]) => (
-              <div class="perks__row">
-                <dt>{t}</dt>
-                <dd>{d}</dd>
-              </div>
-            ))}
-          </dl>
-          <p class="agora__limit">A primeira leva tem vagas limitadas.</p>
+          <h2 id="h-final">A primeira leva tem vagas contadas.</h2>
+          <p class="final__lead">Quem entra agora usa antes de todo mundo e recebe a proposta de taxa pelo WhatsApp.</p>
           <a href="#lista" class="btn btn--light" data-goto-form>
-            Entrar na lista
+            Garantir minha vaga
             <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
           </a>
         </div>
-
-        <div class="how">
-          <h3 class="how__title">Como funciona</h3>
-          <ol class="how__list">
-            {steps.map(([t, d], i) => (
-              <li>
-                <span class="how__n" aria-hidden="true">{i + 1}</span>
-                <div>
-                  <strong>{t}</strong>
-                  <span>{d}</span>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FAQ ============ -->
-    <section class="sec sec--paper" aria-labelledby="h-faq">
-      <div class="wrap faq">
-        <h2 id="h-faq" class="h2">Perguntas rápidas</h2>
-        <div class="faq__list">
+        <div class="faq">
           {faqs.map(([q, a]) => (
             <details>
               <summary>
@@ -341,18 +204,6 @@ const faqs = [
         </div>
       </div>
     </section>
-
-    <!-- ============ CTA FINAL ============ -->
-    <section class="sec sec--ink final" aria-labelledby="h-final">
-      <div class="wrap final__in">
-        <h2 id="h-final" class="h2">A primeira leva é limitada.</h2>
-        <p class="lead">Garanta sua vaga e as taxas exclusivas da lista.</p>
-        <a href="#lista" class="btn btn--light" data-goto-form>
-          Entrar na lista
-          <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
-        </a>
-      </div>
-    </section>
   </main>
 
   <footer class="foot">
@@ -368,7 +219,7 @@ const faqs = [
   </footer>
 
   <div class="sticky" data-sticky hidden>
-    <a href="#lista" class="btn btn--light btn--block" data-goto-form>Entrar na lista</a>
+    <a href="#lista" class="btn btn--light btn--block" data-goto-form>Garantir minha vaga</a>
   </div>
 
   <script type="application/json" id="quiz-data" set:html={JSON.stringify(QUIZ)} />
