@@ -158,38 +158,40 @@ button { font: inherit; color: inherit; }
 }
 .hero__sub strong { color: #fff; font-weight: 700; }
 
-/* Extrato: a peça da página. Linhas de um extrato real, entram em sequência uma vez. */
+/* Dossiê: a peça da página. Parte revelada, parte tarjada; as linhas entram em sequência uma vez. */
 .hero__copy { grid-area: copy; }
 .funnel-slot { grid-area: form; }
-.tape { grid-area: tape; margin-top: 8px; max-width: 34rem; border-top: 1px solid var(--ink-line-2); font-variant-numeric: tabular-nums; }
-.tape__row {
-  display: grid; grid-template-columns: 3.1rem minmax(0, 1fr) auto; align-items: baseline; gap: 4px 14px;
-  padding: 13px 0; border-bottom: 1px solid var(--ink-line);
-  font-size: 14.5px; line-height: 1.4;
+.dos { grid-area: tape; max-width: 34rem; }
+.dos__h { font-size: 14px; font-weight: 600; color: var(--on-ink-3); padding-bottom: 12px; border-bottom: 1px solid var(--ink-line-2); }
+.dos__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px;
+  min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--ink-line);
 }
-.tape__t { color: var(--on-ink-3); font-size: 13px; }
-.tape__e { color: var(--on-ink); font-weight: 600; min-width: 0; }
-.tape__e small { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: var(--on-ink-3); }
-.tape__v { font-weight: 700; color: #fff; white-space: nowrap; text-align: right; }
-.tape__v--in { color: #7FCFA6; }
-.tape__v--stop { color: #E69A9A; font-weight: 600; font-size: 13px; }
-.tape__v--shield { color: var(--suede-300); font-weight: 600; font-size: 13px; }
-.tape__cap { margin-top: 10px; font-size: 12px; color: var(--on-ink-3); }
+.dos__txt { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; font-size: 16px; font-weight: 600; color: var(--on-ink); line-height: 1.35; }
+.dos__row.is-open .dos__txt { color: #fff; }
+.dos__st { font-size: 12.5px; font-weight: 600; color: var(--on-ink-3); white-space: nowrap; }
+.dos__row.is-open .dos__st { color: var(--suede-300); }
+.bar { display: inline-block; width: var(--w, 6em); max-width: 100%; height: .95em; border-radius: 2px; background: rgba(159, 185, 211, .2); vertical-align: middle; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media (prefers-reduced-motion: no-preference) {
-  .tape__row { animation: tape-in .6s var(--ease) both; }
-  .tape__row:nth-child(1) { animation-delay: .35s; }
-  .tape__row:nth-child(2) { animation-delay: 1.05s; }
-  .tape__row:nth-child(3) { animation-delay: 1.75s; }
-  .tape__row:nth-child(4) { animation-delay: 2.45s; }
+  .dos__row { animation: tape-in .6s var(--ease) both; }
+  .dos__row:nth-child(1) { animation-delay: .3s; }
+  .dos__row:nth-child(2) { animation-delay: .7s; }
+  .dos__row:nth-child(3) { animation-delay: 1.1s; }
+  .dos__row:nth-child(4) { animation-delay: 1.4s; }
+  .dos__row:nth-child(5) { animation-delay: 1.7s; }
+  .dos__row:nth-child(6) { animation-delay: 2s; }
+  .dos__row:not(.is-open) .bar { animation: bar-pulse 2.4s ease-in-out 2.6s 2; }
 }
 @keyframes tape-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes bar-pulse { 50% { background: rgba(159, 185, 211, .34); } }
 
 @media (min-width: 1024px) {
   .hero { padding: 64px 0 104px; }
   .hero__grid { grid-template-columns: minmax(0, 1fr) 432px; grid-template-areas: "copy form" "tape form"; column-gap: 80px; row-gap: 0; align-items: start; }
   .hero__copy { padding-top: 12px; }
   .hero__sub { font-size: 19px; margin-top: 28px; }
-  .tape { margin-top: 48px; align-self: start; }
+  .dos { margin-top: 52px; align-self: start; }
 }
 
 /* ---------- Cartão do funil ---------- */
@@ -384,7 +386,8 @@ fieldset.q { border: 0; margin: 0; padding: 0; min-width: 0; }
 /* Quatro cortes: frase grande à esquerda, prova curta à direita, fio entre eles. */
 .cuts { border-top: 1px solid var(--ink-line-2); }
 .cut { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 26px 0 28px; border-bottom: 1px solid var(--ink-line); }
-.cut h2 {
+.cuts__h { font-size: 15px; font-weight: 600; color: var(--on-ink-3); margin-bottom: 14px; }
+.cut h3 {
   font-size: clamp(1.75rem, 6.2vw, 3rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.035em;
   color: #fff; text-wrap: balance;
 }
@@ -393,6 +396,8 @@ fieldset.q { border: 0; margin: 0; padding: 0; min-width: 0; }
   .cut { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 56px; align-items: end; padding: 36px 0 38px; }
   .cut p { font-size: 17px; padding-bottom: 6px; }
 }
+.cut--locked h3 { color: var(--on-ink-3); }
+.cut--locked p { display: flex; flex-wrap: wrap; gap: 8px; }
 .more { margin-top: 28px; font-size: 15px; line-height: 1.6; color: var(--on-ink-3); max-width: 48rem; }
 .more b { color: var(--on-ink-2); font-weight: 600; }
 

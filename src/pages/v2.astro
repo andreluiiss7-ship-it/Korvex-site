@@ -4,24 +4,26 @@ import { CONSENT_TEXT, QUIZ } from '../../api/_lib/v2-quiz';
 
 const title = 'Korvex 2.0 · Lista de acesso antecipado';
 const description =
-  'Venda sem medo de MED, com Pix no saldo no mesmo dia e fraudador barrado na rede inteira. A Korvex 2.0 abre primeiro para uma lista fechada, com taxa que não vai estar em tabela.';
+  'A Korvex 2.0 chega com novidades que o mercado ainda não viu. Quem entra na lista vê tudo primeiro e recebe uma taxa que não vai estar em tabela.';
 
-// Extrato ilustrativo do hero (valores fictícios).
-const tape = [
-  { t: '14:02', e: 'Pix aprovado', d: 'Mentoria Escala, disponível hoje', v: '+ R$ 497,00', k: 'in' },
-  { t: '14:05', e: 'MED aberto', d: 'Defesa montada: 38 acessos, 92% das aulas', v: 'Defendido', k: 'shield' },
-  { t: '14:09', e: 'Compra recusada', d: 'CPF com chargeback em outro checkout Korvex', v: 'Bloqueado', k: 'stop' },
-  { t: '14:11', e: 'Saque solicitado', d: 'Pix para a sua conta', v: 'R$ 12.480,00', k: '' },
+// Dossiê do hero: parte revelada, parte tarjada. As tarjas não levam texto no HTML (sem spoiler no "inspecionar").
+const dossier = [
+  { open: 'Defesa de MED que se monta sozinha' },
+  { open: 'Fraudador barrado em todos os checkouts de uma vez' },
+  { open: 'Pix no saldo', bars: [7.5] },
+  { bars: [9, 5.5] },
+  { bars: [4.5, 8, 3.5] },
+  { bars: [11] },
 ];
 
 const cuts = [
-  ['O dinheiro abre o painel.', 'Faturamento de hoje, vendas pagas e quanto já dá para sacar, na primeira tela. Vendeu de manhã, pede o saque à tarde.'],
   ['MED defendido sem você mexer um dedo.', 'Chegou um MED, o sistema monta a defesa com o que o comprador fez de verdade: acessos, aulas assistidas e aceite dos termos.'],
-  ['Fraudador barrado na rede inteira.', 'Deu MED ou chargeback num checkout Korvex, fica bloqueado em todos. Por CPF, e-mail, IP e aparelho.'],
-  ['Conteúdo vazado tem nome e CPF.', 'Cada aluno assiste com os próprios dados gravados no vídeo, com limite de aparelhos e link que expira.'],
+  ['Deu golpe em um, está fora de todos.', 'Quem deu MED ou chargeback num checkout Korvex fica barrado na rede inteira. Por CPF, e-mail, IP e aparelho.'],
+  ['Vazou seu curso? Você sabe quem foi.', 'Cada aluno assiste com o próprio nome e CPF gravados no vídeo.'],
 ];
 
 const faqs = [
+  ['Quando eu vejo o resto?', 'Quem está na lista recebe a apresentação completa antes da abertura, pelo WhatsApp.'],
   ['Custa alguma coisa entrar?', 'Não. A lista é gratuita e não obriga você a migrar nada.'],
   ['Já vendo na Korvex. Preciso entrar?', 'Precisa. É pela lista que você garante a condição de taxa e a prioridade na migração. Se você integra pela API, muda só a URL e as chaves.'],
   ['O que vocês fazem com os meus dados?', 'Usamos só para falar com você sobre a Korvex 2.0. Você pode pedir a exclusão quando quiser.'],
@@ -46,9 +48,9 @@ const faqs = [
     <section class="hero" aria-labelledby="h1">
       <div class="wrap hero__grid">
         <div class="hero__copy">
-          <h1 id="h1">Venda sem medo de MED.<span class="l2">Pix no saldo no mesmo dia.</span></h1>
+          <h1 id="h1">Esquece tudo o que você sabe sobre gateway.</h1>
           <p class="hero__sub">
-            A Korvex 2.0 abre primeiro para uma lista fechada, com uma <strong>taxa que não vai estar em tabela nenhuma</strong>.
+            A Korvex 2.0 chega com novidades que o mercado ainda não viu. Quem está na lista vê primeiro e paga uma <strong>taxa que nunca vai estar em tabela</strong>.
           </p>
         </div>
 
@@ -143,33 +145,40 @@ const faqs = [
           </div>
         </div>
 
-        <figure class="tape" aria-label="Extrato ilustrativo da Korvex 2.0">
-            <div role="list">
-              {tape.map((r) => (
-                <div class="tape__row" role="listitem">
-                  <span class="tape__t">{r.t}</span>
-                  <span class="tape__e">{r.e}<small>{r.d}</small></span>
-                  <span class={`tape__v${r.k ? ` tape__v--${r.k}` : ''}`}>{r.v}</span>
-                </div>
-              ))}
-            </div>
-            <figcaption class="tape__cap">Extrato ilustrativo. Valores fictícios.</figcaption>
-          </figure>
+        <section class="dos" aria-labelledby="h-dos">
+          <h2 id="h-dos" class="dos__h">O que já dá para contar</h2>
+          <ul class="dos__list" role="list">
+            {dossier.map((r) => (
+              <li class={`dos__row${r.open && !r.bars ? ' is-open' : ''}`}>
+                <span class="dos__txt">
+                  {r.open && <span>{r.open}</span>}
+                  {r.bars && r.bars.map((w) => <i class="bar" style={`--w:${w}em`} aria-hidden="true"></i>)}
+                  {r.bars && <span class="sr">conteúdo revelado só para a lista</span>}
+                </span>
+                <span class="dos__st">{r.open && !r.bars ? 'Revelado' : 'Só na lista'}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </section>
 
     <!-- ============ CORTES ============ -->
-    <section class="sec sec--deep" aria-label="O que muda no seu caixa">
+    <section class="sec sec--deep" aria-labelledby="h-cuts">
       <div class="wrap">
+        <h2 id="h-cuts" class="cuts__h">Três a gente já pode mostrar.</h2>
         <div class="cuts">
           {cuts.map(([h, p]) => (
             <div class="cut">
-              <h2>{h}</h2>
+              <h3>{h}</h3>
               <p>{p}</p>
             </div>
           ))}
+          <div class="cut cut--locked">
+            <h3>O resto fica para a lista.</h3>
+            <p aria-hidden="true"><i class="bar" style="--w:12em"></i> <i class="bar" style="--w:6em"></i> <i class="bar" style="--w:9em"></i></p>
+          </div>
         </div>
-        <p class="more"><b>E ainda:</b> checkout com quiz, lembrete de Pix não pago por e-mail, API e webhooks assinados, UTMify e Pixel da Meta com API de Conversões, equipe com permissão por função.</p>
       </div>
     </section>
 
@@ -177,8 +186,8 @@ const faqs = [
     <section class="sec sec--ink final" aria-labelledby="h-final">
       <div class="wrap final__in">
         <div>
-          <h2 id="h-final">A primeira leva tem vagas contadas.</h2>
-          <p class="final__lead">Quem entra agora usa antes de todo mundo e recebe a proposta de taxa pelo WhatsApp.</p>
+          <h2 id="h-final">A primeira leva vê tudo antes. E tem vagas contadas.</h2>
+          <p class="final__lead">Entre agora: você recebe a apresentação completa e a proposta de taxa pelo WhatsApp, antes da abertura.</p>
           <a href="#lista" class="btn btn--light" data-goto-form>
             Garantir minha vaga
             <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5" /></svg>
