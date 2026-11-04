@@ -12,8 +12,8 @@ export const WHATSAPP_URL = waUrl(WA_PROPOSTA);
 export const WHATSAPP_DUVIDA_URL = waUrl(WA_DUVIDA);
 
 export const SITE_URL = 'https://www.korvexgateway.com';
-export const APP_URL = 'https://app.korvex.com.br';
-export const REGISTER_URL = 'https://app.korvex.com.br/register';
+export const APP_URL = 'https://app.korvexgateway.com';
+export const REGISTER_URL = 'https://app.korvexgateway.com/cadastro';
 
 // Meta Pixel: definir PUBLIC_META_PIXEL_ID no .env / Vercel. Sem ID, nada é injetado.
 export const META_PIXEL_ID = (import.meta.env.PUBLIC_META_PIXEL_ID as string | undefined) ?? '';

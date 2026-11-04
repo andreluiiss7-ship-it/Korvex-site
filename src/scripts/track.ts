@@ -22,7 +22,7 @@ document.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((a) => {
   const cta = a.dataset.cta || 'link';
   try {
     const u = new URL(a.href);
-    if (u.hostname === 'app.korvex.com.br') {
+    if (u.hostname === 'app.korvexgateway.com') {
       Object.entries(attr).forEach(([k, v]) => u.searchParams.set(k, v));
       u.searchParams.set('ref', cta);
       a.href = u.toString();
@@ -44,7 +44,7 @@ document.addEventListener('click', (e) => {
   const fbq = (window as unknown as { fbq?: Fbq }).fbq;
   let ev: string | null = null;
   if (href.includes('wa.me')) ev = 'Lead';
-  else if (href.includes('app.korvex.com.br')) ev = 'InitiateCheckout';
+  else if (href.includes('app.korvexgateway.com')) ev = 'InitiateCheckout';
   if (!ev) return;
   if (fbq) fbq('track', ev, { content_name: name });
   else console.debug('[korvex] evento', ev, name);
