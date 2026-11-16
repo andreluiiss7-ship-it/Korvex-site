@@ -1,41 +1,46 @@
 ---
 import { icon } from '../lib/icons';
 import { REGISTER_URL } from '../lib/site';
-import ProductCheckoutPanel from './ProductCheckoutPanel.astro';
-import ProductFunnelPanel from './ProductFunnelPanel.astro';
-import ProductMembersPanel from './ProductMembersPanel.astro';
+import ProductShot3D from './ProductShot3D.astro';
+import ProductUpsellPanel from './ProductUpsellPanel.astro';
+import ProductMedPanel from './ProductMedPanel.astro';
 import IconRow from './IconRow.astro';
 
+// os sete temas reais do checkout, na ordem do painel
 const themes = [
-  { key: 'padrao',   name: 'Padrão' },
-  { key: 'longo',    name: 'Longo' },
-  { key: 'box',      name: 'Box' },
-  { key: 'moderno',  name: 'Moderno' },
-  { key: 'classico', name: 'Clássico' },
-  { key: 'fluxo',    name: 'Fluxo' },
-  { key: 'etapas',   name: 'Etapas' },
+  { key: 'padrao',  name: 'Padrão',   note: 'Duas colunas, resumo ao lado' },
+  { key: 'moderno', name: 'Moderno',  note: 'Escuro, produto em destaque' },
+  { key: 'etapas3', name: '3 Etapas', note: 'Revisão antes de pagar' },
+  { key: 'etapas2', name: '2 Etapas', note: 'Duas etapas num cartão' },
+  { key: 'vitrine', name: 'Vitrine',  note: 'Produto no topo da página' },
+  { key: 'foco',    name: 'Foco',     note: 'Seções numeradas' },
+  { key: 'express', name: 'Express',  note: 'O mínimo: Pix na mesma tela' },
 ];
 
 const chapters = [
   {
-    id: 'checkout', n: '01', label: 'Checkout',
-    h: '7 checkouts. Um pra cada oferta.',
-    p: 'Do tradicional ao fluxo em etapas. Sua cor, seu logo, seu domínio.',
-    bullets: [{ icon: 'paint', label: 'Marca própria' }, { icon: 'layers', label: 'Order bump e selos' }, { icon: 'card', label: 'Pix, cartão e boleto' }],
+    id: 'checkout', n: '01', label: 'Checkout', tab: 'Checkout',
+    h: 'Sete checkouts. Teste qual vende mais.',
+    p: 'Sete temas prontos e teste A/B entre eles. O melhor fica no ar.',
+    bullets: [{ icon: 'percent', label: 'Teste A/B entre checkouts' }, { icon: 'cursor', label: 'Checkout dentro do seu site' }, { icon: 'bolt', label: 'Leve no celular' }],
   },
   {
-    id: 'funil', n: '02', label: 'Funil',
-    h: 'Upsell em um clique. O ticket sobe sozinho.',
-    p: 'Arraste, conecte, veja a conversão de cada nó ao vivo.',
-    bullets: [{ icon: 'repeat', label: 'Upsell, downsell, order bump' }, { icon: 'cursor', label: 'Conversão por nó' }, { icon: 'clock', label: 'Pronto em 3 minutos' }],
-    stat: { target: 62, label: 'receita por venda' },
+    id: 'ofertas', n: '02', label: 'Mais por venda', tab: 'Ofertas',
+    h: 'A venda não acaba no primeiro Pix.',
+    p: 'Oferta extra no checkout e oferta depois da compra. O comprador aceita em um clique, sem digitar nada de novo.',
+    bullets: [{ icon: 'repeat', label: 'Upsell em um clique no Pix' }, { icon: 'calendar', label: 'Parcelado no Pix, de 2 a 12 vezes' }, { icon: 'undo', label: 'Recuperação de Pix não pago por e-mail' }],
   },
   {
-    id: 'membros', n: '03', label: 'Membros',
+    id: 'membros', n: '03', label: 'Área de membros', tab: 'Membros',
     h: 'Área de membros que vende de novo.',
-    p: 'Cara de streaming, no seu domínio. O aluno compra a próxima oferta lá dentro.',
-    bullets: [{ icon: 'globe', label: 'Seu domínio' }, { icon: 'repeat', label: 'Upsell interno' }, { icon: 'gift', label: 'Materiais e certificados' }],
-    stat: { target: 47, label: 'recompra' },
+    p: 'Cara de streaming. O aluno compra a próxima oferta lá dentro.',
+    bullets: [{ icon: 'cart', label: 'Venda dentro da área' }, { icon: 'file', label: 'PDF marcado com os dados do comprador' }, { icon: 'trophy', label: 'Certificado com QR' }],
+  },
+  {
+    id: 'protecao', n: '04', label: 'Proteção', tab: 'MED',
+    h: 'MED respondido sem você abrir o painel.',
+    p: 'Chegou a contestação, a defesa já está montada com o que o comprador fez: acessos, aulas assistidas e aceite dos termos.',
+    bullets: [{ icon: 'shield', label: 'Defesa montada sozinha' }, { icon: 'eye', label: 'Você revisa ou deixa no automático' }, { icon: 'clock', label: 'Nenhum real travado sem motivo e data' }],
   },
 ];
 ---
@@ -44,8 +49,8 @@ const chapters = [
   <div class="section">
     <header class="reveal max-w-xl">
       <span class="chapter hidden lg:inline-flex">Produto</span>
-      <h2 class="h2 mt-4">Checkout, funil e membros.<br /><span class="muted">Um painel. Sua marca.</span></h2>
-      <p class="lead mt-4 hidden lg:block">Tudo entre o clique e o aluno. Sem plugin. O cliente só vê a sua marca.</p>
+      <h2 class="h2 mt-4">Do clique ao aluno.<br /><span class="muted">Num painel só.</span></h2>
+      <p class="lead mt-4 hidden lg:block">Checkout, oferta depois da compra, área de membros e defesa de MED. Sem plugin e sem segunda ferramenta.</p>
     </header>
 
     <div class="pv mt-[--gap-lg]" data-pv>
@@ -55,6 +60,7 @@ const chapters = [
             <span class="pv-br">[</span><span class="pv-n">{c.n}</span><span class="pv-br">]</span>
           </a>
         ))}
+        <span class="pv-prog" aria-hidden="true"><i></i></span>
       </nav>
 
       {chapters.map((c, i) => (
@@ -64,71 +70,59 @@ const chapters = [
             <h3 class="pv-h3 mt-4">{c.h}</h3>
             <p class="pv-p mt-3">{c.p}</p>
             <IconRow class="mt-5 hidden lg:grid" variant="product" items={c.bullets} />
-
-            {i === 0 && (
-              <div class="pv-chips rail mt-5" role="group" aria-label="Temas de checkout">
-                {themes.map((t, j) => (
-                  <button type="button" data-ck={t.key} aria-pressed={j === 0 ? 'true' : 'false'} class={`ck-tab${j === 0 ? ' active' : ''}`}>
-                    <span class="ck-br">[</span><span class="ck-label">{t.name}</span><span class="ck-br">]</span>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {c.stat && (
-              <p class="pv-stat mt-5">
-                <b data-counter data-target={c.stat.target} data-prefix="+" data-suffix="%">+{c.stat.target}%</b>
-                <span>{c.stat.label}</span>
-              </p>
-            )}
           </article>
 
           {i === 0 && (
             <div class="pv-mtabs seg lg:hidden" role="group" aria-label="Partes do produto">
               {chapters.map((t, j) => (
                 <button type="button" data-mpanel={j} aria-pressed={j === 0 ? 'true' : 'false'} class={`seg-tab${j === 0 ? ' active' : ''}`}>
-                  <span class="ck-br">[</span><span class="ck-label">{t.label}</span><span class="ck-br">]</span>
+                  <span class="ck-br">[</span><span class="ck-label">{t.tab}</span><span class="ck-br">]</span>
                 </button>
               ))}
             </div>
           )}
           <div class={`pv-panel${i === 0 ? ' on-m' : ''}`} data-panel={i} data-active={i === 0 ? 'true' : 'false'} data-tilt-zone style={`--row:${i + 1}`}>
-            {i === 0 && <ProductCheckoutPanel />}
-            {i === 1 && <ProductFunnelPanel />}
-            {i === 2 && <ProductMembersPanel />}
+            {i === 0 && <ProductShot3D kind="checkout" />}
+            {i === 1 && <ProductUpsellPanel />}
+            {i === 2 && <ProductShot3D kind="membros" />}
+            {i === 3 && <ProductMedPanel />}
           </div>
-          {i === 0 && (
-            <div class="pv-tiles reveal-stagger grid grid-cols-2 gap-3 lg:hidden">
-              <div class="pv-tile">
-                <span class="irow-i product" set:html={icon('funnel')} />
-                <span class="pv-tile-n">Funil</span>
-                <b data-counter data-target="62" data-prefix="+" data-suffix="%">+62%</b>
-                <span class="anchor-l">receita por venda</span>
-              </div>
-              <div class="pv-tile">
-                <span class="irow-i product" set:html={icon('users')} />
-                <span class="pv-tile-n">Membros</span>
-                <b data-counter data-target="47" data-prefix="+" data-suffix="%">+47%</b>
-                <span class="anchor-l">recompra</span>
-              </div>
-            </div>
-          )}
         </>
       ))}
     </div>
+  </div>
 
+  <!-- trilho dos sete temas: prints reais; anda de lado com a rolagem no computador, arrasta no celular -->
+  <div class="trail mt-[--gap-lg]" aria-label="Os sete temas de checkout">
+    <div class="trail-stage">
+      <ul class="trail-track">
+        {themes.map((t, i) => (
+          <li class="trail-card">
+            <figure>
+              <div class="trail-shot">
+                <img src={`/assets/app/ck-${t.key}-800.webp`} width="800" height="500" alt={`Checkout da Korvex no tema ${t.name}`} loading="lazy" decoding="async" />
+              </div>
+              <figcaption><b>{String(i + 1).padStart(2, '0')}</b><span>{t.name}</span><em>{t.note}</em></figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="reveal mt-[--gap-md] flex flex-wrap items-center gap-x-6 gap-y-3">
       <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="produto-register" class="btn btn-primary">
         Montar minha operação
         <span class="h-4 w-4" set:html={icon('arrow')}></span>
       </a>
-      <p class="hidden text-[13px] text-[--t-3] lg:block">Migração assistida. Você não para de vender um dia.</p>
+      <p class="hidden text-[13px] text-[--t-3] lg:block">Sete temas reais, todos no ar hoje. Você troca sem refazer o checkout.</p>
     </div>
   </div>
 </section>
 
 <script>
-  // Sticky scrollytelling: painel + marca do rail seguem o capítulo na banda central da viewport
+  // Rolagem fixa: o painel e a marca do trilho seguem o capítulo que está na faixa central da tela
   const root = document.querySelector<HTMLElement>('[data-pv]');
   if (root) {
     const chapters = [...root.querySelectorAll<HTMLElement>('.pv-chapter')];
@@ -140,6 +134,7 @@ const chapters = [
     const activate = (i: number) => {
       panels.forEach((p, j) => { p.dataset.active = String(j === i); p.setAttribute('aria-hidden', String(j !== i)); });
       marks.forEach((m, j) => (j === i ? m.setAttribute('aria-current', 'step') : m.removeAttribute('aria-current')));
+      root.style.setProperty('--pv-step', String(i));
     };
     const start = () => {
       io?.disconnect();
@@ -157,43 +152,7 @@ const chapters = [
     mq.addEventListener('change', apply);
   }
 
-  // Chips de tema trocam a estrutura do checkout no painel
-  const tabs = document.querySelectorAll<HTMLButtonElement>('.ck-tab');
-  const views = document.querySelectorAll<HTMLElement>('.ck-stage [data-view]');
-  const labelEl = document.querySelector<HTMLSpanElement>('[data-current-theme]');
-  const labels: Record<string, string> = {
-    padrao: 'Tema Padrão', longo: 'Formulário longo', box: 'Tema Box', moderno: 'Tema Moderno',
-    classico: 'Tema Clássico', fluxo: 'Tema Fluxo', etapas: 'Fluxo em Etapas',
-  };
-  let busy = false;
-  tabs.forEach((t) => {
-    t.addEventListener('click', () => {
-      if (busy || t.classList.contains('active')) return;
-      busy = true;
-      const key = t.dataset.ck!;
-      tabs.forEach((x) => { const on = x === t; x.classList.toggle('active', on); x.setAttribute('aria-pressed', String(on)); });
-      const visible = [...views].find((el) => !el.classList.contains('hidden'));
-      const next = [...views].find((el) => el.dataset.view === key);
-      const swap = () => {
-        views.forEach((el) => el.classList.toggle('hidden', el.dataset.view !== key));
-        if (labelEl) labelEl.textContent = labels[key] || 'Tema';
-        if (next) {
-          next.style.opacity = '0'; next.style.transform = 'translateY(6px) rotateY(-5deg)';
-          requestAnimationFrame(() => {
-            next.style.transition = 'opacity .35s ease, transform .35s var(--ease-out)';
-            next.style.opacity = '1'; next.style.transform = 'none';
-            setTimeout(() => { next.style.transition = ''; busy = false; }, 380);
-          });
-        } else busy = false;
-      };
-      if (visible) {
-        visible.style.transition = 'opacity .18s ease'; visible.style.opacity = '0';
-        setTimeout(() => { visible.style.opacity = ''; visible.style.transition = ''; swap(); }, 180);
-      } else swap();
-    });
-  });
-
-  // Mobile: abas Checkout / Funil / Membros trocam o mockup visível
+  // Celular: as abas trocam o painel e o texto visíveis
   const mtabs = document.querySelectorAll<HTMLButtonElement>('[data-mpanel]');
   mtabs.forEach((t) => t.addEventListener('click', () => {
     const i = t.dataset.mpanel;
@@ -204,67 +163,92 @@ const chapters = [
 </script>
 
 <style>
-  /* mobile-first: uma coluna, painéis estáticos, rail oculto */
+  /* celular primeiro: uma coluna, painéis estáticos, trilho de capítulos oculto */
   .pv { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 1.25rem; }
   .pv-rail { display: none; }
   .pv-panel { min-width: 0; }
   @media (max-width: 1023px) {
-    .pv-mtabs { order: 1; margin-left: -10px; }
+    .pv-mtabs { order: 1; margin-left: -10px; overflow-x: auto; scrollbar-width: none; }
+    .pv-mtabs::-webkit-scrollbar { display: none; }
+    .pv-mtabs .seg-tab { flex: none; white-space: nowrap; padding-inline: 6px; }
     .pv-chapter { order: 2; }
-    .pv-panel { order: 3; }
-    .pv-tiles { display: none; }
+    .pv-panel { order: 3; padding-bottom: 26px; }
     .pv-panel:not(.on-m), .pv-chapter:not(.on-m) { display: none; }
     .pv-chapter .chapter { display: none; }
   }
 
   .pv-h3 { font-family: var(--font-display); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(1.75rem, 2.6vw, 2.5rem); text-wrap: balance; }
   .pv-p { font-size: 16.5px; line-height: 1.55; color: var(--t-2); max-width: 46ch; text-wrap: pretty; }
-  .pv-stat { display: flex; align-items: baseline; gap: 10px; }
-  .pv-stat b { font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.03em; color: #fff; font-feature-settings: 'tnum'; }
-  .pv-stat span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-3); }
-  .pv-chips { gap: 0 2px; }
-  @media (min-width: 1024px) { .pv-chips { margin-left: -10px; } }
-  .pv-tile { display: grid; gap: 6px; padding: 16px 14px; border-radius: 16px; border: 1px solid var(--line-1); background: var(--bg-1); }
-  .pv-tile-n { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: #fff; margin-top: 4px; }
-  .pv-tile b { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; letter-spacing: -0.03em; color: #fff; font-feature-settings: 'tnum'; line-height: 1; }
-  .pv-tile .anchor-l { margin-top: 0; }
 
-
-  .pv-mark { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--t-4); transition: color .3s; }
-  .pv-mark .pv-br { color: transparent; transition: color .3s; }
+  .pv-mark { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--t-4); transition: color .3s var(--ease-out); }
+  .pv-mark .pv-br { color: transparent; transition: color .3s var(--ease-out); }
   .pv-mark .pv-n { padding: 0 5px; }
-  .pv-mark:hover { color: var(--t-2); }
   .pv-mark[aria-current="step"] { color: #fff; }
   .pv-mark[aria-current="step"] .pv-br { color: rgba(255,255,255,0.85); }
+  @media (hover: hover) and (pointer: fine) { .pv-mark:hover { color: var(--t-2); } }
+  /* progresso do capítulo: um traço que desce no trilho */
+  .pv-prog { position: absolute; left: -1px; top: 0; bottom: 0; width: 1px; background: var(--line-1); }
+  .pv-prog i { position: absolute; left: 0; top: 0; width: 1px; height: 25%; background: var(--blue-2); transform: translateY(calc(var(--pv-step, 0) * 100%)); transition: transform .6s var(--ease-snap); }
 
-  /* desktop: rail | copy | stage sticky */
+  /* computador: trilho | texto | palco fixo */
   @media (min-width: 1024px) {
     .pv {
-      grid-template-columns: 48px minmax(0, 0.9fr) minmax(0, 1.1fr);
-      grid-template-rows: repeat(3, auto);
+      grid-template-columns: 48px minmax(0, 0.86fr) minmax(0, 1.14fr);
+      grid-template-rows: repeat(4, auto);
       column-gap: clamp(2rem, 4vw, 4.5rem);
       row-gap: 0;
       align-items: start;
+      perspective: 1400px;
     }
-    .pv-rail { display: flex; flex-direction: column; gap: 4px; grid-column: 1; grid-row: 1 / 4; position: sticky; top: 50vh; transform: translateY(-50%); align-self: start; }
-    .pv-chapter { grid-column: 2; grid-row: var(--row); min-height: clamp(460px, 58vh, 560px); display: flex; flex-direction: column; justify-content: center; padding-block: clamp(24px, 4vh, 40px); margin: 0; scroll-margin-top: 96px; }
-    .pv { perspective: 1400px; }
+    .pv-rail { display: flex; flex-direction: column; gap: 4px; grid-column: 1; grid-row: 1 / 5; position: sticky; top: calc(50vh - 94px); align-self: start; }
+    .pv-chapter { grid-column: 2; grid-row: var(--row); min-height: clamp(400px, 52vh, 500px); display: flex; flex-direction: column; justify-content: center; padding-block: clamp(20px, 3.5vh, 36px); margin: 0; scroll-margin-top: 96px; }
     .pv-panel {
-      grid-column: 3; grid-row: 1 / 4;
-      position: sticky; top: 15vh; align-self: start; margin: 0;
-      opacity: 0; transform: translateZ(-90px) rotateY(7deg) translateY(12px);
+      grid-column: 3; grid-row: 1 / 5;
+      position: sticky; top: 17vh; align-self: start; margin: 0;
+      opacity: 0; transform: translateZ(-110px) rotateY(9deg) translateY(14px);
       pointer-events: none; visibility: hidden;
-      transition: opacity .55s var(--ease-out), transform .7s var(--ease-out), visibility 0s linear .55s;
+      transition: opacity .5s var(--ease-out), transform .7s var(--ease-out), visibility 0s linear .5s;
     }
     .pv-panel[data-active="true"] {
       opacity: 1; transform: none; pointer-events: auto; visibility: visible; z-index: 2;
       transition: opacity .5s var(--ease-out) .08s, transform .72s var(--ease-snap) .08s, visibility 0s;
     }
   }
-  /* loops infinitos dos mockups só rodam no painel em foco */
+  /* as animações em ciclo dos painéis só rodam no painel em foco */
   .pv-panel:not([data-active="true"]):not(.on-m) :global(*) { animation-play-state: paused !important; }
 
+  /* ---------- trilho dos temas ---------- */
+  .trail { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .trail::-webkit-scrollbar { display: none; }
+  .trail-track { display: flex; gap: 16px; width: max-content; padding-inline: 20px; }
+  .trail-card { flex: none; width: min(78vw, 400px); scroll-snap-align: center; }
+  .trail-shot { border-radius: 10px; overflow: hidden; border: 1px solid var(--line-2); background: #0B121C; box-shadow: 0 24px 50px -30px rgba(0,0,0,.9); }
+  .trail-shot img { display: block; width: 100%; height: auto; }
+  .trail-card figcaption { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: baseline; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-1); }
+  .trail-card figcaption b { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; color: var(--t-3); }
+  .trail-card figcaption span { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: #fff; }
+  .trail-card figcaption em { grid-column: 2; font-style: normal; font-size: 12.5px; color: var(--t-3); }
+  @media (max-width: 1023px) { .trail-card figcaption em { display: none; } }
+
+  @media (min-width: 1024px) {
+    .trail { perspective: 1600px; perspective-origin: 30% 50%; padding-block: 34px 26px; }
+    .trail-stage { transform: rotateY(-13deg) rotateX(3deg); transform-origin: 0 50%; }
+    .trail-track { gap: 26px; padding-inline: max(32px, calc((100vw - 1216px) / 2)); }
+    .trail-card { width: 420px; transition: transform .5s var(--ease-snap); }
+  }
+  @media (hover: hover) and (pointer: fine) and (min-width: 1024px) { .trail-card:hover { transform: translateY(-8px); } }
+
+  /* com timeline de rolagem: sem barra, o trilho desliza enquanto a faixa cruza a tela */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+      .trail { overflow-x: clip; overflow-y: visible; scroll-snap-type: none; }
+      .trail-track { animation: trail-x linear both; animation-timeline: view(); animation-range: entry 10% exit 90%; }
+    }
+  }
+  @keyframes trail-x { from { transform: translateX(6%); } to { transform: translateX(calc(-100% + 88vw)); } }
+
   @media (prefers-reduced-motion: reduce) {
-    .pv-panel, .ck-tab, .pv-mark { transition: none !important; }
+    .pv-panel, .pv-mark, .pv-prog i { transition: none !important; }
+    .trail-stage { transform: none; }
   }
 </style>

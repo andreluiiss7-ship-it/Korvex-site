@@ -1,6 +1,8 @@
 // Atribuição + eventos: guarda UTMs/click ids, repassa pro cadastro e pro WhatsApp, dispara eventos do pixel.
 const KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
 const STORE = 'kx_attr';
+// o cadastro mora em app.korvexgateway.com; o endereço antigo fica para links que ainda existam
+const APP_HOSTS = ['app.korvexgateway.com', 'app.korvex.com.br'];
 
 const read = (): Record<string, string> => {
   try {
@@ -22,7 +24,7 @@ document.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((a) => {
   const cta = a.dataset.cta || 'link';
   try {
     const u = new URL(a.href);
-    if (u.hostname === 'app.korvex.com.br') {
+    if (APP_HOSTS.includes(u.hostname)) {
       Object.entries(attr).forEach(([k, v]) => u.searchParams.set(k, v));
       u.searchParams.set('ref', cta);
       a.href = u.toString();
@@ -44,7 +46,7 @@ document.addEventListener('click', (e) => {
   const fbq = (window as unknown as { fbq?: Fbq }).fbq;
   let ev: string | null = null;
   if (href.includes('wa.me')) ev = 'Lead';
-  else if (href.includes('app.korvex.com.br')) ev = 'InitiateCheckout';
+  else if (APP_HOSTS.some((h) => href.includes(h))) ev = 'InitiateCheckout';
   if (!ev) return;
   if (fbq) fbq('track', ev, { content_name: name });
   else console.debug('[korvex] evento', ev, name);

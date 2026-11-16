@@ -4,9 +4,9 @@ import { icon } from '../lib/icons';
 
 const links = [
   { label: 'Produto',    href: '#produto' },
-  { label: 'Taxas',      href: '#pagamentos' },
+  { label: 'A conta',    href: '#conta' },
   { label: 'Premiações', href: '#premiacoes' },
-  { label: 'Fundador',   href: '#fundador' },
+  { label: 'Dúvidas',    href: '#faq' },
 ];
 ---
 
@@ -59,7 +59,6 @@ const links = [
           {links.map((l) => (
             <a href={l.href} class="block rounded-xl px-3 py-2.5 text-[15px] font-medium text-white/90 hover:bg-white/5">{l.label}</a>
           ))}
-          <a href="#faq" class="block rounded-xl px-3 py-2.5 text-[15px] font-medium text-white/90 hover:bg-white/5">Dúvidas</a>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="nav-wa" class="mt-1 block rounded-xl bg-titan-500/15 px-3 py-2.5 text-[15px] font-semibold text-white">Falar com gerente</a>
         </div>
       </details>

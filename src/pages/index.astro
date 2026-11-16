@@ -2,11 +2,10 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Problem from '../components/Problem.astro';
+import Conta from '../components/Conta.astro';
 import Produto from '../components/Produto.astro';
 import Founder from '../components/Founder.astro';
 import Awards from '../components/Awards.astro';
-import Payments from '../components/Payments.astro';
 import FAQ from '../components/FAQ.astro';
 import FinalCTA from '../components/FinalCTA.astro';
 import Footer from '../components/Footer.astro';
@@ -21,7 +20,7 @@ const jsonld = [
     name: 'Korvex',
     url: SITE_URL,
     logo: `${SITE_URL}/assets/logo-white.png`,
-    description: 'Gateway de pagamento pra infoprodutores: Pix D0, zero reserva de segurança, taxa 6,99% + R$ 1,99 travada em contrato.',
+    description: 'Gateway de Pix para infoprodutores: saldo na hora, defesa de MED automática e taxa de 6,99% + R$ 1,99 travada em contrato.',
     areaServed: 'BR',
   },
   {
@@ -36,11 +35,10 @@ const jsonld = [
   <Nav />
   <main>
     <Hero />
-    <Problem />
+    <Conta />
     <Produto />
     <Founder />
     <Awards />
-    <Payments />
     <FAQ />
     <FinalCTA />
   </main>

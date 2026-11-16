@@ -24,8 +24,4 @@ export const STATS = {
   volumeN: 129,
   players: '400+',
   playersN: 400,
-  approval: '94%',
-  approvalN: 94,
-  uptime: '99,9%',
-  uptimeN: 99.9,
 };

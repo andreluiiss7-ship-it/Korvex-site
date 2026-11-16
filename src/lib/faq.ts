@@ -1,14 +1,9 @@
 // Perguntas frequentes: usadas no FAQ e no JSON-LD (FAQPage)
 export const faqs = [
-  { icon: 'coin',    q: 'Quanto custa?', a: '6,99% + R$ 1,99 por venda aprovada. Sem setup, mensalidade ou mínimo. Volume alto: condição por escrito.' },
-  { icon: 'clock',   q: 'Quando o dinheiro cai?', a: 'Pix D0, inclusive via API Pix. Cartão D+30, antecipação D+14 ou D+2. Saque em cripto disponível.' },
-  { icon: 'shield',  q: 'Tem reserva de segurança?', a: 'Não. Zero retido, em nenhum prazo. O que você vendeu é seu.' },
-  { icon: 'headset', q: 'A Korvex bloqueia conta sem aviso?', a: 'Não. Se algo soar estranho, seu gerente liga antes de qualquer ação.' },
-  { icon: 'ticket',  q: 'A taxa pode mudar depois?', a: 'Só com a sua assinatura. Nunca por e-mail automático.' },
-  { icon: 'repeat',  q: 'Como funciona a migração?', a: 'Manda a operação no WhatsApp. A gente define a condição e conduz a migração. Você não para de vender um dia.' },
-  // CONFIRMAR com o André antes de publicar: chargeback, split, antecipação, fidelidade
-  { icon: 'shield',  q: 'E chargeback?', a: 'A disputa é tratada pelo seu gerente, com você. Sem reserva preventiva: só o valor contestado entra na conta, e só se a disputa for perdida.' },
-  { icon: 'users',   q: 'Tem afiliados e coprodução?', a: 'Sim. Split automático no ato da venda, cada um recebe a parte na própria conta.' },
-  { icon: 'coin',    q: 'Antecipação custa quanto?', a: 'Taxa combinada por escrito antes de ativar. Nunca aparece de surpresa no extrato.' },
-  { icon: 'x',       q: 'Tem fidelidade?', a: 'Não. Sem contrato de permanência: você sai quando quiser, com o saldo liberado.' },
+  { icon: 'coin',    q: 'Quanto custa?', a: '6,99% + R$ 1,99 por venda aprovada. Sem setup, mensalidade ou mínimo.' },
+  { icon: 'clock',   q: 'Quando o dinheiro cai?', a: 'No Pix, a venda vira saldo disponível na hora. O saque é conferido por gente, em horário comercial, e sai por Pix para a sua chave.' },
+  { icon: 'shield',  q: 'Tem reserva de segurança?', a: 'Não. O que você vendeu no Pix fica disponível inteiro.' },
+  { icon: 'flag',    q: 'E quando chega um MED?', a: 'A defesa é montada sozinha com o histórico do comprador. Você revisa ou deixa no automático. Só o valor contestado fica separado enquanto a disputa corre.' },
+  { icon: 'repeat',  q: 'Como é a migração?', a: 'Você importa os produtos, troca o link do checkout e vende no mesmo dia. Seu gerente acompanha.' },
+  { icon: 'card',    q: 'Vende no cartão?', a: 'Conta nova começa no Pix. O cartão é liberado depois da análise da sua operação.' },
 ];

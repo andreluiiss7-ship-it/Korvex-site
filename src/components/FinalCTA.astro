@@ -20,7 +20,7 @@ import Mosaic from './Mosaic.astro';
         <span class="block font-editorial italic font-normal text-chrome-200/80">É pra quem cansou de pedir o próprio dinheiro.</span>
       </h2>
       <p class="lead mx-auto mt-4 hidden lg:block">
-        Mande sua operação. Em 1h um gerente humano responde com a condição do seu volume.
+        Mande a sua operação. Um gerente responde em 1h com a condição do seu volume e o plano de migração.
       </p>
       <div class="mt-5 lg:hidden">
         <span class="anchor-num text-gold-gradient">1h</span>
@@ -28,18 +28,18 @@ import Mosaic from './Mosaic.astro';
       </div>
 
       <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="final-wa" class="btn btn-gold w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
-          <span class="h-5 w-5" set:html={icon('headset')}></span>
-          Receber proposta em 1h
-        </a>
-        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="final-register" class="btn btn-ghost w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
+        <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="final-register" class="btn btn-gold w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
           Abrir conta grátis
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
+        </a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="final-wa" class="btn btn-ghost w-full justify-center !px-7 !py-3.5 text-[15px] sm:w-auto">
+          <span class="h-5 w-5" set:html={icon('headset')}></span>
+          Falar com gerente
         </a>
       </div>
 
       <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.12em] text-chrome-300/70">
-        {STATS.players} operações · {STATS.volume} transacionados · Pix D0 · Zero reserva
+        {STATS.players} operações · {STATS.volume} transacionados · Taxa em contrato
       </p>
       </div>
     </div>

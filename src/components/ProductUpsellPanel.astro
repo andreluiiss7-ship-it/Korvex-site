@@ -1,0 +1,107 @@
+---
+// Capítulo "Mais por venda": o que o comprador vê depois do primeiro Pix aprovado.
+// Ilustração do fluxo de oferta em um clique, no visual do checkout real (tema Vitrine).
+// Produto e valores são fictícios (persona "Método Escala").
+import { icon } from '../lib/icons';
+---
+
+<div class="tilt up" data-tilt="3">
+  <div class="browser kframe blue in glow-blue" style="container-type: inline-size;">
+    <div class="browser-bar">
+      <span class="dot bg-[#ff5f57]/80"></span><span class="dot bg-[#febc2e]/80"></span><span class="dot bg-[#28c840]/80"></span>
+      <span class="ml-2 rounded-md bg-white/5 px-2.5 py-1 text-[11px] text-chrome-300/70">pay.korvexgateway.com/ESCALA7/oferta</span>
+    </div>
+
+    <div class="up-pg" role="img" aria-label="Depois do primeiro Pix aprovado, o comprador aceita uma segunda oferta em um clique e o novo Pix já vem com os dados preenchidos">
+      <p class="up-ok"><i set:html={icon('check')} />Pagamento aprovado · Método Escala · R$ 97,00</p>
+
+      <div class="up-card">
+        <div class="up-cover"><img src="/assets/members/cover-02-oferta.webp" width="400" height="600" alt="" loading="lazy" decoding="async" /></div>
+        <div class="up-body">
+          <p class="up-eyebrow">Só nesta página</p>
+          <p class="up-title">Mentoria em grupo · 4 encontros</p>
+          <p class="up-price"><s>R$ 297,00</s><b>R$ 197,00</b></p>
+          <div class="up-cta">
+            <span class="up-btn a">Sim, adicionar com 1 clique</span>
+            <span class="up-btn b"><i set:html={icon('pix')} />Pix gerado com os seus dados</span>
+            <span class="up-btn c"><i set:html={icon('check')} />Aprovado · R$ 197,00</span>
+          </div>
+          <p class="up-no">Não, obrigado</p>
+        </div>
+      </div>
+
+      <div class="up-sum">
+        <p><span>Método Escala</span><b>R$ 97,00</b></p>
+        <p class="bump"><span>Oferta extra · Planilha de metas</span><b>R$ 27,00</b></p>
+        <p class="add"><span>Mentoria em grupo</span><b>R$ 197,00</b></p>
+        <p class="tot"><span>Total do pedido</span><b><i class="t1">R$ 124,00</i><i class="t2">R$ 321,00</i></b></p>
+      </div>
+    </div>
+  </div>
+
+  <span class="float3d up-float material" style="--z:72px" aria-hidden="true">
+    <i set:html={icon('repeat')} />
+    <b>Parcelado no Pix</b>
+    <em>entrada + até 12 parcelas</em>
+  </span>
+</div>
+
+<style>
+  .up-pg { --pp: #F5F4F0; --ink: #1A1714; --mut: #6B655D; --ln: rgba(26,23,20,.12); --btn: #B93A0E; --ok: #0E8A5F;
+    background: var(--pp); color: var(--ink); padding: 1.6em 1.8em 1.8em; font-family: var(--font-display); font-size: clamp(10px, 1.9cqw, 13.5px); }
+  .up-ok { display: flex; align-items: center; gap: .6em; font-size: .92em; font-weight: 600; color: var(--ok); }
+  .up-ok i { display: block; width: 1.5em; height: 1.5em; padding: .3em; border-radius: 999px; background: rgba(14,138,95,.14); }
+
+  .up-card { display: grid; grid-template-columns: 9.5em 1fr; gap: 1.4em; margin-top: 1.2em; padding: 1.2em; border-radius: .9em; background: #fff; border: 1px solid var(--ln); }
+  .up-cover { border-radius: .6em; overflow: hidden; aspect-ratio: 3 / 4; background: #111; }
+  .up-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .up-eyebrow { font-family: var(--font-mono); font-size: .72em; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); }
+  .up-title { margin-top: .35em; font-size: 1.5em; font-weight: 700; letter-spacing: -.025em; line-height: 1.12; }
+  .up-price { display: flex; align-items: baseline; gap: .7em; margin-top: .6em; }
+  .up-price s { font-size: .95em; color: var(--mut); }
+  .up-price b { font-size: 1.7em; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+
+  .up-cta { position: relative; height: 3.2em; margin-top: .9em; }
+  .up-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: .55em; border-radius: .6em; font-size: 1em; font-weight: 700; color: #fff; white-space: nowrap; }
+  .up-btn i { display: block; width: 1.15em; height: 1.15em; }
+  .up-btn.a { background: var(--btn); }
+  .up-btn.b { background: #1A1714; opacity: 0; }
+  .up-btn.c { background: var(--ok); opacity: 0; }
+  .up-no { margin-top: .7em; text-align: center; font-size: .82em; color: var(--mut); text-decoration: underline; text-underline-offset: .25em; }
+
+  .up-sum { margin-top: 1.1em; }
+  .up-sum p { display: flex; justify-content: space-between; gap: 1em; padding: .6em 0; border-top: 1px solid var(--ln); font-size: .9em; color: var(--mut); }
+  .up-sum b { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .up-sum .tot { color: var(--ink); font-weight: 700; }
+  .up-sum .tot b { position: relative; font-size: 1.25em; font-weight: 800; }
+  .up-sum .tot i { font-style: normal; }
+  .up-sum .tot .t2 { position: absolute; right: 0; top: 0; opacity: 0; }
+  .up-sum .add { opacity: .28; }
+
+  /* um ciclo de 9 s: clica, gera o Pix, aprova, soma no pedido */
+  @media (prefers-reduced-motion: no-preference) {
+    .up-btn.a { animation: up-a 9s var(--ease-out) infinite; }
+    .up-btn.b { animation: up-b 9s var(--ease-out) infinite; }
+    .up-btn.c { animation: up-c 9s var(--ease-out) infinite; }
+    .up-sum .add { animation: up-add 9s var(--ease-out) infinite; }
+    .up-sum .tot .t1 { animation: up-t1 9s var(--ease-out) infinite; }
+    .up-sum .tot .t2 { animation: up-t2 9s var(--ease-out) infinite; }
+  }
+  @keyframes up-a { 0%, 26% { opacity: 1; transform: none; } 29% { opacity: 1; transform: scale(.97); } 33%, 96% { opacity: 0; transform: none; } 100% { opacity: 1; } }
+  @keyframes up-b { 0%, 31% { opacity: 0; } 35%, 52% { opacity: 1; } 56%, 100% { opacity: 0; } }
+  @keyframes up-c { 0%, 54% { opacity: 0; } 58%, 94% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes up-add { 0%, 56% { opacity: .28; } 62%, 94% { opacity: 1; } 100% { opacity: .28; } }
+  @keyframes up-t1 { 0%, 58% { opacity: 1; } 62%, 94% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes up-t2 { 0%, 58% { opacity: 0; } 62%, 94% { opacity: 1; } 100% { opacity: 0; } }
+
+  .up-float { right: -14px; top: 18%; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; padding: 10px 14px; border-radius: 14px; background: rgba(11,17,27,.94); border-color: rgba(255,255,255,.16); }
+  .up-float i { grid-row: 1 / 3; display: block; width: 26px; height: 26px; padding: 6px; border-radius: 8px; background: rgba(59,130,246,.18); color: var(--blue-2); }
+  .up-float b { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: #fff; line-height: 1.1; }
+  .up-float em { font-family: var(--font-mono); font-style: normal; font-size: 10px; letter-spacing: .04em; color: var(--t-2); }
+  @media (max-width: 1023px) {
+    .up-pg { font-size: 11.5px; padding: 1.3em 1.2em 1.4em; }
+    .up-card { grid-template-columns: 6.5em 1fr; gap: 1em; padding: 1em; }
+    .up-title { font-size: 1.25em; }
+    .up-float { right: 8px; top: auto; bottom: -16px; }
+  }
+</style>

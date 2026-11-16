@@ -7,16 +7,16 @@ const cols = [
     title: 'Plataforma',
     links: [
       { label: 'Checkout', href: '#checkout' },
-      { label: 'Funil', href: '#produto' },
+      { label: 'Upsell em um clique', href: '#produto' },
       { label: 'Área de membros', href: '#produto' },
-      { label: 'Taxas', href: '#pagamentos' },
+      { label: 'Taxas', href: '#conta' },
     ],
   },
   {
     title: 'Korvex',
     links: [
       { label: 'Premiações', href: '#premiacoes' },
-      { label: 'Comparativo de taxas', href: '#problema' },
+      { label: 'Calculadora de taxas', href: '#conta' },
       { label: 'Dúvidas frequentes', href: '#faq' },
       { label: 'Falar com o time', href: WHATSAPP_DUVIDA_URL, ext: true },
       { label: 'Manifesto', href: '/manifesto' },
@@ -40,7 +40,7 @@ const cols = [
       <div>
         <img src="/assets/logo-white.png" alt="Korvex" width="1352" height="352" class="h-7 w-auto" />
         <p class="mt-4 hidden max-w-xs text-pretty text-sm leading-relaxed text-chrome-300/60 lg:block">
-          O próprio dinheiro no próprio dia. Pix D0, zero reserva, taxa em contrato.
+          Vendeu, é seu. Pix na hora, taxa em contrato, gente no atendimento.
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
           {['KYC', 'AML', 'KYT'].map((k) => <span class="chip"><span set:html={icon('shield')} />{k}</span>)}
