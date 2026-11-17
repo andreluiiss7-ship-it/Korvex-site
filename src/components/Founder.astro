@@ -4,7 +4,7 @@ import { icon } from '../lib/icons';
 import { WHATSAPP_URL } from '../lib/site';
 
 const stats = [
-  { big: 'R$ 25 mi+', label: 'vendidos online', n: 25, prefix: 'R$ ', suffix: ' mi+' },
+  { big: 'R$ 25 mi+', label: 'vendidos online' },
   { big: '1h', label: 'resposta do gerente' },
 ];
 const rules = [
@@ -35,7 +35,7 @@ const steps = [
         <dl class="reveal-stagger mt-6 grid grid-cols-2 gap-x-6 border-t border-[--line-2] pt-5 sm:gap-x-12">
           {stats.map((s) => (
             <div>
-              <dt class="anchor-num whitespace-nowrap" style="font-size:clamp(1.9rem,4vw,2.7rem)" data-counter={s.n !== undefined ? '' : undefined} data-target={s.n} data-prefix={s.prefix} data-suffix={s.suffix}>{s.big}</dt>
+              <dt class="anchor-num whitespace-nowrap" style="font-size:clamp(1.9rem,4vw,2.7rem)">{s.big}</dt>
               <dd class="anchor-l">{s.label}</dd>
             </div>
           ))}
@@ -63,13 +63,11 @@ const steps = [
 
     <!-- migração -->
     <div class="gn-mig reveal mt-[--gap-lg]">
-      <div class="gn-mig-h">
-        <h3>Trocar de plataforma em uma tarde.</h3>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="migracao-wa" class="btn btn-ghost !py-2.5 text-[13px]">
-          <span class="h-4 w-4" set:html={icon('headset')}></span>
-          Falar com gerente
-        </a>
-      </div>
+      <h3>Trocar de plataforma em uma tarde.</h3>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="migracao-wa" class="gn-mig-cta btn btn-ghost !py-2.5 text-[13px]">
+        <span class="h-4 w-4" set:html={icon('headset')}></span>
+        Falar com gerente
+      </a>
       <ol class="reveal-stagger">
         {steps.map((s) => (
           <li><em>{s.n}</em><b>{s.t}</b><span>{s.d}</span></li>
@@ -93,8 +91,12 @@ const steps = [
   @media (min-width: 640px) { .gn-rules li { grid-template-columns: 0.9fr 1.1fr; align-items: baseline; } }
   @media (max-width: 639px) { .gn-rules span { display: none; } }
 
-  .gn-mig { border-top: 1px solid var(--line-3); padding-top: 22px; }
-  .gn-mig-h { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+  .gn-mig { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 24px; border-top: 1px solid var(--line-3); padding-top: 22px; }
+  .gn-mig ol { grid-column: 1 / -1; }
+  @media (max-width: 639px) {
+    .gn-mig { grid-template-columns: 1fr; }
+    .gn-mig-cta { order: 3; justify-self: start; margin-top: 14px; }
+  }
   .gn-mig h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.35rem, 2.4vw, 1.9rem); letter-spacing: -0.03em; line-height: 1.1; color: var(--t-1); }
   .gn-mig ol { display: grid; margin-top: 18px; }
   .gn-mig li { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 2px; padding: 14px 0; border-top: 1px solid var(--line-1); }
