@@ -15,6 +15,13 @@ export const SITE_URL = 'https://www.korvexgateway.com';
 export const APP_URL = 'https://app.korvex.com.br';
 export const REGISTER_URL = 'https://app.korvexgateway.com/cadastro';
 
+// Aplicativo Korvex. Instalação pelo navegador enquanto o app não está nas lojas.
+export const APP_INSTALL_URL = 'https://app.korvexgateway.com/instalar';
+// Preencher quando o app for publicado. Com o link, o selo oficial da loja aparece
+// e o "Em breve" daquela loja some. Com os dois, os selos viram o destaque.
+export const APP_STORE_URL = '';
+export const PLAY_STORE_URL = '';
+
 // Meta Pixel: definir PUBLIC_META_PIXEL_ID no .env / Vercel. Sem ID, nada é injetado.
 export const META_PIXEL_ID = (import.meta.env.PUBLIC_META_PIXEL_ID as string | undefined) ?? '';
 

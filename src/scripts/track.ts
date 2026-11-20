@@ -46,6 +46,12 @@ document.addEventListener('click', (e) => {
   const fbq = (window as unknown as { fbq?: Fbq }).fbq;
   let ev: string | null = null;
   if (href.includes('wa.me')) ev = 'Lead';
+  else if (/\/instalar\b|apps\.apple\.com|play\.google\.com/.test(href)) {
+    // instalação do aplicativo não é cadastro: evento próprio
+    if (fbq) fbq('trackCustom', 'InstalarApp', { content_name: name });
+    else console.debug('[korvex] evento InstalarApp', name);
+    return;
+  }
   else if (APP_HOSTS.some((h) => href.includes(h))) ev = 'InitiateCheckout';
   if (!ev) return;
   if (fbq) fbq('track', ev, { content_name: name });

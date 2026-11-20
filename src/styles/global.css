@@ -87,12 +87,14 @@ section[id]:not(#topo):not(#produto) {
 }
 /* valores medidos no build de produção; errado aqui vira salto de scroll */
 #conta      { --cis: 1270px; }
+#app        { --cis: 815px; }
 #fundador   { --cis: 860px; }
 #premiacoes { --cis: 1335px; }
 #faq        { --cis: 510px; }
 #contato    { --cis: 630px; }
 @media (max-width: 1023px) {
   #conta      { --cis: 1415px; }
+  #app        { --cis: 930px; }
   #fundador   { --cis: 1180px; }
   #premiacoes { --cis: 960px; }
   #faq        { --cis: 585px; }

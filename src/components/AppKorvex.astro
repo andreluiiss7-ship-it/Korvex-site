@@ -1,0 +1,441 @@
+---
+import { icon } from '../lib/icons';
+import { APP_INSTALL_URL, APP_STORE_URL, PLAY_STORE_URL } from '../lib/site';
+
+// Selos oficiais em português, baixados sem alteração das ferramentas da Apple
+// (toolbox.marketingtools.apple.com) e do Google (play.google.com/intl/.../badges).
+const APPLE_BADGE = '/assets/badges/app-store-pt-br.svg';
+const PLAY_BADGE = '/assets/badges/google-play-pt-br.png';
+
+const hasIos = APP_STORE_URL.length > 0;
+const hasAndroid = PLAY_STORE_URL.length > 0;
+const both = hasIos && hasAndroid;
+const soon = !hasIos && !hasAndroid
+  ? 'Em breve na App Store e no Google Play.'
+  : !hasIos ? 'Em breve na App Store.'
+  : !hasAndroid ? 'Em breve no Google Play.'
+  : '';
+
+// Tela recriada do app real (~/korvex-app, tela Início), com os dados do produto demo.
+// Textos das notificações iguais aos que o gateway envia ("Venda confirmada!" e "Saque efetuado").
+const week = [
+  { d: 'qui', v: 3980.4 }, { d: 'sex', v: 4210.15 }, { d: 'sáb', v: 4105.9 }, { d: 'dom', v: 4460.3 },
+  { d: 'seg', v: 4630.75 }, { d: 'ter', v: 5017.5 }, { d: 'hoje', v: 5902.62 },
+];
+const MAX = 7200;
+const weekTotal = week.reduce((a, w) => a + w.v, 0);
+const brl = (n: number) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const [saldoInt, saldoCents] = brl(12480.9).split(',');
+const [weekInt, weekCents] = brl(weekTotal).split(',');
+---
+
+<section id="app" class="sec relative">
+  <div class="section">
+    <div class="ap-grid">
+      <div class="reveal">
+        <span class="chapter hidden lg:inline-flex">Aplicativo Korvex</span>
+        <h2 class="h2 mt-4">Suas vendas no celular</h2>
+        <p class="lead mt-4">
+          Acompanhe vendas, saldo e receba o aviso de cada venda no celular, em iPhone e Android.
+        </p>
+
+        <div class:list={['ap-actions', { 'ap-both': both }]}>
+          {hasIos && (
+            <a href={APP_STORE_URL} target="_blank" rel="noopener" data-cta="app-ios" class="ap-badge ap-badge-ios">
+              <img src={APPLE_BADGE} alt="Baixar na App Store" width="120" height="40" loading="lazy" decoding="async" />
+            </a>
+          )}
+          {hasAndroid && (
+            <a href={PLAY_STORE_URL} target="_blank" rel="noopener" data-cta="app-android" class="ap-badge ap-badge-play">
+              <img src={PLAY_BADGE} alt="Disponível no Google Play" width="155" height="60" loading="lazy" decoding="async" />
+            </a>
+          )}
+          <a href={APP_INSTALL_URL} target="_blank" rel="noopener" data-cta="app-install"
+             class:list={['btn ap-install', both ? 'btn-ghost' : 'btn-primary']}>
+            <span class="h-4 w-4" set:html={icon('download')}></span>
+            Instalar o app
+          </a>
+        </div>
+
+        {soon && <p class="ap-soon">{soon}</p>}
+      </div>
+
+      <div class="ap-stage reveal" data-tilt-zone aria-hidden="true">
+        <div class="ap-floor"></div>
+        <div class="ap-rest">
+          <div class="tilt ap-dev" data-tilt="8">
+            <div class="ap-phone">
+              <div class="ap-glass">
+                <div class="ap-screen">
+                  <div class="ap-ink">
+                    <div class="ap-status">
+                      <span>9:41</span>
+                      <span class="ap-island"></span>
+                      <span class="ap-sys">
+                        <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+                        <svg viewBox="0 0 16 12"><path d="M8 11.6 5.7 9.2a3.3 3.3 0 0 1 4.6 0L8 11.6Zm-4-4.1L2.6 6.1a7.6 7.6 0 0 1 10.8 0L12 7.5a5.6 5.6 0 0 0-8 0ZM1.3 4.7 0 3.3a11.3 11.3 0 0 1 16 0l-1.3 1.4a9.4 9.4 0 0 0-13.4 0Z"/></svg>
+                        <svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M25 4v4c.8-.3 1.3-1.1 1.3-2S25.8 4.3 25 4Z" opacity=".4"/></svg>
+                      </span>
+                    </div>
+                    <div class="ap-head">
+                      <img src="/assets/app/mark-white-96.png" alt="" width="96" height="91" />
+                      <span><small>Boa tarde</small><b>Método Escala</b></span>
+                      <i class="ap-eye"><svg viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg></i>
+                    </div>
+                    <p class="ap-label ap-on-ink">Disponível para saque</p>
+                    <p class="ap-saldo"><span class="ap-gain" data-ap="gain"></span><small>R$</small><b data-ap="saldo">{saldoInt}</b><small>,<span data-ap="saldoc">{saldoCents}</span></small></p>
+                    <div class="ap-lib">
+                      <span><small>A liberar</small><b>R$ 0,00</b></span>
+                      <i>Sacar</i>
+                    </div>
+                  </div>
+                  <div class="ap-body-light">
+                    <div class="ap-card">
+                      <p class="ap-label">Faturamento líquido</p>
+                      <div class="ap-two">
+                        <span><small>Hoje</small><b>R$ <span data-ap="hoje">5.902,62</span></b><em><span data-ap="hojen">61</span> vendas</em></span>
+                        <span><small>Este mês</small><b>R$ <span data-ap="mes">47.173,62</span></b><em><span data-ap="mesn">512</span> vendas <strong>↑ 12,4%</strong></em></span>
+                      </div>
+                    </div>
+                    <div class="ap-card">
+                      <div class="ap-row"><p class="ap-label">Desempenho</p><small>Últimos 7 dias</small></div>
+                      <div class="ap-seg"><span>Hoje</span><span class="on">7 dias</span><span>30 dias</span><span>Mês</span></div>
+                      <p class="ap-week"><small>R$</small><b data-ap="week">{weekInt}</b><small>,<span data-ap="weekc">{weekCents}</span></small></p>
+                      <div class="ap-bars">
+                        {week.map((w, i) => (
+                          <span class:list={[{ today: i === week.length - 1 }]} style={`--s:${(w.v / MAX).toFixed(3)}`} data-ap={i === week.length - 1 ? 'bar' : undefined}><i></i><em>{w.d}</em></span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <nav class="ap-tabs">
+                    <span class="on"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"/></svg>Início</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M5 20V12M10 20V6M15 20v-9M20 20V9"/></svg>Vendas</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Saques</span>
+                    <span><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M16 5v4M10 15v4"/></svg>Ajustes</span>
+                  </nav>
+                  <span class="ap-home"></span>
+                  <span class="ap-glare"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- notificação: camada solta, na frente do aparelho -->
+            <div class="float3d ap-banner" style="--z:90px">
+              <div class="ap-stack" data-ap="stack">
+                <div class="ap-n n0">
+                  <img src="/assets/app/app-icon-96.png" alt="" width="96" height="96" />
+                  <span class="ap-bt">
+                    <span class="ap-bt-top"><b>Venda confirmada!</b><time>agora</time></span>
+                    <span>Recebemos R$ <span data-v>97,00</span> via Pix.</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="float3d ap-payout" style="--z:56px">
+              <img src="/assets/app/app-icon-96.png" alt="" width="96" height="96" />
+              <span class="ap-bt">
+                <span class="ap-bt-top"><b>Saque efetuado</b><time>9:12</time></span>
+                <span>Saque de R$ 4.200,00 realizado para a sua chave Pix.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ap-grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 1024px) { .ap-grid { grid-template-columns: 1.05fr 0.95fr; gap: 64px; } }
+
+  /* ações: empilhadas e largura total no celular */
+  .ap-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; margin-top: 28px; }
+  .ap-install { justify-content: center; }
+  @media (min-width: 640px) {
+    .ap-actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+  }
+  /* com as duas lojas, o botão vai para o fim como opção secundária */
+  .ap-both .ap-install { order: 3; }
+
+  /* selos oficiais: sem redesenho. Apple com 40px de altura e área livre de 1/4 da altura;
+     o PNG do Google já traz a própria área livre, por isso fica maior */
+  .ap-badge { display: inline-flex; align-self: flex-start; line-height: 0; border-radius: 8px; }
+  .ap-badge-ios { padding: 10px; margin: -10px 0; }
+  .ap-badge-ios img { height: 40px; width: auto; }
+  .ap-badge-play img { height: 60px; width: auto; }
+  .ap-badge:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 2px; }
+
+  .ap-soon { margin-top: 14px; font-size: 13px; color: var(--t-3); }
+
+  /* ---------- aparelho ---------- */
+  .ap-stage { display: flex; justify-content: center; padding: 8px 0 28px; perspective: 1400px; }
+  .ap-rest { transform-style: preserve-3d; }
+  @media (min-width: 1024px) {
+    .ap-stage { perspective: 1600px; padding: 24px 0 40px; }
+    /* pose de repouso; o .tilt soma a inclinação do cursor por cima */
+    .ap-rest { transform: rotateY(-17deg) rotateX(7deg) rotateZ(1.5deg); transform-style: preserve-3d; }
+  }
+  .ap-dev { width: min(72vw, 300px); }
+  @media (max-width: 639px) { .ap-dev { width: min(70vw, 270px); } }
+  .ap-dev::after { border-radius: 50px; }
+
+  .ap-phone {
+    position: relative; padding: 3px; border-radius: 52px;
+    /* moldura de titânio: gradiente frio, quinas mais claras */
+    background: linear-gradient(140deg, #5d6878 0%, #262d38 18%, #161b22 50%, #2b333f 82%, #6b7686 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .06),
+      0 60px 90px -40px rgba(0, 0, 0, .85),
+      0 24px 40px -24px rgba(0, 0, 0, .6);
+  }
+  /* botões laterais */
+  .ap-phone::before, .ap-phone::after { content: ''; position: absolute; width: 3px; border-radius: 2px; background: linear-gradient(90deg, #4a5462, #20262f); }
+  .ap-phone::before { left: -3px; top: 104px; height: 26px; box-shadow: 0 46px 0 0 #333b47, 0 46px 0 0 #333b47; }
+  .ap-phone::after { right: -3px; top: 150px; height: 62px; }
+  .ap-glass { padding: 9px; border-radius: 49px; background: #020407; }
+  .ap-screen {
+    --u: calc(100cqw / 390);
+    container-type: inline-size;
+    position: relative; overflow: hidden; aspect-ratio: 390 / 844;
+    border-radius: 40px; background: #F3F5F8; color: #101C29;
+    font-family: var(--font-display); font-variant-numeric: tabular-nums;
+  }
+
+  /* topo Tinta, como no app */
+  .ap-ink {
+    position: relative; padding: 0 calc(22 * var(--u)) calc(22 * var(--u));
+    background: #101C29; color: #fff; overflow: hidden;
+  }
+  .ap-ink::after { /* K grande de fundo, igual ao app */
+    content: ''; position: absolute; right: calc(-60 * var(--u)); top: calc(70 * var(--u));
+    width: calc(260 * var(--u)); height: calc(250 * var(--u));
+    background: url('/assets/app/mark-white-96.png') center / contain no-repeat; opacity: .05; pointer-events: none;
+  }
+  .ap-status { position: relative; display: flex; align-items: center; justify-content: space-between; height: calc(56 * var(--u)); padding: 0 calc(8 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 600; }
+  .ap-island { position: absolute; left: 50%; top: calc(11 * var(--u)); width: calc(122 * var(--u)); height: calc(35 * var(--u)); transform: translateX(-50%); border-radius: 99px; background: #000; }
+  .ap-sys { display: flex; align-items: center; gap: calc(6 * var(--u)); }
+  .ap-sys svg { height: calc(11 * var(--u)); width: auto; fill: currentColor; }
+  .ap-sys svg:last-child { height: calc(12 * var(--u)); }
+
+  .ap-head { display: flex; align-items: center; gap: calc(12 * var(--u)); margin-top: calc(6 * var(--u)); }
+  .ap-head img { width: calc(36 * var(--u)); height: auto; }
+  .ap-head span { display: grid; line-height: 1.2; }
+  .ap-head small { font-size: calc(13 * var(--u)); color: #8FA6BD; }
+  .ap-head b { font-size: calc(17 * var(--u)); font-weight: 700; }
+  .ap-eye { margin-left: auto; display: grid; place-items: center; width: calc(40 * var(--u)); height: calc(40 * var(--u)); border: 1px solid #24384D; border-radius: calc(8 * var(--u)); }
+  .ap-eye svg { width: calc(18 * var(--u)); fill: none; stroke: #fff; stroke-width: 1.8; }
+
+  .ap-label { font-size: calc(11.5 * var(--u)); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #647588; }
+  .ap-on-ink { margin-top: calc(24 * var(--u)); color: #8FA6BD; }
+  .ap-saldo { display: flex; align-items: baseline; gap: calc(4 * var(--u)); margin-top: calc(6 * var(--u)); line-height: 1; }
+  .ap-saldo small { font-size: calc(19 * var(--u)); font-weight: 600; color: #8FA6BD; }
+  .ap-saldo b { font-size: calc(46 * var(--u)); font-weight: 800; letter-spacing: -.03em; transition: color .5s ease; }
+  .ap-saldo b.hit { color: #58C48E; transition-duration: .08s; }
+  .ap-lib { display: flex; align-items: center; justify-content: space-between; margin-top: calc(18 * var(--u)); padding-top: calc(16 * var(--u)); border-top: 1px solid #24384D; }
+  .ap-lib span { display: grid; gap: calc(2 * var(--u)); }
+  .ap-lib small { font-size: calc(13 * var(--u)); color: #8FA6BD; }
+  .ap-lib b { font-size: calc(16 * var(--u)); font-weight: 700; }
+  .ap-lib i { font-style: normal; padding: calc(10 * var(--u)) calc(26 * var(--u)); border-radius: calc(7 * var(--u)); background: #fff; color: #101C29; font-size: calc(15 * var(--u)); font-weight: 700; }
+
+  .ap-body-light { display: grid; gap: calc(10 * var(--u)); padding-top: calc(10 * var(--u)); }
+  .ap-card { padding: calc(16 * var(--u)) calc(22 * var(--u)); background: #fff; border-block: 1px solid #E1E7EE; }
+  .ap-two { display: grid; grid-template-columns: 1fr 1fr; margin-top: calc(10 * var(--u)); }
+  .ap-two > span { display: grid; gap: calc(3 * var(--u)); }
+  .ap-two > span + span { padding-left: calc(16 * var(--u)); border-left: 1px solid #E1E7EE; }
+  .ap-two small { font-size: calc(12.5 * var(--u)); color: #647588; }
+  .ap-two b { font-size: calc(17 * var(--u)); font-weight: 800; letter-spacing: -.02em; }
+  .ap-two em { font-style: normal; font-size: calc(12 * var(--u)); color: #647588; }
+  .ap-two strong { color: #1F7A4D; font-weight: 700; }
+  .ap-row { display: flex; align-items: center; justify-content: space-between; }
+  .ap-row small { font-size: calc(12 * var(--u)); color: #647588; }
+  .ap-seg { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: calc(12 * var(--u)); padding: calc(3 * var(--u)); border: 1px solid #E1E7EE; border-radius: calc(7 * var(--u)); background: #F3F5F8; }
+  .ap-seg span { padding: calc(6 * var(--u)) 0; text-align: center; font-size: calc(12 * var(--u)); color: #647588; border-radius: calc(5 * var(--u)); }
+  .ap-seg .on { background: #101C29; color: #fff; font-weight: 600; }
+  .ap-week { display: flex; align-items: baseline; gap: calc(3 * var(--u)); margin-top: calc(14 * var(--u)); line-height: 1; }
+  .ap-week small { font-size: calc(14 * var(--u)); font-weight: 600; color: #647588; }
+  .ap-week b { font-size: calc(30 * var(--u)); font-weight: 800; letter-spacing: -.03em; }
+  .ap-bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: calc(7 * var(--u)); align-items: end; height: calc(120 * var(--u)); margin-top: calc(14 * var(--u)); }
+  .ap-bars span { display: grid; grid-template-rows: 1fr auto; height: 100%; gap: calc(5 * var(--u)); }
+  .ap-bars i { align-self: end; height: 100%; border-radius: calc(3 * var(--u)) calc(3 * var(--u)) 0 0; background: #A9C0D8; transform: scaleY(var(--s)); transform-origin: bottom; transition: transform .7s cubic-bezier(.23, 1, .32, 1); }
+  .ap-bars .today i { background: #3B5F86; }
+  .ap-bars em { font-style: normal; text-align: center; font-size: calc(10.5 * var(--u)); color: #93A1B1; }
+  .ap-bars .today em { color: #101C29; font-weight: 700; }
+
+  .ap-tabs { position: absolute; inset: auto 0 0; display: grid; grid-template-columns: repeat(4, 1fr); padding: calc(10 * var(--u)) 0 calc(30 * var(--u)); background: rgba(255, 255, 255, .96); border-top: 1px solid #E1E7EE; }
+  .ap-tabs span { display: grid; justify-items: center; gap: calc(3 * var(--u)); font-size: calc(11 * var(--u)); color: #93A1B1; }
+  .ap-tabs svg { width: calc(22 * var(--u)); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .ap-tabs .on { color: #101C29; font-weight: 700; }
+  .ap-home { position: absolute; left: 50%; bottom: calc(8 * var(--u)); width: calc(134 * var(--u)); height: calc(5 * var(--u)); transform: translateX(-50%); border-radius: 9px; background: #101C29; }
+
+  /* ---------- notificações (estilo do sistema, claro e fosco) ---------- */
+  .ap-banner { top: 50px; left: -14px; right: -14px; z-index: 4; }
+  .ap-n, .ap-payout {
+    display: grid; grid-template-columns: auto 1fr; gap: 11px; align-items: center;
+    padding: 11px 13px; border-radius: 22px;
+    background: rgba(246, 247, 250, .96);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6);
+    box-shadow: 0 0 0 .5px rgba(16, 28, 41, .08), 0 18px 40px -12px rgba(2, 6, 14, .55), 0 4px 10px -4px rgba(2, 6, 14, .3);
+    color: #101C29; font-family: var(--font-display);
+  }
+  .ap-n img, .ap-payout img { width: 38px; height: 38px; border-radius: 9px; }
+  .ap-bt { display: grid; gap: 1px; min-width: 0; font-size: 13.5px; line-height: 1.3; }
+  .ap-bt-top { display: flex; justify-content: space-between; gap: 8px; }
+  .ap-bt-top b { font-weight: 700; font-size: 14px; }
+  .ap-bt time { font-size: 12px; color: #6b7685; flex: none; }
+  /* pilha como no sistema: a nova entra por cima, as anteriores recuam e encolhem */
+  .ap-stack { position: relative; height: 64px; }
+  .ap-n {
+    position: absolute; inset: 0 0 auto; transform-origin: 50% 0;
+    transition: transform .75s cubic-bezier(.16, 1, .3, 1), opacity .5s ease;
+  }
+  .ap-n > * { transition: opacity .35s ease; }
+  .ap-n.enter { transform: translateY(-34px) scale(.9); opacity: 0; }
+  .ap-n.n0 { z-index: 3; }
+  .ap-n.n1 { z-index: 2; transform: translateY(12px) scale(.93); opacity: .8; }
+  .ap-n.n2 { z-index: 1; transform: translateY(22px) scale(.86); opacity: .5; }
+  .ap-n.gone { z-index: 0; transform: translateY(28px) scale(.8); opacity: 0; }
+  .ap-n.n1 > *, .ap-n.n2 > *, .ap-n.gone > * { opacity: 0; }
+
+  .ap-payout { left: -104px; bottom: 26px; width: 268px; z-index: 4; }
+  .ap-payout { opacity: 0; transition: opacity .8s ease .9s; }
+  :global(.reveal.in) .ap-payout { opacity: 1; }
+  @media (max-width: 1023px) { .ap-payout { display: none; } }
+
+  /* +R$ que sobe do saldo a cada venda */
+  .ap-saldo { position: relative; }
+  .ap-gain {
+    position: absolute; right: 0; bottom: 100%; padding: calc(4 * var(--u)) calc(9 * var(--u));
+    border-radius: 99px; background: rgba(88, 196, 142, .16); color: #58C48E;
+    font-size: calc(13 * var(--u)); font-weight: 700; letter-spacing: 0; opacity: 0;
+  }
+  .ap-gain.go { animation: ap-gain 1.6s cubic-bezier(.16, 1, .3, 1) both; }
+  @keyframes ap-gain {
+    0% { opacity: 0; translate: 0 10px; }
+    18% { opacity: 1; translate: 0 0; }
+    70% { opacity: 1; translate: 0 -4px; }
+    100% { opacity: 0; translate: 0 -16px; }
+  }
+
+  /* vibração curta do aparelho quando a notificação chega */
+  .ap-phone.buzz { animation: ap-buzz .34s linear; }
+  @keyframes ap-buzz {
+    0%, 100% { rotate: 0deg; }
+    20% { rotate: .7deg; } 40% { rotate: -.6deg; } 60% { rotate: .45deg; } 80% { rotate: -.25deg; }
+  }
+
+  /* reflexo que varre o vidro uma vez quando o aparelho aparece */
+  .ap-glare {
+    position: absolute; inset: -20% -60%; pointer-events: none; z-index: 5;
+    background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, .22) 50%, transparent 58%);
+    translate: -70% 0; opacity: 0;
+  }
+  :global(.reveal.in) .ap-glare { animation: ap-glare 1.8s cubic-bezier(.65, 0, .35, 1) .5s both; }
+  @keyframes ap-glare { 0% { translate: -70% 0; opacity: 1; } 100% { translate: 70% 0; opacity: 1; } }
+
+  /* flutuação contínua, bem lenta; a sombra no chão acompanha */
+  .ap-stage { position: relative; }
+  .ap-floor {
+    position: absolute; left: 50%; bottom: 6px; width: 62%; height: 34px; translate: -50% 0;
+    border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, .55), transparent);
+    filter: blur(6px); pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ap-dev { animation: ap-bob 7s ease-in-out infinite; }
+    .ap-floor { animation: ap-floor 7s ease-in-out infinite; }
+    .ap-payout { animation: ap-bob2 8.5s ease-in-out infinite; }
+  }
+  @keyframes ap-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+  @keyframes ap-floor { 0%, 100% { scale: 1; opacity: 1; } 50% { scale: .9; opacity: .7; } }
+  @keyframes ap-bob2 { 0%, 100% { translate: 0 0; } 50% { translate: 6px -14px; } }
+
+  /* entrada com o scroll: o aparelho gira de longe até a pose de repouso */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .ap-rest { animation: ap-enter-m linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+    }
+    @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+      .ap-rest { animation-name: ap-enter; animation-range: entry 0% cover 48%; }
+    }
+  }
+  @keyframes ap-enter {
+    from { transform: translateY(110px) translateZ(-220px) rotateY(-52deg) rotateX(24deg) rotateZ(-6deg); }
+    to   { transform: rotateY(-17deg) rotateX(7deg) rotateZ(1.5deg); }
+  }
+  @keyframes ap-enter-m {
+    from { transform: translateY(60px) scale(.9) rotateX(16deg); }
+    to   { transform: none; }
+  }
+
+  @media (max-width: 639px) {
+    .ap-banner { top: 40px; left: -6px; right: -6px; }
+    .ap-n { padding: 9px 11px; border-radius: 18px; }
+    .ap-stack { height: 56px; }
+    .ap-n img { width: 32px; height: 32px; }
+    .ap-bt { font-size: 12.5px; }
+    .ap-bt-top b { font-size: 13px; }
+  }
+</style>
+
+<script>
+  // Venda nova a cada poucos segundos: a notificação entra na pilha, o aparelho vibra,
+  // o saldo conta até o novo valor e a barra de hoje cresce. Taxa de 6,99% + R$ 1,99.
+  const root = document.querySelector<HTMLElement>('#app');
+  if (root && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const q = (k: string) => root.querySelector<HTMLElement>(`[data-ap="${k}"]`)!;
+    const stack = q('stack'), phone = root.querySelector<HTMLElement>('.ap-phone')!, gain = q('gain');
+    const brl = (n: number) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const net = (v: number) => Math.round((v - Math.round(v * 6.99) / 100 - 1.99) * 100) / 100;
+    const st = { saldo: 12480.9, hoje: 5902.62, hojen: 61, mes: 47173.62, mesn: 512, week: 32307.62 };
+    const tickets = [97, 124, 97, 47, 197];
+    let i = 0, timer = 0;
+
+    const countTo = (from: number, to: number, set: (v: number) => void) => {
+      const t0 = performance.now(), d = 750;
+      const step = (t: number) => {
+        const k = Math.min((t - t0) / d, 1), e = 1 - Math.pow(1 - k, 4);
+        set(from + (to - from) * e);
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const setSaldo = (v: number) => { const [a, b] = brl(v).split(','); q('saldo').textContent = a; q('saldoc').textContent = b; };
+    const setWeek = (v: number) => { const [a, b] = brl(v).split(','); q('week').textContent = a; q('weekc').textContent = b; };
+
+    const restack = () => {
+      [...stack.children].forEach((el, idx) => {
+        el.className = 'ap-n ' + (idx === 0 ? 'n0' : idx === 1 ? 'n1' : idx === 2 ? 'n2' : 'gone');
+        if (idx > 2) window.setTimeout(() => el.remove(), 800);
+      });
+    };
+
+    const tick = () => {
+      const v = tickets[i++ % tickets.length], n = net(v);
+      const card = stack.firstElementChild!.cloneNode(true) as HTMLElement;
+      card.querySelector('[data-v]')!.textContent = brl(v);
+      card.className = 'ap-n enter';
+      stack.prepend(card);
+      void card.offsetWidth;
+      restack();
+      phone.classList.remove('buzz'); void phone.offsetWidth; phone.classList.add('buzz');
+
+      window.setTimeout(() => {
+        const s0 = st.saldo, w0 = st.week;
+        st.saldo += n; st.hoje += n; st.hojen += 1; st.mes += n; st.mesn += 1; st.week += n;
+        countTo(s0, st.saldo, setSaldo);
+        countTo(w0, st.week, setWeek);
+        q('saldo').classList.add('hit'); window.setTimeout(() => q('saldo').classList.remove('hit'), 800);
+        q('hoje').textContent = brl(st.hoje); q('hojen').textContent = String(st.hojen);
+        q('mes').textContent = brl(st.mes); q('mesn').textContent = String(st.mesn);
+        q('bar').style.setProperty('--s', Math.min(st.hoje / 7200, 1).toFixed(3));
+        gain.textContent = `+R$ ${brl(n)}`;
+        gain.classList.remove('go'); void gain.offsetWidth; gain.classList.add('go');
+      }, 380);
+    };
+    const start = () => { if (!timer) { window.setTimeout(tick, 900); timer = window.setInterval(tick, 4200); } };
+    const stop = () => { window.clearInterval(timer); timer = 0; };
+    new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? start() : stop())), { threshold: 0.25 }).observe(root);
+  }
+</script>
