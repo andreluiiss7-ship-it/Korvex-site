@@ -381,13 +381,13 @@ const [weekInt, weekCents] = brl(weekTotal).split(',');
 
 <script>
   // Venda nova a cada poucos segundos: a notificação entra na pilha, o aparelho vibra,
-  // o saldo conta até o novo valor e a barra de hoje cresce. Taxa de 6,99% + R$ 1,99.
+  // o saldo conta até o novo valor e a barra de hoje cresce. Taxa de 6,99% + R$ 2,49.
   const root = document.querySelector<HTMLElement>('#app');
   if (root && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const q = (k: string) => root.querySelector<HTMLElement>(`[data-ap="${k}"]`)!;
     const stack = q('stack'), phone = root.querySelector<HTMLElement>('.ap-phone')!, gain = q('gain');
     const brl = (n: number) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const net = (v: number) => Math.round((v - Math.round(v * 6.99) / 100 - 1.99) * 100) / 100;
+    const net = (v: number) => Math.round((v - Math.round(v * 6.99) / 100 - 2.49) * 100) / 100;
     const st = { saldo: 12480.9, hoje: 5902.62, hojen: 61, mes: 47173.62, mesn: 512, week: 32307.62 };
     const tickets = [97, 124, 97, 47, 197];
     let i = 0, timer = 0;

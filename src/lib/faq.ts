@@ -1,6 +1,6 @@
 // Perguntas frequentes: usadas no FAQ e no JSON-LD (FAQPage)
 export const faqs = [
-  { icon: 'coin',    q: 'Quanto custa?', a: '6,99% + R$ 1,99 por venda aprovada. Sem setup, mensalidade ou mínimo.' },
+  { icon: 'coin',    q: 'Quanto custa?', a: '6,99% + R$ 2,49 por venda aprovada. Sem setup, mensalidade ou mínimo.' },
   { icon: 'clock',   q: 'Quando o dinheiro cai?', a: 'No Pix, a venda vira saldo disponível na hora. O saque é conferido por gente, em horário comercial, e sai por Pix para a sua chave.' },
   { icon: 'shield',  q: 'Tem reserva de segurança?', a: 'Não. O que você vendeu no Pix fica disponível inteiro.' },
   { icon: 'flag',    q: 'E quando chega um MED?', a: 'A defesa é montada sozinha com o histórico do comprador. Você revisa ou deixa no automático. Só o valor contestado fica separado enquanto a disputa corre.' },

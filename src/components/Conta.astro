@@ -1,21 +1,24 @@
 ---
-// "A conta": calculadora por ticket contra a plataforma atual, com a taxa fixa na soma,
-// e a tabela de preço da Korvex na mesma seção.
-// Taxas e prazos conferidos nas páginas oficiais em 16/11/2026:
-//   Hotmart 9,9% + R$ 2,49 (hotmart.com/pt-br/taxa-hotmart), Pix em 2 dias.
-//   Kiwify 8,99% + R$ 2,49, Pix em 2 dias corridos, reserva de 4% por 30 dias (ajuda.kiwify.com.br).
+// "A entrega": o que acontece depois de cada venda, contado como o registro de um pedido.
+// Sem preço aqui: a página fala do serviço. Valor da taxa só na dúvida "Quanto custa?".
 import { icon } from '../lib/icons';
 import { REGISTER_URL, WHATSAPP_URL } from '../lib/site';
 
-const plats = [
-  { key: 'kiwify',  name: 'Kiwify',  pct: 8.99, fix: 2.49, lag: 2, res: 0.04, hold: '4% por 30 dias' },
-  { key: 'hotmart', name: 'Hotmart', pct: 9.9,  fix: 2.49, lag: 2, res: 0,    hold: 'não divulgada' },
+const steps = [
+  { t: '0 s',    h: 'Pix pago',                    d: 'O comprador paga o QR Code no checkout.' },
+  { t: '4 s',    h: 'Dinheiro no seu saldo',       d: 'Sem esperar dois dias e sem reserva retida.' },
+  { t: '4 s',    h: 'Aviso no seu celular',        d: '"Venda confirmada!" no app, em iPhone e Android.' },
+  { t: '5 s',    h: 'Aluno com acesso',            d: 'O acesso à área de membros chega no e-mail do comprador.' },
+  { t: '30 s',   h: 'Oferta depois da compra',     d: 'Upsell no Pix em um clique, sem digitar nada de novo.' },
+  { t: 'dia 12', h: 'Chegou um MED? Defesa pronta', d: 'Acessos, aulas assistidas e aceite dos termos viram a defesa. Só o valor contestado fica separado.' },
 ];
-const tickets = [37, 47, 97, 197];
-const prazos = [
-  { t: 'Pix',     d: 'Saldo na hora.' },
-  { t: 'API Pix', d: 'Cobrança direto do seu sistema, com aviso de pagamento.' },
-  { t: 'Cartão',  d: 'Liberado sob análise da operação.' },
+const kit = [
+  'Checkout com 7 temas e teste A/B',
+  'Upsell e parcelado no Pix',
+  'Área de membros com cara de streaming',
+  'Defesa de MED automática',
+  'App no celular, iPhone e Android',
+  'API Pix para o seu sistema',
 ];
 ---
 
@@ -23,283 +26,112 @@ const prazos = [
   <div class="section">
     <div class="reveal grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr]">
       <div>
-        <span class="chapter hidden lg:inline-flex">A conta</span>
+        <span class="chapter hidden lg:inline-flex">A entrega</span>
         <h2 class="h2 mt-4">
-          Quanto a sua plataforma fica
-          <span class="block font-editorial italic font-normal" style="color:var(--t-2)">de cada venda.</span>
+          Vendeu.
+          <span class="block font-editorial italic font-normal" style="color:var(--t-2)">O resto é com a gente.</span>
         </h2>
       </div>
       <p class="lead hidden max-w-md lg:block">
-        Coloque o seu faturamento e o seu ticket. A conta inclui a taxa fixa, que é o que pesa em produto barato.
+        O que acontece depois de cada Pix, sem você abrir o painel.
       </p>
     </div>
 
-    <div class="ct mt-[--gap-md]" data-conta data-plats={JSON.stringify(plats)}>
-      <!-- calculadora + extrato comparativo -->
+    <div class="en mt-[--gap-md]">
+      <!-- registro de uma venda -->
       <div class="stage3d"><div class="lift">
-        <div class="ct-card kframe gold in reveal">
-          <div class="ct-ctl">
-            <div class="ct-rev">
-              <p class="anchor-l !mt-0">Faturamento mensal</p>
-              <p class="anchor-num mt-1" style="font-size:clamp(1.8rem,3.4vw,2.4rem)" data-ct="rev">R$ 100.000</p>
-              <input type="range" min="30000" max="1000000" step="10000" value="100000" class="calc-slider mt-3 w-full" aria-label="Faturamento mensal" data-ct-slider />
-            </div>
-            <div class="ct-pick">
-              <p class="anchor-l !mt-0">Ticket</p>
-              <div class="ct-seg" role="group" aria-label="Ticket do produto">
-                {tickets.map((t) => (
-                  <button type="button" data-ct-ticket={t} aria-pressed={t === 47 ? 'true' : 'false'}>R$ {t}</button>
-                ))}
-              </div>
-            </div>
-            <div class="ct-pick">
-              <p class="anchor-l !mt-0">Onde você vende hoje</p>
-              <div class="ct-seg" role="group" aria-label="Plataforma atual">
-                {plats.map((p, i) => (
-                  <button type="button" data-ct-plat={p.key} aria-pressed={i === 0 ? 'true' : 'false'}>{p.name}</button>
-                ))}
-              </div>
-            </div>
+        <div class="en-log kframe gold in reveal">
+          <div class="en-head">
+            <span>Registro da venda · Pedido 48213</span>
+            <b>Pix · R$ 97,00</b>
           </div>
-
-          <div class="ct-tb" role="table" aria-label="Comparativo de custo por venda">
-            <div class="ct-tr ct-th" role="row">
-              <span role="columnheader"></span>
-              <span role="columnheader" data-ct="pname">Kiwify</span>
-              <span role="columnheader" class="k">Korvex</span>
-            </div>
-            <div class="ct-tr" role="row">
-              <span role="rowheader">Taxa por venda</span>
-              <b role="cell" data-ct="c-sale">R$ 6,72</b>
-              <b role="cell" class="k" data-ct="k-sale">R$ 5,28</b>
-            </div>
-            <div class="ct-tr" role="row">
-              <span role="rowheader">Taxa no mês</span>
-              <b role="cell" data-ct="c-month">R$ 14.288</b>
-              <b role="cell" class="k" data-ct="k-month">R$ 11.224</b>
-            </div>
-            <div class="ct-tr" role="row">
-              <span role="rowheader">Pix disponível</span>
-              <b role="cell" class="dim">em 2 dias</b>
-              <b role="cell" class="k ok"><i set:html={icon('bolt')} />na hora</b>
-            </div>
-            <div class="ct-tr" role="row">
-              <span role="rowheader">Reserva retida</span>
-              <b role="cell" class="dim" data-ct="c-hold">4% por 30 dias</b>
-              <b role="cell" class="k ok"><i set:html={icon('check')} />R$ 0</b>
-            </div>
-          </div>
-
-          <div class="ct-total">
-            <p>
-              <b class="text-gold-gradient" data-ct="diff-m">+R$ 3.064</b>
-              <span>a mais por mês</span>
-            </p>
-            <p class="y"><em data-ct="diff-y">R$ 36.766</em> por ano</p>
-          </div>
+          <ol class="en-steps">
+            {steps.map((s) => (
+              <li>
+                <time>{s.t}</time>
+                <i class="en-dot"></i>
+                <div><b>{s.h}</b><span>{s.d}</span></div>
+              </li>
+            ))}
+          </ol>
+          <p class="en-foot">Você não abriu o painel nenhuma vez.</p>
         </div>
       </div></div>
 
-      <!-- preço da Korvex -->
-      <aside class="ct-price reveal">
-        <p class="anchor-l !mt-0">Taxa padrão</p>
-        <p class="ct-big"><span>6,99%</span><small>+ R$ 1,99 por venda aprovada</small></p>
-        <ul class="ct-zeros">
+      <!-- o que vem na conta -->
+      <aside class="en-side reveal">
+        <p class="anchor-l !mt-0">O que vem na conta</p>
+        <ul class="en-zeros">
           <li><b>0</b>reserva</li><li><b>0</b>setup</li><li><b>0</b>mensalidade</li>
         </ul>
-        <p class="ct-rule">A taxa do contrato é a taxa do extrato. <strong>Só muda com a sua assinatura.</strong></p>
-        <dl class="ct-prazos">
-          {prazos.map((p) => (<div><dt>{p.t}</dt><dd>{p.d}</dd></div>))}
-        </dl>
+        <ul class="en-kit">
+          {kit.map((k) => (<li><i set:html={icon('check')}></i>{k}</li>))}
+        </ul>
         <a href={REGISTER_URL} target="_blank" rel="noopener" data-cta="conta-register" class="btn btn-primary mt-5 w-full justify-center">
           Abrir conta grátis
           <span class="h-4 w-4" set:html={icon('arrow')}></span>
         </a>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="conta-wa" class="ct-link">Fatura acima de R$ 300 mil? Condição por escrito</a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener" data-cta="conta-wa" class="en-link">Prefere conversar antes? Fale com um gerente</a>
       </aside>
     </div>
-
-    <!-- caixa em 30 dias -->
-    <div class="cash reveal mx-auto mt-6 hidden lg:block">
-      <div class="cash-head">
-        <div>
-          <p class="anchor-l !mt-0">Saldo liberado para sacar · primeiros 30 dias</p>
-          <div class="cash-legend">
-            <span><i class="cash-dot k"></i>Korvex · Pix na hora</span>
-            <span><i class="cash-dot c"></i><span data-ct="pname2">Kiwify</span> · <span data-ct="plegend">Pix em 2 dias e 4% retido</span></span>
-          </div>
-        </div>
-        <div class="cash-diff">
-          <b class="text-gold-gradient" data-ct="cash-diff">+R$ 11.971</b>
-          <span class="anchor-l">a mais liberado no dia 30</span>
-        </div>
-      </div>
-      <svg class="cash-svg" viewBox="0 0 600 190" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="cashFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#3B82F6" stop-opacity=".28" />
-            <stop offset="1" stop-color="#3B82F6" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-        <g class="cash-grid">
-          <line x1="0" y1="170" x2="600" y2="170" /><line x1="0" y1="120" x2="600" y2="120" /><line x1="0" y1="70" x2="600" y2="70" /><line x1="0" y1="20" x2="600" y2="20" />
-          <line x1="200" y1="14" x2="200" y2="176" /><line x1="400" y1="14" x2="400" y2="176" />
-        </g>
-        <path class="cash-area" d="M0 170 L600 20 L600 170 Z" />
-        <path class="cash-c" data-ct-path d="M0 170 L40 170 L600 40" />
-        <path class="cash-k" d="M0 170 L600 20" />
-        <circle class="cash-kdot" cx="600" cy="20" r="4" />
-        <circle class="cash-cdot" data-ct-dot cx="600" cy="40" r="4" />
-      </svg>
-      <div class="cash-x"><span>dia 0</span><span>dia 10</span><span>dia 20</span><span>dia 30</span></div>
-    </div>
-
-    <p class="reveal mt-4 font-mono text-[10.5px] leading-relaxed tracking-[0.03em] text-[--t-3]">
-      Taxas e prazos das páginas oficiais de cada plataforma, novembro de 2026. Venda direta no Pix, sem afiliado.
-    </p>
   </div>
 </section>
 
-<script is:inline>
-  (() => {
-    const root = document.querySelector('[data-conta]');
-    if (!root) return;
-    const sec = root.closest('section');
-    const plats = JSON.parse(root.dataset.plats);
-    const K = { pct: 6.99, fix: 1.99 };
-    const $ = (k) => sec.querySelector(`[data-ct="${k}"]`);
-    const slider = root.querySelector('[data-ct-slider]');
-    const path = sec.querySelector('[data-ct-path]'), dot = sec.querySelector('[data-ct-dot]');
-    const state = { rev: 100000, ticket: 47, plat: plats[0] };
-    const int = (n) => 'R$ ' + Math.round(n).toLocaleString('pt-BR');
-    const dec = (n) => 'R$ ' + n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const cur = {}; let raf = 0;
-    const NUM = { 'c-sale': dec, 'k-sale': dec, 'c-month': int, 'k-month': int, 'diff-m': (n) => '+' + int(n), 'diff-y': int, 'cash-diff': (n) => '+' + int(n), rev: int };
-
-    const paint = () => { for (const k in NUM) { const el = $(k); if (el) el.textContent = NUM[k](cur[k]); } };
-    const animate = (t) => {
-      cancelAnimationFrame(raf);
-      const from = { ...cur }, t0 = performance.now();
-      const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const tick = (now) => {
-        const p = still ? 1 : Math.min((now - t0) / 320, 1), e = 1 - Math.pow(1 - p, 3);
-        for (const k in t) cur[k] = (from[k] ?? t[k]) + (t[k] - (from[k] ?? t[k])) * e;
-        paint();
-        if (p < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    };
-
-    const update = () => {
-      const { rev, ticket, plat } = state;
-      const sales = rev / ticket;
-      const cSale = ticket * plat.pct / 100 + plat.fix, kSale = ticket * K.pct / 100 + K.fix;
-      const cMonth = cSale * sales, kMonth = kSale * sales;
-      // saldo liberado no dia 30: Korvex libera cada venda na hora; a outra libera com atraso e segura a reserva
-      const daily = rev / 30;
-      const k30 = 30 * (daily - kMonth / 30);
-      const c30 = (30 - plat.lag) * (daily - cMonth / 30) * (1 - plat.res);
-      animate({ rev, 'c-sale': cSale, 'k-sale': kSale, 'c-month': cMonth, 'k-month': kMonth, 'diff-m': cMonth - kMonth, 'diff-y': (cMonth - kMonth) * 12, 'cash-diff': k30 - c30 });
-      $('pname').textContent = plat.name; $('pname2').textContent = plat.name;
-      $('c-hold').textContent = plat.hold;
-      $('plegend').textContent = 'Pix em ' + plat.lag + ' dias' + (plat.res ? ' e ' + (plat.res * 100) + '% retido' : '');
-      const y30 = 170 - (c30 / k30) * 150, x0 = (plat.lag / 30) * 600;
-      if (path) path.setAttribute('d', `M0 170 L${x0} 170 L600 ${y30.toFixed(1)}`);
-      if (dot) dot.setAttribute('cy', y30.toFixed(1));
-    };
-
-    const press = (sel, on) => root.querySelectorAll(sel).forEach((b) => b.setAttribute('aria-pressed', String(b === on)));
-    slider.addEventListener('input', () => { state.rev = parseFloat(slider.value); update(); });
-    root.querySelectorAll('[data-ct-ticket]').forEach((b) => b.addEventListener('click', () => { state.ticket = Number(b.dataset.ctTicket); press('[data-ct-ticket]', b); update(); }));
-    root.querySelectorAll('[data-ct-plat]').forEach((b) => b.addEventListener('click', () => { state.plat = plats.find((p) => p.key === b.dataset.ctPlat); press('[data-ct-plat]', b); update(); }));
-    update();
-  })();
-</script>
-
 <style>
-  .ct { display: grid; gap: 20px; }
-  @media (min-width: 1024px) { .ct { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 24px; align-items: stretch; } }
+  .en { display: grid; gap: 20px; }
+  @media (min-width: 1024px) { .en { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 24px; align-items: stretch; } }
 
-  .ct-card { height: 100%; border-radius: 18px; border: 1px solid var(--line-2); background: #fff; box-shadow: var(--shadow-card); padding: 22px 22px 20px; }
-  .ct-ctl { display: grid; gap: 18px 28px; padding-bottom: 20px; border-bottom: 1px solid var(--line-2); }
-  @media (min-width: 720px) { .ct-ctl { grid-template-columns: 1fr auto; } .ct-rev { grid-row: 1 / 3; } }
+  .en-log { height: 100%; border-radius: 18px; border: 1px solid var(--line-2); background: #fff; box-shadow: var(--shadow-card); padding: 22px 24px 20px; }
+  .en-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line-2); font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--t-3); }
+  .en-head b { padding: 5px 10px; border-radius: 99px; background: var(--accent-product-tint); color: var(--accent-product); font-weight: 700; letter-spacing: .06em; }
 
-  .calc-slider { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; background: linear-gradient(to right, rgba(11,18,32,0.14), rgba(11,18,32,0.42)); }
-  .calc-slider:focus-visible { outline: 2px solid var(--accent-product); outline-offset: 6px; }
-  .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-product); cursor: grab; box-shadow: 0 4px 12px rgba(11,18,32,0.25); transition: transform .15s var(--ease-out); }
-  .calc-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
-  .calc-slider::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-product); cursor: grab; }
+  /* linha do tempo: a régua se preenche com a rolagem e cada passo acende quando ela passa */
+  .en-steps { position: relative; margin-top: 6px; }
+  .en-steps::before, .en-steps::after { content: ''; position: absolute; left: 77px; top: 26px; bottom: 26px; width: 2px; border-radius: 2px; }
+  .en-steps::before { background: var(--line-2); }
+  .en-steps::after { background: var(--accent-product); transform-origin: top; }
+  .en-steps li { position: relative; display: grid; grid-template-columns: 64px 28px 1fr; align-items: start; column-gap: 0; padding: 14px 0; border-bottom: 1px solid var(--line-1); }
+  .en-steps li:last-child { border-bottom: 0; }
+  .en-steps time { padding-top: 2px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .02em; color: var(--t-1); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .en-dot { position: relative; z-index: 1; width: 12px; height: 12px; margin: 5px 0 0 8px; border-radius: 50%; background: #fff; border: 2px solid var(--accent-product); box-shadow: 0 0 0 4px #fff; }
+  .en-steps li div { display: grid; gap: 2px; padding-left: 6px; }
+  .en-steps b { font-family: var(--font-display); font-weight: 700; font-size: 16.5px; letter-spacing: -0.015em; color: var(--t-1); }
+  .en-steps span { font-size: 14px; line-height: 1.45; color: var(--t-2); text-wrap: pretty; }
+  .en-steps li:last-child .en-dot { border-color: var(--gold-1); }
+  .en-foot { margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line-2); font-family: var(--font-editorial); font-style: italic; font-size: 20px; color: var(--t-2); }
 
-  .ct-seg { display: inline-flex; margin-top: 8px; border: 1px solid var(--line-3); border-radius: 8px; overflow: hidden; background: var(--bg-2); }
-  .ct-seg button { min-height: 44px; padding: 0 14px; font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; letter-spacing: .02em; color: var(--t-3); font-variant-numeric: tabular-nums; transition: background-color .2s var(--ease-out), color .2s var(--ease-out); }
-  .ct-seg button + button { border-left: 1px solid var(--line-2); }
-  .ct-seg button:active { transform: scale(0.97); }
-  .ct-seg button[aria-pressed="true"] { background: #fff; color: var(--t-1); box-shadow: inset 0 -2px 0 var(--accent-product); }
-  @media (hover: hover) and (pointer: fine) { .ct-seg button:hover { color: var(--t-1); } }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .en-steps::after { animation: en-fill linear both; animation-timeline: view(); animation-range: entry 40% cover 62%; }
+      .en-steps li > * { animation: en-lit linear both; animation-timeline: view(); animation-range: entry 70% cover 42%; }
+      .en-steps li .en-dot { animation-name: en-dot; }
+    }
+  }
+  @keyframes en-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes en-lit { from { opacity: .28; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes en-dot { from { scale: .5; background: #fff; } to { scale: 1; background: var(--accent-product); } }
 
-  .ct-tr { display: grid; grid-template-columns: 1.15fr 1fr 1fr; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line-1); font-family: var(--font-mono); font-size: 12.5px; color: var(--t-2); }
-  .ct-tr > :nth-child(n+2) { text-align: right; }
-  .ct-tr b { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.05rem, 2vw, 1.3rem); letter-spacing: -0.02em; color: var(--t-1); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .ct-tr b.dim { font-weight: 600; font-size: 14px; color: var(--t-3); letter-spacing: 0; }
-  .ct-tr b.ok { color: var(--accent-live); font-size: 15px; display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px; }
-  .ct-tr b.ok i { width: 14px; height: 14px; display: block; }
-  .ct-th { padding: 16px 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: -0.01em; color: var(--t-3); border-bottom-color: var(--line-2); }
-  .ct-th .k { color: var(--gold-1); }
-
-  .ct-total { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding-top: 16px; }
-  .ct-total b { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.4vw, 2.9rem); letter-spacing: -0.035em; line-height: 1; font-variant-numeric: tabular-nums; }
-  .ct-total span { margin-left: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--t-3); }
-  .ct-total .y { font-family: var(--font-mono); font-size: 12.5px; color: var(--t-2); }
-  .ct-total .y em { font-style: normal; font-weight: 700; color: var(--gold-1); font-variant-numeric: tabular-nums; }
-
-  /* preço: sem caixa dentro de caixa, só divisórias */
-  .ct-price { border-radius: 18px; border: 1px solid var(--line-2); background: #fff; box-shadow: var(--shadow-card); padding: 22px; }
-  .ct-big span { display: block; margin-top: 6px; font-family: var(--font-display); font-weight: 700; font-size: clamp(3.2rem, 6vw, 4.2rem); letter-spacing: -0.045em; line-height: 0.95; color: var(--t-1); font-variant-numeric: tabular-nums; }
-  .ct-big small { display: block; margin-top: 8px; font-size: 14px; color: var(--t-2); }
-  .ct-zeros { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; border-block: 1px solid var(--line-2); }
-  .ct-zeros li { padding: 12px 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--t-3); }
-  .ct-zeros li + li { padding-left: 14px; border-left: 1px solid var(--line-2); }
-  .ct-zeros b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; letter-spacing: -0.04em; line-height: 1; color: var(--t-1); margin-bottom: 4px; }
-  .ct-rule { margin-top: 16px; font-size: 14.5px; line-height: 1.5; color: var(--t-2); text-wrap: pretty; }
-  .ct-rule strong { color: var(--t-1); font-weight: 600; }
-  .ct-prazos { margin-top: 14px; }
-  .ct-prazos div { display: grid; grid-template-columns: 72px 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line-1); font-size: 13.5px; line-height: 1.4; }
-  .ct-prazos dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-1); font-weight: 600; padding-top: 2px; }
-  .ct-prazos dd { color: var(--t-2); }
-  .ct-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 4px; font-size: 13px; color: var(--t-2); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(11,18,32,0.3); }
-  @media (hover: hover) and (pointer: fine) { .ct-link:hover { color: var(--t-1); } }
-
-  .cash { border-radius: 18px; border: 1px solid var(--line-2); background: #fff; box-shadow: var(--shadow-card); padding: 20px 20px 16px; }
-  .cash-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
-  .cash-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; color: var(--t-3); }
-  .cash-legend > span { display: inline-flex; align-items: center; gap: 6px; }
-  .cash-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
-  .cash-dot.k { background: var(--accent-product); }
-  .cash-dot.c { background: var(--t-4); }
-  .cash-diff { text-align: right; }
-  .cash-diff b { display: block; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
-  .cash-svg { display: block; width: 100%; height: clamp(140px, 17vw, 190px); margin-top: 14px; }
-  .cash-grid line { stroke: var(--line-2); stroke-width: 1; vector-effect: non-scaling-stroke; }
-  .cash-area { fill: url(#cashFill); opacity: 0; transition: opacity 1.2s var(--ease-out) .6s; }
-  .cash-k, .cash-c { fill: none; stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 1.8s var(--ease-out) .2s; }
-  .cash-k { stroke: var(--accent-product); }
-  .cash-c { stroke: var(--t-4); }
-  .cash-kdot { fill: var(--accent-product); stroke: #fff; stroke-width: 2; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .4s var(--ease-out) 1.8s; }
-  .cash-cdot { fill: var(--t-4); opacity: 0; transition: opacity .4s var(--ease-out) 1.8s; }
-  .reveal.in .cash-k, .reveal.in .cash-c { stroke-dashoffset: 0; }
-  .reveal.in .cash-area, .reveal.in .cash-kdot, .reveal.in .cash-cdot { opacity: 1; }
-  .cash-x { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--t-3); }
-  @media (prefers-reduced-motion: reduce) { .cash-k, .cash-c { stroke-dashoffset: 0; transition: none; } .cash-area, .cash-kdot, .cash-cdot { opacity: 1; transition: none; } }
+  .en-side { border-radius: 18px; border: 1px solid var(--line-2); background: #fff; box-shadow: var(--shadow-card); padding: 22px; }
+  .en-zeros { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 14px; border-block: 1px solid var(--line-2); }
+  .en-zeros li { padding: 12px 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--t-3); }
+  .en-zeros li + li { padding-left: 14px; border-left: 1px solid var(--line-2); }
+  .en-zeros b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; letter-spacing: -0.04em; line-height: 1; color: var(--t-1); margin-bottom: 4px; }
+  .en-kit { margin-top: 6px; }
+  .en-kit li { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line-1); font-size: 14.5px; color: var(--t-1); }
+  .en-kit i { flex: none; width: 16px; height: 16px; color: var(--accent-live); }
+  .en-kit i :global(svg) { width: 100%; height: 100%; }
+  .en-link { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 4px; font-size: 13px; color: var(--t-2); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(11,18,32,0.3); text-align: center; }
+  @media (hover: hover) and (pointer: fine) { .en-link:hover { color: var(--t-1); } }
 
   @media (max-width: 719px) {
-    .ct-card { padding: 18px 16px 16px; }
-    .ct-seg { display: flex; }
-    .ct-seg button { flex: 1; padding: 0 6px; }
-    .ct-tr { grid-template-columns: 1fr 1fr; gap: 2px 12px; padding: 12px 0; }
-    .ct-tr > :first-child { grid-column: 1 / -1; font-size: 11px; color: var(--t-3); }
-    .ct-tr > :nth-child(n+2) { text-align: left; justify-content: flex-start; }
-    .ct-th > :first-child { display: none; }
-    .ct-price { padding: 18px 16px; }
-    .ct-prazos { display: none; }
+    .en-log { padding: 18px 16px 16px; }
+    .en-steps::before, .en-steps::after { left: 61px; }
+    .en-steps li { grid-template-columns: 50px 26px 1fr; }
+    .en-steps time { font-size: 11px; }
+    .en-steps span { font-size: 13.5px; }
+    .en-foot { font-size: 18px; }
+    /* no celular a lista de recursos repete o capítulo Produto: fica só o essencial */
+    .en-kit { display: none; }
+    .en-head { font-size: 10px; }
   }
 </style>

@@ -175,10 +175,10 @@ const feed = [
 
     setInterval(() => {
       if (!live || document.hidden) return;
-      // venda de R$ 97 ou R$ 97 + oferta extra de R$ 27; líquido já sem 6,99% + R$ 1,99 por produto
+      // venda de R$ 97 ou R$ 97 + oferta extra de R$ 27; líquido já sem 6,99% + R$ 2,49 por produto
       const bump = Math.random() < 0.3;
       const gross = bump ? 124 : 97;
-      const net = bump ? 111.35 : 88.23;
+      const net = bump ? 110.35 : 87.73;
       vLiq += net; vHoje += net; vDisp += net; vPagas += 1;
       liq.textContent = brl(vLiq);
       if (liq2) liq2.textContent = brl(vLiq);

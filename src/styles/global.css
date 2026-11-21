@@ -86,14 +86,14 @@ section[id]:not(#topo):not(#produto) {
   contain-intrinsic-size: auto var(--cis, 640px);
 }
 /* valores medidos no build de produção; errado aqui vira salto de scroll */
-#conta      { --cis: 1270px; }
+#conta      { --cis: 920px; }
 #app        { --cis: 815px; }
 #fundador   { --cis: 860px; }
 #premiacoes { --cis: 1335px; }
 #faq        { --cis: 510px; }
 #contato    { --cis: 630px; }
 @media (max-width: 1023px) {
-  #conta      { --cis: 1415px; }
+  #conta      { --cis: 1240px; }
   #app        { --cis: 930px; }
   #fundador   { --cis: 1180px; }
   #premiacoes { --cis: 960px; }
